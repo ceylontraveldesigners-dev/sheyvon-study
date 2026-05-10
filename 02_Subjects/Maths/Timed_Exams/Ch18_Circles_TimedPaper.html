@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timed Paper — Chapter 18 — Circles | Sheyvon's Maths</title>
+<style>* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; min-height: 100vh; }
+.start-screen, .results-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 20px; }
+.start-screen { background: linear-gradient(135deg, #1F3864, #2E75B6); }
+.start-box { background: white; color: #222; border-radius: 16px; padding: 40px; max-width: 500px; text-align: center; }
+.start-box h1 { font-size: 24px; color: #1F3864; margin-bottom: 12px; }
+.start-box p { font-size: 14px; color: #555; margin-bottom: 8px; }
+.start-btn { margin-top: 24px; padding: 16px 48px; background: #1F3864; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; }
+.exam-screen { display: none; max-width: 900px; margin: 0 auto; padding: 20px; }
+.timer-bar { position: sticky; top: 0; background: #1F3864; color: white; padding: 12px 24px; border-radius: 10px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+.timer-display { font-size: 28px; font-weight: bold; font-family: monospace; }
+.timer-display.warning { color: #FFD966; } .timer-display.danger { color: #FF6B6B; }
+.card { background: #fff; color: #222; border-radius: 12px; padding: 24px 28px; margin-bottom: 20px; border-left: 5px solid #2E75B6; }
+.card h2 { font-size: 15px; color: #1F3864; margin-bottom: 14px; }
+.question { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #ddd; }
+.question p { font-size: 14px; font-weight: bold; color: #1F3864; margin-bottom: 8px; }
+.opt-btn { padding: 8px 16px; border: 2px solid #BDD7EE; border-radius: 8px; background: white; cursor: pointer; font-size: 13px; margin: 4px; }
+.opt-btn.selected { background: #2E75B6; color: white; border-color: #1F3864; }
+.opt-btn.correct { background: #C6EFCE; border-color: #70AD47; color: #375623; }
+.opt-btn.wrong { background: #FFCCCC; border-color: #FF6B6B; color: #9C0006; }
+.fill-input { width: 200px; padding: 8px 12px; border: 2px solid #BDD7EE; border-radius: 8px; font-size: 13px; }
+.submit-btn { display: block; margin: 30px auto; padding: 14px 48px; background: #375623; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+.results-screen { display: none; background: #1F3864; }
+.results-box { background: white; color: #222; border-radius: 16px; padding: 40px; max-width: 700px; width: 100%; }
+.score-circle { width: 140px; height: 140px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 32px; font-weight: bold; }
+.score-circle.pass { background: #C6EFCE; color: #375623; border: 5px solid #70AD47; }
+.score-circle.warn { background: #FFEB9C; color: #9C5700; border: 5px solid #FFCD00; }
+.score-circle.fail { background: #FFCCCC; color: #9C0006; border: 5px solid #FF6B6B; }
+.review-item { padding: 8px 0; border-bottom: 1px solid #eee; font-size: 13px; }
+.review-item.ok { color: #375623; } .review-item.bad { color: #9C0006; }
+.wa-box { background: #E7F8EF; border: 1px solid #25D366; border-radius: 10px; padding: 16px; margin: 20px 0; font-size: 13px; }
+.wa-box pre { white-space: pre-wrap; font-family: inherit; color: #1a1a1a; }
+.nav-btn { display: inline-block; background: #1F3864; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: bold; margin: 6px; }</style>
+</head>
+<body>
+<div class="start-screen" id="startScreen">
+  <div class="start-box">
+    <h1>⭕ Chapter 18 Timed Paper</h1>
+    <h2 style="font-size:16px;color:#2E75B6;margin-top:8px;">Chapter 18 — Circles</h2>
+    <p style="margin-top:16px;">⏱️ Time: <strong>20 minutes</strong></p>
+    <p>📝 15 auto-marked + 2 bonus written questions</p>
+    <button class="start-btn" onclick="startExam()">▶ START EXAM</button>
+  </div>
+</div>
+<div class="exam-screen" id="examScreen">
+  <div class="timer-bar">
+    <span>📚 Chapter 18 — Circles</span>
+    <span class="timer-display" id="timerDisplay">20:00</span>
+    <span>Ch 18</span>
+  </div>
+  <div class="card"><h2>Section A — Multiple Choice (10 marks)</h2><div class="question" id="q1"><p>Q1. Circumference of circle with r=21 cm (π=22/7):</p><div><button class="opt-btn" onclick="selectMCQ(1,this,false)">66 cm</button><button class="opt-btn" onclick="selectMCQ(1,this,true)">132 cm</button><button class="opt-btn" onclick="selectMCQ(1,this,false)">44 cm</button><button class="opt-btn" onclick="selectMCQ(1,this,false)">264 cm</button></div><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint1">💡 C=2×22/7×21=132 cm</div></div><div class="question" id="q2"><p>Q2. Area of circle with d=14 cm (π=22/7):</p><div><button class="opt-btn" onclick="selectMCQ(2,this,false)">44 cm²</button><button class="opt-btn" onclick="selectMCQ(2,this,true)">154 cm²</button><button class="opt-btn" onclick="selectMCQ(2,this,false)">616 cm²</button><button class="opt-btn" onclick="selectMCQ(2,this,false)">88 cm²</button></div><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint2">💡 r=7; A=22/7×49=154 cm²</div></div><div class="question" id="q3"><p>Q3. If circumference=62.8 cm (π=3.14), find the radius.</p><div><button class="opt-btn" onclick="selectMCQ(3,this,true)">10 cm</button><button class="opt-btn" onclick="selectMCQ(3,this,false)">20 cm</button><button class="opt-btn" onclick="selectMCQ(3,this,false)">5 cm</button><button class="opt-btn" onclick="selectMCQ(3,this,false)">31.4 cm</button></div><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint3">💡 2πr=62.8; r=62.8÷6.28=10 cm</div></div><div class="question" id="q4"><p>Q4. A circular pond has radius 3.5 m. Area (π=22/7):</p><div><button class="opt-btn" onclick="selectMCQ(4,this,false)">22 m²</button><button class="opt-btn" onclick="selectMCQ(4,this,true)">38.5 m²</button><button class="opt-btn" onclick="selectMCQ(4,this,false)">77 m²</button><button class="opt-btn" onclick="selectMCQ(4,this,false)">154 m²</button></div><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint4">💡 A=22/7×12.25=38.5 m²</div></div><div class="question" id="q5"><p>Q5. A wheel has diameter 70 cm. Distance for 10 full turns (π=22/7):</p><div><button class="opt-btn" onclick="selectMCQ(5,this,true)">2200 cm</button><button class="opt-btn" onclick="selectMCQ(5,this,false)">440 cm</button><button class="opt-btn" onclick="selectMCQ(5,this,false)">700 cm</button><button class="opt-btn" onclick="selectMCQ(5,this,false)">220 cm</button></div><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint5">💡 C=22/7×70=220 cm; 10×220=2200 cm</div></div><div class="question" id="q6"><p>Q6. Which is larger: area of circle r=5 or square side=10?</p><div><button class="opt-btn" onclick="selectMCQ(6,this,false)">Circle (78.5)</button><button class="opt-btn" onclick="selectMCQ(6,this,true)">Square (100)</button><button class="opt-btn" onclick="selectMCQ(6,this,false)">Equal</button><button class="opt-btn" onclick="selectMCQ(6,this,false)">Cannot tell</button></div><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint6">💡 Circle=78.5 cm²; Square=100 cm²</div></div><div class="question" id="q7"><p>Q7. Semi-circle with r=7 cm. Perimeter (π=22/7):</p><div><button class="opt-btn" onclick="selectMCQ(7,this,false)">22 cm</button><button class="opt-btn" onclick="selectMCQ(7,this,true)">36 cm</button><button class="opt-btn" onclick="selectMCQ(7,this,false)">44 cm</button><button class="opt-btn" onclick="selectMCQ(7,this,false)">28 cm</button></div><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint7">💡 Half circumference + diameter = 22+14=36 cm</div></div><div class="question" id="q8"><p>Q8. If area=π×64, find the radius.</p><div><button class="opt-btn" onclick="selectMCQ(8,this,true)">8 cm</button><button class="opt-btn" onclick="selectMCQ(8,this,false)">64 cm</button><button class="opt-btn" onclick="selectMCQ(8,this,false)">4 cm</button><button class="opt-btn" onclick="selectMCQ(8,this,false)">16 cm</button></div><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint8">💡 πr²=π×64; r²=64; r=8 cm</div></div><div class="question" id="q9"><p>Q9. Diameter of circle with circumference 44 cm (π=22/7):</p><div><button class="opt-btn" onclick="selectMCQ(9,this,false)">7 cm</button><button class="opt-btn" onclick="selectMCQ(9,this,true)">14 cm</button><button class="opt-btn" onclick="selectMCQ(9,this,false)">22 cm</button><button class="opt-btn" onclick="selectMCQ(9,this,false)">4 cm</button></div><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint9">💡 d=44÷(22/7)=44×7/22=14 cm</div></div><div class="question" id="q10"><p>Q10. Area of semi-circle r=10 cm (π=3.14):</p><div><button class="opt-btn" onclick="selectMCQ(10,this,true)">157 cm²</button><button class="opt-btn" onclick="selectMCQ(10,this,false)">314 cm²</button><button class="opt-btn" onclick="selectMCQ(10,this,false)">62.8 cm²</button><button class="opt-btn" onclick="selectMCQ(10,this,false)">31.4 cm²</button></div><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint10">💡 ½×3.14×100=157 cm²</div></div></div>
+  <div class="card"><h2>Section B — True or False (3 marks)</h2><div class="question" id="q11"><p>Q11. The area of a circle increases 4 times when the radius doubles.</p><div><button class="opt-btn" onclick="selectTF(11,this,true)">✅ True</button><button class="opt-btn" onclick="selectTF(11,this,false)">❌ False</button></div><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint11">💡 A=πr²; if r→2r, A→π(2r)²=4πr².</div></div><div class="question" id="q12"><p>Q12. Circumference and area of a circle have the same units.</p><div><button class="opt-btn" onclick="selectTF(12,this,false)">✅ True</button><button class="opt-btn" onclick="selectTF(12,this,true)">❌ False</button></div><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint12">💡 Circumference: cm; Area: cm².</div></div><div class="question" id="q13"><p>Q13. A circle with larger diameter has larger circumference.</p><div><button class="opt-btn" onclick="selectTF(13,this,true)">✅ True</button><button class="opt-btn" onclick="selectTF(13,this,false)">❌ False</button></div><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint13">💡 C=πd; more d → more C.</div></div></div>
+  <div class="card"><h2>Section C — Fill in the Blank (2 marks)</h2><div class="question" id="q14"><p>Q14. Radius of circle with diameter 18 cm = ___ cm.</p><input class="fill-input" id="fill14" placeholder="Answer..."/><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint14">💡 r=18÷2=9 cm</div><input type="hidden" id="fillans14" value='["9"]'/></div><div class="question" id="q15"><p>Q15. Circumference of circle with r=7 cm (π=22/7) = ___ cm.</p><input class="fill-input" id="fill15" placeholder="Answer..."/><div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint15">💡 C=2×22/7×7=44 cm</div><input type="hidden" id="fillans15" value='["44"]'/></div></div>
+  <div class="card" style="border-left-color:#9C5700;">
+    <h2>Section D — Written Questions (10 marks | Parent-Marked)</h2>
+    <ol style="padding-left:20px;"><li style='margin-bottom:10px;'>A circular garden has radius 14 m. Find the area (π=22/7) and the cost of fencing at Rs. 250 per metre.</li><li style='margin-bottom:10px;'>A bicycle wheel has diameter 56 cm. How many complete revolutions does it make to travel 176 m? (π=22/7)</li></ol>
+  </div>
+  <button class="submit-btn" onclick="submitExam(false)">✅ Submit Paper</button>
+</div>
+<div class="results-screen" id="resultsScreen">
+  <div class="results-box">
+    <h2 style="text-align:center;color:#1F3864;margin-bottom:16px;">⭕ Results — Chapter 18 — Circles</h2>
+    <div class="score-circle" id="resultsCircle"><span id="resultScore">0</span><small>/ 15</small></div>
+    <p id="resultPct" style="text-align:center;font-size:16px;font-weight:bold;margin-bottom:8px;"></p>
+    <p id="resultMsg" style="text-align:center;font-size:13px;color:#555;margin-bottom:20px;"></p>
+    <h3 style="font-size:14px;color:#1F3864;margin-bottom:10px;">Question Review:</h3>
+    <div id="reviewList"></div>
+    <div class="wa-box" style="margin-top:20px;"><strong>📱 WhatsApp for Amma/Thaththa:</strong><pre id="waMsg"></pre></div>
+    <div style="text-align:center;margin-top:20px;">
+      <a class="nav-btn" href="../Short_Notes/Ch18_Circles_Notes.html">📖 Notes</a>
+      <a class="nav-btn" href="../Practice_Papers/Ch18_Circles_PracticeA.html" style="background:#375623;">✏️ Practice</a>
+      <a class="nav-btn" href="../../SHEYVON_DASHBOARD.html" style="background:#555;">🏠 Dashboard</a>
+    </div>
+  </div>
+</div>
+<script>
+let secondsLeft=20*60,timerInterval=null;
+const answers={};
+function startExam(){
+  document.getElementById('startScreen').style.display='none';
+  document.getElementById('examScreen').style.display='block';
+  timerInterval=setInterval(tick,1000);
+  document.querySelectorAll('[id^="hint"]').forEach(h=>h.style.display='none');
+}
+function tick(){
+  secondsLeft--;
+  const m=Math.floor(secondsLeft/60).toString().padStart(2,'0');
+  const s=(secondsLeft%60).toString().padStart(2,'0');
+  const td=document.getElementById('timerDisplay');
+  td.textContent=m+':'+s;
+  if(secondsLeft<=120)td.className='timer-display danger';
+  else if(secondsLeft<=300)td.className='timer-display warning';
+  if(secondsLeft<=0)submitExam(true);
+}
+function selectMCQ(qid,btn,isCorrect){
+  document.getElementById('q'+qid).querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');answers[qid]=isCorrect;
+}
+function selectTF(qid,btn,isCorrect){selectMCQ(qid,btn,isCorrect);}
+function submitExam(auto){
+  clearInterval(timerInterval);
+  const fillIds=[14, 15];
+  fillIds.forEach(i=>{
+    const inp=document.getElementById('fill'+i);
+    const raw=document.getElementById('fillans'+i).value;
+    const accepted=JSON.parse(raw);
+    const val=inp?inp.value.trim().toLowerCase():'';
+    answers[i]=accepted.map(a=>a.toLowerCase()).includes(val);
+  });
+  let score=0;
+  for(let k in answers)if(answers[k])score++;
+  document.getElementById('examScreen').style.display='none';
+  const rs=document.getElementById('resultsScreen');rs.style.display='flex';
+  document.getElementById('resultScore').textContent=score;
+  const pct=Math.round(score/15*100);
+  document.getElementById('resultPct').textContent=pct+'%';
+  const circle=document.getElementById('resultsCircle');const msg=document.getElementById('resultMsg');
+  if(pct>=75){circle.className='score-circle pass';msg.textContent='Excellent! 🎉';}
+  else if(pct>=50){circle.className='score-circle warn';msg.textContent='Good effort! Review notes. 📖';}
+  else{circle.className='score-circle fail';msg.textContent='Keep going! Read notes again. 💪';}
+  document.querySelectorAll('[id^="hint"]').forEach(h=>h.style.display='block');
+  const rl=document.getElementById('reviewList');
+  for(let k=1;k<=15;k++){const ok=answers[k];const div=document.createElement('div');div.className='review-item '+(ok?'ok':'bad');div.textContent=(ok?'✅':'❌')+' Q'+k;rl.appendChild(div);}
+  const date=new Date().toLocaleDateString('en-GB');
+  const status=pct>=75?'✅ Passed':'❌ Needs more practice';
+  document.getElementById('waMsg').textContent=`Hi! Sheyvon just completed:\n📚 Chapter 18 — Circles\n📅 `+date+`\n🎯 Score: `+score+`/15 (`+pct+`%)\n📝 Section D: Please mark out of 10\n`+status;
+}
+</script>
+</body>
+</html>

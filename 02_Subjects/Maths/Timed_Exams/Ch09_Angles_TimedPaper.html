@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timed Paper — Chapter 9 — Angles | Sheyvon's Maths</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; min-height: 100vh; }
+.start-screen, .results-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 20px; }
+.start-screen { background: linear-gradient(135deg, #1F3864, #2E75B6); }
+.start-box { background: white; color: #222; border-radius: 16px; padding: 40px; max-width: 500px; text-align: center; }
+.start-box h1 { font-size: 24px; color: #1F3864; margin-bottom: 12px; }
+.start-box p { font-size: 14px; color: #555; margin-bottom: 8px; }
+.start-btn { margin-top: 24px; padding: 16px 48px; background: #1F3864; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; }
+.exam-screen { display: none; max-width: 900px; margin: 0 auto; padding: 20px; }
+.timer-bar { position: sticky; top: 0; background: #1F3864; color: white; padding: 12px 24px; border-radius: 10px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+.timer-display { font-size: 28px; font-weight: bold; font-family: monospace; }
+.timer-display.warning { color: #FFD966; }
+.timer-display.danger { color: #FF6B6B; }
+.card { background: #fff; color: #222; border-radius: 12px; padding: 24px 28px; margin-bottom: 20px; border-left: 5px solid #2E75B6; }
+.card h2 { font-size: 15px; color: #1F3864; margin-bottom: 14px; }
+.question { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #ddd; }
+.question p { font-size: 14px; font-weight: bold; color: #1F3864; margin-bottom: 8px; }
+.opt-btn { padding: 8px 16px; border: 2px solid #BDD7EE; border-radius: 8px; background: white; cursor: pointer; font-size: 13px; margin: 4px; }
+.opt-btn.selected { background: #2E75B6; color: white; border-color: #1F3864; }
+.opt-btn.correct { background: #C6EFCE; border-color: #70AD47; color: #375623; }
+.opt-btn.wrong { background: #FFCCCC; border-color: #FF6B6B; color: #9C0006; }
+.fill-input { width: 200px; padding: 8px 12px; border: 2px solid #BDD7EE; border-radius: 8px; font-size: 13px; }
+.submit-btn { display: block; margin: 30px auto; padding: 14px 48px; background: #375623; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+.results-screen { display: none; background: #1F3864; }
+.results-box { background: white; color: #222; border-radius: 16px; padding: 40px; max-width: 700px; width: 100%; }
+.score-circle { width: 140px; height: 140px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 32px; font-weight: bold; }
+.score-circle.pass { background: #C6EFCE; color: #375623; border: 5px solid #70AD47; }
+.score-circle.warn { background: #FFEB9C; color: #9C5700; border: 5px solid #FFCD00; }
+.score-circle.fail { background: #FFCCCC; color: #9C0006; border: 5px solid #FF6B6B; }
+.review-item { padding: 8px 0; border-bottom: 1px solid #eee; font-size: 13px; }
+.review-item.ok { color: #375623; }
+.review-item.bad { color: #9C0006; }
+.wa-box { background: #E7F8EF; border: 1px solid #25D366; border-radius: 10px; padding: 16px; margin: 20px 0; font-size: 13px; }
+.wa-box pre { white-space: pre-wrap; font-family: inherit; color: #1a1a1a; }
+.nav-btn { display: inline-block; background: #1F3864; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: bold; margin: 6px; }
+</style>
+</head>
+<body>
+
+<div class="start-screen" id="startScreen">
+  <div class="start-box">
+    <h1>📐 Chapter 9 Timed Paper</h1>
+    <h2 style="font-size:16px;color:#2E75B6;margin-top:8px;">Chapter 9 — Angles</h2>
+    <p style="margin-top:16px;">⏱️ Time Limit: <strong>20 minutes</strong></p>
+    <p>📝 15 auto-marked questions + 2 bonus written questions</p>
+    <p>📊 Total marks: 25 (15 auto + 10 parent-marked)</p>
+    <p style="margin-top:12px;color:#888;">Once you start, the timer counts down. It will auto-submit at 0!</p>
+    <button class="start-btn" onclick="startExam()">▶ START EXAM</button>
+  </div>
+</div>
+
+<div class="exam-screen" id="examScreen">
+  <div class="timer-bar">
+    <span>📚 Chapter 9 — Angles</span>
+    <span class="timer-display" id="timerDisplay">20:00</span>
+    <span>Chapter 9</span>
+  </div>
+
+  <div class="card">
+    <h2>Section A — Multiple Choice (10 marks)</h2>
+    
+<div class="question" id="q1">
+  <p>Q1. Which is a reflex angle?</p>
+  <div><button class="opt-btn" id="q1_8" onclick="selectMCQ(1,this,false)">85°</button>
+<button class="opt-btn" id="q1_1" onclick="selectMCQ(1,this,false)">180°</button>
+<button class="opt-btn" id="q1_2" onclick="selectMCQ(1,this,true)">200°</button>
+<button class="opt-btn" id="q1_9" onclick="selectMCQ(1,this,false)">90°</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint1">💡 200° is between 180° and 360° — reflex.</div>
+</div>
+<div class="question" id="q2">
+  <p>Q2. Find x if angles on a line are 2x and x.</p>
+  <div><button class="opt-btn" id="q2_3" onclick="selectMCQ(2,this,false)">30°</button>
+<button class="opt-btn" id="q2_6" onclick="selectMCQ(2,this,true)">60°</button>
+<button class="opt-btn" id="q2_9" onclick="selectMCQ(2,this,false)">90°</button>
+<button class="opt-btn" id="q2_4" onclick="selectMCQ(2,this,false)">45°</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint2">💡 2x + x = 180; 3x = 180; x = 60.</div>
+</div>
+<div class="question" id="q3">
+  <p>Q3. Complement of 72° = ?</p>
+  <div><button class="opt-btn" id="q3_1" onclick="selectMCQ(3,this,false)">108°</button>
+<button class="opt-btn" id="q3_1" onclick="selectMCQ(3,this,true)">18°</button>
+<button class="opt-btn" id="q3_7" onclick="selectMCQ(3,this,false)">72°</button>
+<button class="opt-btn" id="q3_2" onclick="selectMCQ(3,this,false)">28°</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint3">💡 90 − 72 = 18°.</div>
+</div>
+<div class="question" id="q4">
+  <p>Q4. Vertically opposite to 55° = ?</p>
+  <div><button class="opt-btn" id="q4_1" onclick="selectMCQ(4,this,false)">125°</button>
+<button class="opt-btn" id="q4_5" onclick="selectMCQ(4,this,true)">55°</button>
+<button class="opt-btn" id="q4_3" onclick="selectMCQ(4,this,false)">35°</button>
+<button class="opt-btn" id="q4_9" onclick="selectMCQ(4,this,false)">90°</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint4">💡 Vertically opposite angles are equal.</div>
+</div>
+<div class="question" id="q5">
+  <p>Q5. Angles around a point: 90°, 90°, 120°, x. Find x.</p>
+  <div><button class="opt-btn" id="q5_6" onclick="selectMCQ(5,this,true)">60°</button>
+<button class="opt-btn" id="q5_1" onclick="selectMCQ(5,this,false)">150°</button>
+<button class="opt-btn" id="q5_9" onclick="selectMCQ(5,this,false)">90°</button>
+<button class="opt-btn" id="q5_3" onclick="selectMCQ(5,this,false)">30°</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint5">💡 90+90+120+x=360; x=60°.</div>
+</div>
+<div class="question" id="q6">
+  <p>Q6. Two supplementary angles are in ratio 2:1. Find the smaller angle.</p>
+  <div><button class="opt-btn" id="q6_1" onclick="selectMCQ(6,this,false)">120°</button>
+<button class="opt-btn" id="q6_6" onclick="selectMCQ(6,this,true)">60°</button>
+<button class="opt-btn" id="q6_3" onclick="selectMCQ(6,this,false)">30°</button>
+<button class="opt-btn" id="q6_9" onclick="selectMCQ(6,this,false)">90°</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint6">💡 2x+x=180; 3x=180; x=60°.</div>
+</div>
+<div class="question" id="q7">
+  <p>Q7. An acute angle is:</p>
+  <div><button class="opt-btn" id="q7_e" onclick="selectMCQ(7,this,false)">exactly 90°</button>
+<button class="opt-btn" id="q7_b" onclick="selectMCQ(7,this,true)">between 0° and 90°</button>
+<button class="opt-btn" id="q7_b" onclick="selectMCQ(7,this,false)">between 90° and 180°</button>
+<button class="opt-btn" id="q7_m" onclick="selectMCQ(7,this,false)">more than 180°</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint7">💡 Acute: 0° < angle < 90°.</div>
+</div>
+<div class="question" id="q8">
+  <p>Q8. If two angles are vertically opposite and one is 3y−10 and other is y+30, find y.</p>
+  <div><button class="opt-btn" id="q8_2" onclick="selectMCQ(8,this,true)">20</button>
+<button class="opt-btn" id="q8_1" onclick="selectMCQ(8,this,false)">10</button>
+<button class="opt-btn" id="q8_4" onclick="selectMCQ(8,this,false)">40</button>
+<button class="opt-btn" id="q8_3" onclick="selectMCQ(8,this,false)">30</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint8">💡 3y−10=y+30; 2y=40; y=20.</div>
+</div>
+<div class="question" id="q9">
+  <p>Q9. Angles on a straight line: 3a, 2a, a. Find a.</p>
+  <div><button class="opt-btn" id="q9_3" onclick="selectMCQ(9,this,true)">30°</button>
+<button class="opt-btn" id="q9_4" onclick="selectMCQ(9,this,false)">45°</button>
+<button class="opt-btn" id="q9_6" onclick="selectMCQ(9,this,false)">60°</button>
+<button class="opt-btn" id="q9_2" onclick="selectMCQ(9,this,false)">20°</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint9">💡 3a+2a+a=180; 6a=180; a=30.</div>
+</div>
+<div class="question" id="q10">
+  <p>Q10. Two complementary angles differ by 20°. The smaller is:</p>
+  <div><button class="opt-btn" id="q10_5" onclick="selectMCQ(10,this,false)">55°</button>
+<button class="opt-btn" id="q10_3" onclick="selectMCQ(10,this,true)">35°</button>
+<button class="opt-btn" id="q10_4" onclick="selectMCQ(10,this,false)">45°</button>
+<button class="opt-btn" id="q10_2" onclick="selectMCQ(10,this,false)">25°</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint10">💡 x+(x+20)=90; 2x=70; x=35.</div>
+</div>
+  </div>
+
+  <div class="card">
+    <h2>Section B — True or False (3 marks)</h2>
+    
+<div class="question" id="q11">
+  <p>Q11. The complement of 45° is also 45°.</p>
+  <div>
+    <button class="opt-btn" id="q11_T" onclick="selectTF(11,this,true)">✅ True</button>
+    <button class="opt-btn" id="q11_F" onclick="selectTF(11,this,false)">❌ False</button>
+  </div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint11">💡 90°−45°=45°. They are equal.</div>
+</div>
+<div class="question" id="q12">
+  <p>Q12. An obtuse angle can be 91°.</p>
+  <div>
+    <button class="opt-btn" id="q12_T" onclick="selectTF(12,this,true)">✅ True</button>
+    <button class="opt-btn" id="q12_F" onclick="selectTF(12,this,false)">❌ False</button>
+  </div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint12">💡 91° is between 90° and 180° — obtuse.</div>
+</div>
+<div class="question" id="q13">
+  <p>Q13. Angles at a point always add to 360°.</p>
+  <div>
+    <button class="opt-btn" id="q13_T" onclick="selectTF(13,this,true)">✅ True</button>
+    <button class="opt-btn" id="q13_F" onclick="selectTF(13,this,false)">❌ False</button>
+  </div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint13">💡 A full revolution = 360°.</div>
+</div>
+  </div>
+
+  <div class="card">
+    <h2>Section C — Fill in the Blank (2 marks)</h2>
+    
+<div class="question" id="q14">
+  <p>Q14. The supplement of 90° is ___°.</p>
+  <input class="fill-input" id="fill14" placeholder="Answer..." />
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint14">💡 180−90=90.</div>
+  <input type="hidden" id="fillans14" value='["90"]' />
+</div>
+<div class="question" id="q15">
+  <p>Q15. Vertically opposite to 143° is ___°.</p>
+  <input class="fill-input" id="fill15" placeholder="Answer..." />
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint15">💡 Vertically opposite angles are equal.</div>
+  <input type="hidden" id="fillans15" value='["143"]' />
+</div>
+  </div>
+
+  <div class="card" style="border-left-color:#9C5700;">
+    <h2>Section D — Written Questions (10 marks | Parent-Marked)</h2>
+    <p style="margin-bottom:12px;font-size:13px;color:#666;">Answer these on paper. Your parent will mark these after the exam.</p>
+    <ol style="padding-left:20px;">
+      <li style='margin-bottom:10px;'>Two angles on a straight line are in the ratio 3:7. Find both angles.</li>
+<li style='margin-bottom:10px;'>Three angles around a point are 2x°, 3x°, and 4x−30°. Find x and each angle.</li>
+
+    </ol>
+  </div>
+
+  <button class="submit-btn" onclick="submitExam(false)">✅ Submit Paper</button>
+</div>
+
+<div class="results-screen" id="resultsScreen">
+  <div class="results-box">
+    <h2 style="text-align:center;color:#1F3864;margin-bottom:16px;">📐 Results — Chapter 9 — Angles</h2>
+    <div class="score-circle" id="resultsCircle">
+      <span id="resultScore">0</span>
+      <small>/ 15</small>
+    </div>
+    <p id="resultPct" style="text-align:center;font-size:16px;font-weight:bold;margin-bottom:8px;"></p>
+    <p id="resultMsg" style="text-align:center;font-size:13px;color:#555;margin-bottom:20px;"></p>
+
+    <h3 style="font-size:14px;color:#1F3864;margin-bottom:10px;">Question Review:</h3>
+    <div id="reviewList"></div>
+
+    <div class="wa-box" style="margin-top:20px;">
+      <strong>📱 WhatsApp message for Amma/Thaththa:</strong>
+      <pre id="waMsg"></pre>
+    </div>
+
+    <div style="text-align:center;margin-top:20px;">
+      <a class="nav-btn" href="../Short_Notes/Ch09_Angles_Notes.html">📖 Review Notes</a>
+      <a class="nav-btn" href="../Practice_Papers/Ch09_Angles_PracticeA.html" style="background:#375623;">✏️ Practice Set A</a>
+      <a class="nav-btn" href="../../SHEYVON_DASHBOARD.html" style="background:#555;">🏠 Dashboard</a>
+    </div>
+  </div>
+</div>
+
+<script>
+let secondsLeft = 20 * 60;
+let timerInterval = null;
+let startTime = null;
+const answers = {};
+const correctMap = {};
+
+function startExam() {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examScreen').style.display = 'block';
+  startTime = new Date();
+  timerInterval = setInterval(tick, 1000);
+  // hide hints during exam
+  document.querySelectorAll('[id^="hint"]').forEach(h => h.style.display='none');
+}
+
+function tick() {
+  secondsLeft--;
+  const m = Math.floor(secondsLeft/60).toString().padStart(2,'0');
+  const s = (secondsLeft%60).toString().padStart(2,'0');
+  const td = document.getElementById('timerDisplay');
+  td.textContent = m+':'+s;
+  if(secondsLeft <= 120) td.className='timer-display danger';
+  else if(secondsLeft <= 300) td.className='timer-display warning';
+  if(secondsLeft <= 0) submitExam(true);
+}
+
+function selectMCQ(qid, btn, isCorrect) {
+  const q = document.getElementById('q'+qid);
+  q.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[qid] = isCorrect;
+}
+
+function selectTF(qid, btn, isCorrect) { selectMCQ(qid, btn, isCorrect); }
+
+function submitExam(auto) {
+  clearInterval(timerInterval);
+  // grade fill
+  const fillIds = [14, 15];
+  fillIds.forEach(i => {
+    const inp = document.getElementById('fill'+i);
+    const raw = document.getElementById('fillans'+i).value;
+    const accepted = JSON.parse(raw);
+    const val = inp ? inp.value.trim().toLowerCase() : '';
+    answers[i] = accepted.map(a=>a.toLowerCase()).includes(val);
+  });
+
+  // calculate score
+  let score = 0;
+  for(let k in answers) if(answers[k]) score++;
+
+  // show results
+  document.getElementById('examScreen').style.display='none';
+  const rs = document.getElementById('resultsScreen');
+  rs.style.display='flex';
+
+  document.getElementById('resultScore').textContent = score;
+  const pct = Math.round(score/15*100);
+  document.getElementById('resultPct').textContent = pct+'%';
+  const circle = document.getElementById('resultsCircle');
+  const msg = document.getElementById('resultMsg');
+  if(pct>=75){ circle.className='score-circle pass'; msg.textContent='Excellent! 🎉 Well done Sheyvon!'; }
+  else if(pct>=50){ circle.className='score-circle warn'; msg.textContent='Good effort! Review your notes and try again. 📖'; }
+  else{ circle.className='score-circle fail'; msg.textContent='Keep going! Read the notes again carefully. 💪'; }
+
+  // show hints
+  document.querySelectorAll('[id^="hint"]').forEach(h => h.style.display='block');
+
+  // review
+  const rl = document.getElementById('reviewList');
+  for(let k=1; k<=15; k++) {
+    const ok = answers[k];
+    const div = document.createElement('div');
+    div.className = 'review-item '+(ok?'ok':'bad');
+    div.textContent = (ok?'✅':'❌')+' Q'+k;
+    rl.appendChild(div);
+  }
+
+  // WhatsApp
+  const date = new Date().toLocaleDateString('en-GB');
+  const status = pct>=75?'✅ Passed':'❌ Needs more practice';
+  document.getElementById('waMsg').textContent =
+    `Hi! Sheyvon just completed:\n📚 Chapter 9 — Angles\n📅 `+date+`\n🎯 Auto-marked: `+score+`/15 (`+pct+`%)\n📝 Section D (written): Please mark out of 10\n`+status;
+}
+</script>
+</body>
+</html>

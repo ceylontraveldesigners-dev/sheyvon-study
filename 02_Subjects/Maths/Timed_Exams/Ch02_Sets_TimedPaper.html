@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timed Paper — Chapter 2 — Sets | Sheyvon's Maths</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; min-height: 100vh; }
+.start-screen, .results-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 20px; }
+.start-screen { background: linear-gradient(135deg, #1F3864, #2E75B6); }
+.start-box { background: white; color: #222; border-radius: 16px; padding: 40px; max-width: 500px; text-align: center; }
+.start-box h1 { font-size: 24px; color: #1F3864; margin-bottom: 12px; }
+.start-box p { font-size: 14px; color: #555; margin-bottom: 8px; }
+.start-btn { margin-top: 24px; padding: 16px 48px; background: #1F3864; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; }
+.exam-screen { display: none; max-width: 900px; margin: 0 auto; padding: 20px; }
+.timer-bar { position: sticky; top: 0; background: #1F3864; color: white; padding: 12px 24px; border-radius: 10px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+.timer-display { font-size: 28px; font-weight: bold; font-family: monospace; }
+.timer-display.warning { color: #FFD966; }
+.timer-display.danger { color: #FF6B6B; }
+.card { background: #fff; color: #222; border-radius: 12px; padding: 24px 28px; margin-bottom: 20px; border-left: 5px solid #2E75B6; }
+.card h2 { font-size: 15px; color: #1F3864; margin-bottom: 14px; }
+.question { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #ddd; }
+.question p { font-size: 14px; font-weight: bold; color: #1F3864; margin-bottom: 8px; }
+.opt-btn { padding: 8px 16px; border: 2px solid #BDD7EE; border-radius: 8px; background: white; cursor: pointer; font-size: 13px; margin: 4px; }
+.opt-btn.selected { background: #2E75B6; color: white; border-color: #1F3864; }
+.opt-btn.correct { background: #C6EFCE; border-color: #70AD47; color: #375623; }
+.opt-btn.wrong { background: #FFCCCC; border-color: #FF6B6B; color: #9C0006; }
+.fill-input { width: 200px; padding: 8px 12px; border: 2px solid #BDD7EE; border-radius: 8px; font-size: 13px; }
+.submit-btn { display: block; margin: 30px auto; padding: 14px 48px; background: #375623; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+.results-screen { display: none; background: #1F3864; }
+.results-box { background: white; color: #222; border-radius: 16px; padding: 40px; max-width: 700px; width: 100%; }
+.score-circle { width: 140px; height: 140px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 32px; font-weight: bold; }
+.score-circle.pass { background: #C6EFCE; color: #375623; border: 5px solid #70AD47; }
+.score-circle.warn { background: #FFEB9C; color: #9C5700; border: 5px solid #FFCD00; }
+.score-circle.fail { background: #FFCCCC; color: #9C0006; border: 5px solid #FF6B6B; }
+.review-item { padding: 8px 0; border-bottom: 1px solid #eee; font-size: 13px; }
+.review-item.ok { color: #375623; }
+.review-item.bad { color: #9C0006; }
+.wa-box { background: #E7F8EF; border: 1px solid #25D366; border-radius: 10px; padding: 16px; margin: 20px 0; font-size: 13px; }
+.wa-box pre { white-space: pre-wrap; font-family: inherit; color: #1a1a1a; }
+.nav-btn { display: inline-block; background: #1F3864; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: bold; margin: 6px; }
+</style>
+</head>
+<body>
+
+<div class="start-screen" id="startScreen">
+  <div class="start-box">
+    <h1>🗂️ Chapter 2 Timed Paper</h1>
+    <h2 style="font-size:16px;color:#2E75B6;margin-top:8px;">Chapter 2 — Sets</h2>
+    <p style="margin-top:16px;">⏱️ Time Limit: <strong>20 minutes</strong></p>
+    <p>📝 15 auto-marked questions + 2 bonus written questions</p>
+    <p>📊 Total marks: 25 (15 auto + 10 parent-marked)</p>
+    <p style="margin-top:12px;color:#888;">Once you start, the timer counts down. It will auto-submit at 0!</p>
+    <button class="start-btn" onclick="startExam()">▶ START EXAM</button>
+  </div>
+</div>
+
+<div class="exam-screen" id="examScreen">
+  <div class="timer-bar">
+    <span>📚 Chapter 2 — Sets</span>
+    <span class="timer-display" id="timerDisplay">20:00</span>
+    <span>Chapter 2</span>
+  </div>
+
+  <div class="card">
+    <h2>Section A — Multiple Choice (10 marks)</h2>
+    
+<div class="question" id="q1">
+  <p>Q1. A = {vowels in 'MATHS'}. What is n(A)?</p>
+  <div><button class="opt-btn" id="q1_1" onclick="selectMCQ(1,this,true)">1</button>
+<button class="opt-btn" id="q1_2" onclick="selectMCQ(1,this,false)">2</button>
+<button class="opt-btn" id="q1_3" onclick="selectMCQ(1,this,false)">3</button>
+<button class="opt-btn" id="q1_4" onclick="selectMCQ(1,this,false)">4</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint1">💡 Only 'A' is a vowel in MATHS. n(A) = 1.</div>
+</div>
+<div class="question" id="q2">
+  <p>Q2. Which is NOT a valid set?</p>
+  <div><button class="opt-btn" id="q2_{" onclick="selectMCQ(2,this,false)">{1,2,3}</button>
+<button class="opt-btn" id="q2_{" onclick="selectMCQ(2,this,false)">{}</button>
+<button class="opt-btn" id="q2_1" onclick="selectMCQ(2,this,true)">1,2,3</button>
+<button class="opt-btn" id="q2_{" onclick="selectMCQ(2,this,false)">{∅}</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint2">💡 A set must use curly brackets.</div>
+</div>
+<div class="question" id="q3">
+  <p>Q3. If n(B) = 0, then B is:</p>
+  <div><button class="opt-btn" id="q3_A" onclick="selectMCQ(3,this,false)">A universal set</button>
+<button class="opt-btn" id="q3_A" onclick="selectMCQ(3,this,true)">An empty set</button>
+<button class="opt-btn" id="q3_A" onclick="selectMCQ(3,this,false)">A subset</button>
+<button class="opt-btn" id="q3_A" onclick="selectMCQ(3,this,false)">A full set</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint3">💡 n(B) = 0 means no elements — empty set.</div>
+</div>
+<div class="question" id="q4">
+  <p>Q4. 5 ∈ {1,3,5,7} means:</p>
+  <div><button class="opt-btn" id="q4_5" onclick="selectMCQ(4,this,false)">5 is NOT in the set</button>
+<button class="opt-btn" id="q4_5" onclick="selectMCQ(4,this,true)">5 is an element of the set</button>
+<button class="opt-btn" id="q4_T" onclick="selectMCQ(4,this,false)">The set has 5 elements</button>
+<button class="opt-btn" id="q4_5" onclick="selectMCQ(4,this,false)">5 equals the set</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint4">💡 ∈ means 'is an element of'.</div>
+</div>
+<div class="question" id="q5">
+  <p>Q5. A = {2,4,6}, B = {1,2,3,4,5,6}. Is A ⊆ B?</p>
+  <div><button class="opt-btn" id="q5_Y" onclick="selectMCQ(5,this,true)">Yes</button>
+<button class="opt-btn" id="q5_N" onclick="selectMCQ(5,this,false)">No</button>
+<button class="opt-btn" id="q5_O" onclick="selectMCQ(5,this,false)">Only if B ⊆ A</button>
+<button class="opt-btn" id="q5_C" onclick="selectMCQ(5,this,false)">Cannot tell</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint5">💡 2,4,6 all appear in B, so A ⊆ B.</div>
+</div>
+<div class="question" id="q6">
+  <p>Q6. Which set equals {a,b,c}?</p>
+  <div><button class="opt-btn" id="q6_{" onclick="selectMCQ(6,this,false)">{a,b,c,d}</button>
+<button class="opt-btn" id="q6_{" onclick="selectMCQ(6,this,true)">{c,b,a}</button>
+<button class="opt-btn" id="q6_{" onclick="selectMCQ(6,this,false)">{a,b}</button>
+<button class="opt-btn" id="q6_{" onclick="selectMCQ(6,this,false)">{a,a,b,c}</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint6">💡 Order doesn't matter: {c,b,a} = {a,b,c}.</div>
+</div>
+<div class="question" id="q7">
+  <p>Q7. n(∅) = ?</p>
+  <div><button class="opt-btn" id="q7_1" onclick="selectMCQ(7,this,false)">1</button>
+<button class="opt-btn" id="q7_∞" onclick="selectMCQ(7,this,false)">∞</button>
+<button class="opt-btn" id="q7_0" onclick="selectMCQ(7,this,true)">0</button>
+<button class="opt-btn" id="q7_−" onclick="selectMCQ(7,this,false)">−1</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint7">💡 The empty set has zero elements.</div>
+</div>
+<div class="question" id="q8">
+  <p>Q8. The set of odd numbers between 4 and 8 is:</p>
+  <div><button class="opt-btn" id="q8_{" onclick="selectMCQ(8,this,true)">{5,7}</button>
+<button class="opt-btn" id="q8_{" onclick="selectMCQ(8,this,false)">{4,6,8}</button>
+<button class="opt-btn" id="q8_{" onclick="selectMCQ(8,this,false)">{5,6,7}</button>
+<button class="opt-btn" id="q8_{" onclick="selectMCQ(8,this,false)">{4,5,6,7,8}</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint8">💡 Odd numbers between 4 and 8: 5 and 7.</div>
+</div>
+<div class="question" id="q9">
+  <p>Q9. If every element of P is in Q, then:</p>
+  <div><button class="opt-btn" id="q9_Q" onclick="selectMCQ(9,this,false)">Q ⊆ P</button>
+<button class="opt-btn" id="q9_P" onclick="selectMCQ(9,this,true)">P ⊆ Q</button>
+<button class="opt-btn" id="q9_P" onclick="selectMCQ(9,this,false)">P = Q</button>
+<button class="opt-btn" id="q9_n" onclick="selectMCQ(9,this,false)">n(P) = n(Q)</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint9">💡 P is a subset of Q means P ⊆ Q.</div>
+</div>
+<div class="question" id="q10">
+  <p>Q10. Which is the correct notation for '6 is NOT in set A'?</p>
+  <div><button class="opt-btn" id="q10_6" onclick="selectMCQ(10,this,false)">6 ∈ A</button>
+<button class="opt-btn" id="q10_6" onclick="selectMCQ(10,this,true)">6 ∉ A</button>
+<button class="opt-btn" id="q10_6" onclick="selectMCQ(10,this,false)">6 ⊆ A</button>
+<button class="opt-btn" id="q10_A" onclick="selectMCQ(10,this,false)">A ∉ 6</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint10">💡 ∉ means 'is not an element of'.</div>
+</div>
+  </div>
+
+  <div class="card">
+    <h2>Section B — True or False (3 marks)</h2>
+    
+<div class="question" id="q11">
+  <p>Q11. The set {Monday, Tuesday, Wednesday} has n = 3.</p>
+  <div>
+    <button class="opt-btn" id="q11_T" onclick="selectTF(11,this,true)">✅ True</button>
+    <button class="opt-btn" id="q11_F" onclick="selectTF(11,this,false)">❌ False</button>
+  </div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint11">💡 Three elements.</div>
+</div>
+<div class="question" id="q12">
+  <p>Q12. A set can contain repeated elements.</p>
+  <div>
+    <button class="opt-btn" id="q12_T" onclick="selectTF(12,this,false)">✅ True</button>
+    <button class="opt-btn" id="q12_F" onclick="selectTF(12,this,true)">❌ False</button>
+  </div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint12">💡 Each element appears only once.</div>
+</div>
+<div class="question" id="q13">
+  <p>Q13. {1,2} ⊆ {1,2,3,4}</p>
+  <div>
+    <button class="opt-btn" id="q13_T" onclick="selectTF(13,this,true)">✅ True</button>
+    <button class="opt-btn" id="q13_F" onclick="selectTF(13,this,false)">❌ False</button>
+  </div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint13">💡 Both 1 and 2 are in the larger set.</div>
+</div>
+  </div>
+
+  <div class="card">
+    <h2>Section C — Fill in the Blank (2 marks)</h2>
+    
+<div class="question" id="q14">
+  <p>Q14. The set of factors of 6 is {1, 2, 3, ___}.</p>
+  <input class="fill-input" id="fill14" placeholder="Answer..." />
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint14">💡 Factors of 6: 1, 2, 3, 6.</div>
+  <input type="hidden" id="fillans14" value='["6"]' />
+</div>
+<div class="question" id="q15">
+  <p>Q15. If A = {p, q, r}, then n(A) = ___.</p>
+  <input class="fill-input" id="fill15" placeholder="Answer..." />
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint15">💡 Three elements.</div>
+  <input type="hidden" id="fillans15" value='["3"]' />
+</div>
+  </div>
+
+  <div class="card" style="border-left-color:#9C5700;">
+    <h2>Section D — Written Questions (10 marks | Parent-Marked)</h2>
+    <p style="margin-bottom:12px;font-size:13px;color:#666;">Answer these on paper. Your parent will mark these after the exam.</p>
+    <ol style="padding-left:20px;">
+      <li style='margin-bottom:10px;'>List the set of prime numbers less than 20. How many elements does your set have?</li>
+<li style='margin-bottom:10px;'>A = {multiples of 3 less than 20}. Write set A and state n(A).</li>
+
+    </ol>
+  </div>
+
+  <button class="submit-btn" onclick="submitExam(false)">✅ Submit Paper</button>
+</div>
+
+<div class="results-screen" id="resultsScreen">
+  <div class="results-box">
+    <h2 style="text-align:center;color:#1F3864;margin-bottom:16px;">🗂️ Results — Chapter 2 — Sets</h2>
+    <div class="score-circle" id="resultsCircle">
+      <span id="resultScore">0</span>
+      <small>/ 15</small>
+    </div>
+    <p id="resultPct" style="text-align:center;font-size:16px;font-weight:bold;margin-bottom:8px;"></p>
+    <p id="resultMsg" style="text-align:center;font-size:13px;color:#555;margin-bottom:20px;"></p>
+
+    <h3 style="font-size:14px;color:#1F3864;margin-bottom:10px;">Question Review:</h3>
+    <div id="reviewList"></div>
+
+    <div class="wa-box" style="margin-top:20px;">
+      <strong>📱 WhatsApp message for Amma/Thaththa:</strong>
+      <pre id="waMsg"></pre>
+    </div>
+
+    <div style="text-align:center;margin-top:20px;">
+      <a class="nav-btn" href="../Short_Notes/Ch02_Sets_Notes.html">📖 Review Notes</a>
+      <a class="nav-btn" href="../Practice_Papers/Ch02_Sets_PracticeA.html" style="background:#375623;">✏️ Practice Set A</a>
+      <a class="nav-btn" href="../../SHEYVON_DASHBOARD.html" style="background:#555;">🏠 Dashboard</a>
+    </div>
+  </div>
+</div>
+
+<script>
+let secondsLeft = 20 * 60;
+let timerInterval = null;
+let startTime = null;
+const answers = {};
+const correctMap = {};
+
+function startExam() {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examScreen').style.display = 'block';
+  startTime = new Date();
+  timerInterval = setInterval(tick, 1000);
+  // hide hints during exam
+  document.querySelectorAll('[id^="hint"]').forEach(h => h.style.display='none');
+}
+
+function tick() {
+  secondsLeft--;
+  const m = Math.floor(secondsLeft/60).toString().padStart(2,'0');
+  const s = (secondsLeft%60).toString().padStart(2,'0');
+  const td = document.getElementById('timerDisplay');
+  td.textContent = m+':'+s;
+  if(secondsLeft <= 120) td.className='timer-display danger';
+  else if(secondsLeft <= 300) td.className='timer-display warning';
+  if(secondsLeft <= 0) submitExam(true);
+}
+
+function selectMCQ(qid, btn, isCorrect) {
+  const q = document.getElementById('q'+qid);
+  q.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[qid] = isCorrect;
+}
+
+function selectTF(qid, btn, isCorrect) { selectMCQ(qid, btn, isCorrect); }
+
+function submitExam(auto) {
+  clearInterval(timerInterval);
+  // grade fill
+  const fillIds = [14, 15];
+  fillIds.forEach(i => {
+    const inp = document.getElementById('fill'+i);
+    const raw = document.getElementById('fillans'+i).value;
+    const accepted = JSON.parse(raw);
+    const val = inp ? inp.value.trim().toLowerCase() : '';
+    answers[i] = accepted.map(a=>a.toLowerCase()).includes(val);
+  });
+
+  // calculate score
+  let score = 0;
+  for(let k in answers) if(answers[k]) score++;
+
+  // show results
+  document.getElementById('examScreen').style.display='none';
+  const rs = document.getElementById('resultsScreen');
+  rs.style.display='flex';
+
+  document.getElementById('resultScore').textContent = score;
+  const pct = Math.round(score/15*100);
+  document.getElementById('resultPct').textContent = pct+'%';
+  const circle = document.getElementById('resultsCircle');
+  const msg = document.getElementById('resultMsg');
+  if(pct>=75){ circle.className='score-circle pass'; msg.textContent='Excellent! 🎉 Well done Sheyvon!'; }
+  else if(pct>=50){ circle.className='score-circle warn'; msg.textContent='Good effort! Review your notes and try again. 📖'; }
+  else{ circle.className='score-circle fail'; msg.textContent='Keep going! Read the notes again carefully. 💪'; }
+
+  // show hints
+  document.querySelectorAll('[id^="hint"]').forEach(h => h.style.display='block');
+
+  // review
+  const rl = document.getElementById('reviewList');
+  for(let k=1; k<=15; k++) {
+    const ok = answers[k];
+    const div = document.createElement('div');
+    div.className = 'review-item '+(ok?'ok':'bad');
+    div.textContent = (ok?'✅':'❌')+' Q'+k;
+    rl.appendChild(div);
+  }
+
+  // WhatsApp
+  const date = new Date().toLocaleDateString('en-GB');
+  const status = pct>=75?'✅ Passed':'❌ Needs more practice';
+  document.getElementById('waMsg').textContent =
+    `Hi! Sheyvon just completed:\n📚 Chapter 2 — Sets\n📅 `+date+`\n🎯 Auto-marked: `+score+`/15 (`+pct+`%)\n📝 Section D (written): Please mark out of 10\n`+status;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 1 – Symmetry | Sheyvon's Maths Notes</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
+  .header { background: linear-gradient(135deg, #1F3864, #2E75B6); color: white; padding: 24px 32px; }
+  .header h1 { font-size: 22px; }
+  .header p  { font-size: 13px; opacity: 0.85; margin-top: 6px; }
+  .badge { display:inline-block; background:#FFD966; color:#7F4F00; border-radius:20px; padding:3px 12px; font-size:12px; font-weight:bold; margin-top:8px; }
+  .container { max-width: 860px; margin: 28px auto; padding: 0 20px 60px; }
+  .card { background: white; border-radius: 12px; padding: 24px 28px; margin-bottom: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-left: 5px solid #2E75B6; }
+  .card h2 { font-size: 16px; color: #1F3864; margin-bottom: 14px; display:flex; align-items:center; gap:8px; }
+  .card p, .card li { font-size: 14px; line-height: 1.7; color: #333; }
+  .card ul { padding-left: 20px; margin-top: 8px; }
+  .card li { margin-bottom: 6px; }
+  .definition { background: #EBF3FB; border-left: 4px solid #2E75B6; border-radius: 8px; padding: 14px 18px; margin: 12px 0; }
+  .definition strong { color: #1F3864; }
+  .remember { background: #FFF9E6; border-left: 4px solid #FFD966; border-radius: 8px; padding: 14px 18px; margin: 12px 0; }
+  .remember strong { color: #7F4F00; }
+  .mistake { background: #FFF0F0; border-left: 4px solid #FF6B6B; border-radius: 8px; padding: 14px 18px; margin: 12px 0; }
+  .mistake strong { color: #9C0006; }
+  .example-box { background: #F0FFF0; border: 1px solid #C6EFCE; border-radius: 8px; padding: 14px 18px; margin: 12px 0; }
+  .example-box strong { color: #375623; }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+  th { background: #1F3864; color: white; padding: 10px; text-align: left; }
+  td { padding: 9px 10px; border-bottom: 1px solid #eee; }
+  tr:nth-child(even) td { background: #F7F9FF; }
+  .sym-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-top: 14px; }
+  .sym-item { background: #F7F9FF; border: 1px solid #BDD7EE; border-radius: 8px; padding: 14px; text-align: center; }
+  .sym-item .shape { font-size: 32px; display: block; margin-bottom: 6px; }
+  .sym-item .name { font-weight: bold; font-size: 13px; color: #1F3864; }
+  .sym-item .axes { font-size: 12px; color: #2E75B6; margin-top: 4px; }
+  .steps { counter-reset: step; }
+  .steps li { counter-increment: step; list-style: none; padding-left: 32px; position: relative; margin-bottom: 10px; }
+  .steps li::before { content: counter(step); position: absolute; left: 0; top: 0; background: #2E75B6; color: white; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
+  .nav-btn { display: inline-block; background: #1F3864; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: bold; margin-top: 10px; }
+  .nav-btn:hover { background: #2E75B6; }
+  .progress-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .prog-item { background: #C6EFCE; color: #375623; border-radius: 6px; padding: 6px 14px; font-size: 12px; font-weight: bold; }
+  .prog-item.active { background: #1F3864; color: white; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📐 Chapter 1 — Symmetry</h1>
+  <p>Maths Grade 7 | Sri Lankan Syllabus | Short Notes for Revision</p>
+  <span class="badge">📖 Read this BEFORE doing Practice Set A</span>
+</div>
+
+<div class="container">
+
+  <div class="progress-bar">
+    <div class="prog-item active">📖 1. Short Notes</div>
+    <div class="prog-item">✏️ 2. Practice Set A</div>
+    <div class="prog-item">📝 3. Practice Set B</div>
+    <div class="prog-item">⏱️ 4. Timed Mini Paper</div>
+  </div>
+
+  <!-- WHAT IS SYMMETRY -->
+  <div class="card">
+    <h2>🔑 What is Bilateral Symmetry?</h2>
+    <div class="definition">
+      <strong>Bilateral Symmetry:</strong> A plane figure has bilateral symmetry if it can be folded along a straight line so that the two parts <em>exactly coincide</em> (fit perfectly on top of each other).
+    </div>
+    <div class="definition">
+      <strong>Axis of Symmetry:</strong> The straight line along which a bilaterally symmetric figure is folded is called an <em>axis of symmetry</em>. It is the fold line.
+    </div>
+    <p style="margin-top:10px;">Think of it like folding a piece of paper — if both halves match up perfectly, the fold line is the axis of symmetry.</p>
+  </div>
+
+  <!-- KEY RULES -->
+  <div class="card">
+    <h2>📌 Key Rules to Remember</h2>
+    <div class="remember">
+      <strong>✅ Rule 1:</strong> In a bilaterally symmetric figure, the two parts on either side of the axis of symmetry have the <em>same shape, same area, AND they coincide</em>.
+    </div>
+    <div class="mistake">
+      <strong>❌ Common Mistake:</strong> A line that divides a figure into two equal AREAS does NOT automatically make it an axis of symmetry. The two parts must also <em>coincide exactly</em> when folded.
+      <br><br>
+      <em>Example: A diagonal line through a rectangle divides it into two triangles of equal area — but they do NOT coincide. So the diagonal is NOT an axis of symmetry of the rectangle.</em>
+    </div>
+    <div class="remember">
+      <strong>✅ Rule 2:</strong> A figure can have more than one axis of symmetry. A square has 4, a circle has infinitely many!
+    </div>
+  </div>
+
+  <!-- AXES OF SYMMETRY TABLE -->
+  <div class="card">
+    <h2>📊 Number of Axes of Symmetry — Common Shapes</h2>
+    <div class="sym-grid">
+      <div class="sym-item">
+        <span class="shape">⬛</span>
+        <div class="name">Square</div>
+        <div class="axes">4 axes of symmetry</div>
+      </div>
+      <div class="sym-item">
+        <span class="shape">▬</span>
+        <div class="name">Rectangle</div>
+        <div class="axes">2 axes of symmetry</div>
+      </div>
+      <div class="sym-item">
+        <span class="shape">🔺</span>
+        <div class="name">Equilateral Triangle</div>
+        <div class="axes">3 axes of symmetry</div>
+      </div>
+      <div class="sym-item">
+        <span class="shape">🔺</span>
+        <div class="name">Isosceles Triangle</div>
+        <div class="axes">1 axis of symmetry</div>
+      </div>
+      <div class="sym-item">
+        <span class="shape">🔺</span>
+        <div class="name">Scalene Triangle</div>
+        <div class="axes">0 axes of symmetry</div>
+      </div>
+      <div class="sym-item">
+        <span class="shape">⭕</span>
+        <div class="name">Circle</div>
+        <div class="axes">Infinitely many axes</div>
+      </div>
+      <div class="sym-item">
+        <span class="shape">💎</span>
+        <div class="name">Rhombus</div>
+        <div class="axes">2 axes of symmetry</div>
+      </div>
+      <div class="sym-item">
+        <span class="shape">⬡</span>
+        <div class="name">Regular Hexagon</div>
+        <div class="axes">6 axes of symmetry</div>
+      </div>
+    </div>
+
+    <div class="remember" style="margin-top:16px;">
+      <strong>🧠 Memory Tip:</strong> For a <em>regular polygon</em>, the number of axes of symmetry = the number of sides.<br>
+      Square (4 sides) → 4 axes | Equilateral triangle (3 sides) → 3 axes | Regular pentagon (5 sides) → 5 axes
+    </div>
+  </div>
+
+  <!-- WORKED EXAMPLES -->
+  <div class="card">
+    <h2>✏️ Worked Examples</h2>
+
+    <div class="example-box">
+      <strong>Example 1:</strong> How many axes of symmetry does a regular pentagon have?<br><br>
+      A regular pentagon has 5 equal sides.<br>
+      Number of axes = number of sides = <strong>5 axes of symmetry</strong>.
+    </div>
+
+    <div class="example-box" style="margin-top:12px;">
+      <strong>Example 2:</strong> Does a rectangle have 4 axes of symmetry?<br><br>
+      No! A rectangle has only <strong>2 axes of symmetry</strong> — one horizontal (through the middle) and one vertical (through the middle).<br>
+      The diagonals of a rectangle do NOT create two coinciding halves, so they are NOT axes of symmetry.<br>
+      (A square DOES have 4 axes because its diagonals also create two coinciding halves.)
+    </div>
+
+    <div class="example-box" style="margin-top:12px;">
+      <strong>Example 3:</strong> A circle and a square — which has more axes of symmetry?<br><br>
+      A circle has <strong>infinitely many</strong> axes (any diameter is an axis).<br>
+      A square has only <strong>4</strong> axes.<br>
+      So a circle has more axes of symmetry than a square. ✅
+    </div>
+  </div>
+
+  <!-- DRAWING ON GRID -->
+  <div class="card">
+    <h2>📏 Drawing Symmetric Figures on a Grid</h2>
+    <p>When drawing the symmetric half of a figure on squared paper:</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li>Identify the axis of symmetry (the fold line).</li>
+      <li>For each vertex (corner point), count how many squares it is from the axis of symmetry.</li>
+      <li>Mark a new point the same number of squares on the OTHER side of the axis.</li>
+      <li>Connect the new points to complete the symmetric figure.</li>
+    </ul>
+    <div class="remember" style="margin-top:14px;">
+      <strong>Key Idea:</strong> Each point and its corresponding point are always the same distance from the axis of symmetry, on opposite sides, on a line perpendicular to the axis.
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="card" style="border-left-color:#375623;">
+    <h2>📋 Chapter Summary — Quick Facts</h2>
+    <table>
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td>Bilateral Symmetry</td><td>A figure that can be folded along a line so both halves coincide exactly</td></tr>
+      <tr><td>Axis of Symmetry</td><td>The fold line along which the two halves coincide</td></tr>
+      <tr><td>Coincide</td><td>Fit perfectly on top of each other — same shape AND position</td></tr>
+      <tr><td>Equal Area ≠ Axis</td><td>Dividing into equal areas alone does NOT make an axis of symmetry</td></tr>
+      <tr><td>Square</td><td>4 axes of symmetry</td></tr>
+      <tr><td>Rectangle</td><td>2 axes of symmetry</td></tr>
+      <tr><td>Equilateral Triangle</td><td>3 axes of symmetry</td></tr>
+      <tr><td>Isosceles Triangle</td><td>1 axis of symmetry</td></tr>
+      <tr><td>Circle</td><td>Infinitely many axes</td></tr>
+      <tr><td>Regular polygon</td><td>Number of axes = number of sides</td></tr>
+    </table>
+  </div>
+
+  <div style="text-align:center; margin-top:30px;">
+    <a class="nav-btn" href="Ch01_Symmetry_PracticeA.html">✏️ Go to Practice Set A →</a>
+  </div>
+
+</div>
+</body>
+</html>
