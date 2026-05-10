@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch03 Generation of Electricity — Timed Paper</title>
+<style>
+body{font-family:'Segoe UI',sans-serif;margin:0;background:#e8f5e9;color:#1a1a1a}
+#start-screen,#exam-screen,#result-screen{max-width:760px;margin:0 auto;padding:20px}
+#start-screen{text-align:center;padding-top:60px}
+#start-screen h1{color:#1B5E20;font-size:2rem}
+#start-screen .info{background:#fff;border-radius:12px;padding:24px;margin:24px 0;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+#start-screen .info p{margin:8px 0;font-size:.95rem}
+#exam-screen{display:none}
+#result-screen{display:none;text-align:center}
+#timer-bar{position:sticky;top:0;background:#1B5E20;color:#fff;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;z-index:100;border-radius:8px;margin-bottom:20px}
+#timer{font-size:1.4rem;font-weight:700}
+.qblock{background:#fff;border-radius:10px;padding:18px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,.07);border-left:4px solid #43A047}
+.qblock h3{margin:0 0 10px;color:#1B5E20;font-size:.93rem}
+label{display:block;margin:5px 0;font-size:.9rem;cursor:pointer}
+input[type=radio],input[type=checkbox]{margin-right:8px}
+input[type=text]{width:93%;padding:7px;border:1px solid #ccc;border-radius:6px;font-size:.9rem;margin-top:4px}
+.btn{background:#2E7D32;color:#fff;border:none;padding:12px 32px;border-radius:8px;cursor:pointer;font-size:1rem;margin:8px}
+.btn:hover{background:#1B5E20}
+.score-big{font-size:3rem;font-weight:700;color:#1B5E20}
+.result-card{background:#fff;border-radius:12px;padding:24px;margin:16px 0;box-shadow:0 2px 8px rgba(0,0,0,.1);text-align:left}
+.wa-box{background:#25D366;color:#fff;border-radius:10px;padding:16px;margin-top:16px;font-size:.88rem;white-space:pre-wrap;word-break:break-word}
+.warn{color:#e65100;font-weight:600}
+</style></head><body>
+<div id="start-screen">
+<h1>🔋 Ch03: Generation of Electricity</h1>
+<h2>⏱ Timed Paper — 20 Minutes</h2>
+<div class="info">
+<p>📝 <strong>Section A:</strong> 10 MCQ questions</p>
+<p>✅ <strong>Section B:</strong> 3 True/False questions</p>
+<p>✏️ <strong>Section C:</strong> 2 Fill-in-the-blank questions</p>
+<p>📓 <strong>Section D:</strong> 2 written questions (marked by parent — 10 marks)</p>
+<p><strong>Total auto-marked: 15 marks | Parent-marked: 10 marks | Grand total: 25 marks</strong></p>
+<p class="warn">⚠️ Once you start, the 20-minute timer begins. Work quickly!</p>
+</div>
+<button class="btn" onclick="startExam()">🚀 Start Exam</button>
+<p><a href="../Short_Notes/Ch03_Generation_Electricity_Notes.html" style="color:#2E7D32">📖 Review Notes first</a></p>
+</div>
+<div id="exam-screen">
+<div id="timer-bar">
+<span>🔋 Ch03: Generation of Electricity</span>
+<span id="timer">20:00</span>
+</div>
+<h3 style="color:#1B5E20;margin:0 0 12px">Section A — Multiple Choice</h3>
+<div class="qblock"><h3>Q1. [1 mark] Which source of electricity is renewable?</h3><label><input type="radio" name="m0" value="0"> Coal</label><label><input type="radio" name="m0" value="1"> Oil</label><label><input type="radio" name="m0" value="2"> Solar</label><label><input type="radio" name="m0" value="3"> Natural gas</label></div><div class="qblock"><h3>Q2. [1 mark] A torch uses which type of current?</h3><label><input type="radio" name="m1" value="0"> AC</label><label><input type="radio" name="m1" value="1"> DC</label><label><input type="radio" name="m1" value="2"> Static</label><label><input type="radio" name="m1" value="3"> Alternating</label></div><div class="qblock"><h3>Q3. [1 mark] What energy does a generator convert to electricity?</h3><label><input type="radio" name="m2" value="0"> Chemical</label><label><input type="radio" name="m2" value="1"> Light</label><label><input type="radio" name="m2" value="2"> Kinetic</label><label><input type="radio" name="m2" value="3"> Heat</label></div><div class="qblock"><h3>Q4. [1 mark] AC current is supplied by:</h3><label><input type="radio" name="m3" value="0"> Batteries</label><label><input type="radio" name="m3" value="1"> Torches</label><label><input type="radio" name="m3" value="2"> Mains electricity</label><label><input type="radio" name="m3" value="3"> Solar calculators</label></div><div class="qblock"><h3>Q5. [1 mark] Which component completes a circuit?</h3><label><input type="radio" name="m4" value="0"> An open switch</label><label><input type="radio" name="m4" value="1"> A broken wire</label><label><input type="radio" name="m4" value="2"> A complete path</label><label><input type="radio" name="m4" value="3"> An insulator</label></div><div class="qblock"><h3>Q6. [1 mark] Solar panels convert ______ energy to electrical energy.</h3><label><input type="radio" name="m5" value="0"> Heat</label><label><input type="radio" name="m5" value="1"> Light</label><label><input type="radio" name="m5" value="2"> Sound</label><label><input type="radio" name="m5" value="3"> Chemical</label></div><div class="qblock"><h3>Q7. [1 mark] Hydroelectric power uses:</h3><label><input type="radio" name="m6" value="0"> Wind</label><label><input type="radio" name="m6" value="1"> Sunlight</label><label><input type="radio" name="m6" value="2"> Moving water</label><label><input type="radio" name="m6" value="3"> Coal</label></div><div class="qblock"><h3>Q8. [1 mark] DC stands for:</h3><label><input type="radio" name="m7" value="0"> Direct Current</label><label><input type="radio" name="m7" value="1"> Dynamic Current</label><label><input type="radio" name="m7" value="2"> Dense Current</label><label><input type="radio" name="m7" value="3"> Dual Current</label></div><div class="qblock"><h3>Q9. [1 mark] A battery is a source of:</h3><label><input type="radio" name="m8" value="0"> AC electricity</label><label><input type="radio" name="m8" value="1"> DC electricity</label><label><input type="radio" name="m8" value="2"> Static electricity</label><label><input type="radio" name="m8" value="3"> Magnetic energy</label></div><div class="qblock"><h3>Q10. [1 mark] For a bulb to light up, the circuit must be:</h3><label><input type="radio" name="m9" value="0"> Open</label><label><input type="radio" name="m9" value="1"> Broken</label><label><input type="radio" name="m9" value="2"> Incomplete</label><label><input type="radio" name="m9" value="3"> Complete</label></div>
+<h3 style="color:#1B5E20;margin:16px 0 12px">Section B — True or False</h3>
+<div class="qblock"><h3>Q11. [1 mark] Wind turbines generate electricity from kinetic energy.</h3>
+<label><input type="radio" name="t0" value="true"> True</label>
+<label><input type="radio" name="t0" value="false"> False</label></div><div class="qblock"><h3>Q12. [1 mark] Batteries produce AC electricity.</h3>
+<label><input type="radio" name="t1" value="true"> True</label>
+<label><input type="radio" name="t1" value="false"> False</label></div><div class="qblock"><h3>Q13. [1 mark] A broken circuit will allow current to flow.</h3>
+<label><input type="radio" name="t2" value="true"> True</label>
+<label><input type="radio" name="t2" value="false"> False</label></div>
+<h3 style="color:#1B5E20;margin:16px 0 12px">Section C — Fill in the Blank</h3>
+<div class="qblock"><h3>Q14. [2 marks] Electricity produced by moving water is called ______ power.</h3><input type="text" id="fi0" placeholder="Type your answer..."></div><div class="qblock"><h3>Q15. [2 marks] Mains electricity in homes is ______ current.</h3><input type="text" id="fi1" placeholder="Type your answer..."></div>
+<h3 style="color:#e65100;margin:16px 0 12px">Section D — Written (Answer in notebook)</h3>
+<div class="qblock" style="border-left-color:#f9a825"><h3>Section D — Q1. [5 marks] List three sources of electricity and state the energy conversion for each.</h3><p style="color:#666;font-size:.85rem">✍️ Write your answer in your notebook. Parent will mark this.</p></div><div class="qblock" style="border-left-color:#f9a825"><h3>Section D — Q2. [5 marks] What is the difference between DC and AC? Give one example of each.</h3><p style="color:#666;font-size:.85rem">✍️ Write your answer in your notebook. Parent will mark this.</p></div>
+<div style="text-align:center;margin:24px 0">
+<button class="btn" onclick="submitExam()">📤 Submit Paper</button>
+</div>
+</div>
+<div id="result-screen">
+<h1>📊 Results</h1>
+<div class="result-card">
+<div class="score-big" id="auto-score"></div>
+<p id="auto-label"></p>
+<p id="pct-label"></p>
+</div>
+<div class="result-card">
+<h3>Section D — Written Questions (Parent to mark)</h3>
+<div class="qblock" style="border-left-color:#f9a825"><h3>Section D — Q1. [5 marks] List three sources of electricity and state the energy conversion for each.</h3><p style="color:#666;font-size:.85rem">✍️ Write your answer in your notebook. Parent will mark this.</p></div><div class="qblock" style="border-left-color:#f9a825"><h3>Section D — Q2. [5 marks] What is the difference between DC and AC? Give one example of each.</h3><p style="color:#666;font-size:.85rem">✍️ Write your answer in your notebook. Parent will mark this.</p></div>
+<p><strong>Section D: _____ / 10 marks (parent marks this)</strong></p>
+</div>
+<div class="wa-box" id="wa-msg"></div>
+<div style="margin-top:20px">
+<a href="../Short_Notes/Ch03_Generation_Electricity_Notes.html" class="btn" style="text-decoration:none">📖 Review Notes</a>
+<a href="../../SHEYVON_DASHBOARD.html" class="btn" style="text-decoration:none;background:#1B5E20">🏠 Dashboard</a>
+</div>
+</div>
+<script>
+const mAns=[2, 1, 2, 2, 2, 1, 2, 0, 1, 3], tAns=['true', 'false', 'false'], fAns=['hydroelectric|hydro', 'alternating|ac'], mMarks=[1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+let timeLeft=1200, timerInt=null;
+function startExam(){
+  document.getElementById('start-screen').style.display='none';
+  document.getElementById('exam-screen').style.display='block';
+  timerInt=setInterval(tick,1000);
+}
+function tick(){
+  timeLeft--;
+  const m=Math.floor(timeLeft/60), s=timeLeft%60;
+  const el=document.getElementById('timer');
+  el.textContent=m+':'+(s<10?'0':'')+s;
+  if(timeLeft<=120)el.style.color='#ff1744';
+  else if(timeLeft<=300)el.style.color='#ffeb3b';
+  if(timeLeft<=0){clearInterval(timerInt);submitExam();}
+}
+function submitExam(){
+  clearInterval(timerInt);
+  document.getElementById('exam-screen').style.display='none';
+  document.getElementById('result-screen').style.display='block';
+  let score=0, maxScore=0;
+  mAns.forEach((ans,i)=>{
+    const mk=mMarks[i]; maxScore+=mk;
+    const s=document.querySelector(`input[name=m${i}]:checked`);
+    if(s&&parseInt(s.value)===ans)score+=mk;
+  });
+  tAns.forEach((ans,i)=>{
+    maxScore+=1;
+    const s=document.querySelector(`input[name=t${i}]:checked`);
+    if(s&&s.value===ans)score+=1;
+  });
+  fAns.forEach((ans,i)=>{
+    maxScore+=2;
+    const v=document.getElementById(`fi${i}`).value.trim().toLowerCase();
+    if(v===ans||ans.split('|').includes(v))score+=2;
+  });
+  const pct=Math.round(score/maxScore*100);
+  document.getElementById('auto-score').textContent=score+'/'+maxScore;
+  document.getElementById('auto-label').textContent='Sections A+B+C (auto-marked)';
+  document.getElementById('pct-label').textContent=pct+'% — '+(pct>=80?'Excellent! 🎉':pct>=50?'Good effort! 📖':'Keep practising 💪');
+  const today=new Date().toLocaleDateString('en-GB');
+  document.getElementById('wa-msg').textContent=
+    '📋 *Sheyvon Maths Exam Result — '+today+'*\n'+
+    'Chapter: 03 — Generation of Electricity\n'+
+    'Auto-marked score: '+score+'/'+maxScore+' ('+pct+'%)\n'+
+    'Section D (written): ___/10\n'+
+    'Grand total: ___/25\n\n'+
+    '✍️ Please check and mark Section D in his notebook.';
+}
+</script></body></html>

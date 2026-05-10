@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch05 Acids and Bases — Practice Set A</title>
+<style>
+body{font-family:'Segoe UI',sans-serif;margin:0;background:#f0f7f0;color:#1a1a1a}
+header{background:#1B5E20;color:#fff;padding:18px 28px}
+header h1{margin:0;font-size:1.4rem}
+header p{margin:4px 0 0;opacity:.85;font-size:.88rem}
+main{max-width:760px;margin:24px auto;padding:0 20px}
+.qblock{background:#fff;border-radius:10px;padding:20px;margin-bottom:16px;box-shadow:0 2px 6px rgba(0,0,0,.08);border-left:4px solid #43A047}
+.qblock h3{margin:0 0 12px;color:#1B5E20;font-size:.95rem}
+label{display:block;margin:6px 0;cursor:pointer;font-size:.9rem}
+input[type=radio],input[type=checkbox]{margin-right:8px}
+input[type=text]{width:93%;padding:7px 10px;border:1px solid #ccc;border-radius:6px;font-size:.9rem;margin-top:4px}
+.btn{background:#2E7D32;color:#fff;border:none;padding:12px 30px;border-radius:8px;cursor:pointer;font-size:1rem;margin:6px}
+.btn:hover{background:#1B5E20}
+.fb{margin-top:8px;padding:8px 12px;border-radius:6px;font-size:.88rem;display:none}
+.correct{background:#e8f5e9;color:#1B5E20;border-left:3px solid #43A047}
+.wrong{background:#ffebee;color:#b71c1c;border-left:3px solid #e53935}
+.score-box{text-align:center;padding:28px;background:#fff;border-radius:12px;margin:20px 0;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.score-circle{width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:700;margin:0 auto 12px;color:#fff}
+</style></head><body>
+<header><h1>🧪 Ch05: Acids and Bases — Practice Set A</h1>
+<p>10 questions | No time limit | Check each answer as you go</p></header>
+<main>
+<p style="text-align:center"><a href="../Short_Notes/Ch05_Acids_Bases_Notes.html" style="color:#2E7D32">📖 Review Notes first</a></p>
+<div class="qblock" id="mq0"><h3>Q1. An acid has a pH:</h3><label><input type="radio" name="m0" value="0"> Greater than 7</label><label><input type="radio" name="m0" value="1"> Equal to 7</label><label><input type="radio" name="m0" value="2"> Less than 7</label><label><input type="radio" name="m0" value="3"> Equal to 14</label><div class="fb" id="mf0"></div></div><div class="qblock" id="mq1"><h3>Q2. Which indicator turns red in an acid?</h3><label><input type="radio" name="m1" value="0"> Red litmus</label><label><input type="radio" name="m1" value="1"> Blue litmus</label><label><input type="radio" name="m1" value="2"> Universal indicator</label><label><input type="radio" name="m1" value="3"> None</label><div class="fb" id="mf1"></div></div><div class="qblock" id="mq2"><h3>Q3. Pure water is:</h3><label><input type="radio" name="m2" value="0"> Acidic</label><label><input type="radio" name="m2" value="1"> Basic</label><label><input type="radio" name="m2" value="2"> Neutral</label><label><input type="radio" name="m2" value="3"> An indicator</label><div class="fb" id="mf2"></div></div><div class="qblock" id="mq3"><h3>Q4. Baking soda is a:</h3><label><input type="radio" name="m3" value="0"> Strong acid</label><label><input type="radio" name="m3" value="1"> Weak acid</label><label><input type="radio" name="m3" value="2"> Base</label><label><input type="radio" name="m3" value="3"> Neutral substance</label><div class="fb" id="mf3"></div></div><div class="qblock" id="mq4"><h3>Q5. Acid + Base produces:</h3><label><input type="radio" name="m4" value="0"> Gas + Water</label><label><input type="radio" name="m4" value="1"> Salt + Water</label><label><input type="radio" name="m4" value="2"> Acid + Salt</label><label><input type="radio" name="m4" value="3"> Base + Gas</label><div class="fb" id="mf4"></div></div><div class="qblock" id="tq0"><h3>Q6. Lemon juice is a base.</h3>
+<label><input type="radio" name="t0" value="true"> True</label>
+<label><input type="radio" name="t0" value="false"> False</label>
+<div class="fb" id="tf0"></div></div><div class="qblock" id="tq1"><h3>Q7. Bases turn blue litmus paper red.</h3>
+<label><input type="radio" name="t1" value="true"> True</label>
+<label><input type="radio" name="t1" value="false"> False</label>
+<div class="fb" id="tf1"></div></div><div class="qblock" id="tq2"><h3>Q8. The pH scale goes from 0 to 14.</h3>
+<label><input type="radio" name="t2" value="true"> True</label>
+<label><input type="radio" name="t2" value="false"> False</label>
+<div class="fb" id="tf2"></div></div><div class="qblock" id="fq0"><h3>Q9. A substance that shows whether something is an acid or base is called an ______.</h3><input type="text" id="fi0" placeholder="Type your answer..."><div class="fb" id="ff0"></div></div><div class="qblock" id="fq1"><h3>Q10. The reaction between an acid and a base is called ______.</h3><input type="text" id="fi1" placeholder="Type your answer..."><div class="fb" id="ff1"></div></div>
+<div style="text-align:center;margin:24px 0">
+<button class="btn" onclick="checkAll()">✅ Check All Answers</button>
+<button class="btn" onclick="showScore()">📊 Show Score</button>
+</div>
+<div id="score-area"></div>
+<p style="text-align:center;margin-top:20px">
+<a href="../Timed_Exams/Ch05_Acids_Bases_TimedPaper.html" style="background:#1B5E20;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none">⏱ Ready? Take the Timed Paper →</a></p>
+</main>
+<script>
+const mAns=[2, 1, 2, 2, 1], tAns=['false', 'false', 'true'], fAns=['indicator', 'neutralisation'];
+const mExp=['Acids have pH less than 7.', 'Blue litmus turns RED in the presence of an acid.', 'Pure water has pH 7 — it is neutral.', 'Baking soda (sodium bicarbonate) is a base with pH > 7.', 'Neutralisation: Acid + Base → Salt + Water.'], tExp=['Lemon juice is an ACID — it has pH about 2.', 'ACIDS turn blue litmus red. Bases turn red litmus BLUE.', 'The pH scale ranges from 0 (strongest acid) to 14 (strongest base).'], fExp=['Indicators like litmus paper change colour in acids and bases.', 'Neutralisation produces salt and water.'];
+let score=0, total=10;
+function checkMCQ(){
+  mAns.forEach((ans,i)=>{
+    const sel=document.querySelector(`input[name=m${i}]:checked`);
+    const fb=document.getElementById(`mf${i}`);
+    fb.style.display='block';
+    if(sel&&parseInt(sel.value)===ans){fb.className='fb correct';fb.textContent='✅ Correct! '+mExp[i];}
+    else{fb.className='fb wrong';fb.textContent='❌ Wrong. '+mExp[i];}
+  });
+}
+function checkTF(){
+  tAns.forEach((ans,i)=>{
+    const sel=document.querySelector(`input[name=t${i}]:checked`);
+    const fb=document.getElementById(`tf${i}`);
+    fb.style.display='block';
+    if(sel&&sel.value===ans){fb.className='fb correct';fb.textContent='✅ Correct! '+tExp[i];}
+    else{fb.className='fb wrong';fb.textContent='❌ Wrong. '+tExp[i];}
+  });
+}
+function checkFill(){
+  fAns.forEach((ans,i)=>{
+    const val=document.getElementById(`fi${i}`).value.trim().toLowerCase();
+    const fb=document.getElementById(`ff${i}`);
+    fb.style.display='block';
+    if(val===ans||ans.split('|').includes(val)){fb.className='fb correct';fb.textContent='✅ Correct! '+fExp[i];}
+    else{fb.className='fb wrong';fb.textContent='❌ Answer: '+ans+'. '+fExp[i];}
+  });
+}
+function checkAll(){checkMCQ();checkTF();checkFill();calcScore();}
+function calcScore(){
+  score=0;
+  mAns.forEach((ans,i)=>{const s=document.querySelector(`input[name=m${i}]:checked`);if(s&&parseInt(s.value)===ans)score++;});
+  tAns.forEach((ans,i)=>{const s=document.querySelector(`input[name=t${i}]:checked`);if(s&&s.value===ans)score++;});
+  fAns.forEach((ans,i)=>{const v=document.getElementById(`fi${i}`).value.trim().toLowerCase();if(v===ans||ans.split('|').includes(v))score++;});
+}
+function showScore(){
+  checkAll();
+  const pct=Math.round(score/total*100);
+  const col=pct>=80?'#2E7D32':pct>=50?'#f57c00':'#c62828';
+  const msg=pct>=80?'Excellent! Ready for the timed paper 🎉':pct>=50?'Good effort — review weak areas first 📖':'Keep studying — re-read the notes 💪';
+  document.getElementById('score-area').innerHTML=`<div class="score-box">
+<div class="score-circle" style="background:${col}">${score}/${total}</div>
+<h2>${pct}%</h2><p>${msg}</p></div>`;
+}
+</script></body></html>

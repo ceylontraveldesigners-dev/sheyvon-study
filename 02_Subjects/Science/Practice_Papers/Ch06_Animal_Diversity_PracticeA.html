@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch06 Animal Diversity — Practice Set A</title>
+<style>
+body{font-family:'Segoe UI',sans-serif;margin:0;background:#f0f7f0;color:#1a1a1a}
+header{background:#1B5E20;color:#fff;padding:18px 28px}
+header h1{margin:0;font-size:1.4rem}
+header p{margin:4px 0 0;opacity:.85;font-size:.88rem}
+main{max-width:760px;margin:24px auto;padding:0 20px}
+.qblock{background:#fff;border-radius:10px;padding:20px;margin-bottom:16px;box-shadow:0 2px 6px rgba(0,0,0,.08);border-left:4px solid #43A047}
+.qblock h3{margin:0 0 12px;color:#1B5E20;font-size:.95rem}
+label{display:block;margin:6px 0;cursor:pointer;font-size:.9rem}
+input[type=radio],input[type=checkbox]{margin-right:8px}
+input[type=text]{width:93%;padding:7px 10px;border:1px solid #ccc;border-radius:6px;font-size:.9rem;margin-top:4px}
+.btn{background:#2E7D32;color:#fff;border:none;padding:12px 30px;border-radius:8px;cursor:pointer;font-size:1rem;margin:6px}
+.btn:hover{background:#1B5E20}
+.fb{margin-top:8px;padding:8px 12px;border-radius:6px;font-size:.88rem;display:none}
+.correct{background:#e8f5e9;color:#1B5E20;border-left:3px solid #43A047}
+.wrong{background:#ffebee;color:#b71c1c;border-left:3px solid #e53935}
+.score-box{text-align:center;padding:28px;background:#fff;border-radius:12px;margin:20px 0;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.score-circle{width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:700;margin:0 auto 12px;color:#fff}
+</style></head><body>
+<header><h1>🐠 Ch06: Animal Diversity — Practice Set A</h1>
+<p>10 questions | No time limit | Check each answer as you go</p></header>
+<main>
+<p style="text-align:center"><a href="../Short_Notes/Ch06_Animal_Diversity_Notes.html" style="color:#2E7D32">📖 Review Notes first</a></p>
+<div class="qblock" id="mq0"><h3>Q1. Which animal is a mammal?</h3><label><input type="radio" name="m0" value="0"> Frog</label><label><input type="radio" name="m0" value="1"> Lizard</label><label><input type="radio" name="m0" value="2"> Bat</label><label><input type="radio" name="m0" value="3"> Eagle</label><div class="fb" id="mf0"></div></div><div class="qblock" id="mq1"><h3>Q2. Fish breathe using:</h3><label><input type="radio" name="m1" value="0"> Lungs</label><label><input type="radio" name="m1" value="1"> Skin</label><label><input type="radio" name="m1" value="2"> Gills</label><label><input type="radio" name="m1" value="3"> Nostrils</label><div class="fb" id="mf1"></div></div><div class="qblock" id="mq2"><h3>Q3. Which is a cold-blooded animal?</h3><label><input type="radio" name="m2" value="0"> Dog</label><label><input type="radio" name="m2" value="1"> Whale</label><label><input type="radio" name="m2" value="2"> Eagle</label><label><input type="radio" name="m2" value="3"> Crocodile</label><div class="fb" id="mf2"></div></div><div class="qblock" id="mq3"><h3>Q4. Amphibians can live in:</h3><label><input type="radio" name="m3" value="0"> Only water</label><label><input type="radio" name="m3" value="1"> Only land</label><label><input type="radio" name="m3" value="2"> Both water and land</label><label><input type="radio" name="m3" value="3"> Only trees</label><div class="fb" id="mf3"></div></div><div class="qblock" id="mq4"><h3>Q5. Which animal has feathers?</h3><label><input type="radio" name="m4" value="0"> Bat</label><label><input type="radio" name="m4" value="1"> Lizard</label><label><input type="radio" name="m4" value="2"> Penguin</label><label><input type="radio" name="m4" value="3"> Whale</label><div class="fb" id="mf4"></div></div><div class="qblock" id="tq0"><h3>Q6. All vertebrates have a backbone.</h3>
+<label><input type="radio" name="t0" value="true"> True</label>
+<label><input type="radio" name="t0" value="false"> False</label>
+<div class="fb" id="tf0"></div></div><div class="qblock" id="tq1"><h3>Q7. Reptiles are warm-blooded animals.</h3>
+<label><input type="radio" name="t1" value="true"> True</label>
+<label><input type="radio" name="t1" value="false"> False</label>
+<div class="fb" id="tf1"></div></div><div class="qblock" id="tq2"><h3>Q8. Whales are fish because they live in water.</h3>
+<label><input type="radio" name="t2" value="true"> True</label>
+<label><input type="radio" name="t2" value="false"> False</label>
+<div class="fb" id="tf2"></div></div><div class="qblock" id="fq0"><h3>Q9. Animals without a backbone are called ______.</h3><input type="text" id="fi0" placeholder="Type your answer..."><div class="fb" id="ff0"></div></div><div class="qblock" id="fq1"><h3>Q10. Warm-blooded animals that have feathers and lay eggs are called ______.</h3><input type="text" id="fi1" placeholder="Type your answer..."><div class="fb" id="ff1"></div></div>
+<div style="text-align:center;margin:24px 0">
+<button class="btn" onclick="checkAll()">✅ Check All Answers</button>
+<button class="btn" onclick="showScore()">📊 Show Score</button>
+</div>
+<div id="score-area"></div>
+<p style="text-align:center;margin-top:20px">
+<a href="../Timed_Exams/Ch06_Animal_Diversity_TimedPaper.html" style="background:#1B5E20;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none">⏱ Ready? Take the Timed Paper →</a></p>
+</main>
+<script>
+const mAns=[2, 2, 3, 2, 2], tAns=['true', 'false', 'false'], fAns=['invertebrates', 'birds'];
+const mExp=['Bats are mammals — warm-blooded, have fur, and suckle young with milk.', 'Fish use gills to extract oxygen from water.', 'Crocodiles are reptiles — cold-blooded, their body temperature matches surroundings.', 'Amphibians live both in water and on land.', 'Penguins are birds — all birds have feathers.'], tExp=['Vertebrates are defined by having a vertebral column (backbone).', 'Reptiles are COLD-blooded — their temperature varies with surroundings.', 'Whales are MAMMALS — warm-blooded, breathe air, and suckle young.'], fExp=['Invertebrates lack a vertebral column (backbone).', 'Birds are the only warm-blooded animals with feathers.'];
+let score=0, total=10;
+function checkMCQ(){
+  mAns.forEach((ans,i)=>{
+    const sel=document.querySelector(`input[name=m${i}]:checked`);
+    const fb=document.getElementById(`mf${i}`);
+    fb.style.display='block';
+    if(sel&&parseInt(sel.value)===ans){fb.className='fb correct';fb.textContent='✅ Correct! '+mExp[i];}
+    else{fb.className='fb wrong';fb.textContent='❌ Wrong. '+mExp[i];}
+  });
+}
+function checkTF(){
+  tAns.forEach((ans,i)=>{
+    const sel=document.querySelector(`input[name=t${i}]:checked`);
+    const fb=document.getElementById(`tf${i}`);
+    fb.style.display='block';
+    if(sel&&sel.value===ans){fb.className='fb correct';fb.textContent='✅ Correct! '+tExp[i];}
+    else{fb.className='fb wrong';fb.textContent='❌ Wrong. '+tExp[i];}
+  });
+}
+function checkFill(){
+  fAns.forEach((ans,i)=>{
+    const val=document.getElementById(`fi${i}`).value.trim().toLowerCase();
+    const fb=document.getElementById(`ff${i}`);
+    fb.style.display='block';
+    if(val===ans||ans.split('|').includes(val)){fb.className='fb correct';fb.textContent='✅ Correct! '+fExp[i];}
+    else{fb.className='fb wrong';fb.textContent='❌ Answer: '+ans+'. '+fExp[i];}
+  });
+}
+function checkAll(){checkMCQ();checkTF();checkFill();calcScore();}
+function calcScore(){
+  score=0;
+  mAns.forEach((ans,i)=>{const s=document.querySelector(`input[name=m${i}]:checked`);if(s&&parseInt(s.value)===ans)score++;});
+  tAns.forEach((ans,i)=>{const s=document.querySelector(`input[name=t${i}]:checked`);if(s&&s.value===ans)score++;});
+  fAns.forEach((ans,i)=>{const v=document.getElementById(`fi${i}`).value.trim().toLowerCase();if(v===ans||ans.split('|').includes(v))score++;});
+}
+function showScore(){
+  checkAll();
+  const pct=Math.round(score/total*100);
+  const col=pct>=80?'#2E7D32':pct>=50?'#f57c00':'#c62828';
+  const msg=pct>=80?'Excellent! Ready for the timed paper 🎉':pct>=50?'Good effort — review weak areas first 📖':'Keep studying — re-read the notes 💪';
+  document.getElementById('score-area').innerHTML=`<div class="score-box">
+<div class="score-circle" style="background:${col}">${score}/${total}</div>
+<h2>${pct}%</h2><p>${msg}</p></div>`;
+}
+</script></body></html>
