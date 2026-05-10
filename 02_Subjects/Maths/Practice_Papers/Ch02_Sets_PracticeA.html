@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Practice Set A — Chapter 2 — Sets | Sheyvon's Maths</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
+.header { background: linear-gradient(135deg, #375623, #70AD47); color: white; padding: 24px 32px; }
+.header h1 { font-size: 22px; }
+.header p { font-size: 13px; opacity: 0.85; margin-top: 6px; }
+.container { max-width: 860px; margin: 28px auto; padding: 0 20px 60px; }
+.card { background: white; border-radius: 12px; padding: 24px 28px; margin-bottom: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-left: 5px solid #70AD47; }
+.card h2 { font-size: 16px; color: #375623; margin-bottom: 16px; }
+.question { margin-bottom: 22px; padding-bottom: 22px; border-bottom: 1px solid #eee; }
+.question p { font-size: 14px; font-weight: bold; color: #1F3864; margin-bottom: 10px; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt-btn { padding: 8px 16px; border: 2px solid #BDD7EE; border-radius: 8px; background: white; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+.opt-btn:hover { background: #EBF3FB; }
+.opt-btn.correct { background: #C6EFCE; border-color: #70AD47; color: #375623; font-weight: bold; }
+.opt-btn.wrong { background: #FFCCCC; border-color: #FF6B6B; color: #9C0006; }
+.opt-btn:disabled { cursor: default; }
+.fill-input { width: 200px; padding: 8px 12px; border: 2px solid #BDD7EE; border-radius: 8px; font-size: 13px; }
+.fill-input.correct { border-color: #70AD47; background: #C6EFCE; }
+.fill-input.wrong { border-color: #FF6B6B; background: #FFCCCC; }
+.check-btn { padding: 8px 18px; background: #1F3864; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 13px; margin-left: 8px; }
+.feedback { font-size: 12px; margin-top: 6px; padding: 6px 10px; border-radius: 6px; display: none; }
+.feedback.show { display: block; }
+.feedback.ok { background: #C6EFCE; color: #375623; }
+.feedback.bad { background: #FFCCCC; color: #9C0006; }
+.score-circle { width: 120px; height: 120px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px auto; font-size: 28px; font-weight: bold; }
+.score-circle.pass { background: #C6EFCE; color: #375623; border: 4px solid #70AD47; }
+.score-circle.warn { background: #FFEB9C; color: #9C5700; border: 4px solid #FFCD00; }
+.score-circle.fail { background: #FFCCCC; color: #9C0006; border: 4px solid #FF6B6B; }
+.nav-btn { display: inline-block; background: #1F3864; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: bold; margin: 6px; }
+.submit-btn { display: block; margin: 30px auto 0; padding: 14px 40px; background: #375623; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🗂️ Chapter 2 — Sets — Practice Set A</h1>
+  <p>No time limit | Try each question before checking | 10 questions</p>
+</div>
+<div class="container">
+  <div class="card">
+    <h2>📝 Section A — Multiple Choice (5 questions)</h2>
+    
+<div class="question" id="q1">
+  <p>Q1. Which shows a correct set?</p>
+  <div class="btn-row"><button class="opt-btn" onclick="checkMCQ(1,this,false)">A = {1, 1, 2}</button>
+<button class="opt-btn" onclick="checkMCQ(1,this,true)">B = {2, 4, 6}</button>
+<button class="opt-btn" onclick="checkMCQ(1,this,false)">C = {}</button>
+<button class="opt-btn" onclick="checkMCQ(1,this,false)">D = 3,5,7</button>
+</div>
+  <div class="feedback" id="fb1">💡 A set lists each element once in curly brackets.</div>
+</div>
+<div class="question" id="q2">
+  <p>Q2. What is n({a, b, c, d})?</p>
+  <div class="btn-row"><button class="opt-btn" onclick="checkMCQ(2,this,false)">3</button>
+<button class="opt-btn" onclick="checkMCQ(2,this,true)">4</button>
+<button class="opt-btn" onclick="checkMCQ(2,this,false)">5</button>
+<button class="opt-btn" onclick="checkMCQ(2,this,false)">2</button>
+</div>
+  <div class="feedback" id="fb2">💡 Count the elements: a, b, c, d = 4 elements.</div>
+</div>
+<div class="question" id="q3">
+  <p>Q3. Which symbol means 'is an element of'?</p>
+  <div class="btn-row"><button class="opt-btn" onclick="checkMCQ(3,this,false)">⊆</button>
+<button class="opt-btn" onclick="checkMCQ(3,this,false)">∅</button>
+<button class="opt-btn" onclick="checkMCQ(3,this,true)">∈</button>
+<button class="opt-btn" onclick="checkMCQ(3,this,false)">n</button>
+</div>
+  <div class="feedback" id="fb3">💡 ∈ means 'is an element of'.</div>
+</div>
+<div class="question" id="q4">
+  <p>Q4. The empty set is written as:</p>
+  <div class="btn-row"><button class="opt-btn" onclick="checkMCQ(4,this,false)">{0}</button>
+<button class="opt-btn" onclick="checkMCQ(4,this,true)">∅</button>
+<button class="opt-btn" onclick="checkMCQ(4,this,false)">{∅}</button>
+<button class="opt-btn" onclick="checkMCQ(4,this,false)">{1}</button>
+</div>
+  <div class="feedback" id="fb4">💡 The empty set is ∅ or {}, NOT {0}.</div>
+</div>
+<div class="question" id="q5">
+  <p>Q5. If A = {1,2,3} and B = {1,2,3,4,5}, then:</p>
+  <div class="btn-row"><button class="opt-btn" onclick="checkMCQ(5,this,false)">A ⊇ B</button>
+<button class="opt-btn" onclick="checkMCQ(5,this,false)">B ⊆ A</button>
+<button class="opt-btn" onclick="checkMCQ(5,this,true)">A ⊆ B</button>
+<button class="opt-btn" onclick="checkMCQ(5,this,false)">n(A) = n(B)</button>
+</div>
+  <div class="feedback" id="fb5">💡 Every element of A is in B, so A ⊆ B.</div>
+</div>
+  </div>
+  <div class="card">
+    <h2>✅ Section B — True or False (3 questions)</h2>
+    
+<div class="question" id="q6">
+  <p>Q6. The set {3, 3, 5} has 3 elements.</p>
+  <div class="btn-row">
+    <button class="opt-btn" onclick="checkTF(6,this,false)">✅ True</button>
+    <button class="opt-btn" onclick="checkTF(6,this,true)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb6">💡 Each element is listed only once, so {3,3,5} = {3,5}, which has 2 elements.</div>
+</div>
+<div class="question" id="q7">
+  <p>Q7. ∅ is a subset of every set.</p>
+  <div class="btn-row">
+    <button class="opt-btn" onclick="checkTF(7,this,true)">✅ True</button>
+    <button class="opt-btn" onclick="checkTF(7,this,false)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb7">💡 The empty set is always a subset of any set.</div>
+</div>
+<div class="question" id="q8">
+  <p>Q8. {} and ∅ represent the same thing.</p>
+  <div class="btn-row">
+    <button class="opt-btn" onclick="checkTF(8,this,true)">✅ True</button>
+    <button class="opt-btn" onclick="checkTF(8,this,false)">❌ False</button>
+  </div>
+  <div class="feedback" id="fb8">💡 Both notations mean the empty set.</div>
+</div>
+  </div>
+  <div class="card">
+    <h2>✏️ Section C — Fill in the Blank (2 questions)</h2>
+    
+<div class="question" id="q9">
+  <p>Q9. The number of elements in {x, y, z, w} is ___.</p>
+  <div class="btn-row">
+    <input class="fill-input" id="fi9" placeholder="Your answer..." />
+    <button class="check-btn" onclick="checkFill(9,["4"])">Check</button>
+  </div>
+  <div class="feedback" id="fb9">💡 Count x, y, z, w = 4.</div>
+</div>
+<div class="question" id="q10">
+  <p>Q10. A set with no elements is called the ___ set.</p>
+  <div class="btn-row">
+    <input class="fill-input" id="fi10" placeholder="Your answer..." />
+    <button class="check-btn" onclick="checkFill(10,["empty"])">Check</button>
+  </div>
+  <div class="feedback" id="fb10">💡 An empty set has no elements.</div>
+</div>
+  </div>
+  <div class="card" id="score-card" style="display:none; text-align:center;">
+    <h2>Your Score</h2>
+    <div class="score-circle" id="score-circle">
+      <span id="score-num">0</span>
+      <small>/ 10</small>
+    </div>
+    <p id="score-msg" style="margin-top:12px; font-size:14px;"></p>
+  </div>
+  <div style="text-align:center;">
+    <button class="submit-btn" onclick="showScore()">🎯 Check My Score</button>
+    <br><br>
+    <a class="nav-btn" href="../Short_Notes/Ch02_Sets_Notes.html">← Back to Notes</a>
+    <a class="nav-btn" href="../Timed_Exams/Ch02_Sets_TimedPaper.html" style="background:#9C0006; margin-left:10px;">⏱️ Try Timed Paper</a>
+    <br><br>
+    <a href="../../SHEYVON_DASHBOARD.html" style="color:#375623; font-size:13px;">← Dashboard</a>
+  </div>
+</div>
+<script>
+const scores = {};
+function checkMCQ(qid, btn, isCorrect) {
+  const q = document.getElementById('q'+qid);
+  q.querySelectorAll('.opt-btn').forEach(b => { b.disabled = true; b.classList.remove('selected'); });
+  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) q.querySelectorAll('.opt-btn').forEach(b => { if(b.getAttribute('onclick').includes(',true)')) b.classList.add('correct'); });
+  const fb = document.getElementById('fb'+qid);
+  fb.classList.add('show'); fb.classList.add(isCorrect ? 'ok' : 'bad');
+  scores[qid] = isCorrect ? 1 : 0;
+}
+function checkTF(qid, btn, isCorrect) { checkMCQ(qid, btn, isCorrect); }
+function checkFill(qid, accepted) {
+  const inp = document.getElementById('fi'+qid);
+  const val = inp.value.trim().toLowerCase();
+  const ok = accepted.map(a=>a.toLowerCase()).includes(val);
+  inp.classList.add(ok ? 'correct' : 'wrong');
+  inp.disabled = true;
+  const fb = document.getElementById('fb'+qid);
+  fb.classList.add('show'); fb.classList.add(ok ? 'ok' : 'bad');
+  scores[qid] = ok ? 1 : 0;
+}
+function showScore() {
+  let total = 0;
+  for(let k in scores) total += scores[k];
+  const sc = document.getElementById('score-card');
+  sc.style.display = 'block';
+  document.getElementById('score-num').textContent = total;
+  const pct = Math.round(total/10*100);
+  const circle = document.getElementById('score-circle');
+  const msg = document.getElementById('score-msg');
+  if(pct >= 75) { circle.className='score-circle pass'; msg.textContent='Great work! You\'re ready for the Timed Paper. 🎉'; }
+  else if(pct >= 50) { circle.className='score-circle warn'; msg.textContent='Good effort! Review the notes once more before the Timed Paper. 📖'; }
+  else { circle.className='score-circle fail'; msg.textContent='No worries! Re-read the Short Notes and try again. 💪'; }
+  sc.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
