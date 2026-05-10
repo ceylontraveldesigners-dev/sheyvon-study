@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Timed Paper – Geography 04</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:#FFF3E0;min-height:100vh;padding:20px}
+.card{background:#fff;border-radius:16px;padding:28px;max-width:800px;margin:0 auto;box-shadow:0 4px 20px rgba(0,0,0,.10)}
+#start-screen h1{color:#E65100;font-size:1.6rem;margin-bottom:8px}
+#start-screen .info{background:#FFF3E0;border-radius:10px;padding:14px;margin:14px 0;color:#BF360C}
+.start-btn{background:#E65100;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.1rem;cursor:pointer;margin-top:10px}
+.start-btn:hover{background:#BF360C}
+#exam-screen{display:none}
+.timer-bar{background:#FFF3E0;border-radius:10px;padding:10px 16px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+#timer{font-size:1.4rem;font-weight:700;color:#E65100}
+#timer.warn{color:#FF8F00}#timer.danger{color:#C62828}
+.q-block{background:#FFF8E1;border-radius:12px;padding:16px;margin:12px 0;border-left:4px solid #FFB300}
+.q-block .q{font-weight:600;color:#E65100;margin-bottom:10px}
+.opts label{display:block;padding:7px 10px;border-radius:7px;cursor:pointer;margin:4px 0}
+.opts label:hover{background:#FFE0B2}
+.opts input{margin-right:8px}
+.tf-row{display:flex;gap:10px;margin-top:8px}
+.tf-row label{padding:6px 18px;border-radius:8px;border:2px solid #FFB300;cursor:pointer}
+input[type=text]{width:100%;padding:8px 12px;border-radius:8px;border:2px solid #FFCC80;font-size:1rem;margin-top:6px}
+input[type=text]:focus{border-color:#E65100;outline:none}
+.submit-btn{background:#E65100;color:#fff;border:none;padding:12px 28px;border-radius:10px;font-size:1rem;cursor:pointer;margin-top:14px;width:100%}
+.submit-btn:hover{background:#BF360C}
+#result-screen{display:none;text-align:center}
+#result-screen h2{color:#E65100;font-size:1.5rem;margin-bottom:12px}
+.score-circle{width:130px;height:130px;border-radius:50%;background:#FFF3E0;border:6px solid #E65100;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:2rem;font-weight:700;color:#E65100}
+.breakdown{text-align:left;background:#FFF8E1;border-radius:10px;padding:14px;margin:10px 0}
+.breakdown li{margin:6px 0;font-size:.95rem}
+.correct{color:#2E7D32}.wrong{color:#C62828}
+.nav{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:center}
+.nav a{background:#E65100;color:#fff;padding:8px 18px;border-radius:8px;text-decoration:none;font-size:.9rem}
+.nav a:hover{background:#BF360C}
+.nav a.sec{background:#FFF3E0;color:#E65100}.nav a.sec:hover{background:#FFE0B2}</style></head><body>
+<div class="card">
+
+<!-- START SCREEN -->
+<div id="start-screen">
+  <h1>⚠️ Natural Hazards and Disasters</h1>
+  <div class="sub">Geography Chapter 04 · Timed Exam</div>
+  <div class="info">
+    ⏱️ <strong>20 minutes</strong> · 15 questions<br>
+    📌 10 MCQ + 3 True/False + 2 Fill-in-Blank<br>
+    ⚡ Timer starts when you press Begin. Auto-submits at 0:00.
+  </div>
+  <button class="start-btn" onclick="startExam()">🚀 Begin Exam</button>
+</div>
+
+<!-- EXAM SCREEN -->
+<div id="exam-screen">
+  <div class="timer-bar">
+    <span>🗺️ Geo Ch04</span>
+    <span id="timer">20:00</span>
+  </div>
+  <h2 style="color:#E65100;margin-bottom:12px">Part 1: Multiple Choice</h2>
+  <div class="q-block"><div class="q">Q1. A hazard that causes actual harm becomes a:</div><div class="opts"><label><input type="radio" name="t_0" value="0"> Risk</label><label><input type="radio" name="t_0" value="1"> Warning</label><label><input type="radio" name="t_0" value="2"> Disaster</label><label><input type="radio" name="t_0" value="3"> Crisis</label></div></div>
+<div class="q-block"><div class="q">Q2. Extended period of very low rainfall is called:</div><div class="opts"><label><input type="radio" name="t_1" value="0"> Flood</label><label><input type="radio" name="t_1" value="1"> Cyclone</label><label><input type="radio" name="t_1" value="2"> Drought</label><label><input type="radio" name="t_1" value="3"> Earth slip</label></div></div>
+<div class="q-block"><div class="q">Q3. Tsunamis are caused by:</div><div class="opts"><label><input type="radio" name="t_2" value="0"> Heavy rainfall</label><label><input type="radio" name="t_2" value="1"> Deforestation</label><label><input type="radio" name="t_2" value="2"> Underwater earthquakes</label><label><input type="radio" name="t_2" value="3"> Strong winds</label></div></div>
+<div class="q-block"><div class="q">Q4. Earth slips are most common in:</div><div class="opts"><label><input type="radio" name="t_3" value="0"> Flat coastal areas</label><label><input type="radio" name="t_3" value="1"> Dry Zone</label><label><input type="radio" name="t_3" value="2"> Hilly areas</label><label><input type="radio" name="t_3" value="3"> Jaffna Peninsula</label></div></div>
+<div class="q-block"><div class="q">Q5. Which human activity worsens floods in cities?</div><div class="opts"><label><input type="radio" name="t_4" value="0"> Building reservoirs</label><label><input type="radio" name="t_4" value="1"> Planting trees</label><label><input type="radio" name="t_4" value="2"> Blocking drains and removing vegetation</label><label><input type="radio" name="t_4" value="3"> Irrigation</label></div></div>
+<div class="q-block"><div class="q">Q6. The 2004 Tsunami originated near:</div><div class="opts"><label><input type="radio" name="t_5" value="0"> Sri Lanka</label><label><input type="radio" name="t_5" value="1"> India</label><label><input type="radio" name="t_5" value="2"> Indonesia</label><label><input type="radio" name="t_5" value="3"> Maldives</label></div></div>
+<div class="q-block"><div class="q">Q7. Cyclones mainly affect:</div><div class="opts"><label><input type="radio" name="t_6" value="0"> Hill Country</label><label><input type="radio" name="t_6" value="1"> Dry Zone interior</label><label><input type="radio" name="t_6" value="2"> Coastal areas</label><label><input type="radio" name="t_6" value="3"> Wet Zone</label></div></div>
+<div class="q-block"><div class="q">Q8. Which is a drought-prone district in Sri Lanka?</div><div class="opts"><label><input type="radio" name="t_7" value="0"> Ratnapura</label><label><input type="radio" name="t_7" value="1"> Colombo</label><label><input type="radio" name="t_7" value="2"> Hambantota</label><label><input type="radio" name="t_7" value="3"> Kalutara</label></div></div>
+<div class="q-block"><div class="q">Q9. Which of these is a natural hazard in Sri Lanka?</div><div class="opts"><label><input type="radio" name="t_8" value="0"> Traffic jam</label><label><input type="radio" name="t_8" value="1"> Drought</label><label><input type="radio" name="t_8" value="2"> Power outage</label><label><input type="radio" name="t_8" value="3"> Water bill</label></div></div>
+<div class="q-block"><div class="q">Q10. Deforestation increases which hazard?</div><div class="opts"><label><input type="radio" name="t_9" value="0"> Tsunami</label><label><input type="radio" name="t_9" value="1"> Cyclone</label><label><input type="radio" name="t_9" value="2"> Both drought and flood</label><label><input type="radio" name="t_9" value="3"> Lightning only</label></div></div>
+  <h2 style="color:#E65100;margin:18px 0 12px">Part 2: True or False</h2>
+  <div class="q-block"><div class="q">TF1. Tsunamis are caused by underwater earthquakes.</div><div class="tf-row"><label><input type="radio" name="t_tf_0" value="true"> True</label><label><input type="radio" name="t_tf_0" value="false"> False</label></div></div>
+<div class="q-block"><div class="q">TF2. Earth slips are most common in flat areas.</div><div class="tf-row"><label><input type="radio" name="t_tf_1" value="true"> True</label><label><input type="radio" name="t_tf_1" value="false"> False</label></div></div>
+<div class="q-block"><div class="q">TF3. Droughts are worsened by planting trees.</div><div class="tf-row"><label><input type="radio" name="t_tf_2" value="true"> True</label><label><input type="radio" name="t_tf_2" value="false"> False</label></div></div>
+  <h2 style="color:#E65100;margin:18px 0 12px">Part 3: Fill in the Blank</h2>
+  <div class="q-block"><div class="q">Fill1. A natural phenomenon that may cause damage is called a ___.</div><input type="text" id="t_fill_0" placeholder="Your answer…"></div>
+<div class="q-block"><div class="q">Fill2. Overflow of rivers during heavy rain causes a ___.</div><input type="text" id="t_fill_1" placeholder="Your answer…"></div>
+  <button class="submit-btn" onclick="submitExam()">📤 Submit Exam</button>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="result-screen">
+  <h2>📊 Your Results</h2>
+  <div class="score-circle" id="score-display">-/-</div>
+  <div class="breakdown"><ul id="breakdown-list"></ul></div>
+  <div class="nav">
+    <a class="sec" href="Ch04_Natural_Hazards_Notes.html">📖 Review Notes</a>
+    <a class="sec" href="Ch04_Natural_Hazards_Practice_A.html">📝 Practice A</a>
+    <a href='Ch05_Using_Maps_Notes.html'>Next Chapter ▶</a>
+  </div>
+</div>
+
+</div>
+<script>
+const SECS=1200;
+const mcqAns=[2, 2, 2, 2, 2, 2, 2, 2, 1, 2];
+const tfAns=["true", "false", "false"];
+const fillAns=["hazard", "flood"];
+let remaining=SECS,timer=null;
+function startExam(){
+  document.getElementById('start-screen').style.display='none';
+  document.getElementById('exam-screen').style.display='block';
+  timer=setInterval(tick,1000);
+}
+function tick(){
+  remaining--;
+  const m=Math.floor(remaining/60),s=remaining%60;
+  const el=document.getElementById('timer');
+  el.textContent=(m<10?'0'+m:m)+':'+(s<10?'0'+s:s);
+  el.className=remaining<=120?'danger':remaining<=300?'warn':'';
+  if(remaining<=0){clearInterval(timer);submitExam();}
+}
+function submitExam(){
+  clearInterval(timer);
+  document.getElementById('exam-screen').style.display='none';
+  document.getElementById('result-screen').style.display='block';
+  let score=0,total=15,items=[];
+  mcqAns.forEach((a,i)=>{
+    const sel=document.querySelector(`input[name="t_${i}"]:checked`);
+    const ok=sel&&parseInt(sel.value)===a;
+    if(ok)score++;
+    items.push(`<li class="${ok?'correct':'wrong'}">${ok?'✅':'❌'} MCQ ${i+1}: ${ok?'Correct':'Incorrect'}</li>`);
+  });
+  tfAns.forEach((a,i)=>{
+    const sel=document.querySelector(`input[name="t_tf_${i}"]:checked`);
+    const ok=sel&&sel.value===a;
+    if(ok)score++;
+    items.push(`<li class="${ok?'correct':'wrong'}">${ok?'✅':'❌'} T/F ${i+1}: ${ok?'Correct':'Incorrect'}</li>`);
+  });
+  fillAns.forEach((a,i)=>{
+    const v=(document.getElementById(`t_fill_${i}`)||{}).value||'';
+    const ok=v.trim().toLowerCase()===a||v.trim().toLowerCase().includes(a.split(' ')[0]);
+    if(ok)score++;
+    items.push(`<li class="${ok?'correct':'wrong'}">${ok?'✅':'❌'} Fill ${i+1}: ${ok?'Correct':'Incorrect'}</li>`);
+  });
+  const pct=Math.round(score/total*100);
+  document.getElementById('score-display').textContent=score+'/'+total;
+  document.getElementById('breakdown-list').innerHTML=items.join('');
+}
+</script></body></html>

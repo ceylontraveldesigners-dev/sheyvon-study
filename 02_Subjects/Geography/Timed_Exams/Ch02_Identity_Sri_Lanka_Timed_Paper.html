@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Timed Paper – Geography 02</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:#FFF3E0;min-height:100vh;padding:20px}
+.card{background:#fff;border-radius:16px;padding:28px;max-width:800px;margin:0 auto;box-shadow:0 4px 20px rgba(0,0,0,.10)}
+#start-screen h1{color:#E65100;font-size:1.6rem;margin-bottom:8px}
+#start-screen .info{background:#FFF3E0;border-radius:10px;padding:14px;margin:14px 0;color:#BF360C}
+.start-btn{background:#E65100;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.1rem;cursor:pointer;margin-top:10px}
+.start-btn:hover{background:#BF360C}
+#exam-screen{display:none}
+.timer-bar{background:#FFF3E0;border-radius:10px;padding:10px 16px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+#timer{font-size:1.4rem;font-weight:700;color:#E65100}
+#timer.warn{color:#FF8F00}#timer.danger{color:#C62828}
+.q-block{background:#FFF8E1;border-radius:12px;padding:16px;margin:12px 0;border-left:4px solid #FFB300}
+.q-block .q{font-weight:600;color:#E65100;margin-bottom:10px}
+.opts label{display:block;padding:7px 10px;border-radius:7px;cursor:pointer;margin:4px 0}
+.opts label:hover{background:#FFE0B2}
+.opts input{margin-right:8px}
+.tf-row{display:flex;gap:10px;margin-top:8px}
+.tf-row label{padding:6px 18px;border-radius:8px;border:2px solid #FFB300;cursor:pointer}
+input[type=text]{width:100%;padding:8px 12px;border-radius:8px;border:2px solid #FFCC80;font-size:1rem;margin-top:6px}
+input[type=text]:focus{border-color:#E65100;outline:none}
+.submit-btn{background:#E65100;color:#fff;border:none;padding:12px 28px;border-radius:10px;font-size:1rem;cursor:pointer;margin-top:14px;width:100%}
+.submit-btn:hover{background:#BF360C}
+#result-screen{display:none;text-align:center}
+#result-screen h2{color:#E65100;font-size:1.5rem;margin-bottom:12px}
+.score-circle{width:130px;height:130px;border-radius:50%;background:#FFF3E0;border:6px solid #E65100;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:2rem;font-weight:700;color:#E65100}
+.breakdown{text-align:left;background:#FFF8E1;border-radius:10px;padding:14px;margin:10px 0}
+.breakdown li{margin:6px 0;font-size:.95rem}
+.correct{color:#2E7D32}.wrong{color:#C62828}
+.nav{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:center}
+.nav a{background:#E65100;color:#fff;padding:8px 18px;border-radius:8px;text-decoration:none;font-size:.9rem}
+.nav a:hover{background:#BF360C}
+.nav a.sec{background:#FFF3E0;color:#E65100}.nav a.sec:hover{background:#FFE0B2}</style></head><body>
+<div class="card">
+
+<!-- START SCREEN -->
+<div id="start-screen">
+  <h1>🇱🇰 Identity of Sri Lanka</h1>
+  <div class="sub">Geography Chapter 02 · Timed Exam</div>
+  <div class="info">
+    ⏱️ <strong>20 minutes</strong> · 15 questions<br>
+    📌 10 MCQ + 3 True/False + 2 Fill-in-Blank<br>
+    ⚡ Timer starts when you press Begin. Auto-submits at 0:00.
+  </div>
+  <button class="start-btn" onclick="startExam()">🚀 Begin Exam</button>
+</div>
+
+<!-- EXAM SCREEN -->
+<div id="exam-screen">
+  <div class="timer-bar">
+    <span>🗺️ Geo Ch02</span>
+    <span id="timer">20:00</span>
+  </div>
+  <h2 style="color:#E65100;margin-bottom:12px">Part 1: Multiple Choice</h2>
+  <div class="q-block"><div class="q">Q1. Sri Lanka is separated from India by:</div><div class="opts"><label><input type="radio" name="t_0" value="0"> Bay of Bengal</label><label><input type="radio" name="t_0" value="1"> Palk Strait</label><label><input type="radio" name="t_0" value="2"> Arabian Sea</label><label><input type="radio" name="t_0" value="3"> Gulf of Mannar only</label></div></div>
+<div class="q-block"><div class="q">Q2. Total area of Sri Lanka:</div><div class="opts"><label><input type="radio" name="t_1" value="0"> 56,610 km²</label><label><input type="radio" name="t_1" value="1"> 65,610 km²</label><label><input type="radio" name="t_1" value="2"> 76,510 km²</label><label><input type="radio" name="t_1" value="3"> 45,610 km²</label></div></div>
+<div class="q-block"><div class="q">Q3. The location of a country using coordinates is called:</div><div class="opts"><label><input type="radio" name="t_2" value="0"> Relative location</label><label><input type="radio" name="t_2" value="1"> Absolute location</label><label><input type="radio" name="t_2" value="2"> Specific location</label><label><input type="radio" name="t_2" value="3"> General location</label></div></div>
+<div class="q-block"><div class="q">Q4. Sri Lanka&#x27;s EEZ extends:</div><div class="opts"><label><input type="radio" name="t_3" value="0"> 12 nm</label><label><input type="radio" name="t_3" value="1"> 24 nm</label><label><input type="radio" name="t_3" value="2"> 100 nm</label><label><input type="radio" name="t_3" value="3"> 200 nm</label></div></div>
+<div class="q-block"><div class="q">Q5. Which ocean surrounds Sri Lanka?</div><div class="opts"><label><input type="radio" name="t_4" value="0"> Pacific</label><label><input type="radio" name="t_4" value="1"> Atlantic</label><label><input type="radio" name="t_4" value="2"> Indian</label><label><input type="radio" name="t_4" value="3"> Southern</label></div></div>
+<div class="q-block"><div class="q">Q6. The width of Sri Lanka is approximately:</div><div class="opts"><label><input type="radio" name="t_5" value="0"> 432 km</label><label><input type="radio" name="t_5" value="1"> 224 km</label><label><input type="radio" name="t_5" value="2"> 365 km</label><label><input type="radio" name="t_5" value="3"> 510 km</label></div></div>
+<div class="q-block"><div class="q">Q7. Sri Lanka is located in which zone?</div><div class="opts"><label><input type="radio" name="t_6" value="0"> Polar zone</label><label><input type="radio" name="t_6" value="1"> Temperate zone</label><label><input type="radio" name="t_6" value="2"> Tropical zone</label><label><input type="radio" name="t_6" value="3"> Sub-polar zone</label></div></div>
+<div class="q-block"><div class="q">Q8. Territorial waters extend up to:</div><div class="opts"><label><input type="radio" name="t_7" value="0"> 6 nm</label><label><input type="radio" name="t_7" value="1"> 12 nm</label><label><input type="radio" name="t_7" value="2"> 24 nm</label><label><input type="radio" name="t_7" value="3"> 200 nm</label></div></div>
+<div class="q-block"><div class="q">Q9. Which of these is NOT an island near Sri Lanka?</div><div class="opts"><label><input type="radio" name="t_8" value="0"> Maldives</label><label><input type="radio" name="t_8" value="1"> Lakshadweep</label><label><input type="radio" name="t_8" value="2"> Nicobar</label><label><input type="radio" name="t_8" value="3"> Singapore</label></div></div>
+<div class="q-block"><div class="q">Q10. Relative location describes a country&#x27;s position using:</div><div class="opts"><label><input type="radio" name="t_9" value="0"> Coordinates</label><label><input type="radio" name="t_9" value="1"> Surrounding lands and oceans</label><label><input type="radio" name="t_9" value="2"> Its size</label><label><input type="radio" name="t_9" value="3"> Its population</label></div></div>
+  <h2 style="color:#E65100;margin:18px 0 12px">Part 2: True or False</h2>
+  <div class="q-block"><div class="q">TF1. Sri Lanka is in the tropical zone.</div><div class="tf-row"><label><input type="radio" name="t_tf_0" value="true"> True</label><label><input type="radio" name="t_tf_0" value="false"> False</label></div></div>
+<div class="q-block"><div class="q">TF2. The Contiguous Zone extends to 200 nautical miles.</div><div class="tf-row"><label><input type="radio" name="t_tf_1" value="true"> True</label><label><input type="radio" name="t_tf_1" value="false"> False</label></div></div>
+<div class="q-block"><div class="q">TF3. Sri Lanka has the third largest EEZ in the Indian Ocean.</div><div class="tf-row"><label><input type="radio" name="t_tf_2" value="true"> True</label><label><input type="radio" name="t_tf_2" value="false"> False</label></div></div>
+  <h2 style="color:#E65100;margin:18px 0 12px">Part 3: Fill in the Blank</h2>
+  <div class="q-block"><div class="q">Fill1. The sea zone that gives mineral and fishing rights up to 200 nm is the ___.</div><input type="text" id="t_fill_0" placeholder="Your answer…"></div>
+<div class="q-block"><div class="q">Fill2. The sea separating Sri Lanka from India is the ___.</div><input type="text" id="t_fill_1" placeholder="Your answer…"></div>
+  <button class="submit-btn" onclick="submitExam()">📤 Submit Exam</button>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="result-screen">
+  <h2>📊 Your Results</h2>
+  <div class="score-circle" id="score-display">-/-</div>
+  <div class="breakdown"><ul id="breakdown-list"></ul></div>
+  <div class="nav">
+    <a class="sec" href="Ch02_Identity_Sri_Lanka_Notes.html">📖 Review Notes</a>
+    <a class="sec" href="Ch02_Identity_Sri_Lanka_Practice_A.html">📝 Practice A</a>
+    <a href='Ch03_Landscape_Sri_Lanka_Notes.html'>Next Chapter ▶</a>
+  </div>
+</div>
+
+</div>
+<script>
+const SECS=1200;
+const mcqAns=[1, 1, 2, 3, 2, 1, 2, 1, 3, 1];
+const tfAns=["true", "false", "true"];
+const fillAns=["exclusive economic zone", "palk strait"];
+let remaining=SECS,timer=null;
+function startExam(){
+  document.getElementById('start-screen').style.display='none';
+  document.getElementById('exam-screen').style.display='block';
+  timer=setInterval(tick,1000);
+}
+function tick(){
+  remaining--;
+  const m=Math.floor(remaining/60),s=remaining%60;
+  const el=document.getElementById('timer');
+  el.textContent=(m<10?'0'+m:m)+':'+(s<10?'0'+s:s);
+  el.className=remaining<=120?'danger':remaining<=300?'warn':'';
+  if(remaining<=0){clearInterval(timer);submitExam();}
+}
+function submitExam(){
+  clearInterval(timer);
+  document.getElementById('exam-screen').style.display='none';
+  document.getElementById('result-screen').style.display='block';
+  let score=0,total=15,items=[];
+  mcqAns.forEach((a,i)=>{
+    const sel=document.querySelector(`input[name="t_${i}"]:checked`);
+    const ok=sel&&parseInt(sel.value)===a;
+    if(ok)score++;
+    items.push(`<li class="${ok?'correct':'wrong'}">${ok?'✅':'❌'} MCQ ${i+1}: ${ok?'Correct':'Incorrect'}</li>`);
+  });
+  tfAns.forEach((a,i)=>{
+    const sel=document.querySelector(`input[name="t_tf_${i}"]:checked`);
+    const ok=sel&&sel.value===a;
+    if(ok)score++;
+    items.push(`<li class="${ok?'correct':'wrong'}">${ok?'✅':'❌'} T/F ${i+1}: ${ok?'Correct':'Incorrect'}</li>`);
+  });
+  fillAns.forEach((a,i)=>{
+    const v=(document.getElementById(`t_fill_${i}`)||{}).value||'';
+    const ok=v.trim().toLowerCase()===a||v.trim().toLowerCase().includes(a.split(' ')[0]);
+    if(ok)score++;
+    items.push(`<li class="${ok?'correct':'wrong'}">${ok?'✅':'❌'} Fill ${i+1}: ${ok?'Correct':'Incorrect'}</li>`);
+  });
+  const pct=Math.round(score/total*100);
+  document.getElementById('score-display').textContent=score+'/'+total;
+  document.getElementById('breakdown-list').innerHTML=items.join('');
+}
+</script></body></html>
