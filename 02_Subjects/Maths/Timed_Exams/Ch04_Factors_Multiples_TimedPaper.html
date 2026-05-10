@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timed Paper — Chapter 4 — Factors and Multiples | Sheyvon's Maths</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; min-height: 100vh; }
+.start-screen, .results-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 20px; }
+.start-screen { background: linear-gradient(135deg, #1F3864, #2E75B6); }
+.start-box { background: white; color: #222; border-radius: 16px; padding: 40px; max-width: 500px; text-align: center; }
+.start-box h1 { font-size: 24px; color: #1F3864; margin-bottom: 12px; }
+.start-box p { font-size: 14px; color: #555; margin-bottom: 8px; }
+.start-btn { margin-top: 24px; padding: 16px 48px; background: #1F3864; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; }
+.exam-screen { display: none; max-width: 900px; margin: 0 auto; padding: 20px; }
+.timer-bar { position: sticky; top: 0; background: #1F3864; color: white; padding: 12px 24px; border-radius: 10px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+.timer-display { font-size: 28px; font-weight: bold; font-family: monospace; }
+.timer-display.warning { color: #FFD966; }
+.timer-display.danger { color: #FF6B6B; }
+.card { background: #fff; color: #222; border-radius: 12px; padding: 24px 28px; margin-bottom: 20px; border-left: 5px solid #2E75B6; }
+.card h2 { font-size: 15px; color: #1F3864; margin-bottom: 14px; }
+.question { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #ddd; }
+.question p { font-size: 14px; font-weight: bold; color: #1F3864; margin-bottom: 8px; }
+.opt-btn { padding: 8px 16px; border: 2px solid #BDD7EE; border-radius: 8px; background: white; cursor: pointer; font-size: 13px; margin: 4px; }
+.opt-btn.selected { background: #2E75B6; color: white; border-color: #1F3864; }
+.opt-btn.correct { background: #C6EFCE; border-color: #70AD47; color: #375623; }
+.opt-btn.wrong { background: #FFCCCC; border-color: #FF6B6B; color: #9C0006; }
+.fill-input { width: 200px; padding: 8px 12px; border: 2px solid #BDD7EE; border-radius: 8px; font-size: 13px; }
+.submit-btn { display: block; margin: 30px auto; padding: 14px 48px; background: #375623; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+.results-screen { display: none; background: #1F3864; }
+.results-box { background: white; color: #222; border-radius: 16px; padding: 40px; max-width: 700px; width: 100%; }
+.score-circle { width: 140px; height: 140px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 32px; font-weight: bold; }
+.score-circle.pass { background: #C6EFCE; color: #375623; border: 5px solid #70AD47; }
+.score-circle.warn { background: #FFEB9C; color: #9C5700; border: 5px solid #FFCD00; }
+.score-circle.fail { background: #FFCCCC; color: #9C0006; border: 5px solid #FF6B6B; }
+.review-item { padding: 8px 0; border-bottom: 1px solid #eee; font-size: 13px; }
+.review-item.ok { color: #375623; }
+.review-item.bad { color: #9C0006; }
+.wa-box { background: #E7F8EF; border: 1px solid #25D366; border-radius: 10px; padding: 16px; margin: 20px 0; font-size: 13px; }
+.wa-box pre { white-space: pre-wrap; font-family: inherit; color: #1a1a1a; }
+.nav-btn { display: inline-block; background: #1F3864; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: bold; margin: 6px; }
+</style>
+</head>
+<body>
+
+<div class="start-screen" id="startScreen">
+  <div class="start-box">
+    <h1>🔢 Chapter 4 Timed Paper</h1>
+    <h2 style="font-size:16px;color:#2E75B6;margin-top:8px;">Chapter 4 — Factors and Multiples</h2>
+    <p style="margin-top:16px;">⏱️ Time Limit: <strong>20 minutes</strong></p>
+    <p>📝 15 auto-marked questions + 2 bonus written questions</p>
+    <p>📊 Total marks: 25 (15 auto + 10 parent-marked)</p>
+    <p style="margin-top:12px;color:#888;">Once you start, the timer counts down. It will auto-submit at 0!</p>
+    <button class="start-btn" onclick="startExam()">▶ START EXAM</button>
+  </div>
+</div>
+
+<div class="exam-screen" id="examScreen">
+  <div class="timer-bar">
+    <span>📚 Chapter 4 — Factors and Multiples</span>
+    <span class="timer-display" id="timerDisplay">20:00</span>
+    <span>Chapter 4</span>
+  </div>
+
+  <div class="card">
+    <h2>Section A — Multiple Choice (10 marks)</h2>
+    
+<div class="question" id="q1">
+  <p>Q1. How many factors does 18 have?</p>
+  <div><button class="opt-btn" id="q1_4" onclick="selectMCQ(1,this,false)">4</button>
+<button class="opt-btn" id="q1_5" onclick="selectMCQ(1,this,false)">5</button>
+<button class="opt-btn" id="q1_6" onclick="selectMCQ(1,this,true)">6</button>
+<button class="opt-btn" id="q1_8" onclick="selectMCQ(1,this,false)">8</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint1">💡 Factors: 1,2,3,6,9,18 = 6 factors.</div>
+</div>
+<div class="question" id="q2">
+  <p>Q2. Which pair of numbers has HCF = 5?</p>
+  <div><button class="opt-btn" id="q2_1" onclick="selectMCQ(2,this,true)">10 and 15</button>
+<button class="opt-btn" id="q2_6" onclick="selectMCQ(2,this,false)">6 and 9</button>
+<button class="opt-btn" id="q2_4" onclick="selectMCQ(2,this,false)">4 and 8</button>
+<button class="opt-btn" id="q2_7" onclick="selectMCQ(2,this,false)">7 and 14</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint2">💡 Factors of 10: 1,2,5,10. Factors of 15: 1,3,5,15. HCF=5.</div>
+</div>
+<div class="question" id="q3">
+  <p>Q3. LCM(3, 4, 6) = ?</p>
+  <div><button class="opt-btn" id="q3_6" onclick="selectMCQ(3,this,false)">6</button>
+<button class="opt-btn" id="q3_1" onclick="selectMCQ(3,this,true)">12</button>
+<button class="opt-btn" id="q3_2" onclick="selectMCQ(3,this,false)">24</button>
+<button class="opt-btn" id="q3_3" onclick="selectMCQ(3,this,false)">36</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint3">💡 Multiples of 6: 6,12. 12 is also a multiple of 3 and 4. LCM=12.</div>
+</div>
+<div class="question" id="q4">
+  <p>Q4. Prime factorisation of 36 = ?</p>
+  <div><button class="opt-btn" id="q4_2" onclick="selectMCQ(4,this,false)">2 × 18</button>
+<button class="opt-btn" id="q4_4" onclick="selectMCQ(4,this,false)">4 × 9</button>
+<button class="opt-btn" id="q4_2" onclick="selectMCQ(4,this,true)">2² × 3²</button>
+<button class="opt-btn" id="q4_6" onclick="selectMCQ(4,this,false)">6 × 6</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint4">💡 36 = 4×9 = 2²×3².</div>
+</div>
+<div class="question" id="q5">
+  <p>Q5. Which is a prime number?</p>
+  <div><button class="opt-btn" id="q5_2" onclick="selectMCQ(5,this,false)">27</button>
+<button class="opt-btn" id="q5_3" onclick="selectMCQ(5,this,false)">33</button>
+<button class="opt-btn" id="q5_4" onclick="selectMCQ(5,this,true)">41</button>
+<button class="opt-btn" id="q5_4" onclick="selectMCQ(5,this,false)">49</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint5">💡 41 has no factors other than 1 and 41.</div>
+</div>
+<div class="question" id="q6">
+  <p>Q6. The 5th multiple of 9 is:</p>
+  <div><button class="opt-btn" id="q6_3" onclick="selectMCQ(6,this,false)">36</button>
+<button class="opt-btn" id="q6_4" onclick="selectMCQ(6,this,true)">45</button>
+<button class="opt-btn" id="q6_5" onclick="selectMCQ(6,this,false)">54</button>
+<button class="opt-btn" id="q6_4" onclick="selectMCQ(6,this,false)">40</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint6">💡 9×5=45.</div>
+</div>
+<div class="question" id="q7">
+  <p>Q7. HCF(24, 36) = ?</p>
+  <div><button class="opt-btn" id="q7_6" onclick="selectMCQ(7,this,false)">6</button>
+<button class="opt-btn" id="q7_1" onclick="selectMCQ(7,this,true)">12</button>
+<button class="opt-btn" id="q7_8" onclick="selectMCQ(7,this,false)">8</button>
+<button class="opt-btn" id="q7_4" onclick="selectMCQ(7,this,false)">4</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint7">💡 Common factors: 1,2,3,4,6,12. HCF=12.</div>
+</div>
+<div class="question" id="q8">
+  <p>Q8. How many prime numbers are there between 10 and 20?</p>
+  <div><button class="opt-btn" id="q8_3" onclick="selectMCQ(8,this,false)">3</button>
+<button class="opt-btn" id="q8_4" onclick="selectMCQ(8,this,true)">4</button>
+<button class="opt-btn" id="q8_5" onclick="selectMCQ(8,this,false)">5</button>
+<button class="opt-btn" id="q8_2" onclick="selectMCQ(8,this,false)">2</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint8">💡 11,13,17,19 — four primes.</div>
+</div>
+<div class="question" id="q9">
+  <p>Q9. The smallest prime number is:</p>
+  <div><button class="opt-btn" id="q9_0" onclick="selectMCQ(9,this,false)">0</button>
+<button class="opt-btn" id="q9_1" onclick="selectMCQ(9,this,false)">1</button>
+<button class="opt-btn" id="q9_2" onclick="selectMCQ(9,this,true)">2</button>
+<button class="opt-btn" id="q9_3" onclick="selectMCQ(9,this,false)">3</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint9">💡 2 is the smallest prime (and only even prime).</div>
+</div>
+<div class="question" id="q10">
+  <p>Q10. A number that is both a factor of 12 and a multiple of 4 is:</p>
+  <div><button class="opt-btn" id="q10_6" onclick="selectMCQ(10,this,false)">6</button>
+<button class="opt-btn" id="q10_4" onclick="selectMCQ(10,this,true)">4</button>
+<button class="opt-btn" id="q10_3" onclick="selectMCQ(10,this,false)">3</button>
+<button class="opt-btn" id="q10_8" onclick="selectMCQ(10,this,false)">8</button>
+</div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint10">💡 4 is a factor of 12 (12÷4=3) and 4=4×1.</div>
+</div>
+  </div>
+
+  <div class="card">
+    <h2>Section B — True or False (3 marks)</h2>
+    
+<div class="question" id="q11">
+  <p>Q11. The HCF of two different prime numbers is always 1.</p>
+  <div>
+    <button class="opt-btn" id="q11_T" onclick="selectTF(11,this,true)">✅ True</button>
+    <button class="opt-btn" id="q11_F" onclick="selectTF(11,this,false)">❌ False</button>
+  </div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint11">💡 Primes only share 1 as a common factor.</div>
+</div>
+<div class="question" id="q12">
+  <p>Q12. Every multiple of 6 is also a multiple of 3.</p>
+  <div>
+    <button class="opt-btn" id="q12_T" onclick="selectTF(12,this,true)">✅ True</button>
+    <button class="opt-btn" id="q12_F" onclick="selectTF(12,this,false)">❌ False</button>
+  </div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint12">💡 6=2×3, so all multiples of 6 contain factor 3.</div>
+</div>
+<div class="question" id="q13">
+  <p>Q13. The LCM of two numbers is always larger than both numbers.</p>
+  <div>
+    <button class="opt-btn" id="q13_T" onclick="selectTF(13,this,false)">✅ True</button>
+    <button class="opt-btn" id="q13_F" onclick="selectTF(13,this,true)">❌ False</button>
+  </div>
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint13">💡 LCM(5,5)=5, not larger.</div>
+</div>
+  </div>
+
+  <div class="card">
+    <h2>Section C — Fill in the Blank (2 marks)</h2>
+    
+<div class="question" id="q14">
+  <p>Q14. The HCF of 20 and 30 is ___.</p>
+  <input class="fill-input" id="fill14" placeholder="Answer..." />
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint14">💡 Common factors: 1,2,5,10. HCF=10.</div>
+  <input type="hidden" id="fillans14" value='["10"]' />
+</div>
+<div class="question" id="q15">
+  <p>Q15. The prime factorisation of 30 is 2 × 3 × ___.</p>
+  <input class="fill-input" id="fill15" placeholder="Answer..." />
+  <div style="font-size:11px;color:#aaa;margin-top:4px;" id="hint15">💡 30=2×3×5.</div>
+  <input type="hidden" id="fillans15" value='["5"]' />
+</div>
+  </div>
+
+  <div class="card" style="border-left-color:#9C5700;">
+    <h2>Section D — Written Questions (10 marks | Parent-Marked)</h2>
+    <p style="margin-bottom:12px;font-size:13px;color:#666;">Answer these on paper. Your parent will mark these after the exam.</p>
+    <ol style="padding-left:20px;">
+      <li style='margin-bottom:10px;'>Find the LCM and HCF of 36 and 48. Show your working clearly.</li>
+<li style='margin-bottom:10px;'>A bell rings every 4 minutes and another every 6 minutes. They ring together at noon. When will they next ring together?</li>
+
+    </ol>
+  </div>
+
+  <button class="submit-btn" onclick="submitExam(false)">✅ Submit Paper</button>
+</div>
+
+<div class="results-screen" id="resultsScreen">
+  <div class="results-box">
+    <h2 style="text-align:center;color:#1F3864;margin-bottom:16px;">🔢 Results — Chapter 4 — Factors and Multiples</h2>
+    <div class="score-circle" id="resultsCircle">
+      <span id="resultScore">0</span>
+      <small>/ 15</small>
+    </div>
+    <p id="resultPct" style="text-align:center;font-size:16px;font-weight:bold;margin-bottom:8px;"></p>
+    <p id="resultMsg" style="text-align:center;font-size:13px;color:#555;margin-bottom:20px;"></p>
+
+    <h3 style="font-size:14px;color:#1F3864;margin-bottom:10px;">Question Review:</h3>
+    <div id="reviewList"></div>
+
+    <div class="wa-box" style="margin-top:20px;">
+      <strong>📱 WhatsApp message for Amma/Thaththa:</strong>
+      <pre id="waMsg"></pre>
+    </div>
+
+    <div style="text-align:center;margin-top:20px;">
+      <a class="nav-btn" href="../Short_Notes/Ch04_Factors_Multiples_Notes.html">📖 Review Notes</a>
+      <a class="nav-btn" href="../Practice_Papers/Ch04_Factors_Multiples_PracticeA.html" style="background:#375623;">✏️ Practice Set A</a>
+      <a class="nav-btn" href="../../SHEYVON_DASHBOARD.html" style="background:#555;">🏠 Dashboard</a>
+    </div>
+  </div>
+</div>
+
+<script>
+let secondsLeft = 20 * 60;
+let timerInterval = null;
+let startTime = null;
+const answers = {};
+const correctMap = {};
+
+function startExam() {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examScreen').style.display = 'block';
+  startTime = new Date();
+  timerInterval = setInterval(tick, 1000);
+  // hide hints during exam
+  document.querySelectorAll('[id^="hint"]').forEach(h => h.style.display='none');
+}
+
+function tick() {
+  secondsLeft--;
+  const m = Math.floor(secondsLeft/60).toString().padStart(2,'0');
+  const s = (secondsLeft%60).toString().padStart(2,'0');
+  const td = document.getElementById('timerDisplay');
+  td.textContent = m+':'+s;
+  if(secondsLeft <= 120) td.className='timer-display danger';
+  else if(secondsLeft <= 300) td.className='timer-display warning';
+  if(secondsLeft <= 0) submitExam(true);
+}
+
+function selectMCQ(qid, btn, isCorrect) {
+  const q = document.getElementById('q'+qid);
+  q.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[qid] = isCorrect;
+}
+
+function selectTF(qid, btn, isCorrect) { selectMCQ(qid, btn, isCorrect); }
+
+function submitExam(auto) {
+  clearInterval(timerInterval);
+  // grade fill
+  const fillIds = [14, 15];
+  fillIds.forEach(i => {
+    const inp = document.getElementById('fill'+i);
+    const raw = document.getElementById('fillans'+i).value;
+    const accepted = JSON.parse(raw);
+    const val = inp ? inp.value.trim().toLowerCase() : '';
+    answers[i] = accepted.map(a=>a.toLowerCase()).includes(val);
+  });
+
+  // calculate score
+  let score = 0;
+  for(let k in answers) if(answers[k]) score++;
+
+  // show results
+  document.getElementById('examScreen').style.display='none';
+  const rs = document.getElementById('resultsScreen');
+  rs.style.display='flex';
+
+  document.getElementById('resultScore').textContent = score;
+  const pct = Math.round(score/15*100);
+  document.getElementById('resultPct').textContent = pct+'%';
+  const circle = document.getElementById('resultsCircle');
+  const msg = document.getElementById('resultMsg');
+  if(pct>=75){ circle.className='score-circle pass'; msg.textContent='Excellent! 🎉 Well done Sheyvon!'; }
+  else if(pct>=50){ circle.className='score-circle warn'; msg.textContent='Good effort! Review your notes and try again. 📖'; }
+  else{ circle.className='score-circle fail'; msg.textContent='Keep going! Read the notes again carefully. 💪'; }
+
+  // show hints
+  document.querySelectorAll('[id^="hint"]').forEach(h => h.style.display='block');
+
+  // review
+  const rl = document.getElementById('reviewList');
+  for(let k=1; k<=15; k++) {
+    const ok = answers[k];
+    const div = document.createElement('div');
+    div.className = 'review-item '+(ok?'ok':'bad');
+    div.textContent = (ok?'✅':'❌')+' Q'+k;
+    rl.appendChild(div);
+  }
+
+  // WhatsApp
+  const date = new Date().toLocaleDateString('en-GB');
+  const status = pct>=75?'✅ Passed':'❌ Needs more practice';
+  document.getElementById('waMsg').textContent =
+    `Hi! Sheyvon just completed:\n📚 Chapter 4 — Factors and Multiples\n📅 `+date+`\n🎯 Auto-marked: `+score+`/15 (`+pct+`%)\n📝 Section D (written): Please mark out of 10\n`+status;
+}
+</script>
+</body>
+</html>
