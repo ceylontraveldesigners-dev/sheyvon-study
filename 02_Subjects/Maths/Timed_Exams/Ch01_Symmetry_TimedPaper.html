@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.1 Symmetry – Timed Mini Paper | Sheyvon</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
+
+  /* START SCREEN */
+  #start-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .start-card { background: white; border-radius: 16px; padding: 40px; max-width: 560px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.12); text-align: center; }
+  .start-card h1 { font-size: 22px; color: #1F3864; margin-bottom: 6px; }
+  .start-card p  { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 20px; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+  .info-box { background: #F0F4FF; border-radius: 10px; padding: 14px; }
+  .info-box .val { font-size: 22px; font-weight: bold; color: #1F3864; }
+  .info-box .lbl { font-size: 11px; color: #777; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .start-btn { background: linear-gradient(135deg, #1F3864, #2E75B6); color: white; border: none; border-radius: 10px; padding: 16px 40px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+  .start-btn:hover { opacity: 0.9; }
+  .warning-box { background: #FFF9E6; border-left: 4px solid #FFC000; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #7F4F00; text-align: left; margin-bottom: 16px; }
+
+  /* EXAM SCREEN */
+  #exam-screen { display: none; }
+  .exam-header { background: linear-gradient(135deg, #1F3864, #2E75B6); color: white; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .exam-title { font-size: 15px; font-weight: bold; }
+  .exam-meta { font-size: 11px; opacity: 0.8; }
+  .timer-box { background: rgba(255,255,255,0.15); border-radius: 10px; padding: 8px 18px; text-align: center; min-width: 100px; }
+  .timer-num { font-size: 26px; font-weight: bold; font-family: monospace; }
+  .timer-lbl { font-size: 10px; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+  .timer-box.warning { background: rgba(255,200,0,0.3); animation: pulse 1s infinite; }
+  .timer-box.danger  { background: rgba(255,60,60,0.4); animation: pulse 0.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
+  .container { max-width: 780px; margin: 24px auto; padding: 0 20px 60px; }
+  .marks-bar { background: white; border-radius: 10px; padding: 14px 20px; margin-bottom: 20px; font-size: 13px; color: #555; box-shadow: 0 1px 6px rgba(0,0,0,0.06); display:flex; gap:20px; flex-wrap:wrap; }
+  .marks-bar strong { color: #1F3864; }
+
+  .q-card { background: white; border-radius: 12px; padding: 22px 24px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border-left: 4px solid #BDD7EE; }
+  .q-num { font-size: 11px; font-weight: bold; color: #2E75B6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .q-marks { float: right; background: #EBF3FB; color: #2E75B6; border-radius: 6px; padding: 2px 10px; font-size: 12px; font-weight: bold; }
+  .q-text { font-size: 15px; font-weight: bold; color: #1F3864; line-height: 1.5; margin-bottom: 16px; }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn { background: #F7F9FF; border: 2px solid #BDD7EE; border-radius: 8px; padding: 12px 16px; text-align: left; font-size: 14px; cursor: pointer; transition: all 0.2s; display:flex; align-items:center; gap:10px; }
+  .option-btn:hover { background: #EBF3FB; border-color: #2E75B6; }
+  .option-btn.selected { background: #2E75B6; border-color: #2E75B6; color: white; }
+  .option-btn.selected .option-label { background: white; color: #2E75B6; }
+  .option-label { width: 26px; height: 26px; border-radius: 50%; background: #2E75B6; color: white; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; }
+  .option-btn.correct { background: #C6EFCE; border-color: #70AD47; color: #375623; }
+  .option-btn.wrong   { background: #FFE0E0; border-color: #FF6B6B; color: #9C0006; }
+  .option-btn.correct .option-label { background: #375623; color: white; }
+  .option-btn.wrong   .option-label { background: #9C0006; color: white; }
+  .tf-group { display: flex; gap: 12px; margin-top: 8px; }
+  .tf-btn { flex: 1; padding: 12px; border: 2px solid #BDD7EE; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; background: #F7F9FF; transition: all 0.2s; }
+  .tf-btn:hover { background: #EBF3FB; }
+  .tf-btn.selected { background: #2E75B6; color: white; border-color: #2E75B6; }
+  .tf-btn.correct  { background: #C6EFCE; border-color: #70AD47; color: #375623; }
+  .tf-btn.wrong    { background: #FFE0E0; border-color: #FF6B6B; color: #9C0006; }
+  .fill-input { border: 2px solid #BDD7EE; border-radius: 8px; padding: 10px 14px; font-size: 15px; width: 220px; outline: none; font-family: Arial; display:block; margin-top:8px; }
+  .fill-input:focus { border-color: #2E75B6; }
+  .fill-input.correct { border-color: #70AD47; background: #EBF9E6; color: #375623; }
+  .fill-input.wrong   { border-color: #FF6B6B; background: #FFF0F0; color: #9C0006; }
+
+  .section-header { background: #1F3864; color: white; border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: bold; margin: 24px 0 14px; }
+
+  .submit-btn { width: 100%; background: #9C0006; color: white; border: none; border-radius: 10px; padding: 16px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 16px; }
+  .submit-btn:hover { background: #7F0005; }
+
+  /* RESULTS SCREEN */
+  #results-screen { display: none; }
+  .results-header { background: linear-gradient(135deg, #1F3864, #2E75B6); color: white; padding: 30px 32px; text-align: center; }
+  .results-header h1 { font-size: 20px; margin-bottom: 4px; }
+  .score-circle { width: 140px; height: 140px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px auto; font-size: 36px; font-weight: bold; color: white; }
+  .score-circle.pass { background: linear-gradient(135deg, #375623, #70AD47); }
+  .score-circle.warn { background: linear-gradient(135deg, #7F4F00, #FFC000); }
+  .score-circle.fail { background: linear-gradient(135deg, #9C0006, #FF6B6B); }
+  .score-circle small { font-size: 13px; font-weight: normal; }
+  .results-body { max-width: 760px; margin: 0 auto; padding: 24px 20px 60px; }
+  .results-summary { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+  .results-summary h2 { font-size: 16px; color: #1F3864; margin-bottom: 14px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .stat-box { background: #F0F4FF; border-radius: 10px; padding: 14px; text-align: center; }
+  .stat-box .val { font-size: 24px; font-weight: bold; color: #1F3864; }
+  .stat-box .lbl { font-size: 11px; color: #777; margin-top: 2px; }
+  .q-result { background: white; border-radius: 10px; padding: 16px 18px; margin-bottom: 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 14px; }
+  .q-result .icon { font-size: 20px; flex-shrink: 0; }
+  .q-result .q-info { flex: 1; }
+  .q-result .q-info p { font-size: 13px; color: #555; line-height: 1.5; }
+  .q-result .q-info strong { color: #1F3864; font-size: 14px; }
+  .q-result.correct-res { border-left: 4px solid #70AD47; }
+  .q-result.wrong-res   { border-left: 4px solid #FF6B6B; }
+  .action-panel { background: white; border-radius: 12px; padding: 20px 24px; margin-top: 20px; }
+  .action-panel h2 { font-size: 16px; color: #1F3864; margin-bottom: 12px; }
+  .action-btn { display: inline-block; background: #1F3864; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: bold; margin: 5px; }
+  .action-btn.green { background: #375623; }
+  .action-btn.orange { background: #7F4F00; }
+  .parent-box { background: #FFF9E6; border: 1px solid #FFC000; border-radius: 10px; padding: 16px 20px; margin-top: 20px; font-size: 13px; line-height: 1.7; }
+  .parent-box h3 { color: #7F4F00; font-size: 14px; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ START SCREEN ═══════════ -->
+<div id="start-screen">
+  <div class="start-card">
+    <div style="font-size:48px; margin-bottom:12px;">⏱️</div>
+    <h1>Timed Mini Paper</h1>
+    <p>Chapter 1: Symmetry &nbsp;|&nbsp; Maths Grade 7</p>
+
+    <div class="info-grid">
+      <div class="info-box"><div class="val">25</div><div class="lbl">Total Marks</div></div>
+      <div class="info-box"><div class="val">30</div><div class="lbl">Minutes</div></div>
+      <div class="info-box"><div class="val">15</div><div class="lbl">Questions</div></div>
+      <div class="info-box"><div class="val">Basic + Standard</div><div class="lbl">Difficulty</div></div>
+    </div>
+
+    <div class="warning-box">
+      ⚠️ <strong>Important:</strong> Once you click "Start Exam", the 30-minute timer will begin. The paper will auto-submit when time runs out. Do not close this tab during the exam.
+    </div>
+
+    <p style="font-size:13px; color:#555; margin-bottom:16px;">Make sure you have read the <strong>Chapter 1 Short Notes</strong> and completed <strong>Practice Set A</strong> before starting this paper.</p>
+
+    <button class="start-btn" onclick="startExam()">▶ Start Exam — 30 Minutes</button>
+  </div>
+</div>
+
+<!-- ═══════════ EXAM SCREEN ═══════════ -->
+<div id="exam-screen">
+  <div class="exam-header">
+    <div>
+      <div class="exam-title">⏱️ Timed Mini Paper — Ch.1 Symmetry</div>
+      <div class="exam-meta">Maths Grade 7 &nbsp;|&nbsp; 25 marks &nbsp;|&nbsp; Sheyvon Warnapura</div>
+    </div>
+    <div class="timer-box" id="timer-box">
+      <div class="timer-num" id="timer-display">30:00</div>
+      <div class="timer-lbl">Time Remaining</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="marks-bar">
+      <span><strong>Section A:</strong> Multiple Choice — 10 questions × 1 mark = 10 marks</span>
+      <span><strong>Section B:</strong> True / False — 3 questions × 1 mark = 3 marks</span>
+      <span><strong>Section C:</strong> Fill in the Blank — 2 questions × 1 mark = 2 marks</span>
+      <span><strong>Bonus:</strong> Short Answer — 2 questions × 5 marks = 10 marks</span>
+    </div>
+
+    <!-- ──────── SECTION A ──────── -->
+    <div class="section-header">Section A — Multiple Choice &nbsp;(10 marks)</div>
+
+    <div class="q-card" id="eq1">
+      <div class="q-num">Question 1 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">What does it mean for a figure to have bilateral symmetry?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('eq1','A',false)"><span class="option-label">A</span>It has equal sides on all sides</button>
+        <button class="option-btn" onclick="selectMCQ('eq1','B',true)"><span class="option-label">B</span>It can be folded along a line so the two halves coincide exactly</button>
+        <button class="option-btn" onclick="selectMCQ('eq1','C',false)"><span class="option-label">C</span>It has a dotted line through its centre</button>
+        <button class="option-btn" onclick="selectMCQ('eq1','D',false)"><span class="option-label">D</span>It can be divided into two triangles</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="eq2">
+      <div class="q-num">Question 2 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A square has how many axes of symmetry?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('eq2','A',false)"><span class="option-label">A</span>2</button>
+        <button class="option-btn" onclick="selectMCQ('eq2','B',false)"><span class="option-label">B</span>3</button>
+        <button class="option-btn" onclick="selectMCQ('eq2','C',true)"><span class="option-label">C</span>4</button>
+        <button class="option-btn" onclick="selectMCQ('eq2','D',false)"><span class="option-label">D</span>6</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="eq3">
+      <div class="q-num">Question 3 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A rhombus (diamond shape) has all sides equal. How many axes of symmetry does it have?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('eq3','A',false)"><span class="option-label">A</span>0</button>
+        <button class="option-btn" onclick="selectMCQ('eq3','B',false)"><span class="option-label">B</span>1</button>
+        <button class="option-btn" onclick="selectMCQ('eq3','C',true)"><span class="option-label">C</span>2</button>
+        <button class="option-btn" onclick="selectMCQ('eq3','D',false)"><span class="option-label">D</span>4</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="eq4">
+      <div class="q-num">Question 4 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Which of the following shapes has ZERO axes of symmetry?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('eq4','A',false)"><span class="option-label">A</span>An equilateral triangle</button>
+        <button class="option-btn" onclick="selectMCQ('eq4','B',false)"><span class="option-label">B</span>An isosceles triangle</button>
+        <button class="option-btn" onclick="selectMCQ('eq4','C',true)"><span class="option-label">C</span>A scalene triangle (all sides different)</button>
+        <button class="option-btn" onclick="selectMCQ('eq4','D',false)"><span class="option-label">D</span>A rectangle</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="eq5">
+      <div class="q-num">Question 5 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Janith folds a piece of paper along a line and both halves fit exactly on top of each other. What is this fold line called?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('eq5','A',false)"><span class="option-label">A</span>Line of division</button>
+        <button class="option-btn" onclick="selectMCQ('eq5','B',true)"><span class="option-label">B</span>Axis of symmetry</button>
+        <button class="option-btn" onclick="selectMCQ('eq5','C',false)"><span class="option-label">C</span>Perpendicular bisector</button>
+        <button class="option-btn" onclick="selectMCQ('eq5','D',false)"><span class="option-label">D</span>Diagonal line</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="eq6">
+      <div class="q-num">Question 6 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A regular octagon has 8 equal sides. How many axes of symmetry does it have?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('eq6','A',false)"><span class="option-label">A</span>4</button>
+        <button class="option-btn" onclick="selectMCQ('eq6','B',false)"><span class="option-label">B</span>6</button>
+        <button class="option-btn" onclick="selectMCQ('eq6','C',true)"><span class="option-label">C</span>8</button>
+        <button class="option-btn" onclick="selectMCQ('eq6','D',false)"><span class="option-label">D</span>16</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="eq7">
+      <div class="q-num">Question 7 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A line divides a rectangle into two smaller rectangles of equal area. Is this line an axis of symmetry?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('eq7','A',false)"><span class="option-label">A</span>Yes, because both parts have equal area</button>
+        <button class="option-btn" onclick="selectMCQ('eq7','B',false)"><span class="option-label">B</span>No, because rectangles have no axes of symmetry</button>
+        <button class="option-btn" onclick="selectMCQ('eq7','C',true)"><span class="option-label">C</span>It depends — only if the two parts coincide when folded along that line</button>
+        <button class="option-btn" onclick="selectMCQ('eq7','D',false)"><span class="option-label">D</span>Yes, any line through a rectangle is an axis of symmetry</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="eq8">
+      <div class="q-num">Question 8 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Nimasha cuts a piece of paper that has been folded in half, keeping part of the fold line in the cut shape. When she unfolds it, the shape she gets will always be:</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('eq8','A',false)"><span class="option-label">A</span>A rectangle</button>
+        <button class="option-btn" onclick="selectMCQ('eq8','B',true)"><span class="option-label">B</span>A bilaterally symmetric figure</button>
+        <button class="option-btn" onclick="selectMCQ('eq8','C',false)"><span class="option-label">C</span>A triangle</button>
+        <button class="option-btn" onclick="selectMCQ('eq8','D',false)"><span class="option-label">D</span>A circle</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="eq9">
+      <div class="q-num">Question 9 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">On a square grid, a point P is 3 squares to the right of the axis of symmetry. Where is its corresponding point P' (mirror image)?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('eq9','A',false)"><span class="option-label">A</span>3 squares above P</button>
+        <button class="option-btn" onclick="selectMCQ('eq9','B',true)"><span class="option-label">B</span>3 squares to the left of the axis of symmetry</button>
+        <button class="option-btn" onclick="selectMCQ('eq9','C',false)"><span class="option-label">C</span>3 squares below P</button>
+        <button class="option-btn" onclick="selectMCQ('eq9','D',false)"><span class="option-label">D</span>On the axis of symmetry</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="eq10">
+      <div class="q-num">Question 10 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Which of the following letters of the English alphabet has exactly ONE axis of symmetry?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('eq10','A',false)"><span class="option-label">A</span>X (has 2 axes)</button>
+        <button class="option-btn" onclick="selectMCQ('eq10','B',false)"><span class="option-label">B</span>O (has many axes)</button>
+        <button class="option-btn" onclick="selectMCQ('eq10','C',true)"><span class="option-label">C</span>A (has 1 axis — vertical)</button>
+        <button class="option-btn" onclick="selectMCQ('eq10','D',false)"><span class="option-label">D</span>Z (has no axes)</button>
+      </div>
+    </div>
+
+    <!-- ──────── SECTION B ──────── -->
+    <div class="section-header">Section B — True or False &nbsp;(3 marks)</div>
+
+    <div class="q-card" id="eq11">
+      <div class="q-num">Question 11 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A figure with bilateral symmetry must have EXACTLY one axis of symmetry.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('eq11','T',false)">✅ True</button>
+        <button class="tf-btn" onclick="selectTF('eq11','F',true)">❌ False</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="eq12">
+      <div class="q-num">Question 12 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The two parts on either side of an axis of symmetry must coincide when the figure is folded along that axis.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('eq12','T',true)">✅ True</button>
+        <button class="tf-btn" onclick="selectTF('eq12','F',false)">❌ False</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="eq13">
+      <div class="q-num">Question 13 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A circle has fewer axes of symmetry than a square.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('eq13','T',false)">✅ True</button>
+        <button class="tf-btn" onclick="selectTF('eq13','F',true)">❌ False</button>
+      </div>
+    </div>
+
+    <!-- ──────── SECTION C ──────── -->
+    <div class="section-header">Section C — Fill in the Blank &nbsp;(2 marks)</div>
+
+    <div class="q-card" id="eq14">
+      <div class="q-num">Question 14 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A rectangle has _______ axes of symmetry.</div>
+      <input class="fill-input" id="eq14-input" type="text" placeholder="Enter a number...">
+    </div>
+
+    <div class="q-card" id="eq15">
+      <div class="q-num">Question 15 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A regular polygon with 7 sides (regular heptagon) has _______ axes of symmetry.</div>
+      <input class="fill-input" id="eq15-input" type="text" placeholder="Enter a number...">
+    </div>
+
+    <!-- ──────── BONUS ──────── -->
+    <div class="section-header" style="background:#7F4F00;">Bonus Section — Short Answer &nbsp;(10 marks) — Marked by parent / teacher</div>
+
+    <div class="q-card" id="eq16" style="border-left-color:#FFC000;">
+      <div class="q-num">Bonus Question 1 <span class="q-marks">5 marks</span></div>
+      <div class="q-text">Explain in your own words what bilateral symmetry means. Give TWO examples of objects you see in daily life that have bilateral symmetry. For each example, describe where the axis of symmetry is located.</div>
+      <textarea style="width:100%; height:120px; border:2px solid #BDD7EE; border-radius:8px; padding:12px; font-size:14px; font-family:Arial; margin-top:10px; outline:none; resize:vertical;" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="q-card" id="eq17" style="border-left-color:#FFC000;">
+      <div class="q-num">Bonus Question 2 <span class="q-marks">5 marks</span></div>
+      <div class="q-text">Kavindu says: "I drew a diagonal line through a square and divided it into two equal triangles. This diagonal is an axis of symmetry of the square." Is Kavindu correct? Explain why or why not, using what you know about bilateral symmetry.</div>
+      <textarea style="width:100%; height:120px; border:2px solid #BDD7EE; border-radius:8px; padding:12px; font-size:14px; font-family:Arial; margin-top:10px; outline:none; resize:vertical;" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <button class="submit-btn" onclick="submitExam()">📩 Submit Paper &amp; See Results</button>
+  </div>
+</div>
+
+<!-- ═══════════ RESULTS SCREEN ═══════════ -->
+<div id="results-screen">
+  <div class="results-header">
+    <h1>📊 Paper Results — Chapter 1: Symmetry</h1>
+    <p style="font-size:13px; opacity:0.85; margin-top:4px;">Maths Grade 7 | Timed Mini Paper</p>
+    <div class="score-circle" id="r-circle">
+      <span id="r-score">?</span>
+      <small>/ 15 (obj.)</small>
+    </div>
+    <p id="r-pct" style="font-size:22px; font-weight:bold;"></p>
+    <p id="r-status" style="font-size:15px; margin-top:6px; opacity:0.9;"></p>
+  </div>
+
+  <div class="results-body">
+    <div class="results-summary">
+      <h2>📈 Score Summary</h2>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="val" id="r-correct">—</div><div class="lbl">Correct (obj.)</div></div>
+        <div class="stat-box"><div class="val" id="r-wrong">—</div><div class="lbl">Wrong (obj.)</div></div>
+        <div class="stat-box"><div class="val" id="r-time">—</div><div class="lbl">Time Taken</div></div>
+        <div class="stat-box"><div class="val">10</div><div class="lbl">Bonus Marks (parent-marked)</div></div>
+      </div>
+    </div>
+
+    <h2 style="color:#1F3864; margin: 20px 0 12px;">📝 Question-by-Question Review</h2>
+    <div id="results-list"></div>
+
+    <div class="parent-box">
+      <h3>📱 Parent Summary (for WhatsApp / Email)</h3>
+      <div id="parent-msg"></div>
+    </div>
+
+    <div class="action-panel">
+      <h2>⏭️ What Next?</h2>
+      <div id="next-action"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── State ──────────────────────────────────────────────────
+let timerInterval = null;
+let secondsLeft = 30 * 60;
+let startTime = null;
+let submitted = false;
+
+const answers = {}; // qid -> {selected, correct}
+
+const correct_answers = {
+  eq1: 'B', eq2: 'C', eq3: 'C', eq4: 'C', eq5: 'B',
+  eq6: 'C', eq7: 'C', eq8: 'B', eq9: 'B', eq10: 'C',
+  eq11: 'F', eq12: 'T', eq13: 'F',
+  eq14: ['2', 'two'], eq15: ['7', 'seven']
+};
+
+const q_texts = {
+  eq1:  "What does it mean for a figure to have bilateral symmetry?",
+  eq2:  "How many axes of symmetry does a square have?",
+  eq3:  "A rhombus — how many axes of symmetry?",
+  eq4:  "Which shape has ZERO axes of symmetry?",
+  eq5:  "What is the fold line of a symmetric figure called?",
+  eq6:  "Axes of symmetry of a regular octagon (8 sides)?",
+  eq7:  "Is a line through a rectangle always an axis of symmetry?",
+  eq8:  "Cutting a folded paper always produces a _____ figure.",
+  eq9:  "Where is the mirror image of a point 3 squares right of axis?",
+  eq10: "Which letter has exactly ONE axis of symmetry?",
+  eq11: "A symmetric figure must have EXACTLY one axis. True/False?",
+  eq12: "Parts must coincide when folded along axis. True/False?",
+  eq13: "Circle has fewer axes than square. True/False?",
+  eq14: "A rectangle has __ axes of symmetry.",
+  eq15: "A regular heptagon (7 sides) has __ axes of symmetry.",
+};
+
+const explanations = {
+  eq1:  "The axis of symmetry is the fold line where both halves coincide exactly.",
+  eq2:  "A square has 4 axes: 2 through midpoints of opposite sides + 2 diagonals.",
+  eq3:  "A rhombus has 2 axes — its two diagonals are axes of symmetry.",
+  eq4:  "A scalene triangle (all sides different) has 0 axes of symmetry.",
+  eq5:  "The fold line is called the axis of symmetry.",
+  eq6:  "Regular polygon: axes = number of sides. Octagon → 8 axes.",
+  eq7:  "It depends whether the two parts coincide. A horizontal or vertical midline does; a diagonal does not (for a rectangle).",
+  eq8:  "Cutting from a folded paper always produces a bilaterally symmetric figure — the fold is the axis.",
+  eq9:  "The mirror point is the same distance (3 squares) on the OTHER side of the axis.",
+  eq10: "The letter A has one vertical axis of symmetry.",
+  eq11: "FALSE — a figure can have MORE than one axis of symmetry (e.g., square has 4).",
+  eq12: "TRUE — coinciding is the key requirement for an axis of symmetry.",
+  eq13: "FALSE — a circle has INFINITELY MANY axes, far more than a square's 4.",
+  eq14: "A rectangle has 2 axes: one horizontal and one vertical through the centre.",
+  eq15: "Regular polygon with 7 sides → 7 axes of symmetry.",
+};
+
+// ─── Timer ──────────────────────────────────────────────────
+function startExam() {
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('exam-screen').style.display = 'block';
+  startTime = new Date();
+  timerInterval = setInterval(tick, 1000);
+  window.scrollTo(0, 0);
+}
+
+function tick() {
+  secondsLeft--;
+  const m = Math.floor(secondsLeft / 60);
+  const s = secondsLeft % 60;
+  document.getElementById('timer-display').textContent =
+    String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+
+  const box = document.getElementById('timer-box');
+  if (secondsLeft <= 0) {
+    clearInterval(timerInterval);
+    submitExam(true);
+  } else if (secondsLeft <= 120) {
+    box.className = 'timer-box danger';
+  } else if (secondsLeft <= 300) {
+    box.className = 'timer-box warning';
+  }
+}
+
+// ─── MCQ Selection ──────────────────────────────────────────
+function selectMCQ(qid, letter, isCorrect) {
+  if (submitted) return;
+  answers[qid] = { selected: letter, correct: isCorrect };
+  const card = document.getElementById(qid);
+  card.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+}
+
+// ─── TF Selection ───────────────────────────────────────────
+function selectTF(qid, letter, isCorrect) {
+  if (submitted) return;
+  answers[qid] = { selected: letter, correct: isCorrect };
+  const card = document.getElementById(qid);
+  card.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+}
+
+// ─── Submit ─────────────────────────────────────────────────
+function submitExam(autoSubmit = false) {
+  if (submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+
+  const elapsed = Math.round((new Date() - startTime) / 1000);
+  const em = Math.floor(elapsed / 60);
+  const es = elapsed % 60;
+  const timeStr = String(em).padStart(2,'0') + ':' + String(es).padStart(2,'0');
+
+  // Score fills
+  let fill14 = (document.getElementById('eq14-input').value || '').trim().toLowerCase();
+  let fill15 = (document.getElementById('eq15-input').value || '').trim().toLowerCase();
+  answers['eq14'] = { selected: fill14, correct: ['2','two'].includes(fill14) };
+  answers['eq15'] = { selected: fill15, correct: ['7','seven'].includes(fill15) };
+
+  // Highlight all
+  ['eq1','eq2','eq3','eq4','eq5','eq6','eq7','eq8','eq9','eq10'].forEach(qid => {
+    const card = document.getElementById(qid);
+    const btns = card.querySelectorAll('.option-btn');
+    btns.forEach(b => {
+      b.disabled = true;
+      const isCorrectBtn = b.onclick && b.onclick.toString().includes(',true)');
+      if (b.classList.contains('selected')) {
+        b.classList.remove('selected');
+        b.classList.add(answers[qid]?.correct ? 'correct' : 'wrong');
+        b.querySelector('.option-label').style.background = answers[qid]?.correct ? '#375623' : '#9C0006';
+        b.querySelector('.option-label').style.color = 'white';
+      } else if (isCorrectBtn) {
+        b.classList.add('correct');
+        b.querySelector('.option-label').style.background = '#375623';
+      }
+    });
+  });
+
+  ['eq11','eq12','eq13'].forEach(qid => {
+    const card = document.getElementById(qid);
+    card.querySelectorAll('.tf-btn').forEach(b => {
+      b.disabled = true;
+      if (b.classList.contains('selected')) {
+        b.classList.remove('selected');
+        b.classList.add(answers[qid]?.correct ? 'correct' : 'wrong');
+      } else {
+        // mark the correct one green
+        const letter = b.onclick.toString().match(/'(T|F)'/)?.[1];
+        if (letter === correct_answers[qid]) b.classList.add('correct');
+      }
+    });
+  });
+
+  // Fill colour
+  ['eq14','eq15'].forEach(qid => {
+    const inp = document.getElementById(qid + '-input');
+    inp.disabled = true;
+    inp.classList.add(answers[qid]?.correct ? 'correct' : 'wrong');
+  });
+
+  // Calculate objective score (15 qs, 15 marks)
+  let score = 0;
+  const objQids = ['eq1','eq2','eq3','eq4','eq5','eq6','eq7','eq8','eq9','eq10','eq11','eq12','eq13','eq14','eq15'];
+  objQids.forEach(qid => { if (answers[qid]?.correct) score++; });
+
+  const pct = Math.round((score / 15) * 100);
+
+  // Show results
+  document.getElementById('exam-screen').style.display = 'none';
+  const rs = document.getElementById('results-screen');
+  rs.style.display = 'block';
+  window.scrollTo(0, 0);
+
+  document.getElementById('r-score').textContent = score;
+  document.getElementById('r-pct').textContent = pct + '%';
+  document.getElementById('r-correct').textContent = score;
+  document.getElementById('r-wrong').textContent = (15 - score);
+  document.getElementById('r-time').textContent = timeStr;
+
+  const circle = document.getElementById('r-circle');
+  const status = document.getElementById('r-status');
+  if (pct >= 80) {
+    circle.className = 'score-circle pass';
+    status.textContent = '🌟 Excellent! Well done, Sheyvon!';
+  } else if (pct >= 60) {
+    circle.className = 'score-circle warn';
+    status.textContent = '👍 Good effort — review the wrong answers and aim higher next time!';
+  } else {
+    circle.className = 'score-circle fail';
+    status.textContent = '📖 Needs revision — go back to the short notes and practice again.';
+  }
+
+  // Results list
+  const list = document.getElementById('results-list');
+  list.innerHTML = '';
+  objQids.forEach((qid, i) => {
+    const isCorrect = answers[qid]?.correct;
+    const div = document.createElement('div');
+    div.className = 'q-result ' + (isCorrect ? 'correct-res' : 'wrong-res');
+    div.innerHTML = `
+      <div class="icon">${isCorrect ? '✅' : '❌'}</div>
+      <div class="q-info">
+        <strong>Q${i+1}: ${q_texts[qid]}</strong>
+        <p>${isCorrect ? '✔ Correct' : '✘ Wrong — ' + explanations[qid]}</p>
+      </div>`;
+    list.appendChild(div);
+  });
+
+  // Parent message
+  const pMsg = document.getElementById('parent-msg');
+  pMsg.innerHTML = `
+    <strong>Sheyvon completed:</strong> Maths — Chapter 1 Symmetry<br>
+    <strong>Score (objective):</strong> ${score}/15 (${pct}%)<br>
+    <strong>Time taken:</strong> ${timeStr}<br>
+    <strong>Status:</strong> ${pct >= 60 ? '✅ Passed' : '❌ Needs revision'}<br>
+    <strong>Bonus questions:</strong> 2 written answers — please review with Sheyvon.<br>
+    <strong>Next task:</strong> ${pct >= 60 ? 'Move to Chapter 2 — Sets (Practice Set A)' : 'Redo correction sheet for Chapter 1, then attempt paper again'}`;
+
+  // Next action
+  const na = document.getElementById('next-action');
+  if (pct >= 80) {
+    na.innerHTML = `<p style="color:#375623; font-size:14px; margin-bottom:12px;">🌟 Outstanding! You're ready to move forward.</p>
+    <a class="action-btn green" href="../Short_Notes/Ch01_Symmetry_Notes.html">📖 Review Notes</a>
+    <a class="action-btn" href="#">📝 Chapter 2 — Sets (Coming Soon)</a>`;
+  } else if (pct >= 60) {
+    na.innerHTML = `<p style="color:#7F4F00; font-size:14px; margin-bottom:12px;">👍 You passed! Review the mistakes above, then move forward.</p>
+    <a class="action-btn orange" href="../Practice_Papers/Ch01_Symmetry_PracticeA.html">↩ Redo Practice Set A</a>
+    <a class="action-btn" href="#">📝 Chapter 2 — Sets (Coming Soon)</a>`;
+  } else {
+    na.innerHTML = `<p style="color:#9C0006; font-size:14px; margin-bottom:12px;">📖 Let's revise Chapter 1 before moving on. No worries — revision is how we improve!</p>
+    <a class="action-btn" href="../Short_Notes/Ch01_Symmetry_Notes.html">📖 Re-read Short Notes</a>
+    <a class="action-btn orange" href="../Practice_Papers/Ch01_Symmetry_PracticeA.html">↩ Redo Practice Set A</a>`;
+  }
+}
+</script>
+</body>
+</html>
