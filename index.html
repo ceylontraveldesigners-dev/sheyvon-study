@@ -11,24 +11,36 @@ body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
 .top-bar h1 { font-size: 22px; }
 .top-bar p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
 .date-badge { background: rgba(255,255,255,0.2); border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: bold; }
-.container { max-width: 1000px; margin: 0 auto; padding: 24px 20px 80px; }
-.quick-nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 28px; }
-.nav-card { background: white; border-radius: 12px; padding: 16px; text-align: center; text-decoration: none; color: #1F3864; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-top: 4px solid #2E75B6; transition: transform 0.15s; }
-.nav-card:hover { transform: translateY(-2px); }
-.nav-card .icon { font-size: 28px; display: block; margin-bottom: 6px; }
-.nav-card .label { font-size: 12px; font-weight: bold; }
-.stats-bar { background: white; border-radius: 12px; padding: 16px 24px; margin-bottom: 28px; display: flex; gap: 24px; flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.container { max-width: 1050px; margin: 0 auto; padding: 24px 20px 80px; }
+
+/* SUBJECT TABS */
+.subject-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.tab-btn { padding: 10px 22px; border: none; border-radius: 10px; font-size: 14px; font-weight: bold; cursor: pointer; opacity: 0.5; transition: opacity .2s, transform .2s; }
+.tab-btn.active { opacity: 1; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.tab-maths { background: #1F3864; color: white; }
+.tab-sci   { background: #1B5E20; color: white; }
+.tab-geo   { background: #E65100; color: white; }
+
+/* SUBJECT PANELS */
+.subject-panel { display: none; }
+.subject-panel.active { display: block; }
+
+/* STATS BAR */
+.stats-bar { background: white; border-radius: 12px; padding: 16px 24px; margin-bottom: 24px; display: flex; gap: 24px; flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
 .stat { text-align: center; }
-.stat .num { font-size: 28px; font-weight: bold; color: #1F3864; }
+.stat .num { font-size: 24px; font-weight: bold; }
 .stat .lbl { font-size: 11px; color: #666; }
-.section-head { font-size: 16px; font-weight: bold; color: #1F3864; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #BDD7EE; }
+
+/* SECTION HEADING */
+.section-head { font-size: 16px; font-weight: bold; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #ddd; }
+
+/* CHAPTER CARDS */
 .ch-card { background: white; border-radius: 10px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); overflow: hidden; }
 .ch-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; cursor: pointer; user-select: none; flex-wrap: wrap; }
 .ch-header:hover { background: #f7f9ff; }
 .ch-num { color: white; border-radius: 6px; padding: 4px 10px; font-size: 12px; font-weight: bold; white-space: nowrap; }
 .ch-title { flex: 1; font-size: 14px; font-weight: bold; color: #1F3864; }
-.term-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; color: white; font-weight: bold; }
-.toggle-icon { color: #2E75B6; font-size: 13px; transition: transform 0.2s; }
+.toggle-icon { font-size: 13px; transition: transform 0.2s; }
 .ch-card.open .toggle-icon { transform: rotate(180deg); }
 .ch-body { display: none; padding: 0 18px 18px; border-top: 1px solid #f0f0f0; }
 .ch-card.open .ch-body { display: block; }
@@ -36,25 +48,35 @@ body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
 .ch-link { display: inline-block; padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: bold; text-decoration: none; }
 .notes-link { background: #EBF3FB; color: #1F3864; border: 1px solid #BDD7EE; }
 .notes-link:hover { background: #BDD7EE; }
-.practice-link { background: #EDF7E9; color: #375623; border: 1px solid #C6EFCE; }
-.practice-link:hover { background: #C6EFCE; }
+.prac-link { background: #EDF7E9; color: #375623; border: 1px solid #C6EFCE; }
+.prac-link:hover { background: #C6EFCE; }
 .timed-link { background: #FFF0F0; color: #9C0006; border: 1px solid #FFCCCC; }
 .timed-link:hover { background: #FFCCCC; }
 .ch-flow { display: flex; align-items: center; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
 .flow-step { background: #f7f9ff; border: 1px solid #dce5f3; border-radius: 6px; padding: 5px 12px; font-size: 12px; color: #555; }
 .flow-arrow { color: #2E75B6; font-weight: bold; }
+
+/* FILTER */
 .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-.filter-btn { padding: 7px 16px; border: 2px solid #BDD7EE; background: white; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; color: #1F3864; }
-.filter-btn.active { background: #1F3864; color: white; border-color: #1F3864; }
+.filter-btn { padding: 7px 16px; border: 2px solid #ccc; background: white; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; color: #555; }
+
+/* ADMIN */
 .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 28px; }
 .admin-card { background: white; border-radius: 10px; padding: 16px 20px; text-decoration: none; color: #333; box-shadow: 0 2px 6px rgba(0,0,0,0.06); border-left: 4px solid #FFD966; display: flex; align-items: center; gap: 12px; }
 .admin-card:hover { background: #FFF9E6; }
 .admin-icon { font-size: 24px; }
 .admin-text .title { font-size: 13px; font-weight: bold; color: #1F3864; }
-.admin-text .sub { font-size: 11px; color: #888; margin-top: 2px; }
-.reminder-box { background: #E7F8EF; border: 1px solid #25D366; border-radius: 12px; padding: 16px 20px; margin-bottom: 28px; }
-.reminder-box h3 { color: #1a7a45; font-size: 14px; margin-bottom: 8px; }
-.reminder-slot { display: inline-block; background: #25D366; color: white; border-radius: 6px; padding: 4px 12px; font-size: 12px; font-weight: bold; margin: 4px; }
+.admin-text .sub   { font-size: 11px; color: #888; margin-top: 2px; }
+
+/* OVERALL SUMMARY */
+.overall-bar { background: linear-gradient(135deg, #1F3864, #2E75B6); color: white; border-radius: 14px; padding: 18px 24px; margin-bottom: 24px; display: flex; gap: 28px; flex-wrap: wrap; justify-content: space-around; }
+.overall-stat .num { font-size: 28px; font-weight: bold; }
+.overall-stat .lbl { font-size: 11px; opacity: .8; }
+
+/* REMINDER */
+.reminder-box { border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; background: #E7F8EF; border: 1px solid #25D366; }
+.reminder-box h3 { font-size: 14px; margin-bottom: 8px; color: #1a7a45; }
+.reminder-slot { display: inline-block; color: white; border-radius: 6px; padding: 4px 12px; font-size: 12px; font-weight: bold; margin: 4px; }
 </style>
 </head>
 <body>
@@ -62,53 +84,28 @@ body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
 <div class="top-bar">
   <div>
     <h1>📚 Sheyvon's Study Dashboard</h1>
-    <p>Grade 7 Maths — All 29 Chapters Ready | Sri Lankan Syllabus</p>
+    <p>Grade 7 — Maths · Science · Geography | Sri Lankan Syllabus</p>
   </div>
   <div class="date-badge" id="todayDate">Loading...</div>
 </div>
 
 <div class="container">
 
-  <div class="quick-nav">
-    <a class="nav-card" href="01_Syllabus_Maps/Master_Syllabus_Tracker.xlsx">
-      <span class="icon">📋</span><span class="label">Syllabus Tracker</span>
-    </a>
-    <a class="nav-card" href="sheyvon_study_timetable.xlsx" style="border-top-color:#FFD966; color:#7F4F00;">
-      <span class="icon">📅</span><span class="label">Weekly Timetable</span>
-    </a>
-    <a class="nav-card" href="02_Subjects/Maths/Short_Notes/Ch01_Symmetry_Notes.html" style="border-top-color:#9C0006; color:#9C0006;">
-      <span class="icon">🚀</span><span class="label">Start from Ch 1</span>
-    </a>
-    <a class="nav-card" href="02_Subjects/Maths/Timed_Exams/Ch01_Symmetry_TimedPaper.html" style="border-top-color:#375623; color:#375623;">
-      <span class="icon">⏱️</span><span class="label">Today's Timed Paper</span>
-    </a>
+  <!-- OVERALL STATS -->
+  <div class="overall-bar">
+    <div class="overall-stat"><div class="num">53</div><div class="lbl">Total Chapters</div></div>
+    <div class="overall-stat"><div class="num">159</div><div class="lbl">Study Files</div></div>
+    <div class="overall-stat"><div class="num">3</div><div class="lbl">Subjects</div></div>
+    <div class="overall-stat"><div class="num">7</div><div class="lbl">Days / Week</div></div>
+    <div class="overall-stat"><div class="num">7</div><div class="lbl">WhatsApp Reminders</div></div>
   </div>
 
-  <div class="reminder-box">
-    <h3>📱 WhatsApp Study Reminders — Starting 11th May 2026</h3>
-    <p>Sheyvon gets a reminder to open his study materials at:</p>
-    <div style="margin-top:8px;">
-      <span class="reminder-slot">📐 Monday 4:45 PM — Maths Study</span>
-      <span class="reminder-slot">📐 Thursday 6:15 PM — Maths Review</span>
-      <span class="reminder-slot">📐 Saturday 10:00 AM — Maths Practice</span>
-    </div>
-    <p style="margin-top:8px; font-size:12px; color:#555;">After each Timed Paper, a WhatsApp message is auto-generated for Amma/Thaththa to mark Section D (written questions, 10 marks).</p>
-  </div>
-
-  <div class="stats-bar">
-    <div class="stat"><div class="num">29</div><div class="lbl">Chapters</div></div>
-    <div class="stat"><div class="num">29</div><div class="lbl">Short Notes</div></div>
-    <div class="stat"><div class="num">29</div><div class="lbl">Practice Sets</div></div>
-    <div class="stat"><div class="num">29</div><div class="lbl">Timed Papers</div></div>
-    <div class="stat"><div class="num">87</div><div class="lbl">Total Files</div></div>
-    <div class="stat"><div class="num">25</div><div class="lbl">Marks / Paper</div></div>
-  </div>
-
+  <!-- ADMIN -->
   <div class="section-head">🗂️ Admin Files</div>
   <div class="admin-grid">
     <a class="admin-card" href="01_Syllabus_Maps/Master_Syllabus_Tracker.xlsx">
       <span class="admin-icon">📋</span>
-      <div class="admin-text"><div class="title">Master Syllabus Tracker</div><div class="sub">All chapters, 2-week plan, performance log</div></div>
+      <div class="admin-text"><div class="title">Master Syllabus Tracker</div><div class="sub">All chapters, plan, performance log</div></div>
     </a>
     <a class="admin-card" href="sheyvon_study_timetable.xlsx">
       <span class="admin-icon">📅</span>
@@ -116,31 +113,115 @@ body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
     </a>
   </div>
 
-  <div class="section-head">📐 Maths — All 29 Chapters</div>
-  <div class="filter-bar">
-    <button class="filter-btn active" onclick="filterTerm('all',this)">All Terms</button>
-    <button class="filter-btn" onclick="filterTerm('T1',this)" style="border-color:#1F3864; color:#1F3864;">Term 1 (Ch 1–10)</button>
-    <button class="filter-btn" onclick="filterTerm('T2',this)" style="border-color:#375623; color:#375623;">Term 2 (Ch 11–20)</button>
-    <button class="filter-btn" onclick="filterTerm('T3',this)" style="border-color:#7B2C8C; color:#7B2C8C;">Term 3 (Ch 21–29)</button>
+  <!-- WHATSAPP REMINDERS -->
+  <div class="reminder-box">
+    <h3>📱 WhatsApp Reminders — Sheyvon gets a link every study day</h3>
+    <div style="margin-top:8px; line-height:2.2;">
+      <span class="reminder-slot" style="background:#1F3864;">📐 Mon 4:45 PM — Maths</span>
+      <span class="reminder-slot" style="background:#1B5E20;">🔬 Tue 4:45 PM — Science</span>
+      <span class="reminder-slot" style="background:#E65100;">🗺️ Wed 4:45 PM — Geography</span>
+      <span class="reminder-slot" style="background:#1F3864;">📐 Thu 6:15 PM — Maths</span>
+      <span class="reminder-slot" style="background:#1B5E20;">🔬 Fri 6:15 PM — Science</span>
+      <span class="reminder-slot" style="background:#1F3864;">📐 Sat 10:00 AM — Maths</span>
+      <span class="reminder-slot" style="background:#E65100;">🗺️ Sun 10:00 AM — Geography</span>
+    </div>
+    <p style="margin-top:10px; font-size:12px; color:#555;">Each message includes the Notes link and the Timed Paper link for that day's chapter.</p>
   </div>
 
-  <div id="chapterList"></div>
+  <!-- SUBJECT TABS -->
+  <div class="subject-tabs">
+    <button class="tab-btn tab-maths active" onclick="showSubject('maths',this)">📐 Maths — 29 chapters</button>
+    <button class="tab-btn tab-sci"          onclick="showSubject('sci',this)">🔬 Science — 19 chapters</button>
+    <button class="tab-btn tab-geo"          onclick="showSubject('geo',this)">🗺️ Geography — 5 chapters</button>
+  </div>
+
+  <!-- ═══ MATHS ═══ -->
+  <div class="subject-panel active" id="panel-maths">
+    <div class="stats-bar">
+      <div class="stat"><div class="num" style="color:#1F3864;">29</div><div class="lbl">Chapters</div></div>
+      <div class="stat"><div class="num" style="color:#1F3864;">87</div><div class="lbl">Files</div></div>
+      <div class="stat"><div class="num" style="color:#1F3864;">Mon · Thu · Sat</div><div class="lbl">Study Days</div></div>
+    </div>
+    <div class="section-head" style="color:#1F3864; border-color:#BDD7EE;">📐 Maths — All 29 Chapters</div>
+    <div class="filter-bar" id="mfilters">
+      <button class="filter-btn" style="background:#1F3864;color:white;border-color:#1F3864;" onclick="filterMaths('all',this)">All Terms</button>
+      <button class="filter-btn" style="border-color:#1F3864;color:#1F3864;"  onclick="filterMaths('T1',this)">Term 1 (Ch 1–10)</button>
+      <button class="filter-btn" style="border-color:#375623;color:#375623;" onclick="filterMaths('T2',this)">Term 2 (Ch 11–20)</button>
+      <button class="filter-btn" style="border-color:#7B2C8C;color:#7B2C8C;" onclick="filterMaths('T3',this)">Term 3 (Ch 21–29)</button>
+    </div>
+    <div id="mathsList"></div>
+  </div>
+
+  <!-- ═══ SCIENCE ═══ -->
+  <div class="subject-panel" id="panel-sci">
+    <div class="stats-bar">
+      <div class="stat"><div class="num" style="color:#1B5E20;">19</div><div class="lbl">Chapters</div></div>
+      <div class="stat"><div class="num" style="color:#1B5E20;">57</div><div class="lbl">Files</div></div>
+      <div class="stat"><div class="num" style="color:#1B5E20;">Tue · Fri</div><div class="lbl">Study Days</div></div>
+    </div>
+    <div class="section-head" style="color:#1B5E20; border-color:#A5D6A7;">🔬 Science — All 19 Chapters</div>
+    <div id="sciList"></div>
+  </div>
+
+  <!-- ═══ GEOGRAPHY ═══ -->
+  <div class="subject-panel" id="panel-geo">
+    <div class="stats-bar">
+      <div class="stat"><div class="num" style="color:#E65100;">5</div><div class="lbl">Chapters</div></div>
+      <div class="stat"><div class="num" style="color:#E65100;">15</div><div class="lbl">Files</div></div>
+      <div class="stat"><div class="num" style="color:#E65100;">Wed · Sun</div><div class="lbl">Study Days</div></div>
+    </div>
+    <div class="section-head" style="color:#E65100; border-color:#FFCC80;">🗺️ Geography — All 5 Chapters</div>
+    <div id="geoList"></div>
+  </div>
 
 </div>
 
 <script>
 document.getElementById('todayDate').textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
-const chapters = [
-  {n:1,t:"Symmetry",e:"📐",term:"T1",slug:"Ch01_Symmetry"},
-  {n:2,t:"Sets",e:"🗂️",term:"T1",slug:"Ch02_Sets"},
-  {n:3,t:"Operations on Numbers",e:"➕",term:"T1",slug:"Ch03_Operations"},
-  {n:4,t:"Factors and Multiples",e:"🔢",term:"T1",slug:"Ch04_Factors_Multiples"},
-  {n:5,t:"Indices",e:"📐",term:"T1",slug:"Ch05_Indices"},
-  {n:6,t:"Time",e:"🕐",term:"T1",slug:"Ch06_Time"},
-  {n:7,t:"Parallel Lines",e:"📏",term:"T1",slug:"Ch07_Parallel_Lines"},
-  {n:8,t:"Directed Numbers",e:"🔴",term:"T1",slug:"Ch08_Directed_Numbers"},
-  {n:9,t:"Angles",e:"📐",term:"T1",slug:"Ch09_Angles"},
+function showSubject(name, btn) {
+  document.querySelectorAll('.subject-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+function buildCard(ch, notesUrl, pracUrl, timedUrl, color) {
+  const n = String(ch.n).padStart(2,'0');
+  return `<div class="ch-card" id="${ch.id}" data-term="${ch.term||''}">
+    <div class="ch-header" onclick="toggle('${ch.id}')" style="border-left:5px solid ${color};">
+      <span class="ch-num" style="background:${color};">Ch ${n}</span>
+      <span class="ch-title">${ch.e} ${ch.t}</span>
+      <span class="toggle-icon" style="color:${color};">▼</span>
+    </div>
+    <div class="ch-body">
+      <div class="ch-links">
+        <a href="${notesUrl}"  class="ch-link notes-link">📖 Short Notes</a>
+        <a href="${pracUrl}"   class="ch-link prac-link">✏️ Practice A</a>
+        <a href="${timedUrl}"  class="ch-link timed-link">⏱️ Timed Paper</a>
+      </div>
+      <div class="ch-flow">
+        <span class="flow-step">📖 Read Notes</span><span class="flow-arrow">→</span>
+        <span class="flow-step">✏️ Practice A</span><span class="flow-arrow">→</span>
+        <span class="flow-step">⏱️ Timed Paper</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggle(id) { document.getElementById(id).classList.toggle('open'); }
+
+/* MATHS */
+const maths = [
+  {n:1, t:"Symmetry",e:"📐",term:"T1",slug:"Ch01_Symmetry"},
+  {n:2, t:"Sets",e:"🗂️",term:"T1",slug:"Ch02_Sets"},
+  {n:3, t:"Operations on Numbers",e:"➕",term:"T1",slug:"Ch03_Operations"},
+  {n:4, t:"Factors and Multiples",e:"🔢",term:"T1",slug:"Ch04_Factors_Multiples"},
+  {n:5, t:"Indices",e:"📐",term:"T1",slug:"Ch05_Indices"},
+  {n:6, t:"Time",e:"🕐",term:"T1",slug:"Ch06_Time"},
+  {n:7, t:"Parallel Lines",e:"📏",term:"T1",slug:"Ch07_Parallel_Lines"},
+  {n:8, t:"Directed Numbers",e:"🔴",term:"T1",slug:"Ch08_Directed_Numbers"},
+  {n:9, t:"Angles",e:"📐",term:"T1",slug:"Ch09_Angles"},
   {n:10,t:"Fractions",e:"🍕",term:"T1",slug:"Ch10_Fractions"},
   {n:11,t:"Decimals",e:"🔟",term:"T2",slug:"Ch11_Decimals"},
   {n:12,t:"Algebra",e:"🔡",term:"T2",slug:"Ch12_Algebra"},
@@ -162,51 +243,78 @@ const chapters = [
   {n:28,t:"Tessellation",e:"🔷",term:"T3",slug:"Ch28_Tessellation"},
   {n:29,t:"Likelihood (Probability)",e:"🎲",term:"T3",slug:"Ch29_Likelihood"},
 ];
-
-const termColors = {T1:"#1F3864",T2:"#375623",T3:"#7B2C8C"};
-const termLabels = {T1:"Term 1",T2:"Term 2",T3:"Term 3"};
-
-const list = document.getElementById('chapterList');
-chapters.forEach(ch => {
-  const col = termColors[ch.term];
-  const tl = termLabels[ch.term];
-  const num = String(ch.n).padStart(2,'0');
-  list.innerHTML += `
-  <div class="ch-card" id="ch${ch.n}" data-term="${ch.term}">
-    <div class="ch-header" onclick="toggle('ch${ch.n}')" style="border-left:5px solid ${col};">
-      <span class="ch-num" style="background:${col};">Ch ${num}</span>
-      <span class="ch-title">${ch.e} ${ch.t}</span>
-      <span class="term-badge" style="background:${col};">${tl}</span>
-      <span class="toggle-icon">▼</span>
-    </div>
-    <div class="ch-body" id="body-ch${ch.n}">
-      <div class="ch-links">
-        <a href="02_Subjects/Maths/Short_Notes/${ch.slug}_Notes.html" class="ch-link notes-link">📖 Short Notes</a>
-        <a href="02_Subjects/Maths/Practice_Papers/${ch.slug}_PracticeA.html" class="ch-link practice-link">✏️ Practice Set A</a>
-        <a href="02_Subjects/Maths/Timed_Exams/${ch.slug}_TimedPaper.html" class="ch-link timed-link">⏱️ Timed Mini Paper</a>
-      </div>
-      <div class="ch-flow">
-        <span class="flow-step">📖 Read Notes</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-step">✏️ Practice A</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-step">⏱️ Timed Paper</span>
-      </div>
-    </div>
-  </div>`;
+const tc = {T1:"#1F3864",T2:"#375623",T3:"#7B2C8C"};
+const ml = document.getElementById('mathsList');
+maths.forEach(ch => {
+  ch.id = 'mch'+ch.n;
+  ml.innerHTML += buildCard(ch,
+    `02_Subjects/Maths/Short_Notes/${ch.slug}_Notes.html`,
+    `02_Subjects/Maths/Practice_Papers/${ch.slug}_PracticeA.html`,
+    `02_Subjects/Maths/Timed_Exams/${ch.slug}_TimedPaper.html`,
+    tc[ch.term]);
 });
 
-function toggle(id) {
-  document.getElementById(id).classList.toggle('open');
-}
-
-function filterTerm(term, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.ch-card').forEach(card => {
-    card.style.display = (term === 'all' || card.dataset.term === term) ? 'block' : 'none';
+function filterMaths(term, btn) {
+  document.querySelectorAll('#mfilters .filter-btn').forEach(b => {
+    b.style.background = 'white';
+    b.style.color = b.dataset.col || '#555';
+  });
+  btn.style.background = btn.style.borderColor || '#1F3864';
+  btn.style.color = 'white';
+  document.querySelectorAll('#mathsList .ch-card').forEach(c => {
+    c.style.display = (term==='all'||c.dataset.term===term) ? 'block':'none';
   });
 }
+
+/* SCIENCE */
+const sci = [
+  {n:1, t:"Plant Diversity",e:"🌿",slug:"Ch01_Plant_Diversity"},
+  {n:2, t:"Static Electricity",e:"⚡",slug:"Ch02_Static_Electricity"},
+  {n:3, t:"Generation of Electricity",e:"🔋",slug:"Ch03_Generation_Electricity"},
+  {n:4, t:"Functions of Water",e:"💧",slug:"Ch04_Functions_Water"},
+  {n:5, t:"Acids and Bases",e:"🧪",slug:"Ch05_Acids_Bases"},
+  {n:6, t:"Animal Diversity",e:"🦁",slug:"Ch06_Animal_Diversity"},
+  {n:7, t:"Forms of Energy",e:"⚡",slug:"Ch07_Forms_Energy"},
+  {n:8, t:"Nature of the Earth",e:"🌍",slug:"Ch08_Nature_Earth"},
+  {n:9, t:"Light",e:"💡",slug:"Ch09_Light"},
+  {n:10,t:"The Microscope",e:"🔬",slug:"Ch10_Microscope"},
+  {n:11,t:"Sound",e:"🔊",slug:"Ch11_Sound"},
+  {n:12,t:"Biological Processes",e:"🧬",slug:"Ch12_Biological_Processes"},
+  {n:13,t:"The Atmosphere",e:"🌤️",slug:"Ch13_Atmosphere"},
+  {n:14,t:"Heat and Temperature",e:"🌡️",slug:"Ch14_Heat_Temperature"},
+  {n:15,t:"Soil",e:"🌱",slug:"Ch15_Soil"},
+  {n:16,t:"Force and Motion",e:"🏃",slug:"Ch16_Force_Motion"},
+  {n:17,t:"Nutrients in Food",e:"🥗",slug:"Ch17_Nutrients_Food"},
+  {n:18,t:"Minerals and Rocks",e:"💎",slug:"Ch18_Minerals_Rocks"},
+  {n:19,t:"Sources of Energy",e:"☀️",slug:"Ch19_Sources_Energy"},
+];
+const sl2 = document.getElementById('sciList');
+sci.forEach(ch => {
+  ch.id = 'sch'+ch.n;
+  sl2.innerHTML += buildCard(ch,
+    `02_Subjects/Science/Short_Notes/${ch.slug}_Notes.html`,
+    `02_Subjects/Science/Practice_Papers/${ch.slug}_Practice_A.html`,
+    `02_Subjects/Science/Timed_Exams/${ch.slug}_Timed_Paper.html`,
+    '#2E7D32');
+});
+
+/* GEOGRAPHY */
+const geo = [
+  {n:1,t:"The Earth in Which We Live",e:"🌍",slug:"Ch01_The_Earth"},
+  {n:2,t:"Identity of Sri Lanka",e:"🇱🇰",slug:"Ch02_Identity_Sri_Lanka"},
+  {n:3,t:"The Landscape of Sri Lanka",e:"🏔️",slug:"Ch03_Landscape_Sri_Lanka"},
+  {n:4,t:"Natural Hazards and Disasters",e:"⚠️",slug:"Ch04_Natural_Hazards"},
+  {n:5,t:"Using Maps",e:"🗺️",slug:"Ch05_Using_Maps"},
+];
+const gl = document.getElementById('geoList');
+geo.forEach(ch => {
+  ch.id = 'gch'+ch.n;
+  gl.innerHTML += buildCard(ch,
+    `02_Subjects/Geography/Short_Notes/${ch.slug}_Notes.html`,
+    `02_Subjects/Geography/Practice_Papers/${ch.slug}_Practice_A.html`,
+    `02_Subjects/Geography/Timed_Exams/${ch.slug}_Timed_Paper.html`,
+    '#E65100');
+});
 </script>
 </body>
 </html>
