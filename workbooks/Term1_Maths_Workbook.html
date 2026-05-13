@@ -34,8 +34,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
 .answer-line:focus{outline:none;border-color:#1F3864}
 .answer-box{border:2px solid #BDD7EE;border-radius:8px;width:100%;padding:8px 10px;font-size:.95rem;min-height:60px;resize:vertical;margin-top:6px;font-family:inherit}
 .answer-box:focus{outline:none;border-color:#1F3864}
-.mcq-opts{margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.mcq-opt{padding:8px 12px;border-radius:8px;border:2px solid #BDD7EE;cursor:pointer;font-size:.9rem;transition:all .2s;user-select:none;display:flex;align-items:center;gap:8px}
+.mcq-opts{margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px;touch-action:manipulation}
+.mcq-opt{padding:8px 12px;border-radius:8px;border:2px solid #BDD7EE;cursor:pointer;font-size:.9rem;transition:all .2s;user-select:none;display:flex;align-items:center;gap:8px;background:white;width:100%;text-align:left;font-family:inherit;-webkit-appearance:none}
 .mcq-opt:hover{background:#EBF3FB;border-color:#2E75B6}
 .mcq-opt.selected{background:#1F3864;color:white;border-color:#1F3864}
 .mcq-opt.correct{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20}
@@ -127,20 +127,20 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q1 · Multiple Choice</div>
     <div class="q-text">How many lines of symmetry does a square have?</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q1_1',0,3)"><span class="opt-letter">A</span> 2</div>
-      <div class="mcq-opt" onclick="selectMCQ('q1_1',1,3)"><span class="opt-letter">B</span> 3</div>
-      <div class="mcq-opt" onclick="selectMCQ('q1_1',2,3)"><span class="opt-letter">C</span> 4</div>
-      <div class="mcq-opt" onclick="selectMCQ('q1_1',3,3)"><span class="opt-letter">D</span> 6</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_1',0,3)"><span class="opt-letter">A</span> 2</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_1',1,3)"><span class="opt-letter">B</span> 3</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_1',2,3)"><span class="opt-letter">C</span> 4</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_1',3,3)"><span class="opt-letter">D</span> 6</button>
     </div>
   </div>
   <div class="q" id="q1_2">
     <div class="q-num">Q2 · Multiple Choice</div>
     <div class="q-text">Which letter of the alphabet has exactly ONE line of symmetry?</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q1_2',0,0)"><span class="opt-letter">A</span> A</div>
-      <div class="mcq-opt" onclick="selectMCQ('q1_2',1,0)"><span class="opt-letter">B</span> X</div>
-      <div class="mcq-opt" onclick="selectMCQ('q1_2',2,0)"><span class="opt-letter">C</span> Z</div>
-      <div class="mcq-opt" onclick="selectMCQ('q1_2',3,0)"><span class="opt-letter">D</span> S</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_2',0,0)"><span class="opt-letter">A</span> A</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_2',1,0)"><span class="opt-letter">B</span> X</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_2',2,0)"><span class="opt-letter">C</span> Z</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_2',3,0)"><span class="opt-letter">D</span> S</button>
     </div>
   </div>
   <div class="q">
@@ -151,8 +151,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q4 · True or False</div>
     <div class="q-text">A circle has an infinite number of lines of symmetry.</div>
     <div class="tf-btns">
-      <button class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
-      <button class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
     </div>
     <input type="hidden" class="tf-ans" value="true">
   </div>
@@ -179,20 +179,20 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q1 · Multiple Choice</div>
     <div class="q-text">If A = {2, 4, 6, 8} and B = {4, 8, 12}, what is A ∩ B?</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q2_1',0,0)"><span class="opt-letter">A</span> {4, 8}</div>
-      <div class="mcq-opt" onclick="selectMCQ('q2_1',1,0)"><span class="opt-letter">B</span> {2, 4, 6, 8, 12}</div>
-      <div class="mcq-opt" onclick="selectMCQ('q2_1',2,0)"><span class="opt-letter">C</span> {2, 6}</div>
-      <div class="mcq-opt" onclick="selectMCQ('q2_1',3,0)"><span class="opt-letter">D</span> {12}</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_1',0,0)"><span class="opt-letter">A</span> {4, 8}</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_1',1,0)"><span class="opt-letter">B</span> {2, 4, 6, 8, 12}</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_1',2,0)"><span class="opt-letter">C</span> {2, 6}</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_1',3,0)"><span class="opt-letter">D</span> {12}</button>
     </div>
   </div>
   <div class="q" id="q2_2">
     <div class="q-num">Q2 · Multiple Choice</div>
     <div class="q-text">A set with NO elements is called a:</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q2_2',0,1)"><span class="opt-letter">A</span> Universal set</div>
-      <div class="mcq-opt" onclick="selectMCQ('q2_2',1,1)"><span class="opt-letter">B</span> Empty set</div>
-      <div class="mcq-opt" onclick="selectMCQ('q2_2',2,1)"><span class="opt-letter">C</span> Subset</div>
-      <div class="mcq-opt" onclick="selectMCQ('q2_2',3,1)"><span class="opt-letter">D</span> Union set</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_2',0,1)"><span class="opt-letter">A</span> Universal set</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_2',1,1)"><span class="opt-letter">B</span> Empty set</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_2',2,1)"><span class="opt-letter">C</span> Subset</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_2',3,1)"><span class="opt-letter">D</span> Union set</button>
     </div>
   </div>
   <div class="q">
@@ -214,8 +214,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q6 · True or False</div>
     <div class="q-text">The empty set (∅) is a subset of every set.</div>
     <div class="tf-btns">
-      <button class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
-      <button class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
     </div>
     <input type="hidden" class="tf-ans" value="true">
   </div>
@@ -232,20 +232,20 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q1 · Multiple Choice</div>
     <div class="q-text">What is the value of 48 ÷ 6 + 3 × 4?</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q3_1',0,2)"><span class="opt-letter">A</span> 36</div>
-      <div class="mcq-opt" onclick="selectMCQ('q3_1',1,2)"><span class="opt-letter">B</span> 16</div>
-      <div class="mcq-opt" onclick="selectMCQ('q3_1',2,2)"><span class="opt-letter">C</span> 20</div>
-      <div class="mcq-opt" onclick="selectMCQ('q3_1',3,2)"><span class="opt-letter">D</span> 40</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_1',0,2)"><span class="opt-letter">A</span> 36</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_1',1,2)"><span class="opt-letter">B</span> 16</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_1',2,2)"><span class="opt-letter">C</span> 20</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_1',3,2)"><span class="opt-letter">D</span> 40</button>
     </div>
   </div>
   <div class="q" id="q3_2">
     <div class="q-num">Q2 · Multiple Choice</div>
     <div class="q-text">According to BODMAS, which operation is done first in: 5 + 3² × (4 − 2)?</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q3_2',0,3)"><span class="opt-letter">A</span> Addition (5+3)</div>
-      <div class="mcq-opt" onclick="selectMCQ('q3_2',1,3)"><span class="opt-letter">B</span> Multiplication</div>
-      <div class="mcq-opt" onclick="selectMCQ('q3_2',2,3)"><span class="opt-letter">C</span> Indices (3²)</div>
-      <div class="mcq-opt" onclick="selectMCQ('q3_2',3,3)"><span class="opt-letter">D</span> Brackets (4−2)</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_2',0,3)"><span class="opt-letter">A</span> Addition (5+3)</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_2',1,3)"><span class="opt-letter">B</span> Multiplication</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_2',2,3)"><span class="opt-letter">C</span> Indices (3²)</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_2',3,3)"><span class="opt-letter">D</span> Brackets (4−2)</button>
     </div>
   </div>
   <div class="q">
@@ -268,8 +268,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q6 · True or False</div>
     <div class="q-text">In the expression 10 − 3 × 2, you subtract first because subtraction comes before multiplication in BODMAS.</div>
     <div class="tf-btns">
-      <button class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
-      <button class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
     </div>
     <input type="hidden" class="tf-ans" value="false">
   </div>
@@ -286,20 +286,20 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q1 · Multiple Choice</div>
     <div class="q-text">What is the HCF of 24 and 36?</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q4_1',0,2)"><span class="opt-letter">A</span> 6</div>
-      <div class="mcq-opt" onclick="selectMCQ('q4_1',1,2)"><span class="opt-letter">B</span> 4</div>
-      <div class="mcq-opt" onclick="selectMCQ('q4_1',2,2)"><span class="opt-letter">C</span> 12</div>
-      <div class="mcq-opt" onclick="selectMCQ('q4_1',3,2)"><span class="opt-letter">D</span> 72</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_1',0,2)"><span class="opt-letter">A</span> 6</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_1',1,2)"><span class="opt-letter">B</span> 4</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_1',2,2)"><span class="opt-letter">C</span> 12</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_1',3,2)"><span class="opt-letter">D</span> 72</button>
     </div>
   </div>
   <div class="q" id="q4_2">
     <div class="q-num">Q2 · Multiple Choice</div>
     <div class="q-text">What is the LCM of 4 and 6?</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q4_2',0,1)"><span class="opt-letter">A</span> 24</div>
-      <div class="mcq-opt" onclick="selectMCQ('q4_2',1,1)"><span class="opt-letter">B</span> 12</div>
-      <div class="mcq-opt" onclick="selectMCQ('q4_2',2,1)"><span class="opt-letter">C</span> 6</div>
-      <div class="mcq-opt" onclick="selectMCQ('q4_2',3,1)"><span class="opt-letter">D</span> 2</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_2',0,1)"><span class="opt-letter">A</span> 24</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_2',1,1)"><span class="opt-letter">B</span> 12</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_2',2,1)"><span class="opt-letter">C</span> 6</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_2',3,1)"><span class="opt-letter">D</span> 2</button>
     </div>
   </div>
   <div class="q">
@@ -336,20 +336,20 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q1 · Multiple Choice</div>
     <div class="q-text">What is the value of 2⁵?</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q5_1',0,1)"><span class="opt-letter">A</span> 10</div>
-      <div class="mcq-opt" onclick="selectMCQ('q5_1',1,1)"><span class="opt-letter">B</span> 32</div>
-      <div class="mcq-opt" onclick="selectMCQ('q5_1',2,1)"><span class="opt-letter">C</span> 25</div>
-      <div class="mcq-opt" onclick="selectMCQ('q5_1',3,1)"><span class="opt-letter">D</span> 16</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_1',0,1)"><span class="opt-letter">A</span> 10</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_1',1,1)"><span class="opt-letter">B</span> 32</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_1',2,1)"><span class="opt-letter">C</span> 25</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_1',3,1)"><span class="opt-letter">D</span> 16</button>
     </div>
   </div>
   <div class="q" id="q5_2">
     <div class="q-num">Q2 · Multiple Choice</div>
     <div class="q-text">Simplify: 3⁴ × 3²</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q5_2',0,2)"><span class="opt-letter">A</span> 3⁸</div>
-      <div class="mcq-opt" onclick="selectMCQ('q5_2',1,2)"><span class="opt-letter">B</span> 9⁶</div>
-      <div class="mcq-opt" onclick="selectMCQ('q5_2',2,2)"><span class="opt-letter">C</span> 3⁶</div>
-      <div class="mcq-opt" onclick="selectMCQ('q5_2',3,2)"><span class="opt-letter">D</span> 3²</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_2',0,2)"><span class="opt-letter">A</span> 3⁸</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_2',1,2)"><span class="opt-letter">B</span> 9⁶</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_2',2,2)"><span class="opt-letter">C</span> 3⁶</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_2',3,2)"><span class="opt-letter">D</span> 3²</button>
     </div>
   </div>
   <div class="q">
@@ -365,8 +365,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q5 · True or False</div>
     <div class="q-text">Any number raised to the power of 0 equals 0.</div>
     <div class="tf-btns">
-      <button class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
-      <button class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
     </div>
     <input type="hidden" class="tf-ans" value="false">
   </div>
@@ -388,10 +388,10 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q1 · Multiple Choice</div>
     <div class="q-text">A train leaves Colombo at 07:45 and arrives in Kandy at 10:20. How long is the journey?</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q6_1',0,2)"><span class="opt-letter">A</span> 2 h 15 min</div>
-      <div class="mcq-opt" onclick="selectMCQ('q6_1',1,2)"><span class="opt-letter">B</span> 3 h 05 min</div>
-      <div class="mcq-opt" onclick="selectMCQ('q6_1',2,2)"><span class="opt-letter">C</span> 2 h 35 min</div>
-      <div class="mcq-opt" onclick="selectMCQ('q6_1',3,2)"><span class="opt-letter">D</span> 2 h 45 min</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q6_1',0,2)"><span class="opt-letter">A</span> 2 h 15 min</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q6_1',1,2)"><span class="opt-letter">B</span> 3 h 05 min</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q6_1',2,2)"><span class="opt-letter">C</span> 2 h 35 min</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q6_1',3,2)"><span class="opt-letter">D</span> 2 h 45 min</button>
     </div>
   </div>
   <div class="q">
@@ -417,8 +417,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q6 · True or False</div>
     <div class="q-text">14:00 in 24-hour format is the same as 2:00 AM in 12-hour format.</div>
     <div class="tf-btns">
-      <button class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
-      <button class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
     </div>
     <input type="hidden" class="tf-ans" value="false">
   </div>
@@ -435,20 +435,20 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q1 · Multiple Choice</div>
     <div class="q-text">When a transversal crosses two parallel lines, alternate angles are:</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q7_1',0,0)"><span class="opt-letter">A</span> Equal</div>
-      <div class="mcq-opt" onclick="selectMCQ('q7_1',1,0)"><span class="opt-letter">B</span> Supplementary</div>
-      <div class="mcq-opt" onclick="selectMCQ('q7_1',2,0)"><span class="opt-letter">C</span> Complementary</div>
-      <div class="mcq-opt" onclick="selectMCQ('q7_1',3,0)"><span class="opt-letter">D</span> Right angles</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_1',0,0)"><span class="opt-letter">A</span> Equal</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_1',1,0)"><span class="opt-letter">B</span> Supplementary</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_1',2,0)"><span class="opt-letter">C</span> Complementary</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_1',3,0)"><span class="opt-letter">D</span> Right angles</button>
     </div>
   </div>
   <div class="q" id="q7_2">
     <div class="q-num">Q2 · Multiple Choice</div>
     <div class="q-text">Co-interior angles (same-side interior angles) between parallel lines add up to:</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q7_2',0,2)"><span class="opt-letter">A</span> 90°</div>
-      <div class="mcq-opt" onclick="selectMCQ('q7_2',1,2)"><span class="opt-letter">B</span> 360°</div>
-      <div class="mcq-opt" onclick="selectMCQ('q7_2',2,2)"><span class="opt-letter">C</span> 180°</div>
-      <div class="mcq-opt" onclick="selectMCQ('q7_2',3,2)"><span class="opt-letter">D</span> 270°</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_2',0,2)"><span class="opt-letter">A</span> 90°</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_2',1,2)"><span class="opt-letter">B</span> 360°</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_2',2,2)"><span class="opt-letter">C</span> 180°</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_2',3,2)"><span class="opt-letter">D</span> 270°</button>
     </div>
   </div>
   <div class="q">
@@ -483,20 +483,20 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q1 · Multiple Choice</div>
     <div class="q-text">What is −8 + (−5)?</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q8_1',0,1)"><span class="opt-letter">A</span> 3</div>
-      <div class="mcq-opt" onclick="selectMCQ('q8_1',1,1)"><span class="opt-letter">B</span> −13</div>
-      <div class="mcq-opt" onclick="selectMCQ('q8_1',2,1)"><span class="opt-letter">C</span> 13</div>
-      <div class="mcq-opt" onclick="selectMCQ('q8_1',3,1)"><span class="opt-letter">D</span> −3</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_1',0,1)"><span class="opt-letter">A</span> 3</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_1',1,1)"><span class="opt-letter">B</span> −13</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_1',2,1)"><span class="opt-letter">C</span> 13</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_1',3,1)"><span class="opt-letter">D</span> −3</button>
     </div>
   </div>
   <div class="q" id="q8_2">
     <div class="q-num">Q2 · Multiple Choice</div>
     <div class="q-text">What is (−4) × (−6)?</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q8_2',0,0)"><span class="opt-letter">A</span> 24</div>
-      <div class="mcq-opt" onclick="selectMCQ('q8_2',1,0)"><span class="opt-letter">B</span> −24</div>
-      <div class="mcq-opt" onclick="selectMCQ('q8_2',2,0)"><span class="opt-letter">C</span> 10</div>
-      <div class="mcq-opt" onclick="selectMCQ('q8_2',3,0)"><span class="opt-letter">D</span> −10</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_2',0,0)"><span class="opt-letter">A</span> 24</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_2',1,0)"><span class="opt-letter">B</span> −24</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_2',2,0)"><span class="opt-letter">C</span> 10</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_2',3,0)"><span class="opt-letter">D</span> −10</button>
     </div>
   </div>
   <div class="q">
@@ -531,10 +531,10 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q1 · Multiple Choice</div>
     <div class="q-text">The sum of interior angles of a triangle is:</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q9_1',0,1)"><span class="opt-letter">A</span> 90°</div>
-      <div class="mcq-opt" onclick="selectMCQ('q9_1',1,1)"><span class="opt-letter">B</span> 180°</div>
-      <div class="mcq-opt" onclick="selectMCQ('q9_1',2,1)"><span class="opt-letter">C</span> 270°</div>
-      <div class="mcq-opt" onclick="selectMCQ('q9_1',3,1)"><span class="opt-letter">D</span> 360°</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q9_1',0,1)"><span class="opt-letter">A</span> 90°</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q9_1',1,1)"><span class="opt-letter">B</span> 180°</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q9_1',2,1)"><span class="opt-letter">C</span> 270°</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q9_1',3,1)"><span class="opt-letter">D</span> 360°</button>
     </div>
   </div>
   <div class="q">
@@ -575,10 +575,10 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
     <div class="q-num">Q1 · Multiple Choice</div>
     <div class="q-text">What is ¾ + ⅝?</div>
     <div class="mcq-opts">
-      <div class="mcq-opt" onclick="selectMCQ('q10_1',0,2)"><span class="opt-letter">A</span> 8/12</div>
-      <div class="mcq-opt" onclick="selectMCQ('q10_1',1,2)"><span class="opt-letter">B</span> 1⅜</div>
-      <div class="mcq-opt" onclick="selectMCQ('q10_1',2,2)"><span class="opt-letter">C</span> 1⅜ = 11/8</div>
-      <div class="mcq-opt" onclick="selectMCQ('q10_1',3,2)"><span class="opt-letter">D</span> ½</div>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q10_1',0,2)"><span class="opt-letter">A</span> 8/12</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q10_1',1,2)"><span class="opt-letter">B</span> 1⅜</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q10_1',2,2)"><span class="opt-letter">C</span> 1⅜ = 11/8</button>
+      <button type="button" class="mcq-opt" onclick="selectMCQ('q10_1',3,2)"><span class="opt-letter">D</span> ½</button>
     </div>
   </div>
   <div class="q">
