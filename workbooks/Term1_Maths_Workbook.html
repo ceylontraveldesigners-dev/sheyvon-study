@@ -615,11 +615,15 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
 <!-- CHECK ANSWERS -->
 <div class="section check-section">
   <h2 style="color:#1F3864;margin-bottom:16px">✅ Check Your Answers</h2>
-  <p style="color:#555;margin-bottom:16px;">Click below to check your multiple choice and true/false answers. Written questions are checked by your teacher!</p>
+  <p style="color:#555;margin-bottom:16px;">Click below to check your MCQ & True/False answers, then send all your results to Amma!</p>
   <button class="check-btn" onclick="checkAll()">🎯 Check MCQ & True/False</button>
   <button class="check-btn green" onclick="toggleAnswers()">📋 Show Full Answer Key</button>
+  <button class="check-btn" onclick="sendToAmma()" style="background:#25D366;font-size:1rem;">📩 Send Results to Amma</button>
   <div id="scoreDisplay" style="margin-top:16px;display:none">
     <div class="score-badge" id="scoreBadge"></div>
+  </div>
+  <div id="waSent" style="display:none;margin-top:14px;padding:12px 20px;background:#E7F8EF;border-radius:10px;color:#1a7a45;font-weight:bold;">
+    ✅ WhatsApp opened! Ask Amma to check her phone. 📱
   </div>
 </div>
 
@@ -752,6 +756,97 @@ function toggleAnswers() {
   const el = document.getElementById('answerKey');
   el.classList.toggle('show');
   el.scrollIntoView({behavior:'smooth'});
+}
+
+function sendToAmma() {
+  const date = document.getElementById('dateField').value || new Date().toLocaleDateString('en-GB');
+
+  // --- Score from MCQ ---
+  let mcqCorrect=0, mcqTotal=0;
+  Object.entries(mcqState).forEach(([qid,{selected,correct}]) => {
+    mcqTotal++;
+    if(selected===correct) mcqCorrect++;
+  });
+
+  // --- Score from TF ---
+  let tfCorrect=0, tfTotal=0;
+  document.querySelectorAll('.tf-btn[data-selected]').forEach(btn => {
+    const ans = btn.closest('.q').querySelector('.tf-ans').value;
+    const sel = btn.dataset.selected;
+    if(sel) { tfTotal++; if(sel===ans) tfCorrect++; }
+  });
+
+  const totalAuto = mcqCorrect + tfCorrect;
+  const totalPossible = mcqTotal + tfTotal;
+  const pct = totalPossible > 0 ? Math.round(totalAuto/totalPossible*100) : 0;
+
+  // --- Collect written answers ---
+  const chapterNames = ['','Symmetry','Sets','Operations on Numbers','Factors & Multiples','Indices','Time','Parallel Lines','Directed Numbers','Angles','Fractions'];
+  let writtenParts = '';
+  document.querySelectorAll('.section').forEach((sec, si) => {
+    const titleEl = sec.querySelector('.section-title');
+    if(!titleEl) return;
+    const chTitle = titleEl.textContent.trim();
+    let chAnswers = [];
+    // fill-in inputs
+    sec.querySelectorAll('input.fill-input').forEach((inp,i) => {
+      const val = inp.value.trim();
+      if(val) chAnswers.push('Fill '+(i+1)+': '+val);
+    });
+    // answer-lines
+    sec.querySelectorAll('input.answer-line').forEach((inp,i) => {
+      const val = inp.value.trim();
+      if(val) chAnswers.push('Ans '+(i+1)+': '+val);
+    });
+    // textareas
+    sec.querySelectorAll('textarea.answer-box').forEach((ta,i) => {
+      const val = ta.value.trim();
+      if(val) chAnswers.push('Written '+(i+1)+': '+val.substring(0,120)+(val.length>120?'...':''));
+    });
+    if(chAnswers.length>0) writtenParts += '
+'+chTitle+':
+'+chAnswers.join('
+');
+  });
+
+  // --- Build message ---
+  const msg =
+    '📐 Term 1 Maths Workbook Results
+' +
+    '👦 Sheyvon Warnapura — Grade 7
+' +
+    '📅 ' + date + '
+
+' +
+    '━━━━━━━━━━━━━━━━━━━━
+' +
+    '🎯 AUTO-MARKED SCORE
+' +
+    'MCQ: ' + mcqCorrect + '/' + mcqTotal + '
+' +
+    'True/False: ' + tfCorrect + '/' + tfTotal + '
+' +
+    'Total (auto): ' + totalAuto + '/' + totalPossible + ' (' + pct + '%)
+' +
+    (pct>=70 ? '🌟 Well done, Sheyvon!' : '📚 Keep practising!') + '
+
+' +
+    '━━━━━━━━━━━━━━━━━━━━
+' +
+    '✏️ WRITTEN ANSWERS
+' +
+    (writtenParts || '(No written answers entered)') + '
+
+' +
+    '━━━━━━━━━━━━━━━━━━━━
+' +
+    '📖 Full workbook: https://ceylontraveldesigners-dev.github.io/sheyvon-study/workbooks/Term1_Maths_Workbook.html';
+
+  const encoded = encodeURIComponent(msg);
+  const url = 'https://web.whatsapp.com/send?phone=94764551840&text=' + encoded;
+  window.open(url, '_blank');
+  document.getElementById('waSent').style.display='block';
+  document.getElementById('waSent').scrollIntoView({behavior:'smooth'});
 }
 </script>
 </body>
