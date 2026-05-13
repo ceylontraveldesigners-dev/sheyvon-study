@@ -34,15 +34,20 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
 .answer-line:focus{outline:none;border-color:#1F3864}
 .answer-box{border:2px solid #BDD7EE;border-radius:8px;width:100%;padding:8px 10px;font-size:.95rem;min-height:60px;resize:vertical;margin-top:6px;font-family:inherit}
 .answer-box:focus{outline:none;border-color:#1F3864}
-.mcq-opts{margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px;touch-action:manipulation}
-.mcq-opt{padding:8px 12px;border-radius:8px;border:2px solid #BDD7EE;cursor:pointer;font-size:.9rem;transition:all .2s;user-select:none;display:flex;align-items:center;gap:8px;background:white;width:100%;text-align:left;font-family:inherit;-webkit-appearance:none}
-.mcq-opt:hover{background:#EBF3FB;border-color:#2E75B6}
-.mcq-opt.selected{background:#1F3864;color:white;border-color:#1F3864}
-.mcq-opt.correct{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20}
-.mcq-opt.wrong{background:#FFEBEE;border-color:#C62828;color:#B71C1C}
-.opt-letter{font-weight:bold;min-width:20px}
+/* MCQ: options shown as plain labels, big answer input below */
+.mcq-opts{margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:10px}
+.mcq-opt-label{padding:7px 11px;border-radius:6px;border:1.5px solid #BDD7EE;font-size:.9rem;background:#fff;display:flex;align-items:center;gap:8px;color:#333}
+.opt-letter{font-weight:bold;color:#1F3864;min-width:20px}
+.mcq-answer-row{display:flex;align-items:center;gap:10px;margin-top:6px}
+.mcq-answer-row label{font-size:.9rem;font-weight:bold;color:#1F3864;white-space:nowrap}
+.mcq-input{border:2px solid #1F3864;border-radius:8px;padding:8px 12px;font-size:1.1rem;font-weight:bold;width:70px;text-align:center;text-transform:uppercase;font-family:inherit}
+.mcq-input:focus{outline:none;border-color:#2E75B6;background:#EBF3FB}
+.mcq-input.correct{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20}
+.mcq-input.wrong{background:#FFEBEE;border-color:#C62828;color:#B71C1C}
+.hint{font-size:.8rem;color:#888;margin-left:6px}
+/* TF buttons */
 .tf-btns{display:flex;gap:10px;margin-top:8px}
-.tf-btn{padding:8px 24px;border-radius:8px;border:2px solid #BDD7EE;cursor:pointer;font-weight:bold;font-size:.9rem;transition:all .2s}
+.tf-btn{padding:8px 24px;border-radius:8px;border:2px solid #BDD7EE;cursor:pointer;font-weight:bold;font-size:.9rem;transition:all .2s;background:white;font-family:inherit}
 .tf-btn:hover{background:#EBF3FB}
 .tf-btn.selected-true{background:#1B5E20;color:white;border-color:#1B5E20}
 .tf-btn.selected-false{background:#C62828;color:white;border-color:#C62828}
@@ -50,10 +55,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
 .fill-input:focus{outline:none;border-color:#1F3864}
 .workings-box{background:#FFFDE7;border:2px dashed #FFD600;border-radius:8px;padding:10px;margin-top:8px;min-height:70px;font-size:.85rem;color:#999}
 .check-section{text-align:center;margin-top:20px}
-.check-btn{background:#1F3864;color:white;border:none;padding:12px 28px;border-radius:10px;font-size:1rem;cursor:pointer;margin:6px}
+.check-btn{background:#1F3864;color:white;border:none;padding:12px 28px;border-radius:10px;font-size:1rem;cursor:pointer;margin:6px;font-family:inherit}
 .check-btn:hover{background:#163060}
-.check-btn.green{background:#2E7D32}
-.check-btn.green:hover{background:#1B5E20}
 .score-badge{display:inline-block;background:#EBF3FB;border:2px solid #1F3864;border-radius:12px;padding:10px 24px;font-size:1.1rem;font-weight:bold;color:#1F3864;margin-top:12px}
 .answers-section{background:#F8FAFF;border-radius:14px;padding:24px 28px;max-width:800px;margin:0 auto 20px;box-shadow:0 2px 10px rgba(0,0,0,.08);display:none}
 .answers-section.show{display:block}
@@ -61,29 +64,27 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
 .ans-item{padding:8px 12px;border-radius:8px;margin:6px 0;font-size:.9rem;background:white;border-left:4px solid #2E75B6}
 .ans-item strong{color:#1F3864}
 .footer{text-align:center;padding:20px;color:#888;font-size:.85rem;max-width:800px;margin:0 auto}
-@media print{
-  body{background:white;padding:0}
-  .cover,.section,.answers-section{box-shadow:none;border-radius:0;page-break-inside:avoid}
-  .check-section,.progress-bar,.name-box input{border:1px solid #ccc}
+@media(max-width:600px){
+  .mcq-opts{grid-template-columns:1fr}
+  .cover h1{font-size:1.5rem}
+  .section{padding:18px 14px}
 }
 </style>
 </head>
 <body>
 
-<!-- COVER -->
 <div class="cover">
-  <div style="font-size:3rem;margin-bottom:10px">📐</div>
+  <div style="font-size:3rem;margin-bottom:10px">&#128208;</div>
   <h1>Term 1 Maths Workbook</h1>
-  <div class="sub">Grade 7 · Sri Lankan Syllabus · Chapters 1–10</div>
+  <div class="sub">Grade 7 &middot; Sri Lankan Syllabus &middot; Chapters 1&ndash;10</div>
   <div class="chips">
-    <span class="chip">📅 12 May 2026</span>
-    <span class="chip">✏️ 60 Questions</span>
-    <span class="chip">⏱️ Work at your own pace</span>
-    <span class="chip">🏠 Home Study Day</span>
+    <span class="chip">&#128197; 13 May 2026</span>
+    <span class="chip">&#9999;&#65039; 60 Questions</span>
+    <span class="chip">&#9200;&#65039; Work at your own pace</span>
+    <span class="chip">&#127968; Home Study Day</span>
   </div>
 </div>
 
-<!-- NAME BOX -->
 <div class="name-box">
   <div class="name-field">
     <label>Student Name</label>
@@ -99,9 +100,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
   </div>
 </div>
 
-<!-- PROGRESS TRACKER -->
 <div class="progress-bar">
-  <h3>📊 Chapter Progress — click a circle when you finish that chapter</h3>
+  <h3>&#128202; Chapter Progress &mdash; tap a circle when you finish that chapter</h3>
   <div class="chapters-track">
     <div class="ch-dot" onclick="this.classList.toggle('done')" title="Ch1 Symmetry">1</div>
     <div class="ch-dot" onclick="this.classList.toggle('done')" title="Ch2 Sets">2</div>
@@ -120,49 +120,62 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
 <div class="section">
   <div class="section-header">
     <span class="section-num">Chapter 1</span>
-    <span class="section-title">📐 Symmetry</span>
+    <span class="section-title">&#128208; Symmetry</span>
     <span class="section-marks">6 marks</span>
   </div>
+
   <div class="q" id="q1_1">
-    <div class="q-num">Q1 · Multiple Choice</div>
+    <div class="q-num">Q1 &middot; Multiple Choice</div>
     <div class="q-text">How many lines of symmetry does a square have?</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_1',0,3)"><span class="opt-letter">A</span> 2</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_1',1,3)"><span class="opt-letter">B</span> 3</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_1',2,3)"><span class="opt-letter">C</span> 4</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_1',3,3)"><span class="opt-letter">D</span> 6</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> 2</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> 3</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> 4</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> 6</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q1_1" data-correct="C" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q" id="q1_2">
-    <div class="q-num">Q2 · Multiple Choice</div>
+    <div class="q-num">Q2 &middot; Multiple Choice</div>
     <div class="q-text">Which letter of the alphabet has exactly ONE line of symmetry?</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_2',0,0)"><span class="opt-letter">A</span> A</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_2',1,0)"><span class="opt-letter">B</span> X</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_2',2,0)"><span class="opt-letter">C</span> Z</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q1_2',3,0)"><span class="opt-letter">D</span> S</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> A</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> X</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> Z</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> S</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q1_2" data-correct="A" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q">
-    <div class="q-num">Q3 · Fill in the Blank</div>
+    <div class="q-num">Q3 &middot; Fill in the Blank</div>
     <div class="q-text">A line that divides a shape into two identical halves is called a <input class="fill-input" data-ans="line of symmetry" placeholder="___________">.</div>
   </div>
   <div class="q">
-    <div class="q-num">Q4 · True or False</div>
+    <div class="q-num">Q4 &middot; True or False</div>
     <div class="q-text">A circle has an infinite number of lines of symmetry.</div>
     <div class="tf-btns">
-      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
-      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">&#9989; True</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">&#10060; False</button>
     </div>
     <input type="hidden" class="tf-ans" value="true">
   </div>
   <div class="q">
-    <div class="q-num">Q5 · Written</div>
+    <div class="q-num">Q5 &middot; Written</div>
     <div class="q-text">Draw and name TWO shapes that have more than 2 lines of symmetry. State how many lines each has.</div>
     <textarea class="answer-box" placeholder="Write your answer here..."></textarea>
   </div>
   <div class="q">
-    <div class="q-num">Q6 · Problem Solving</div>
+    <div class="q-num">Q6 &middot; Problem Solving</div>
     <div class="q-text">Sheyvon draws a regular hexagon. How many lines of symmetry does it have? Explain how you know.</div>
     <textarea class="answer-box" placeholder="Write your answer and working here..."></textarea>
   </div>
@@ -172,104 +185,130 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
 <div class="section">
   <div class="section-header">
     <span class="section-num">Chapter 2</span>
-    <span class="section-title">🗂️ Sets</span>
+    <span class="section-title">&#128193; Sets</span>
     <span class="section-marks">6 marks</span>
   </div>
+
   <div class="q" id="q2_1">
-    <div class="q-num">Q1 · Multiple Choice</div>
-    <div class="q-text">If A = {2, 4, 6, 8} and B = {4, 8, 12}, what is A ∩ B?</div>
+    <div class="q-num">Q1 &middot; Multiple Choice</div>
+    <div class="q-text">If A = {2, 4, 6, 8} and B = {4, 8, 12}, what is A &cap; B?</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_1',0,0)"><span class="opt-letter">A</span> {4, 8}</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_1',1,0)"><span class="opt-letter">B</span> {2, 4, 6, 8, 12}</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_1',2,0)"><span class="opt-letter">C</span> {2, 6}</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_1',3,0)"><span class="opt-letter">D</span> {12}</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> {4, 8}</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> {2, 4, 6, 8, 12}</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> {2, 6}</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> {12}</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q2_1" data-correct="A" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q" id="q2_2">
-    <div class="q-num">Q2 · Multiple Choice</div>
+    <div class="q-num">Q2 &middot; Multiple Choice</div>
     <div class="q-text">A set with NO elements is called a:</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_2',0,1)"><span class="opt-letter">A</span> Universal set</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_2',1,1)"><span class="opt-letter">B</span> Empty set</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_2',2,1)"><span class="opt-letter">C</span> Subset</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q2_2',3,1)"><span class="opt-letter">D</span> Union set</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> Universal set</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> Empty set</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> Subset</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> Union set</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q2_2" data-correct="B" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q">
-    <div class="q-num">Q3 · Fill in the Blank</div>
+    <div class="q-num">Q3 &middot; Fill in the Blank</div>
     <div class="q-text">If A = {1,3,5} and B = {1,2,3,4,5}, then A is a <input class="fill-input" data-ans="subset" placeholder="___________"> of B.</div>
   </div>
   <div class="q">
-    <div class="q-num">Q4 · Written</div>
-    <div class="q-text">Given P = {vowels in the word MATHEMATICS} and Q = {letters in the word SCIENCE}, list the elements of P ∪ Q.</div>
-    <textarea class="answer-box" placeholder="P = { } Q = { } P ∪ Q = { }"></textarea>
+    <div class="q-num">Q4 &middot; Written</div>
+    <div class="q-text">Given P = {vowels in the word MATHEMATICS} and Q = {letters in the word SCIENCE}, list the elements of P &cup; Q.</div>
+    <textarea class="answer-box" placeholder="P = { }  Q = { }  P &cup; Q = { }"></textarea>
   </div>
   <div class="q">
-    <div class="q-num">Q5 · Problem Solving</div>
+    <div class="q-num">Q5 &middot; Problem Solving</div>
     <div class="q-text">In a class of 30 students, 18 play cricket and 15 play football. 7 play both. How many play ONLY cricket? How many play ONLY football? How many play neither?</div>
-    <div class="workings-box">🖊️ Show your working here (use Venn diagram if helpful)</div>
+    <div class="workings-box">&#128394;&#65039; Show your working here</div>
     <textarea class="answer-box" placeholder="Only cricket = ___, Only football = ___, Neither = ___"></textarea>
   </div>
   <div class="q">
-    <div class="q-num">Q6 · True or False</div>
-    <div class="q-text">The empty set (∅) is a subset of every set.</div>
+    <div class="q-num">Q6 &middot; True or False</div>
+    <div class="q-text">The empty set (&empty;) is a subset of every set.</div>
     <div class="tf-btns">
-      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
-      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">&#9989; True</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">&#10060; False</button>
     </div>
     <input type="hidden" class="tf-ans" value="true">
   </div>
 </div>
 
-<!-- CH 3: OPERATIONS ON NUMBERS -->
+<!-- CH 3: OPERATIONS -->
 <div class="section">
   <div class="section-header">
     <span class="section-num">Chapter 3</span>
-    <span class="section-title">➕ Operations on Numbers</span>
+    <span class="section-title">&#10133; Operations on Numbers</span>
     <span class="section-marks">6 marks</span>
   </div>
+
   <div class="q" id="q3_1">
-    <div class="q-num">Q1 · Multiple Choice</div>
-    <div class="q-text">What is the value of 48 ÷ 6 + 3 × 4?</div>
+    <div class="q-num">Q1 &middot; Multiple Choice</div>
+    <div class="q-text">What is the value of 48 &divide; 6 + 3 &times; 4?</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_1',0,2)"><span class="opt-letter">A</span> 36</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_1',1,2)"><span class="opt-letter">B</span> 16</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_1',2,2)"><span class="opt-letter">C</span> 20</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_1',3,2)"><span class="opt-letter">D</span> 40</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> 36</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> 16</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> 20</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> 40</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q3_1" data-correct="C" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q" id="q3_2">
-    <div class="q-num">Q2 · Multiple Choice</div>
-    <div class="q-text">According to BODMAS, which operation is done first in: 5 + 3² × (4 − 2)?</div>
+    <div class="q-num">Q2 &middot; Multiple Choice</div>
+    <div class="q-text">According to BODMAS, which operation is done first in: 5 + 3&sup2; &times; (4 &minus; 2)?</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_2',0,3)"><span class="opt-letter">A</span> Addition (5+3)</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_2',1,3)"><span class="opt-letter">B</span> Multiplication</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_2',2,3)"><span class="opt-letter">C</span> Indices (3²)</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q3_2',3,3)"><span class="opt-letter">D</span> Brackets (4−2)</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> Addition (5+3)</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> Multiplication</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> Indices (3&sup2;)</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> Brackets (4&minus;2)</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q3_2" data-correct="D" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q">
-    <div class="q-num">Q3 · Calculate</div>
-    <div class="q-text">Work out: (15 + 5) × 3 − 4² ÷ 2</div>
-    <div class="workings-box">🖊️ Show your working step by step</div>
+    <div class="q-num">Q3 &middot; Calculate</div>
+    <div class="q-text">Work out: (15 + 5) &times; 3 &minus; 4&sup2; &divide; 2</div>
+    <div class="workings-box">&#128394;&#65039; Show your working step by step</div>
     <input class="answer-line" data-ans="52" placeholder="Answer = ___">
   </div>
   <div class="q">
-    <div class="q-num">Q4 · Fill in the Blank</div>
+    <div class="q-num">Q4 &middot; Fill in the Blank</div>
     <div class="q-text">BODMAS stands for: Brackets, <input class="fill-input" data-ans="orders" placeholder="______">, Division, Multiplication, Addition, Subtraction.</div>
   </div>
   <div class="q">
-    <div class="q-num">Q5 · Written</div>
+    <div class="q-num">Q5 &middot; Written</div>
     <div class="q-text">A shopkeeper has 3 boxes of mangoes. Each box has 24 mangoes. He sells 15 mangoes and then buys 2 more boxes of 24 each. How many mangoes does he have now? Show full working.</div>
-    <div class="workings-box">🖊️ Working space</div>
-    <input class="answer-line" data-ans="129" placeholder="Answer = ___">
+    <div class="workings-box">&#128394;&#65039; Working space</div>
+    <input class="answer-line" data-ans="105" placeholder="Answer = ___">
   </div>
   <div class="q">
-    <div class="q-num">Q6 · True or False</div>
-    <div class="q-text">In the expression 10 − 3 × 2, you subtract first because subtraction comes before multiplication in BODMAS.</div>
+    <div class="q-num">Q6 &middot; True or False</div>
+    <div class="q-text">In the expression 10 &minus; 3 &times; 2, you subtract first because subtraction comes before multiplication in BODMAS.</div>
     <div class="tf-btns">
-      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
-      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">&#9989; True</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">&#10060; False</button>
     </div>
     <input type="hidden" class="tf-ans" value="false">
   </div>
@@ -279,48 +318,61 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
 <div class="section">
   <div class="section-header">
     <span class="section-num">Chapter 4</span>
-    <span class="section-title">🔢 Factors and Multiples</span>
+    <span class="section-title">&#128290; Factors and Multiples</span>
     <span class="section-marks">6 marks</span>
   </div>
+
   <div class="q" id="q4_1">
-    <div class="q-num">Q1 · Multiple Choice</div>
+    <div class="q-num">Q1 &middot; Multiple Choice</div>
     <div class="q-text">What is the HCF of 24 and 36?</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_1',0,2)"><span class="opt-letter">A</span> 6</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_1',1,2)"><span class="opt-letter">B</span> 4</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_1',2,2)"><span class="opt-letter">C</span> 12</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_1',3,2)"><span class="opt-letter">D</span> 72</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> 6</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> 4</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> 12</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> 72</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q4_1" data-correct="C" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q" id="q4_2">
-    <div class="q-num">Q2 · Multiple Choice</div>
+    <div class="q-num">Q2 &middot; Multiple Choice</div>
     <div class="q-text">What is the LCM of 4 and 6?</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_2',0,1)"><span class="opt-letter">A</span> 24</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_2',1,1)"><span class="opt-letter">B</span> 12</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_2',2,1)"><span class="opt-letter">C</span> 6</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q4_2',3,1)"><span class="opt-letter">D</span> 2</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> 24</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> 12</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> 6</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> 2</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q4_2" data-correct="B" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q">
-    <div class="q-num">Q3 · List all factors</div>
+    <div class="q-num">Q3 &middot; List all factors</div>
     <div class="q-text">Write ALL the factors of 48.</div>
     <textarea class="answer-box" placeholder="Factors of 48 = { }"></textarea>
   </div>
   <div class="q">
-    <div class="q-num">Q4 · Prime Factorisation</div>
-    <div class="q-text">Express 60 as a product of its prime factors (use a factor tree).</div>
-    <div class="workings-box">🖊️ Draw your factor tree here (describe it in writing)</div>
-    <input class="answer-line" data-ans="2x2x3x5" placeholder="60 = ___ × ___ × ___ × ___">
+    <div class="q-num">Q4 &middot; Prime Factorisation</div>
+    <div class="q-text">Express 60 as a product of its prime factors.</div>
+    <div class="workings-box">&#128394;&#65039; Show your working</div>
+    <input class="answer-line" data-ans="2x2x3x5" placeholder="60 = ___ &times; ___ &times; ___ &times; ___">
   </div>
   <div class="q">
-    <div class="q-num">Q5 · Problem Solving</div>
-    <div class="q-text">Three bells ring every 4, 6, and 9 minutes respectively. If they all ring together at 8:00 AM, when will they next all ring together?</div>
-    <div class="workings-box">🖊️ Find the LCM of 4, 6 and 9</div>
+    <div class="q-num">Q5 &middot; Problem Solving</div>
+    <div class="q-text">Three bells ring every 4, 6, and 9 minutes. If they all ring together at 8:00 AM, when will they next all ring together?</div>
+    <div class="workings-box">&#128394;&#65039; Find the LCM of 4, 6 and 9</div>
     <input class="answer-line" data-ans="8:36 AM" placeholder="They will next ring together at ___">
   </div>
   <div class="q">
-    <div class="q-num">Q6 · Fill in the Blank</div>
+    <div class="q-num">Q6 &middot; Fill in the Blank</div>
     <div class="q-text">A prime number has exactly <input class="fill-input" data-ans="two" placeholder="___"> factors: 1 and itself.</div>
   </div>
 </div>
@@ -329,50 +381,63 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
 <div class="section">
   <div class="section-header">
     <span class="section-num">Chapter 5</span>
-    <span class="section-title">📐 Indices</span>
+    <span class="section-title">&#128208; Indices</span>
     <span class="section-marks">6 marks</span>
   </div>
+
   <div class="q" id="q5_1">
-    <div class="q-num">Q1 · Multiple Choice</div>
-    <div class="q-text">What is the value of 2⁵?</div>
+    <div class="q-num">Q1 &middot; Multiple Choice</div>
+    <div class="q-text">What is the value of 2&#8309;?</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_1',0,1)"><span class="opt-letter">A</span> 10</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_1',1,1)"><span class="opt-letter">B</span> 32</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_1',2,1)"><span class="opt-letter">C</span> 25</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_1',3,1)"><span class="opt-letter">D</span> 16</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> 10</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> 32</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> 25</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> 16</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q5_1" data-correct="B" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q" id="q5_2">
-    <div class="q-num">Q2 · Multiple Choice</div>
-    <div class="q-text">Simplify: 3⁴ × 3²</div>
+    <div class="q-num">Q2 &middot; Multiple Choice</div>
+    <div class="q-text">Simplify: 3&#8308; &times; 3&#178;</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_2',0,2)"><span class="opt-letter">A</span> 3⁸</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_2',1,2)"><span class="opt-letter">B</span> 9⁶</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_2',2,2)"><span class="opt-letter">C</span> 3⁶</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q5_2',3,2)"><span class="opt-letter">D</span> 3²</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> 3&#8312;</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> 9&#8310;</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> 3&#8310;</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> 3&#178;</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q5_2" data-correct="C" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q">
-    <div class="q-num">Q3 · Calculate</div>
-    <div class="q-text">Work out: 4³ − 5²</div>
+    <div class="q-num">Q3 &middot; Calculate</div>
+    <div class="q-text">Work out: 4&#179; &minus; 5&#178;</div>
     <input class="answer-line" data-ans="39" placeholder="Answer = ___">
   </div>
   <div class="q">
-    <div class="q-num">Q4 · Fill in the Blank</div>
-    <div class="q-text">In the expression 7³, the number 7 is called the <input class="fill-input" data-ans="base" placeholder="______"> and 3 is called the <input class="fill-input" data-ans="index" placeholder="______">.</div>
+    <div class="q-num">Q4 &middot; Fill in the Blank</div>
+    <div class="q-text">In the expression 7&#179;, the number 7 is called the <input class="fill-input" data-ans="base" placeholder="______"> and 3 is called the <input class="fill-input" data-ans="index" placeholder="______">.</div>
   </div>
   <div class="q">
-    <div class="q-num">Q5 · True or False</div>
+    <div class="q-num">Q5 &middot; True or False</div>
     <div class="q-text">Any number raised to the power of 0 equals 0.</div>
     <div class="tf-btns">
-      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
-      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">&#9989; True</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">&#10060; False</button>
     </div>
     <input type="hidden" class="tf-ans" value="false">
   </div>
   <div class="q">
-    <div class="q-num">Q6 · Simplify</div>
-    <div class="q-text">Simplify: 5⁶ ÷ 5²</div>
+    <div class="q-num">Q6 &middot; Simplify</div>
+    <div class="q-text">Simplify: 5&#8310; &divide; 5&#178;</div>
     <input class="answer-line" data-ans="5^4" placeholder="Answer = 5^___">
   </div>
 </div>
@@ -381,44 +446,51 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
 <div class="section">
   <div class="section-header">
     <span class="section-num">Chapter 6</span>
-    <span class="section-title">🕐 Time</span>
+    <span class="section-title">&#128336; Time</span>
     <span class="section-marks">6 marks</span>
   </div>
+
   <div class="q" id="q6_1">
-    <div class="q-num">Q1 · Multiple Choice</div>
+    <div class="q-num">Q1 &middot; Multiple Choice</div>
     <div class="q-text">A train leaves Colombo at 07:45 and arrives in Kandy at 10:20. How long is the journey?</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q6_1',0,2)"><span class="opt-letter">A</span> 2 h 15 min</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q6_1',1,2)"><span class="opt-letter">B</span> 3 h 05 min</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q6_1',2,2)"><span class="opt-letter">C</span> 2 h 35 min</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q6_1',3,2)"><span class="opt-letter">D</span> 2 h 45 min</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> 2 h 15 min</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> 3 h 05 min</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> 2 h 35 min</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> 2 h 45 min</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q6_1" data-correct="C" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q">
-    <div class="q-num">Q2 · Convert</div>
+    <div class="q-num">Q2 &middot; Convert</div>
     <div class="q-text">Convert 3 hours 45 minutes to minutes.</div>
     <input class="answer-line" data-ans="225" placeholder="___ minutes">
   </div>
   <div class="q">
-    <div class="q-num">Q3 · 12-hour to 24-hour</div>
+    <div class="q-num">Q3 &middot; 12-hour to 24-hour</div>
     <div class="q-text">Write 8:35 PM in 24-hour clock format.</div>
     <input class="answer-line" data-ans="20:35" placeholder="Answer = ___">
   </div>
   <div class="q">
-    <div class="q-num">Q4 · Problem Solving</div>
-    <div class="q-text">Sheyvon starts studying at 16:30 and studies for 1 hour 45 minutes. At what time does he finish? Give your answer in 12-hour and 24-hour format.</div>
+    <div class="q-num">Q4 &middot; Problem Solving</div>
+    <div class="q-text">Sheyvon starts studying at 16:30 and studies for 1 hour 45 minutes. At what time does he finish?</div>
     <textarea class="answer-box" placeholder="12-hour: ___ PM     24-hour: ___"></textarea>
   </div>
   <div class="q">
-    <div class="q-num">Q5 · Fill in the Blank</div>
+    <div class="q-num">Q5 &middot; Fill in the Blank</div>
     <div class="q-text">There are <input class="fill-input" data-ans="86400" placeholder="_______"> seconds in one day.</div>
   </div>
   <div class="q">
-    <div class="q-num">Q6 · True or False</div>
+    <div class="q-num">Q6 &middot; True or False</div>
     <div class="q-text">14:00 in 24-hour format is the same as 2:00 AM in 12-hour format.</div>
     <div class="tf-btns">
-      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">✅ True</button>
-      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">❌ False</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'true')">&#9989; True</button>
+      <button type="button" class="tf-btn" onclick="selectTF(this,'false')">&#10060; False</button>
     </div>
     <input type="hidden" class="tf-ans" value="false">
   </div>
@@ -428,45 +500,58 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
 <div class="section">
   <div class="section-header">
     <span class="section-num">Chapter 7</span>
-    <span class="section-title">📏 Parallel Lines</span>
+    <span class="section-title">&#128207; Parallel Lines</span>
     <span class="section-marks">6 marks</span>
   </div>
+
   <div class="q" id="q7_1">
-    <div class="q-num">Q1 · Multiple Choice</div>
+    <div class="q-num">Q1 &middot; Multiple Choice</div>
     <div class="q-text">When a transversal crosses two parallel lines, alternate angles are:</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_1',0,0)"><span class="opt-letter">A</span> Equal</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_1',1,0)"><span class="opt-letter">B</span> Supplementary</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_1',2,0)"><span class="opt-letter">C</span> Complementary</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_1',3,0)"><span class="opt-letter">D</span> Right angles</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> Equal</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> Supplementary</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> Complementary</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> Right angles</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q7_1" data-correct="A" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q" id="q7_2">
-    <div class="q-num">Q2 · Multiple Choice</div>
-    <div class="q-text">Co-interior angles (same-side interior angles) between parallel lines add up to:</div>
+    <div class="q-num">Q2 &middot; Multiple Choice</div>
+    <div class="q-text">Co-interior angles between parallel lines add up to:</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_2',0,2)"><span class="opt-letter">A</span> 90°</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_2',1,2)"><span class="opt-letter">B</span> 360°</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_2',2,2)"><span class="opt-letter">C</span> 180°</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q7_2',3,2)"><span class="opt-letter">D</span> 270°</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> 90&deg;</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> 360&deg;</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> 180&deg;</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> 270&deg;</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q7_2" data-correct="C" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q">
-    <div class="q-num">Q3 · Find the Angle</div>
-    <div class="q-text">Two parallel lines are cut by a transversal. One corresponding angle is 65°. What is the size of the other corresponding angle?</div>
-    <input class="answer-line" data-ans="65" placeholder="___ °">
+    <div class="q-num">Q3 &middot; Find the Angle</div>
+    <div class="q-text">Two parallel lines are cut by a transversal. One corresponding angle is 65&deg;. What is the other corresponding angle?</div>
+    <input class="answer-line" data-ans="65" placeholder="___ &deg;">
   </div>
   <div class="q">
-    <div class="q-num">Q4 · Find the Angle</div>
-    <div class="q-text">A co-interior angle is 112°. What is the size of the other co-interior angle?</div>
-    <input class="answer-line" data-ans="68" placeholder="___ °">
+    <div class="q-num">Q4 &middot; Find the Angle</div>
+    <div class="q-text">A co-interior angle is 112&deg;. What is the other co-interior angle?</div>
+    <input class="answer-line" data-ans="68" placeholder="___ &deg;">
   </div>
   <div class="q">
-    <div class="q-num">Q5 · Fill in the Blank</div>
+    <div class="q-num">Q5 &middot; Fill in the Blank</div>
     <div class="q-text">Corresponding angles are on the <input class="fill-input" data-ans="same" placeholder="_____"> side of the transversal and are <input class="fill-input" data-ans="equal" placeholder="_____">.</div>
   </div>
   <div class="q">
-    <div class="q-num">Q6 · Written</div>
+    <div class="q-num">Q6 &middot; Written</div>
     <div class="q-text">Name and describe THREE types of angle pairs formed when a transversal crosses two parallel lines.</div>
     <textarea class="answer-box" placeholder="1. ___  2. ___  3. ___"></textarea>
   </div>
@@ -476,46 +561,59 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
 <div class="section">
   <div class="section-header">
     <span class="section-num">Chapter 8</span>
-    <span class="section-title">🔴 Directed Numbers</span>
+    <span class="section-title">&#128308; Directed Numbers</span>
     <span class="section-marks">6 marks</span>
   </div>
+
   <div class="q" id="q8_1">
-    <div class="q-num">Q1 · Multiple Choice</div>
-    <div class="q-text">What is −8 + (−5)?</div>
+    <div class="q-num">Q1 &middot; Multiple Choice</div>
+    <div class="q-text">What is &minus;8 + (&minus;5)?</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_1',0,1)"><span class="opt-letter">A</span> 3</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_1',1,1)"><span class="opt-letter">B</span> −13</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_1',2,1)"><span class="opt-letter">C</span> 13</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_1',3,1)"><span class="opt-letter">D</span> −3</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> 3</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> &minus;13</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> 13</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> &minus;3</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q8_1" data-correct="B" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q" id="q8_2">
-    <div class="q-num">Q2 · Multiple Choice</div>
-    <div class="q-text">What is (−4) × (−6)?</div>
+    <div class="q-num">Q2 &middot; Multiple Choice</div>
+    <div class="q-text">What is (&minus;4) &times; (&minus;6)?</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_2',0,0)"><span class="opt-letter">A</span> 24</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_2',1,0)"><span class="opt-letter">B</span> −24</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_2',2,0)"><span class="opt-letter">C</span> 10</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q8_2',3,0)"><span class="opt-letter">D</span> −10</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> 24</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> &minus;24</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> 10</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> &minus;10</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q8_2" data-correct="A" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q">
-    <div class="q-num">Q3 · Calculate (show working)</div>
-    <div class="q-text">Work out: −15 − (−9) + 4</div>
+    <div class="q-num">Q3 &middot; Calculate</div>
+    <div class="q-text">Work out: &minus;15 &minus; (&minus;9) + 4</div>
     <input class="answer-line" data-ans="-2" placeholder="Answer = ___">
   </div>
   <div class="q">
-    <div class="q-num">Q4 · Real Life Problem</div>
-    <div class="q-text">The temperature in Nuwara Eliya at midnight was −3°C. By noon it rose by 11°C. What was the temperature at noon?</div>
-    <input class="answer-line" data-ans="8" placeholder="___ °C">
+    <div class="q-num">Q4 &middot; Real Life Problem</div>
+    <div class="q-text">The temperature in Nuwara Eliya at midnight was &minus;3&deg;C. By noon it rose by 11&deg;C. What was the temperature at noon?</div>
+    <input class="answer-line" data-ans="8" placeholder="___ &deg;C">
   </div>
   <div class="q">
-    <div class="q-num">Q5 · Fill in the Blank</div>
+    <div class="q-num">Q5 &middot; Fill in the Blank</div>
     <div class="q-text">When multiplying two negative numbers, the answer is always <input class="fill-input" data-ans="positive" placeholder="_________">.</div>
   </div>
   <div class="q">
-    <div class="q-num">Q6 · Order these numbers</div>
-    <div class="q-text">Write these numbers in ascending order (smallest to largest): −7, 3, −1, 0, −10, 5</div>
+    <div class="q-num">Q6 &middot; Order these numbers</div>
+    <div class="q-text">Write in ascending order (smallest first): &minus;7, 3, &minus;1, 0, &minus;10, 5</div>
     <input class="answer-line" data-ans="-10,-7,-1,0,3,5" placeholder="___ , ___ , ___ , ___ , ___ , ___">
   </div>
 </div>
@@ -524,43 +622,50 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
 <div class="section">
   <div class="section-header">
     <span class="section-num">Chapter 9</span>
-    <span class="section-title">📐 Angles</span>
+    <span class="section-title">&#128208; Angles</span>
     <span class="section-marks">6 marks</span>
   </div>
+
   <div class="q" id="q9_1">
-    <div class="q-num">Q1 · Multiple Choice</div>
+    <div class="q-num">Q1 &middot; Multiple Choice</div>
     <div class="q-text">The sum of interior angles of a triangle is:</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q9_1',0,1)"><span class="opt-letter">A</span> 90°</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q9_1',1,1)"><span class="opt-letter">B</span> 180°</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q9_1',2,1)"><span class="opt-letter">C</span> 270°</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q9_1',3,1)"><span class="opt-letter">D</span> 360°</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> 90&deg;</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> 180&deg;</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> 270&deg;</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> 360&deg;</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q9_1" data-correct="B" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q">
-    <div class="q-num">Q2 · Find the missing angle</div>
-    <div class="q-text">A triangle has angles of 47° and 83°. Find the third angle.</div>
-    <input class="answer-line" data-ans="50" placeholder="___ °">
+    <div class="q-num">Q2 &middot; Find the missing angle</div>
+    <div class="q-text">A triangle has angles of 47&deg; and 83&deg;. Find the third angle.</div>
+    <input class="answer-line" data-ans="50" placeholder="___ &deg;">
   </div>
   <div class="q">
-    <div class="q-num">Q3 · Classify the angle</div>
-    <div class="q-text">Name the type of angle for each: (a) 35° (b) 90° (c) 145° (d) 180° (e) 270°</div>
+    <div class="q-num">Q3 &middot; Classify the angle</div>
+    <div class="q-text">Name the type of angle for each: (a) 35&deg; (b) 90&deg; (c) 145&deg; (d) 180&deg; (e) 270&deg;</div>
     <textarea class="answer-box" placeholder="(a) ___ (b) ___ (c) ___ (d) ___ (e) ___"></textarea>
   </div>
   <div class="q">
-    <div class="q-num">Q4 · Supplementary and Complementary</div>
-    <div class="q-text">Find the supplement of 63° and the complement of 38°.</div>
-    <textarea class="answer-box" placeholder="Supplement of 63° = ___°     Complement of 38° = ___°"></textarea>
+    <div class="q-num">Q4 &middot; Supplementary and Complementary</div>
+    <div class="q-text">Find the supplement of 63&deg; and the complement of 38&deg;.</div>
+    <textarea class="answer-box" placeholder="Supplement of 63&deg; = ___&deg;     Complement of 38&deg; = ___&deg;"></textarea>
   </div>
   <div class="q">
-    <div class="q-num">Q5 · Vertically Opposite</div>
-    <div class="q-text">Two straight lines cross. One angle formed is 72°. Write the sizes of ALL four angles formed.</div>
-    <input class="answer-line" data-ans="72,108,72,108" placeholder="___ °, ___ °, ___ °, ___ °">
+    <div class="q-num">Q5 &middot; Vertically Opposite</div>
+    <div class="q-text">Two straight lines cross. One angle formed is 72&deg;. Write ALL four angles formed.</div>
+    <input class="answer-line" data-ans="72,108,72,108" placeholder="___ &deg;, ___ &deg;, ___ &deg;, ___ &deg;">
   </div>
   <div class="q">
-    <div class="q-num">Q6 · Angles around a point</div>
-    <div class="q-text">Three angles meet at a point. Two of them are 115° and 97°. What is the third angle?</div>
-    <input class="answer-line" data-ans="148" placeholder="___ °">
+    <div class="q-num">Q6 &middot; Angles around a point</div>
+    <div class="q-text">Three angles meet at a point. Two of them are 115&deg; and 97&deg;. What is the third angle?</div>
+    <input class="answer-line" data-ans="148" placeholder="___ &deg;">
   </div>
 </div>
 
@@ -568,288 +673,226 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;color:#1a1a1a;pa
 <div class="section">
   <div class="section-header">
     <span class="section-num">Chapter 10</span>
-    <span class="section-title">🍕 Fractions</span>
+    <span class="section-title">&#127829; Fractions</span>
     <span class="section-marks">6 marks</span>
   </div>
+
   <div class="q" id="q10_1">
-    <div class="q-num">Q1 · Multiple Choice</div>
-    <div class="q-text">What is ¾ + ⅝?</div>
+    <div class="q-num">Q1 &middot; Multiple Choice</div>
+    <div class="q-text">What is &frac34; + &frac58;?</div>
     <div class="mcq-opts">
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q10_1',0,2)"><span class="opt-letter">A</span> 8/12</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q10_1',1,2)"><span class="opt-letter">B</span> 1⅜</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q10_1',2,2)"><span class="opt-letter">C</span> 1⅜ = 11/8</button>
-      <button type="button" class="mcq-opt" onclick="selectMCQ('q10_1',3,2)"><span class="opt-letter">D</span> ½</button>
+      <div class="mcq-opt-label"><span class="opt-letter">A</span> 8/12</div>
+      <div class="mcq-opt-label"><span class="opt-letter">B</span> 1&frac14;</div>
+      <div class="mcq-opt-label"><span class="opt-letter">C</span> 1&frac38; (= 11/8)</div>
+      <div class="mcq-opt-label"><span class="opt-letter">D</span> &frac12;</div>
+    </div>
+    <div class="mcq-answer-row">
+      <label>Your answer:</label>
+      <input type="text" class="mcq-input" id="mcq_q10_1" data-correct="C" maxlength="1" placeholder="A/B/C/D">
+      <span class="hint">Type A, B, C or D</span>
     </div>
   </div>
+
   <div class="q">
-    <div class="q-num">Q2 · Calculate</div>
-    <div class="q-text">Work out: 2⅓ × 1½</div>
-    <div class="workings-box">🖊️ Convert to improper fractions first</div>
+    <div class="q-num">Q2 &middot; Calculate</div>
+    <div class="q-text">Work out: 2&frac13; &times; 1&frac12;</div>
+    <div class="workings-box">&#128394;&#65039; Convert to improper fractions first</div>
     <input class="answer-line" data-ans="3.5" placeholder="Answer = ___">
   </div>
   <div class="q">
-    <div class="q-num">Q3 · Calculate</div>
-    <div class="q-text">Work out: 3¾ ÷ 1¼</div>
-    <div class="workings-box">🖊️ Show working</div>
+    <div class="q-num">Q3 &middot; Calculate</div>
+    <div class="q-text">Work out: 3&frac34; &divide; 1&frac14;</div>
+    <div class="workings-box">&#128394;&#65039; Show working</div>
     <input class="answer-line" data-ans="3" placeholder="Answer = ___">
   </div>
   <div class="q">
-    <div class="q-num">Q4 · Word Problem</div>
-    <div class="q-text">Sheyvon drank ⅔ of a 1.5-litre bottle of water. How many litres did he drink?</div>
-    <div class="workings-box">🖊️ Working</div>
+    <div class="q-num">Q4 &middot; Word Problem</div>
+    <div class="q-text">Sheyvon drank &frac23; of a 1.5-litre bottle of water. How many litres did he drink?</div>
+    <div class="workings-box">&#128394;&#65039; Working</div>
     <input class="answer-line" data-ans="1" placeholder="___ litres">
   </div>
   <div class="q">
-    <div class="q-num">Q5 · Simplify</div>
+    <div class="q-num">Q5 &middot; Simplify</div>
     <div class="q-text">Simplify: 36/48</div>
     <input class="answer-line" data-ans="3/4" placeholder="Answer = ___">
   </div>
   <div class="q">
-    <div class="q-num">Q6 · Compare</div>
-    <div class="q-text">Which is larger: ⅗ or ⅔? Show your working.</div>
-    <div class="workings-box">🖊️ Find a common denominator</div>
+    <div class="q-num">Q6 &middot; Compare</div>
+    <div class="q-text">Which is larger: &frac35; or &frac23;? Show your working.</div>
+    <div class="workings-box">&#128394;&#65039; Find a common denominator</div>
     <input class="answer-line" data-ans="2/3" placeholder="The larger fraction is ___">
   </div>
 </div>
 
 <!-- CHECK ANSWERS -->
 <div class="section check-section">
-  <h2 style="color:#1F3864;margin-bottom:16px">✅ Check Your Answers</h2>
-  <p style="color:#555;margin-bottom:16px;">Click below to check your MCQ & True/False answers, then send all your results to Amma!</p>
-  <button class="check-btn" onclick="checkAll()">🎯 Check MCQ & True/False</button>
-  <button class="check-btn green" id="ansKeyBtn" onclick="toggleAnswers()" style="display:none;">📋 Show Full Answer Key</button>
-  <button class="check-btn" onclick="sendToAmma()" style="background:#25D366;font-size:1rem;">📩 Send Results to Amma</button>
+  <h2 style="color:#1F3864;margin-bottom:16px">&#9989; Check Your Answers</h2>
+  <p style="color:#555;margin-bottom:16px">Click below to check your MCQ &amp; True/False answers, then send all results to Amma!</p>
+  <button type="button" class="check-btn" onclick="checkAll()">&#127919; Check MCQ &amp; True/False</button>
+  <button type="button" class="check-btn" id="ansKeyBtn" onclick="toggleAnswers()" style="display:none;background:#2E7D32">&#128203; Show Full Answer Key</button>
+  <button type="button" class="check-btn" onclick="sendToAmma()" style="background:#25D366">&#128233; Send Results to Amma</button>
   <div id="scoreDisplay" style="margin-top:16px;display:none">
     <div class="score-badge" id="scoreBadge"></div>
   </div>
   <div id="waSent" style="display:none;margin-top:14px;padding:12px 20px;background:#E7F8EF;border-radius:10px;color:#1a7a45;font-weight:bold;">
-    ✅ WhatsApp opened! Ask Amma to check her phone. 📱
+    &#9989; WhatsApp opened! Ask Amma to check her phone. &#128241;
   </div>
 </div>
 
 <!-- ANSWER KEY -->
 <div class="answers-section" id="answerKey">
-  <h2>📋 Answer Key — Term 1 Maths</h2>
-  <p style="color:#555;font-size:.85rem;margin-bottom:16px">MCQ and key answers only. Written and problem-solving questions should be discussed with your teacher.</p>
-
-  <div class="ans-item"><strong>Ch1 Q1:</strong> C — 4 lines of symmetry</div>
-  <div class="ans-item"><strong>Ch1 Q2:</strong> A — Letter A</div>
+  <h2>&#128203; Answer Key &mdash; Term 1 Maths</h2>
+  <p style="color:#555;font-size:.85rem;margin-bottom:16px">MCQ and key answers. Written questions should be discussed with your teacher.</p>
+  <div class="ans-item"><strong>Ch1 Q1:</strong> C &mdash; 4 lines of symmetry</div>
+  <div class="ans-item"><strong>Ch1 Q2:</strong> A &mdash; Letter A</div>
   <div class="ans-item"><strong>Ch1 Q3:</strong> Line of symmetry</div>
   <div class="ans-item"><strong>Ch1 Q4:</strong> True</div>
-  <div class="ans-item"><strong>Ch1 Q6:</strong> 6 lines of symmetry (one through each pair of opposite vertices and one through each pair of opposite edge midpoints)</div>
-
-  <div class="ans-item"><strong>Ch2 Q1:</strong> A — {4, 8}</div>
-  <div class="ans-item"><strong>Ch2 Q2:</strong> B — Empty set</div>
-  <div class="ans-item"><strong>Ch2 Q4:</strong> P = {A, E, M, T, H, I, C, S} Q = {S, C, I, E, N} P∪Q = {A, E, M, T, H, I, C, S, N}</div>
+  <div class="ans-item"><strong>Ch1 Q6:</strong> 6 lines of symmetry</div>
+  <div class="ans-item"><strong>Ch2 Q1:</strong> A &mdash; {4, 8}</div>
+  <div class="ans-item"><strong>Ch2 Q2:</strong> B &mdash; Empty set</div>
+  <div class="ans-item"><strong>Ch2 Q4:</strong> P &cup; Q = {A, E, M, T, H, I, C, S, N}</div>
   <div class="ans-item"><strong>Ch2 Q5:</strong> Only cricket = 11, Only football = 8, Neither = 4</div>
   <div class="ans-item"><strong>Ch2 Q6:</strong> True</div>
-
-  <div class="ans-item"><strong>Ch3 Q1:</strong> C — 20 (48÷6=8, 3×4=12, 8+12=20)</div>
-  <div class="ans-item"><strong>Ch3 Q2:</strong> D — Brackets first</div>
-  <div class="ans-item"><strong>Ch3 Q3:</strong> (15+5)×3 − 4²÷2 = 20×3 − 16÷2 = 60 − 8 = 52</div>
-  <div class="ans-item"><strong>Ch3 Q5:</strong> 3×24=72, −15=57, +2×24=57+48=105... (3+2)×24−15 = 120−15 = 105. Wait: re-check: start 3×24=72 mangoes, sell 15 → 57, buy 2 more boxes → 57+48 = 105</div>
-  <div class="ans-item"><strong>Ch3 Q6:</strong> False — multiplication is done before subtraction</div>
-
-  <div class="ans-item"><strong>Ch4 Q1:</strong> C — HCF(24,36) = 12</div>
-  <div class="ans-item"><strong>Ch4 Q2:</strong> B — LCM(4,6) = 12</div>
+  <div class="ans-item"><strong>Ch3 Q1:</strong> C &mdash; 20</div>
+  <div class="ans-item"><strong>Ch3 Q2:</strong> D &mdash; Brackets first</div>
+  <div class="ans-item"><strong>Ch3 Q3:</strong> (15+5)&times;3 &minus; 4&sup2;&divide;2 = 60 &minus; 8 = 52</div>
+  <div class="ans-item"><strong>Ch3 Q5:</strong> (3+2)&times;24 &minus; 15 = 120 &minus; 15 = 105</div>
+  <div class="ans-item"><strong>Ch3 Q6:</strong> False &mdash; multiplication is done before subtraction</div>
+  <div class="ans-item"><strong>Ch4 Q1:</strong> C &mdash; HCF(24,36) = 12</div>
+  <div class="ans-item"><strong>Ch4 Q2:</strong> B &mdash; LCM(4,6) = 12</div>
   <div class="ans-item"><strong>Ch4 Q3:</strong> {1, 2, 3, 4, 6, 8, 12, 16, 24, 48}</div>
-  <div class="ans-item"><strong>Ch4 Q4:</strong> 60 = 2² × 3 × 5</div>
-  <div class="ans-item"><strong>Ch4 Q5:</strong> LCM(4,6,9) = 36 min → They ring together at 8:36 AM</div>
-
-  <div class="ans-item"><strong>Ch5 Q1:</strong> B — 2⁵ = 32</div>
-  <div class="ans-item"><strong>Ch5 Q2:</strong> C — 3⁴ × 3² = 3⁶ (add indices when base is same)</div>
-  <div class="ans-item"><strong>Ch5 Q3:</strong> 4³ − 5² = 64 − 25 = 39</div>
-  <div class="ans-item"><strong>Ch5 Q5:</strong> False — any number to the power 0 = 1</div>
-  <div class="ans-item"><strong>Ch5 Q6:</strong> 5⁶ ÷ 5² = 5⁴ (subtract indices)</div>
-
-  <div class="ans-item"><strong>Ch6 Q1:</strong> C — 2 h 35 min (07:45 to 10:20)</div>
+  <div class="ans-item"><strong>Ch4 Q4:</strong> 60 = 2&sup2; &times; 3 &times; 5</div>
+  <div class="ans-item"><strong>Ch4 Q5:</strong> LCM(4,6,9) = 36 min &rarr; 8:36 AM</div>
+  <div class="ans-item"><strong>Ch5 Q1:</strong> B &mdash; 2&#8309; = 32</div>
+  <div class="ans-item"><strong>Ch5 Q2:</strong> C &mdash; 3&#8308; &times; 3&#178; = 3&#8310;</div>
+  <div class="ans-item"><strong>Ch5 Q3:</strong> 4&#179; &minus; 5&#178; = 64 &minus; 25 = 39</div>
+  <div class="ans-item"><strong>Ch5 Q5:</strong> False &mdash; any number to the power 0 = 1</div>
+  <div class="ans-item"><strong>Ch5 Q6:</strong> 5&#8310; &divide; 5&#178; = 5&#8308;</div>
+  <div class="ans-item"><strong>Ch6 Q1:</strong> C &mdash; 2 h 35 min</div>
   <div class="ans-item"><strong>Ch6 Q2:</strong> 225 minutes</div>
   <div class="ans-item"><strong>Ch6 Q3:</strong> 20:35</div>
-  <div class="ans-item"><strong>Ch6 Q4:</strong> 16:30 + 1h45min = 18:15 = 6:15 PM</div>
+  <div class="ans-item"><strong>Ch6 Q4:</strong> 18:15 = 6:15 PM</div>
   <div class="ans-item"><strong>Ch6 Q5:</strong> 86,400 seconds</div>
-  <div class="ans-item"><strong>Ch6 Q6:</strong> False — 14:00 = 2:00 PM (not AM)</div>
-
-  <div class="ans-item"><strong>Ch7 Q1:</strong> A — Equal</div>
-  <div class="ans-item"><strong>Ch7 Q2:</strong> C — 180°</div>
-  <div class="ans-item"><strong>Ch7 Q3:</strong> 65° (corresponding angles are equal)</div>
-  <div class="ans-item"><strong>Ch7 Q4:</strong> 180° − 112° = 68°</div>
-
-  <div class="ans-item"><strong>Ch8 Q1:</strong> B — −13</div>
-  <div class="ans-item"><strong>Ch8 Q2:</strong> A — 24 (negative × negative = positive)</div>
-  <div class="ans-item"><strong>Ch8 Q3:</strong> −15 − (−9) + 4 = −15 + 9 + 4 = −2</div>
-  <div class="ans-item"><strong>Ch8 Q4:</strong> −3 + 11 = 8°C</div>
-  <div class="ans-item"><strong>Ch8 Q6:</strong> −10, −7, −1, 0, 3, 5</div>
-
-  <div class="ans-item"><strong>Ch9 Q1:</strong> B — 180°</div>
-  <div class="ans-item"><strong>Ch9 Q2:</strong> 180° − 47° − 83° = 50°</div>
+  <div class="ans-item"><strong>Ch6 Q6:</strong> False &mdash; 14:00 = 2:00 PM</div>
+  <div class="ans-item"><strong>Ch7 Q1:</strong> A &mdash; Equal</div>
+  <div class="ans-item"><strong>Ch7 Q2:</strong> C &mdash; 180&deg;</div>
+  <div class="ans-item"><strong>Ch7 Q3:</strong> 65&deg;</div>
+  <div class="ans-item"><strong>Ch7 Q4:</strong> 180&deg; &minus; 112&deg; = 68&deg;</div>
+  <div class="ans-item"><strong>Ch8 Q1:</strong> B &mdash; &minus;13</div>
+  <div class="ans-item"><strong>Ch8 Q2:</strong> A &mdash; 24</div>
+  <div class="ans-item"><strong>Ch8 Q3:</strong> &minus;2</div>
+  <div class="ans-item"><strong>Ch8 Q4:</strong> 8&deg;C</div>
+  <div class="ans-item"><strong>Ch8 Q6:</strong> &minus;10, &minus;7, &minus;1, 0, 3, 5</div>
+  <div class="ans-item"><strong>Ch9 Q1:</strong> B &mdash; 180&deg;</div>
+  <div class="ans-item"><strong>Ch9 Q2:</strong> 50&deg;</div>
   <div class="ans-item"><strong>Ch9 Q3:</strong> (a) Acute (b) Right (c) Obtuse (d) Straight (e) Reflex</div>
-  <div class="ans-item"><strong>Ch9 Q4:</strong> Supplement of 63° = 117°; Complement of 38° = 52°</div>
-  <div class="ans-item"><strong>Ch9 Q5:</strong> 72°, 108°, 72°, 108°</div>
-  <div class="ans-item"><strong>Ch9 Q6:</strong> 360° − 115° − 97° = 148°</div>
-
-  <div class="ans-item"><strong>Ch10 Q1:</strong> C — 11/8 = 1⅜</div>
-  <div class="ans-item"><strong>Ch10 Q2:</strong> 7/3 × 3/2 = 21/6 = 7/2 = 3½</div>
-  <div class="ans-item"><strong>Ch10 Q3:</strong> 15/4 ÷ 5/4 = 15/4 × 4/5 = 60/20 = 3</div>
-  <div class="ans-item"><strong>Ch10 Q4:</strong> ⅔ × 1.5 = 1 litre</div>
-  <div class="ans-item"><strong>Ch10 Q5:</strong> 36/48 = 3/4</div>
-  <div class="ans-item"><strong>Ch10 Q6:</strong> ⅗ = 6/10, ⅔ = 6⅔/10 → ⅔ is larger</div>
+  <div class="ans-item"><strong>Ch9 Q4:</strong> Supplement = 117&deg;; Complement = 52&deg;</div>
+  <div class="ans-item"><strong>Ch9 Q5:</strong> 72&deg;, 108&deg;, 72&deg;, 108&deg;</div>
+  <div class="ans-item"><strong>Ch9 Q6:</strong> 148&deg;</div>
+  <div class="ans-item"><strong>Ch10 Q1:</strong> C &mdash; 11/8 = 1&frac38;</div>
+  <div class="ans-item"><strong>Ch10 Q2:</strong> 7/3 &times; 3/2 = 7/2 = 3&frac12;</div>
+  <div class="ans-item"><strong>Ch10 Q3:</strong> 15/4 &divide; 5/4 = 3</div>
+  <div class="ans-item"><strong>Ch10 Q4:</strong> 1 litre</div>
+  <div class="ans-item"><strong>Ch10 Q5:</strong> 3/4</div>
+  <div class="ans-item"><strong>Ch10 Q6:</strong> 2/3 is larger</div>
 </div>
 
 <div class="footer">
-  📚 Sheyvon's Study System · Term 1 Maths Workbook · Grade 7 Sri Lanka Syllabus<br>
-  <a href="https://ceylontraveldesigners-dev.github.io/sheyvon-study/" style="color:#2E75B6">← Back to Dashboard</a>
+  &#128218; Sheyvon's Study System &middot; Term 1 Maths Workbook &middot; Grade 7 Sri Lanka Syllabus<br>
+  <a href="https://ceylontraveldesigners-dev.github.io/sheyvon-study/" style="color:#2E75B6">&larr; Back to Dashboard</a>
 </div>
 
 <script>
-document.getElementById('dateField').value = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+document.getElementById('dateField').value = new Date().toLocaleDateString('en-GB');
 
-// MCQ selection
-const mcqState = {};
-function selectMCQ(qid, selected, correct) {
-  mcqState[qid] = {selected, correct};
-  const opts = document.querySelectorAll(`#${qid} .mcq-opt`);
-  opts.forEach((o,i) => {
-    o.classList.remove('selected','correct','wrong');
-    if(i===selected) o.classList.add('selected');
-  });
-}
-
-// TF selection
 function selectTF(btn, val) {
-  const parent = btn.closest('.q');
-  parent.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected-true','selected-false'));
+  var parent = btn.closest('.q');
+  parent.querySelectorAll('.tf-btn').forEach(function(b){ b.classList.remove('selected-true','selected-false'); });
   btn.classList.add(val==='true' ? 'selected-true' : 'selected-false');
   btn.dataset.selected = val;
 }
 
-// Check all
 function checkAll() {
-  let correct=0, total=0;
-  // MCQ
-  Object.entries(mcqState).forEach(([qid,{selected,correct:ans}]) => {
-    total++;
-    const opts = document.querySelectorAll(`#${qid} .mcq-opt`);
-    opts.forEach((o,i) => {
-      o.classList.remove('selected','correct','wrong');
-      if(i===ans) o.classList.add('correct');
-      else if(i===selected && selected!==ans) o.classList.add('wrong');
-    });
-    if(selected===ans) correct++;
-  });
-  // TF
-  document.querySelectorAll('.tf-btn.selected-true, .tf-btn.selected-false').forEach(btn => {
-    const ans = btn.closest('.q').querySelector('.tf-ans').value;
-    const selected = btn.dataset.selected;
-    if(selected) {
+  var correct = 0, total = 0;
+
+  // MCQ inputs
+  document.querySelectorAll('.mcq-input').forEach(function(inp) {
+    var ans = inp.value.trim().toUpperCase();
+    var correctAns = inp.dataset.correct.toUpperCase();
+    inp.classList.remove('correct','wrong');
+    if(ans) {
       total++;
-      if(selected===ans) { correct++; btn.style.background='#2E7D32'; btn.style.color='white'; }
-      else { btn.style.background='#C62828'; btn.style.color='white'; }
+      if(ans === correctAns) { inp.classList.add('correct'); correct++; }
+      else { inp.classList.add('wrong'); }
     }
   });
-  const pct = total>0 ? Math.round(correct/total*100) : 0;
-  document.getElementById('scoreDisplay').style.display='block';
-  document.getElementById('scoreBadge').textContent = `MCQ & T/F Score: ${correct}/${total} (${pct}%) ${pct>=70?'🎉 Great work!':'📚 Keep going!'}`;
-  document.getElementById('totalScore').value = `${correct}/${total} MCQ+TF (${pct}%)`;
+
+  // TF buttons
+  document.querySelectorAll('.q').forEach(function(q) {
+    var selected = q.querySelector('.tf-btn.selected-true, .tf-btn.selected-false');
+    var hiddenAns = q.querySelector('.tf-ans');
+    if(selected && hiddenAns) {
+      total++;
+      var userVal = selected.dataset.selected;
+      var correctVal = hiddenAns.value;
+      if(userVal === correctVal) { correct++; selected.style.background='#2E7D32'; selected.style.color='white'; }
+      else { selected.style.background='#C62828'; selected.style.color='white'; }
+    }
+  });
+
+  var pct = total > 0 ? Math.round(correct/total*100) : 0;
+  document.getElementById('scoreDisplay').style.display = 'block';
+  document.getElementById('scoreBadge').textContent = 'MCQ & T/F Score: ' + correct + '/' + total + ' (' + pct + '%) ' + (pct >= 70 ? 'Great work!' : 'Keep going!');
+  document.getElementById('totalScore').value = correct + '/' + total + ' MCQ+TF (' + pct + '%)';
 }
 
 function toggleAnswers() {
-  const el = document.getElementById('answerKey');
+  var el = document.getElementById('answerKey');
   el.classList.toggle('show');
   el.scrollIntoView({behavior:'smooth'});
 }
 
 function sendToAmma() {
-  const date = document.getElementById('dateField').value || new Date().toLocaleDateString('en-GB');
+  var name = document.querySelector('.name-field input').value || 'Sheyvon';
+  var date = document.getElementById('dateField').value;
+  var msg = 'SHEYVON MATHS WORKBOOK RESULTS\n' + name + ' | ' + date + '\n\n';
 
-  // --- Score from MCQ ---
-  let mcqCorrect=0, mcqTotal=0;
-  Object.entries(mcqState).forEach(([qid,{selected,correct}]) => {
-    mcqTotal++;
-    if(selected===correct) mcqCorrect++;
+  // MCQ answers
+  msg += '--- MCQ ANSWERS ---\n';
+  document.querySelectorAll('.mcq-input').forEach(function(inp) {
+    var qid = inp.id.replace('mcq_','');
+    var ans = inp.value.trim().toUpperCase() || '(blank)';
+    var correct = inp.dataset.correct;
+    var mark = ans === correct ? 'CORRECT' : 'WRONG (ans:'+correct+')';
+    msg += qid + ': ' + ans + ' - ' + mark + '\n';
   });
 
-  // --- Score from TF ---
-  let tfCorrect=0, tfTotal=0;
-  document.querySelectorAll('.tf-btn[data-selected]').forEach(btn => {
-    const ans = btn.closest('.q').querySelector('.tf-ans').value;
-    const sel = btn.dataset.selected;
-    if(sel) { tfTotal++; if(sel===ans) tfCorrect++; }
+  // TF answers
+  msg += '\n--- TRUE/FALSE ---\n';
+  document.querySelectorAll('.q').forEach(function(q) {
+    var sel = q.querySelector('.tf-btn.selected-true, .tf-btn.selected-false');
+    if(sel) {
+      var qnum = q.querySelector('.q-num');
+      var label = qnum ? qnum.textContent : 'TF';
+      msg += label + ': ' + sel.dataset.selected + '\n';
+    }
   });
 
-  const totalAuto = mcqCorrect + tfCorrect;
-  const totalPossible = mcqTotal + tfTotal;
-  const pct = totalPossible > 0 ? Math.round(totalAuto/totalPossible*100) : 0;
-
-  // --- Collect written answers ---
-  const chapterNames = ['','Symmetry','Sets','Operations on Numbers','Factors & Multiples','Indices','Time','Parallel Lines','Directed Numbers','Angles','Fractions'];
-  let writtenParts = '';
-  document.querySelectorAll('.section').forEach((sec, si) => {
-    const titleEl = sec.querySelector('.section-title');
-    if(!titleEl) return;
-    const chTitle = titleEl.textContent.trim();
-    let chAnswers = [];
-    // fill-in inputs
-    sec.querySelectorAll('input.fill-input').forEach((inp,i) => {
-      const val = inp.value.trim();
-      if(val) chAnswers.push('Fill '+(i+1)+': '+val);
-    });
-    // answer-lines
-    sec.querySelectorAll('input.answer-line').forEach((inp,i) => {
-      const val = inp.value.trim();
-      if(val) chAnswers.push('Ans '+(i+1)+': '+val);
-    });
-    // textareas
-    sec.querySelectorAll('textarea.answer-box').forEach((ta,i) => {
-      const val = ta.value.trim();
-      if(val) chAnswers.push('Written '+(i+1)+': '+val.substring(0,120)+(val.length>120?'...':''));
-    });
-    if(chAnswers.length>0) writtenParts += '
-'+chTitle+':
-'+chAnswers.join('
-');
+  // Written answers
+  msg += '\n--- WRITTEN ANSWERS ---\n';
+  document.querySelectorAll('.answer-line, .answer-box').forEach(function(el, i) {
+    var val = el.value.trim();
+    if(val) msg += 'Q' + (i+1) + ': ' + val + '\n';
   });
 
-  // --- Build message ---
-  const msg =
-    '📐 Term 1 Maths Workbook Results
-' +
-    '👦 Sheyvon Warnapura — Grade 7
-' +
-    '📅 ' + date + '
+  // Score
+  var score = document.getElementById('totalScore').value;
+  if(score && score !== 'Check answers to see') msg += '\nSCORE: ' + score;
 
-' +
-    '━━━━━━━━━━━━━━━━━━━━
-' +
-    '🎯 AUTO-MARKED SCORE
-' +
-    'MCQ: ' + mcqCorrect + '/' + mcqTotal + '
-' +
-    'True/False: ' + tfCorrect + '/' + tfTotal + '
-' +
-    'Total (auto): ' + totalAuto + '/' + totalPossible + ' (' + pct + '%)
-' +
-    (pct>=70 ? '🌟 Well done, Sheyvon!' : '📚 Keep practising!') + '
-
-' +
-    '━━━━━━━━━━━━━━━━━━━━
-' +
-    '✏️ WRITTEN ANSWERS
-' +
-    (writtenParts || '(No written answers entered)') + '
-
-' +
-    '━━━━━━━━━━━━━━━━━━━━
-' +
-    '📖 Full workbook: https://ceylontraveldesigners-dev.github.io/sheyvon-study/workbooks/Term1_Maths_Workbook.html';
-
-  const encoded = encodeURIComponent(msg);
-  const url = 'https://web.whatsapp.com/send?phone=94764551840&text=' + encoded;
-  window.open(url, '_blank');
-  document.getElementById('waSent').style.display='block';
-  document.getElementById('waSent').scrollIntoView({behavior:'smooth'});
-  // Unlock answer key now that paper is submitted
-  document.getElementById('ansKeyBtn').style.display='inline-block';
-  document.getElementById('ansKeyBtn').textContent = '📋 View Full Answer Key (Unlocked!)';
+  var encoded = encodeURIComponent(msg);
+  window.open('https://web.whatsapp.com/send?phone=94764551840&text=' + encoded, '_blank');
+  document.getElementById('waSent').style.display = 'block';
+  document.getElementById('ansKeyBtn').style.display = 'inline-block';
 }
 </script>
 </body>
