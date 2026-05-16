@@ -20,6 +20,7 @@ body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
 .tab-maths { background: #1F3864; color: white; }
 .tab-sci   { background: #1B5E20; color: white; }
 .tab-geo   { background: #E65100; color: white; }
+.tab-comp  { background: #4527A0; color: white; }
 
 /* SUBJECT PANELS */
 .subject-panel { display: none; }
@@ -84,7 +85,7 @@ body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
 <div class="top-bar">
   <div>
     <h1>📚 Sheyvon's Study Dashboard</h1>
-    <p>Grade 7 — Maths · Science · Geography | Sri Lankan Syllabus</p>
+    <p>Grade 7 — Maths · Science · Geography · Computing | Sri Lankan Syllabus</p>
   </div>
   <div class="date-badge" id="todayDate">Loading...</div>
 </div>
@@ -93,11 +94,11 @@ body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
 
   <!-- OVERALL STATS -->
   <div class="overall-bar">
-    <div class="overall-stat"><div class="num">53</div><div class="lbl">Total Chapters</div></div>
-    <div class="overall-stat"><div class="num">159</div><div class="lbl">Study Files</div></div>
-    <div class="overall-stat"><div class="num">3</div><div class="lbl">Subjects</div></div>
+    <div class="overall-stat"><div class="num">60</div><div class="lbl">Total Chapters</div></div>
+    <div class="overall-stat"><div class="num">180</div><div class="lbl">Study Files</div></div>
+    <div class="overall-stat"><div class="num">4</div><div class="lbl">Subjects</div></div>
     <div class="overall-stat"><div class="num">7</div><div class="lbl">Days / Week</div></div>
-    <div class="overall-stat"><div class="num">7</div><div class="lbl">WhatsApp Reminders</div></div>
+    <div class="overall-stat"><div class="num">10</div><div class="lbl">WhatsApp Reminders</div></div>
   </div>
 
   <!-- ADMIN -->
@@ -123,7 +124,10 @@ body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
       <span class="reminder-slot" style="background:#1F3864;">📐 Thu 6:15 PM — Maths</span>
       <span class="reminder-slot" style="background:#1B5E20;">🔬 Fri 6:15 PM — Science</span>
       <span class="reminder-slot" style="background:#1F3864;">📐 Sat 10:00 AM — Maths</span>
+      <span class="reminder-slot" style="background:#4527A0;">💻 Sat 5:30 PM — Computing</span>
       <span class="reminder-slot" style="background:#E65100;">🗺️ Sun 10:00 AM — Geography</span>
+      <span class="reminder-slot" style="background:#4527A0;">💻 Sun 1:00 PM — Computing</span>
+      <span class="reminder-slot" style="background:#4527A0;">💻 Wed 7:00 PM — Computing</span>
     </div>
     <p style="margin-top:10px; font-size:12px; color:#555;">Each message includes the Notes link and the Timed Paper link for that day's chapter.</p>
   </div>
@@ -133,6 +137,7 @@ body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
     <button class="tab-btn tab-maths active" onclick="showSubject('maths',this)">📐 Maths — 29 chapters</button>
     <button class="tab-btn tab-sci"          onclick="showSubject('sci',this)">🔬 Science — 19 chapters</button>
     <button class="tab-btn tab-geo"          onclick="showSubject('geo',this)">🗺️ Geography — 5 chapters</button>
+    <button class="tab-btn tab-comp"         onclick="showSubject('comp',this)">💻 Computing — 7 chapters</button>
   </div>
 
   <!-- ═══ MATHS ═══ -->
@@ -172,6 +177,17 @@ body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
     </div>
     <div class="section-head" style="color:#E65100; border-color:#FFCC80;">🗺️ Geography — All 5 Chapters</div>
     <div id="geoList"></div>
+  </div>
+
+  <!-- ═══ COMPUTING ═══ -->
+  <div class="subject-panel" id="panel-comp">
+    <div class="stats-bar">
+      <div class="stat"><div class="num" style="color:#4527A0;">7</div><div class="lbl">Chapters</div></div>
+      <div class="stat"><div class="num" style="color:#4527A0;">21</div><div class="lbl">Files</div></div>
+      <div class="stat"><div class="num" style="color:#4527A0;">Wed · Sat · Sun</div><div class="lbl">Study Days</div></div>
+    </div>
+    <div class="section-head" style="color:#4527A0; border-color:#CE93D8;">💻 Computing — All 7 Chapters</div>
+    <div id="compList"></div>
   </div>
 
 </div>
@@ -296,6 +312,26 @@ sci.forEach(ch => {
     `02_Subjects/Science/Practice_Papers/${ch.slug}_Practice_A.html`,
     `02_Subjects/Science/Timed_Exams/${ch.slug}_Timed_Paper.html`,
     '#2E7D32');
+});
+
+/* COMPUTING */
+const comp = [
+  {n:1, t:"Central Processing Unit",e:"💻",slug:"Ch01_CPU"},
+  {n:2, t:"Operating System",e:"🖥️",slug:"Ch02_OS"},
+  {n:3, t:"Security of Computer System",e:"🔒",slug:"Ch03_Security"},
+  {n:4, t:"Word Processing",e:"📝",slug:"Ch04_WordProcessing"},
+  {n:5, t:"Programme Development",e:"⌨️",slug:"Ch05_ProgDev"},
+  {n:6, t:"Presentation Software",e:"📊",slug:"Ch06_Presentation"},
+  {n:7, t:"Internet for Information and Communication",e:"🌐",slug:"Ch07_Internet"},
+];
+const cl = document.getElementById('compList');
+comp.forEach(ch => {
+  ch.id = 'cch'+ch.n;
+  cl.innerHTML += buildCard(ch,
+    `02_Subjects/Computing/Short_Notes/${ch.slug}_Notes.html`,
+    `02_Subjects/Computing/Practice_Papers/${ch.slug}_PracticeA.html`,
+    `02_Subjects/Computing/Timed_Exams/${ch.slug}_TimedPaper.html`,
+    '#4527A0');
 });
 
 /* GEOGRAPHY */
