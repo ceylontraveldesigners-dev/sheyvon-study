@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ch.3 Security of Computer System – Timed Paper | Sheyvon</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f3f0ff;color:#222}
+#ss{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.sc{background:white;border-radius:16px;padding:40px;max-width:560px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,.12);text-align:center}
+.sc h1{font-size:22px;color:#4527A0;margin-bottom:6px}.sc p{font-size:14px;color:#555;line-height:1.6;margin-bottom:20px}
+.ig{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.ib{background:#F3F0FF;border-radius:10px;padding:14px}.ib .val{font-size:22px;font-weight:bold;color:#4527A0}.ib .lbl{font-size:11px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.sb{background:linear-gradient(135deg,#4527A0,#7E57C2);color:white;border:none;border-radius:10px;padding:16px 40px;font-size:16px;font-weight:bold;cursor:pointer;width:100%;margin-top:10px}
+.wb{background:#FFF9E6;border-left:4px solid #FFC000;border-radius:8px;padding:12px 16px;font-size:13px;color:#7F4F00;text-align:left;margin-bottom:16px}
+#es{display:none}
+.eh{background:linear-gradient(135deg,#4527A0,#7E57C2);color:white;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:100}
+.et{font-size:15px;font-weight:bold}
+.tb{background:rgba(255,255,255,.15);border-radius:10px;padding:8px 18px;text-align:center;min-width:100px}
+.tn{font-size:26px;font-weight:bold;font-family:monospace}.tl{font-size:10px;opacity:.8;text-transform:uppercase;letter-spacing:1px}
+.tb.warning{background:rgba(255,200,0,.3);animation:pulse 1s infinite}.tb.danger{background:rgba(255,60,60,.4);animation:pulse .5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.con{max-width:780px;margin:24px auto;padding:0 20px 60px}
+.sh{background:#4527A0;color:white;border-radius:8px;padding:10px 16px;font-size:13px;font-weight:bold;margin:24px 0 14px}
+.qc{background:white;border-radius:12px;padding:22px 24px;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,.07);border-left:4px solid #D1C4E9}
+.qn{font-size:11px;font-weight:bold;color:#7E57C2;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.qm{float:right;background:#EDE7F6;color:#7E57C2;border-radius:6px;padding:2px 10px;font-size:12px;font-weight:bold}
+.qt{font-size:15px;font-weight:bold;color:#4527A0;line-height:1.5;margin-bottom:16px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.ob{background:#F7F5FF;border:2px solid #D1C4E9;border-radius:8px;padding:12px 16px;text-align:left;font-size:14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px}
+.ob:hover{background:#EDE7F6;border-color:#7E57C2}.ob.sel{background:#7E57C2;border-color:#7E57C2;color:white}
+.ob.cor{background:#C6EFCE;border-color:#70AD47;color:#375623}.ob.wrg{background:#FFE0E0;border-color:#FF6B6B;color:#9C0006}
+.ob.sel .ol{background:white;color:#7E57C2}.ob.cor .ol{background:#375623;color:white}.ob.wrg .ol{background:#9C0006;color:white}
+.ol{width:26px;height:26px;border-radius:50%;background:#7E57C2;color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;flex-shrink:0}
+.tg{display:flex;gap:12px;margin-top:8px}
+.tb2{flex:1;padding:12px;border:2px solid #D1C4E9;border-radius:8px;font-size:14px;font-weight:bold;cursor:pointer;background:#F7F5FF;transition:all .2s}
+.tb2:hover{background:#EDE7F6}.tb2.sel{background:#7E57C2;color:white;border-color:#7E57C2}
+.tb2.cor{background:#C6EFCE;border-color:#70AD47;color:#375623}.tb2.wrg{background:#FFE0E0;border-color:#FF6B6B;color:#9C0006}
+.xb{width:100%;background:#9C0006;color:white;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:16px}
+#rs{display:none}
+.rh{background:linear-gradient(135deg,#4527A0,#7E57C2);color:white;padding:30px 32px;text-align:center}
+.rh h1{font-size:20px;margin-bottom:4px}
+.rc{width:140px;height:140px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:20px auto;font-size:36px;font-weight:bold;color:white}
+.rc.pass{background:linear-gradient(135deg,#375623,#70AD47)}.rc.warn{background:linear-gradient(135deg,#7F4F00,#FFC000)}.rc.fail{background:linear-gradient(135deg,#9C0006,#FF6B6B)}
+.rc small{font-size:13px;font-weight:normal}
+.rb{max-width:760px;margin:0 auto;padding:24px 20px 60px}
+.rs{background:white;border-radius:12px;padding:24px;margin-bottom:20px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.sx{background:#F3F0FF;border-radius:10px;padding:14px;text-align:center}
+.sx .val{font-size:24px;font-weight:bold;color:#4527A0}.sx .lbl{font-size:11px;color:#777;margin-top:2px}
+.ap{background:white;border-radius:12px;padding:20px 24px;margin-top:20px}
+.ab{display:inline-block;background:#4527A0;color:white;text-decoration:none;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:bold;margin:5px}
+.ab.g{background:#375623}</style></head><body>
+<div id="ss"><div class="sc">
+  <h1>⏱️ Timed Paper<br>Ch 3: Security of Computer System</h1>
+  <p>You have <strong>15 minutes</strong> for 10 questions. Close your notes now!</p>
+  <div class="ig">
+    <div class="ib"><div class="val">10</div><div class="lbl">Questions</div></div>
+    <div class="ib"><div class="val">15</div><div class="lbl">Minutes</div></div>
+    <div class="ib"><div class="val">10</div><div class="lbl">Marks</div></div>
+    <div class="ib"><div class="val">ICT G7</div><div class="lbl">Subject</div></div>
+  </div>
+  <div class="wb">⚠️ <strong>Before you start:</strong> Have you read the Short Notes? Close them now — this tests your memory!</div>
+  <button class="sb" onclick="startExam()">🚀 Start Timer &amp; Begin</button>
+</div></div>
+<div id="es">
+  <div class="eh">
+    <div><div class="et">⏱️ Ch.3 Security of Computer System</div><div style="font-size:11px;opacity:.8">ICT Grade 7 | 10 marks</div></div>
+    <div class="tb" id="tbox"><div class="tn" id="td">15:00</div><div class="tl">Remaining</div></div>
+  </div>
+  <div class="con">
+  <div class="sh">Section A — Answer all questions (1 mark each)</div>
+  <div class="qc" id="q1"><div class="qn">Q1 <span class="qm">1 mark</span></div><div class="qt">Which type of malware disguises itself as a useful programme?</div><div class="opts"><button class="ob" onclick="sMCQ('q1',this,false)"><span class="ol">A</span>Spyware</button><button class="ob" onclick="sMCQ('q1',this,false)"><span class="ol">B</span>Worm</button><button class="ob" onclick="sMCQ('q1',this,true)"><span class="ol">C</span>Trojan Horse</button><button class="ob" onclick="sMCQ('q1',this,false)"><span class="ol">D</span>Adware</button></div></div><div class="qc" id="q2"><div class="qn">Q2 <span class="qm">1 mark</span></div><div class="qt">A firewall protects the computer by blocking unauthorised network traffic.</div><div class="tg"><button class="tb2" onclick="sTF('q2',this,true)">✅ True</button><button class="tb2" onclick="sTF('q2',this,false)">❌ False</button></div></div><div class="qc" id="q3"><div class="qn">Q3 <span class="qm">1 mark</span></div><div class="qt">What does antivirus software do?</div><div class="opts"><button class="ob" onclick="sMCQ('q3',this,false)"><span class="ol">A</span>Speeds up the computer</button><button class="ob" onclick="sMCQ('q3',this,false)"><span class="ol">B</span>Blocks network access</button><button class="ob" onclick="sMCQ('q3',this,true)"><span class="ol">C</span>Detects and removes viruses and malware</button><button class="ob" onclick="sMCQ('q3',this,false)"><span class="ol">D</span>Creates backups of files</button></div></div><div class="qc" id="q4"><div class="qn">Q4 <span class="qm">1 mark</span></div><div class="qt">It is safe to use '123456' as your password because it is easy to remember.</div><div class="tg"><button class="tb2" onclick="sTF('q4',this,false)">✅ True</button><button class="tb2" onclick="sTF('q4',this,true)">❌ False</button></div></div><div class="qc" id="q5"><div class="qn">Q5 <span class="qm">1 mark</span></div><div class="qt">A worm is different from a virus because it:</div><div class="opts"><button class="ob" onclick="sMCQ('q5',this,false)"><span class="ol">A</span>Deletes all files</button><button class="ob" onclick="sMCQ('q5',this,true)"><span class="ol">B</span>Replicates and spreads through networks without user action</button><button class="ob" onclick="sMCQ('q5',this,false)"><span class="ol">C</span>Only affects mobile phones</button><button class="ob" onclick="sMCQ('q5',this,false)"><span class="ol">D</span>Makes the computer faster</button></div></div><div class="qc" id="q6"><div class="qn">Q6 <span class="qm">1 mark</span></div><div class="qt">What is a 'backup'?</div><div class="opts"><button class="ob" onclick="sMCQ('q6',this,false)"><span class="ol">A</span>A strong password</button><button class="ob" onclick="sMCQ('q6',this,false)"><span class="ol">B</span>An antivirus programme</button><button class="ob" onclick="sMCQ('q6',this,true)"><span class="ol">C</span>A copy of important data saved in another location</button><button class="ob" onclick="sMCQ('q6',this,false)"><span class="ol">D</span>A type of firewall</button></div></div><div class="qc" id="q7"><div class="qn">Q7 <span class="qm">1 mark</span></div><div class="qt">Phishing is when criminals try to trick you into revealing your passwords through fake emails or websites.</div><div class="tg"><button class="tb2" onclick="sTF('q7',this,true)">✅ True</button><button class="tb2" onclick="sTF('q7',this,false)">❌ False</button></div></div><div class="qc" id="q8"><div class="qn">Q8 <span class="qm">1 mark</span></div><div class="qt">Which of the following is the STRONGEST password?</div><div class="opts"><button class="ob" onclick="sMCQ('q8',this,false)"><span class="ol">A</span>myname</button><button class="ob" onclick="sMCQ('q8',this,false)"><span class="ol">B</span>12345678</button><button class="ob" onclick="sMCQ('q8',this,true)"><span class="ol">C</span>P@55w0rd!</button><button class="ob" onclick="sMCQ('q8',this,false)"><span class="ol">D</span>password123</button></div></div><div class="qc" id="q9"><div class="qn">Q9 <span class="qm">1 mark</span></div><div class="qt">You should update your antivirus software regularly to ensure it can detect new threats.</div><div class="tg"><button class="tb2" onclick="sTF('q9',this,true)">✅ True</button><button class="tb2" onclick="sTF('q9',this,false)">❌ False</button></div></div><div class="qc" id="q10"><div class="qn">Q10 <span class="qm">1 mark</span></div><div class="qt">Ransomware locks your files and then:</div><div class="opts"><button class="ob" onclick="sMCQ('q10',this,false)"><span class="ol">A</span>Makes the computer faster</button><button class="ob" onclick="sMCQ('q10',this,true)"><span class="ol">B</span>Demands payment to unlock them</button><button class="ob" onclick="sMCQ('q10',this,false)"><span class="ol">C</span>Deletes the antivirus</button><button class="ob" onclick="sMCQ('q10',this,false)"><span class="ol">D</span>Improves your internet speed</button></div></div>
+  <button class="xb" onclick="submitExam()">📩 Submit My Answers</button>
+  </div>
+</div>
+<div id="rs">
+  <div class="rh"><h1>📊 Results — Ch 3: Security of Computer System</h1>
+  <div class="rc" id="scircle"><span id="snum">?</span><small>/10</small></div>
+  <p id="smsg" style="font-size:18px;font-weight:bold;margin-top:10px;"></p></div>
+  <div class="rb">
+    <div class="rs"><div class="sg">
+      <div class="sx"><div class="val" id="r-score">-</div><div class="lbl">Score</div></div>
+      <div class="sx"><div class="val" id="r-pct">-</div><div class="lbl">Percentage</div></div>
+      <div class="sx"><div class="val" id="r-time">-</div><div class="lbl">Time Used</div></div>
+      <div class="sx"><div class="val" id="r-correct">-</div><div class="lbl">Correct</div></div>
+    </div></div>
+    <div class="ap"><h2 style="font-size:16px;color:#4527A0;margin-bottom:12px;">⏭️ What next?</h2>
+      <a class="ab" href="../Short_Notes/Ch03_Security_Notes.html">📖 Re-read Notes</a>
+      <a class="ab g" href="../Short_Notes/Ch04_WordProcessing_Notes.html">➡️ Next: Chapter 4</a>
+    </div>
+  </div>
+</div>
+<script>
+let sel={},timerInterval,secondsLeft=15*60,startTime;
+function startExam(){document.getElementById('ss').style.display='none';document.getElementById('es').style.display='block';startTime=Date.now();timerInterval=setInterval(tick,1000);}
+function tick(){secondsLeft--;const m=Math.floor(secondsLeft/60),s=secondsLeft%60;document.getElementById('td').textContent=m+':'+(s<10?'0':'')+s;const tb=document.getElementById('tbox');if(secondsLeft<=120)tb.className='tb danger';else if(secondsLeft<=300)tb.className='tb warning';if(secondsLeft<=0){clearInterval(timerInterval);submitExam();}}
+function sMCQ(qid,btn,v){const c=document.getElementById(qid);c.querySelectorAll('.ob').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');sel[qid]=v;}
+function sTF(qid,btn,v){const c=document.getElementById(qid);c.querySelectorAll('.tb2').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');sel[qid]=v;}
+function submitExam(){
+  clearInterval(timerInterval);const elapsed=Math.floor((Date.now()-startTime)/1000);const em=Math.floor(elapsed/60),es2=elapsed%60;
+  let total=0;
+  ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10'].forEach(qid=>{
+    const ok=sel[qid]===true;if(ok)total++;
+    const c=document.getElementById(qid);
+    c.querySelectorAll('.ob').forEach(b=>{b.disabled=true;if(b.classList.contains('sel')&&ok)b.classList.add('cor');else if(b.classList.contains('sel')&&!ok)b.classList.add('wrg');if(b.onclick&&b.onclick.toString().includes(',true)'))b.classList.add('cor');});
+    c.querySelectorAll('.tb2').forEach(b=>{b.disabled=true;if(b.classList.contains('sel')&&ok)b.classList.add('cor');else if(b.classList.contains('sel')&&!ok)b.classList.add('wrg');if(!b.classList.contains('sel')&&!ok)b.classList.add('cor');});
+  });
+  const pct=Math.round((total/10)*100);
+  document.getElementById('es').style.display='none';document.getElementById('rs').style.display='block';
+  document.getElementById('r-score').textContent=total+'/10';document.getElementById('r-pct').textContent=pct+'%';
+  document.getElementById('r-time').textContent=em+'m '+es2+'s';document.getElementById('r-correct').textContent=total;
+  document.getElementById('snum').textContent=total;
+  const circle=document.getElementById('scircle');const msg=document.getElementById('smsg');
+  if(pct>=80){circle.className='rc pass';msg.textContent='🌟 Excellent, Sheyvon!';}
+  else if(pct>=60){circle.className='rc warn';msg.textContent='👍 Good work — keep revising!';}
+  else{circle.className='rc fail';msg.textContent='📖 Re-read your notes and try again!';}
+  window.scrollTo(0,0);
+
+  // ─── WhatsApp result capture (auto-injected) ─────────────
+  (function(){
+    var _tot=(typeof maxScore!=='undefined'?maxScore:(typeof total!=='undefined'?total:15));
+    var _tim=(typeof timeStr!=='undefined'?' · Time: '+timeStr:'');
+    var _dat=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    var _lbl=document.querySelector('title')?document.querySelector('title').textContent.split('–')[0].split('—')[0].split('|')[0].trim():'Sheyvon Paper';
+    var _msg='📊 *Sheyvon Result*\n📚 '+_lbl+'\n🗓️ '+_dat+'\n✏️ Score: '+score+'/'+_tot+' ('+pct+'%)'+_tim+'\n'+(pct>=60?'✅ Passed':'❌ Needs revision');
+    var btn=document.getElementById('wa-float-btn');
+    if(btn){btn.href='https://wa.me/94764551840?text='+encodeURIComponent(_msg);btn.style.display='flex';}
+  })();
+  // ─────────────────────────────────────────────────────────
+}</script>
+<!-- ═══ WhatsApp Result Capture (injected) ═══ -->
+<style>
+#wa-float-btn{position:fixed;bottom:22px;right:22px;background:#25D366;color:#fff;padding:14px 22px;border-radius:50px;font-size:15px;font-weight:bold;text-decoration:none;display:none;align-items:center;gap:10px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:transform .15s;}
+#wa-float-btn:hover{transform:scale(1.05);}
+</style>
+<a id="wa-float-btn" href="#" target="_blank">📲 Send Results to Mum</a>
+<!-- ════════════════════════════════════════════ -->
+</body></html>

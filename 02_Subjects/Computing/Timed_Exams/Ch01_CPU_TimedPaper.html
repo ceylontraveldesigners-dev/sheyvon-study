@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.1 CPU – Timed Paper | Sheyvon</title>
+<style>  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f3f0ff; color: #222; }
+  #start-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .start-card { background: white; border-radius: 16px; padding: 40px; max-width: 560px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.12); text-align: center; }
+  .start-card h1 { font-size: 22px; color: #4527A0; margin-bottom: 6px; }
+  .start-card p  { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 20px; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+  .info-box { background: #F3F0FF; border-radius: 10px; padding: 14px; }
+  .info-box .val { font-size: 22px; font-weight: bold; color: #4527A0; }
+  .info-box .lbl { font-size: 11px; color: #777; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .start-btn { background: linear-gradient(135deg, #4527A0, #7E57C2); color: white; border: none; border-radius: 10px; padding: 16px 40px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+  .warning-box { background: #FFF9E6; border-left: 4px solid #FFC000; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #7F4F00; text-align: left; margin-bottom: 16px; }
+  #exam-screen { display: none; }
+  .exam-header { background: linear-gradient(135deg, #4527A0, #7E57C2); color: white; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .exam-title { font-size: 15px; font-weight: bold; }
+  .timer-box { background: rgba(255,255,255,0.15); border-radius: 10px; padding: 8px 18px; text-align: center; min-width: 100px; }
+  .timer-num { font-size: 26px; font-weight: bold; font-family: monospace; }
+  .timer-lbl { font-size: 10px; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+  .timer-box.warning { background: rgba(255,200,0,0.3); animation: pulse 1s infinite; }
+  .timer-box.danger  { background: rgba(255,60,60,0.4); animation: pulse 0.5s infinite; }
+  @keyframes pulse { 0%,100%{{opacity:1}} 50%{{opacity:0.6}} }
+  .container { max-width: 780px; margin: 24px auto; padding: 0 20px 60px; }
+  .q-card { background: white; border-radius: 12px; padding: 22px 24px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border-left: 4px solid #D1C4E9; }
+  .q-num { font-size: 11px; font-weight: bold; color: #7E57C2; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .q-marks { float: right; background: #EDE7F6; color: #7E57C2; border-radius: 6px; padding: 2px 10px; font-size: 12px; font-weight: bold; }
+  .q-text { font-size: 15px; font-weight: bold; color: #4527A0; line-height: 1.5; margin-bottom: 16px; }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn { background: #F7F5FF; border: 2px solid #D1C4E9; border-radius: 8px; padding: 12px 16px; text-align: left; font-size: 14px; cursor: pointer; transition: all 0.2s; display:flex; align-items:center; gap:10px; }
+  .option-btn:hover { background: #EDE7F6; border-color: #7E57C2; }
+  .option-btn.selected { background: #7E57C2; border-color: #7E57C2; color: white; }
+  .option-label { width: 26px; height: 26px; border-radius: 50%; background: #7E57C2; color: white; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; }
+  .option-btn.correct { background: #C6EFCE; border-color: #70AD47; color: #375623; }
+  .option-btn.wrong   { background: #FFE0E0; border-color: #FF6B6B; color: #9C0006; }
+  .option-btn.correct .option-label { background: #375623; color: white; }
+  .option-btn.wrong   .option-label { background: #9C0006; color: white; }
+  .option-btn.selected .option-label { background: white; color: #7E57C2; }
+  .tf-group { display: flex; gap: 12px; margin-top: 8px; }
+  .tf-btn { flex: 1; padding: 12px; border: 2px solid #D1C4E9; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; background: #F7F5FF; transition: all 0.2s; }
+  .tf-btn:hover { background: #EDE7F6; }
+  .tf-btn.selected { background: #7E57C2; color: white; border-color: #7E57C2; }
+  .tf-btn.correct  { background: #C6EFCE; border-color: #70AD47; color: #375623; }
+  .tf-btn.wrong    { background: #FFE0E0; border-color: #FF6B6B; color: #9C0006; }
+  .fill-input { border: 2px solid #D1C4E9; border-radius: 8px; padding: 10px 14px; font-size: 15px; width: 220px; outline: none; font-family: Arial; display:block; margin-top:8px; }
+  .fill-input:focus { border-color: #7E57C2; }
+  .fill-input.correct { border-color: #70AD47; background: #EBF9E6; color: #375623; }
+  .fill-input.wrong   { border-color: #FF6B6B; background: #FFF0F0; color: #9C0006; }
+  .section-header { background: #4527A0; color: white; border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: bold; margin: 24px 0 14px; }
+  .submit-btn { width: 100%; background: #9C0006; color: white; border: none; border-radius: 10px; padding: 16px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 16px; }
+  #results-screen { display: none; }
+  .results-header { background: linear-gradient(135deg, #4527A0, #7E57C2); color: white; padding: 30px 32px; text-align: center; }
+  .score-circle { width: 140px; height: 140px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px auto; font-size: 36px; font-weight: bold; color: white; }
+  .score-circle.pass { background: linear-gradient(135deg, #375623, #70AD47); }
+  .score-circle.warn { background: linear-gradient(135deg, #7F4F00, #FFC000); }
+  .score-circle.fail { background: linear-gradient(135deg, #9C0006, #FF6B6B); }
+  .score-circle small { font-size: 13px; font-weight: normal; }
+  .results-body { max-width: 760px; margin: 0 auto; padding: 24px 20px 60px; }
+  .results-summary { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .stat-box { background: #F3F0FF; border-radius: 10px; padding: 14px; text-align: center; }
+  .stat-box .val { font-size: 24px; font-weight: bold; color: #4527A0; }
+  .stat-box .lbl { font-size: 11px; color: #777; margin-top: 2px; }
+  .action-panel { background: white; border-radius: 12px; padding: 20px 24px; margin-top: 20px; }
+  .action-btn { display: inline-block; background: #4527A0; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: bold; margin: 5px; }</style>
+</head>
+<body>
+<div id="start-screen">
+  <div class="start-card">
+    <h1>⏱️ Timed Paper<br>Chapter 1: Central Processing Unit</h1>
+    <p>This is a timed exam. You have <strong>15 minutes</strong> to answer 10 questions. Once the timer starts, try not to look at your notes!</p>
+    <div class="info-grid">
+      <div class="info-box"><div class="val">10</div><div class="lbl">Questions</div></div>
+      <div class="info-box"><div class="val">15</div><div class="lbl">Minutes</div></div>
+      <div class="info-box"><div class="val">10</div><div class="lbl">Total Marks</div></div>
+      <div class="info-box"><div class="val">ICT G7</div><div class="lbl">Subject</div></div>
+    </div>
+    <div class="warning-box">⚠️ <strong>Before you start:</strong> Make sure you have read the Short Notes for Chapter 1. Close them now — this is a test of your memory!</div>
+    <button class="start-btn" onclick="startExam()">🚀 Start Timer &amp; Begin</button>
+  </div>
+</div>
+
+<div id="exam-screen">
+  <div class="exam-header">
+    <div><div class="exam-title">⏱️ Ch.1 CPU — Timed Paper</div><div style="font-size:11px;opacity:.8;">ICT Grade 7 | 10 marks</div></div>
+    <div class="timer-box" id="timer-box"><div class="timer-num" id="timer-display">15:00</div><div class="timer-lbl">Remaining</div></div>
+  </div>
+  <div class="container">
+    <div class="section-header">Section A — Answer all questions (1 mark each)</div>
+
+    <div class="q-card" id="q1">
+      <div class="q-num">Q1 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The CPU is sometimes called the __________ of the computer.</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q1',this,false)"><span class="option-label">A</span>Heart</button>
+        <button class="option-btn" onclick="selectMCQ('q1',this,true)"><span class="option-label">B</span>Brain</button>
+        <button class="option-btn" onclick="selectMCQ('q1',this,false)"><span class="option-label">C</span>Memory</button>
+        <button class="option-btn" onclick="selectMCQ('q1',this,false)"><span class="option-label">D</span>Eyes</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q2">
+      <div class="q-num">Q2 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Which component of the CPU controls and coordinates all hardware connected to the computer?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q2',this,false)"><span class="option-label">A</span>ALU</button>
+        <button class="option-btn" onclick="selectMCQ('q2',this,true)"><span class="option-label">B</span>Control Unit</button>
+        <button class="option-btn" onclick="selectMCQ('q2',this,false)"><span class="option-label">C</span>Memory Registers</button>
+        <button class="option-btn" onclick="selectMCQ('q2',this,false)"><span class="option-label">D</span>Hard Disk</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q3">
+      <div class="q-num">Q3 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The third generation of computers used which technology?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q3',this,false)"><span class="option-label">A</span>Vacuum tubes</button>
+        <button class="option-btn" onclick="selectMCQ('q3',this,false)"><span class="option-label">B</span>Transistors</button>
+        <button class="option-btn" onclick="selectMCQ('q3',this,true)"><span class="option-label">C</span>Integrated circuits</button>
+        <button class="option-btn" onclick="selectMCQ('q3',this,false)"><span class="option-label">D</span>Microprocessors</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q4">
+      <div class="q-num">Q4 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">True or False: The first generation computers were as large as a room.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q4',this,true)">✅ True</button>
+        <button class="tf-btn" onclick="selectTF('q4',this,false)">❌ False</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q5">
+      <div class="q-num">Q5 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">1 GHz (Gigahertz) equals how many Hz?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q5',this,false)"><span class="option-label">A</span>1,000 Hz</button>
+        <button class="option-btn" onclick="selectMCQ('q5',this,false)"><span class="option-label">B</span>1,000,000 Hz</button>
+        <button class="option-btn" onclick="selectMCQ('q5',this,true)"><span class="option-label">C</span>1,000,000,000 Hz</button>
+        <button class="option-btn" onclick="selectMCQ('q5',this,false)"><span class="option-label">D</span>1,000,000,000,000 Hz</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q6">
+      <div class="q-num">Q6 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Which part of the CPU temporarily stores data and instructions currently being used?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q6',this,false)"><span class="option-label">A</span>Control Unit</button>
+        <button class="option-btn" onclick="selectMCQ('q6',this,false)"><span class="option-label">B</span>ALU</button>
+        <button class="option-btn" onclick="selectMCQ('q6',this,true)"><span class="option-label">C</span>Memory Registers</button>
+        <button class="option-btn" onclick="selectMCQ('q6',this,false)"><span class="option-label">D</span>Hard Disk</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q7">
+      <div class="q-num">Q7 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">True or False: With each new generation, computers became smaller, faster, and cheaper.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q7',this,true)">✅ True</button>
+        <button class="tf-btn" onclick="selectTF('q7',this,false)">❌ False</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q8">
+      <div class="q-num">Q8 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">What does the ALU stand for in the CPU?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q8',this,true)"><span class="option-label">A</span>Arithmetic and Logical Unit</button>
+        <button class="option-btn" onclick="selectMCQ('q8',this,false)"><span class="option-label">B</span>Automatic Logical Unit</button>
+        <button class="option-btn" onclick="selectMCQ('q8',this,false)"><span class="option-label">C</span>Advanced Language Unit</button>
+        <button class="option-btn" onclick="selectMCQ('q8',this,false)"><span class="option-label">D</span>Array Logic Utility</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q9">
+      <div class="q-num">Q9 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The second generation of computers (1956–1963) used which technology?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q9',this,false)"><span class="option-label">A</span>Vacuum tubes</button>
+        <button class="option-btn" onclick="selectMCQ('q9',this,true)"><span class="option-label">B</span>Transistors</button>
+        <button class="option-btn" onclick="selectMCQ('q9',this,false)"><span class="option-label">C</span>Integrated circuits</button>
+        <button class="option-btn" onclick="selectMCQ('q9',this,false)"><span class="option-label">D</span>Microprocessors</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q10">
+      <div class="q-num">Q10 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">True or False: The CPU can be seen from the outside of a desktop computer without opening it.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q10',this,false)">✅ True</button>
+        <button class="tf-btn" onclick="selectTF('q10',this,true)">❌ False</button>
+      </div>
+    </div>
+
+    <button class="submit-btn" onclick="submitExam()">📩 Submit My Answers</button>
+  </div>
+</div>
+
+<div id="results-screen">
+  <div class="results-header">
+    <h1>📊 Your Results — Chapter 1: CPU</h1>
+    <div class="score-circle" id="score-circle"><span id="score-num">?</span><small>/ 10</small></div>
+    <p id="score-msg" style="font-size:18px;font-weight:bold;margin-top:10px;"></p>
+  </div>
+  <div class="results-body">
+    <div class="results-summary">
+      <div class="stat-grid">
+        <div class="stat-box"><div class="val" id="r-score">-</div><div class="lbl">Score</div></div>
+        <div class="stat-box"><div class="val" id="r-pct">-</div><div class="lbl">Percentage</div></div>
+        <div class="stat-box"><div class="val" id="r-time">-</div><div class="lbl">Time Used</div></div>
+        <div class="stat-box"><div class="val" id="r-correct">-</div><div class="lbl">Correct</div></div>
+      </div>
+    </div>
+    <div class="action-panel">
+      <h2>⏭️ What next?</h2>
+      <a class="action-btn" href="../Short_Notes/Ch01_CPU_Notes.html">📖 Re-read Notes</a>
+      <a class="action-btn" href="../Short_Notes/Ch02_OS_Notes.html" style="background:#375623;">➡️ Next: Chapter 2</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const answers = {q1:true,q2:true,q3:true,q4:true,q5:true,q6:true,q7:true,q8:true,q9:true,q10:true};
+// Which option index is correct (0-based)
+const correctIdx = {q1:1,q2:1,q3:2,q4:0,q5:2,q6:2,q7:0,q8:0,q9:1,q10:1};
+let selected = {};
+let timerInterval, secondsLeft = 15*60, startTime;
+
+function startExam() {
+  document.getElementById('start-screen').style.display='none';
+  document.getElementById('exam-screen').style.display='block';
+  startTime = Date.now();
+  timerInterval = setInterval(tick,1000);
+}
+
+function tick() {
+  secondsLeft--;
+  const m = Math.floor(secondsLeft/60), s = secondsLeft%60;
+  document.getElementById('timer-display').textContent = m+':'+(s<10?'0':'')+s;
+  const tb = document.getElementById('timer-box');
+  if(secondsLeft<=120) tb.className='timer-box danger';
+  else if(secondsLeft<=300) tb.className='timer-box warning';
+  if(secondsLeft<=0) { clearInterval(timerInterval); submitExam(); }
+}
+
+function selectMCQ(qid, btn, isCorrect) {
+  const card = document.getElementById(qid);
+  card.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selected[qid] = isCorrect;
+}
+
+function selectTF(qid, btn, isCorrect) {
+  const card = document.getElementById(qid);
+  card.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selected[qid] = isCorrect;
+}
+
+function submitExam() {
+  clearInterval(timerInterval);
+  const elapsed = Math.floor((Date.now()-startTime)/1000);
+  const em = Math.floor(elapsed/60), es = elapsed%60;
+
+  // Mark all questions
+  const correctAnswers = {q1:1,q2:1,q3:2,q4:0,q5:2,q6:2,q7:0,q8:0,q9:1,q10:1};
+  const qTypes = {q1:'mcq',q2:'mcq',q3:'mcq',q4:'tf',q5:'mcq',q6:'mcq',q7:'tf',q8:'mcq',q9:'mcq',q10:'tf'};
+  let total = 0;
+
+  ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10'].forEach(qid => {
+    const isCorrect = selected[qid] === true;
+    if(isCorrect) total++;
+    const card = document.getElementById(qid);
+    const type = qTypes[qid];
+    if(type==='mcq') {
+      card.querySelectorAll('.option-btn').forEach((b,i) => {
+        b.disabled=true;
+        const wasSelected = b.classList.contains('selected');
+        if(wasSelected && isCorrect) b.classList.add('correct');
+        else if(wasSelected && !isCorrect) b.classList.add('wrong');
+        if(b.onclick && b.onclick.toString().includes(',true)')) b.classList.add('correct');
+      });
+    } else {
+      card.querySelectorAll('.tf-btn').forEach(b => {
+        b.disabled=true;
+        const wasSelected = b.classList.contains('selected');
+        if(wasSelected && isCorrect) b.classList.add('correct');
+        else if(wasSelected && !isCorrect) b.classList.add('wrong');
+        if(!wasSelected && !isCorrect) b.classList.add('correct');
+      });
+    }
+  });
+
+  const pct = Math.round((total/10)*100);
+  document.getElementById('exam-screen').style.display='none';
+  document.getElementById('results-screen').style.display='block';
+  document.getElementById('r-score').textContent=total+'/10';
+  document.getElementById('r-pct').textContent=pct+'%';
+  document.getElementById('r-time').textContent=em+'m '+es+'s';
+  document.getElementById('r-correct').textContent=total;
+  document.getElementById('score-num').textContent=total;
+  const circle = document.getElementById('score-circle');
+  const msg = document.getElementById('score-msg');
+  if(pct>=80){ circle.className='score-circle pass'; msg.textContent='🌟 Excellent, Sheyvon! Great score!'; }
+  else if(pct>=60){ circle.className='score-circle warn'; msg.textContent='👍 Good work — keep revising!'; }
+  else { circle.className='score-circle fail'; msg.textContent='📖 Re-read your notes and try again!'; }
+  window.scrollTo(0,0);
+
+  // ─── WhatsApp result capture (auto-injected) ─────────────
+  (function(){
+    var _tot=(typeof maxScore!=='undefined'?maxScore:(typeof total!=='undefined'?total:15));
+    var _tim=(typeof timeStr!=='undefined'?' · Time: '+timeStr:'');
+    var _dat=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    var _lbl=document.querySelector('title')?document.querySelector('title').textContent.split('–')[0].split('—')[0].split('|')[0].trim():'Sheyvon Paper';
+    var _msg='📊 *Sheyvon Result*\n📚 '+_lbl+'\n🗓️ '+_dat+'\n✏️ Score: '+score+'/'+_tot+' ('+pct+'%)'+_tim+'\n'+(pct>=60?'✅ Passed':'❌ Needs revision');
+    var btn=document.getElementById('wa-float-btn');
+    if(btn){btn.href='https://wa.me/94764551840?text='+encodeURIComponent(_msg);btn.style.display='flex';}
+  })();
+  // ─────────────────────────────────────────────────────────
+}
+</script>
+
+<!-- ═══ WhatsApp Result Capture (injected) ═══ -->
+<style>
+#wa-float-btn{position:fixed;bottom:22px;right:22px;background:#25D366;color:#fff;padding:14px 22px;border-radius:50px;font-size:15px;font-weight:bold;text-decoration:none;display:none;align-items:center;gap:10px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:transform .15s;}
+#wa-float-btn:hover{transform:scale(1.05);}
+</style>
+<a id="wa-float-btn" href="#" target="_blank">📲 Send Results to Mum</a>
+<!-- ════════════════════════════════════════════ -->
+</body>
+</html>

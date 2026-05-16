@@ -80,8 +80,8 @@ input[type=text]:focus{border-color:#E65100;outline:none}
   <div class="score-circle" id="score-display">-/-</div>
   <div class="breakdown"><ul id="breakdown-list"></ul></div>
   <div class="nav">
-    <a class="sec" href="../Short_Notes/Ch03_Landscape_Sri_Lanka_Notes.html">📖 Review Notes</a>
-    <a class="sec" href="../Practice_Papers/Ch03_Landscape_Sri_Lanka_Practice_A.html">📝 Practice A</a>
+    <a class="sec" href="Ch03_Landscape_Sri_Lanka_Notes.html">📖 Review Notes</a>
+    <a class="sec" href="Ch03_Landscape_Sri_Lanka_Practice_A.html">📝 Practice A</a>
     <a href='Ch04_Natural_Hazards_Notes.html'>Next Chapter ▶</a>
   </div>
 </div>
@@ -132,5 +132,25 @@ function submitExam(){
   const pct=Math.round(score/total*100);
   document.getElementById('score-display').textContent=score+'/'+total;
   document.getElementById('breakdown-list').innerHTML=items.join('');
+
+  // ─── WhatsApp result capture (auto-injected) ─────────────
+  (function(){
+    var _tot=(typeof maxScore!=='undefined'?maxScore:(typeof total!=='undefined'?total:15));
+    var _tim=(typeof timeStr!=='undefined'?' · Time: '+timeStr:'');
+    var _dat=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    var _lbl=document.querySelector('title')?document.querySelector('title').textContent.split('–')[0].split('—')[0].split('|')[0].trim():'Sheyvon Paper';
+    var _msg='📊 *Sheyvon Result*\n📚 '+_lbl+'\n🗓️ '+_dat+'\n✏️ Score: '+score+'/'+_tot+' ('+pct+'%)'+_tim+'\n'+(pct>=60?'✅ Passed':'❌ Needs revision');
+    var btn=document.getElementById('wa-float-btn');
+    if(btn){btn.href='https://wa.me/94764551840?text='+encodeURIComponent(_msg);btn.style.display='flex';}
+  })();
+  // ─────────────────────────────────────────────────────────
 }
-</script></body></html>
+</script>
+<!-- ═══ WhatsApp Result Capture (injected) ═══ -->
+<style>
+#wa-float-btn{position:fixed;bottom:22px;right:22px;background:#25D366;color:#fff;padding:14px 22px;border-radius:50px;font-size:15px;font-weight:bold;text-decoration:none;display:none;align-items:center;gap:10px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:transform .15s;}
+#wa-float-btn:hover{transform:scale(1.05);}
+</style>
+<a id="wa-float-btn" href="#" target="_blank">📲 Send Results to Mum</a>
+<!-- ════════════════════════════════════════════ -->
+</body></html>

@@ -130,7 +130,27 @@ function submitExam(auto){
   const date=new Date().toLocaleDateString('en-GB');
   const status=pct>=75?'✅ Passed':'❌ Needs more practice';
   document.getElementById('waMsg').textContent=`Hi! Sheyvon just completed:\n📚 Chapter 19 — Volume\n📅 `+date+`\n🎯 Score: `+score+`/15 (`+pct+`%)\n📝 Section D: Please mark out of 10\n`+status;
+
+  // ─── WhatsApp result capture (auto-injected) ─────────────
+  (function(){
+    var _tot=(typeof maxScore!=='undefined'?maxScore:(typeof total!=='undefined'?total:15));
+    var _tim=(typeof timeStr!=='undefined'?' · Time: '+timeStr:'');
+    var _dat=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    var _lbl=document.querySelector('title')?document.querySelector('title').textContent.split('–')[0].split('—')[0].split('|')[0].trim():'Sheyvon Paper';
+    var _msg='📊 *Sheyvon Result*\n📚 '+_lbl+'\n🗓️ '+_dat+'\n✏️ Score: '+score+'/'+_tot+' ('+pct+'%)'+_tim+'\n'+(pct>=60?'✅ Passed':'❌ Needs revision');
+    var btn=document.getElementById('wa-float-btn');
+    if(btn){btn.href='https://wa.me/94764551840?text='+encodeURIComponent(_msg);btn.style.display='flex';}
+  })();
+  // ─────────────────────────────────────────────────────────
 }
 </script>
+
+<!-- ═══ WhatsApp Result Capture (injected) ═══ -->
+<style>
+#wa-float-btn{position:fixed;bottom:22px;right:22px;background:#25D366;color:#fff;padding:14px 22px;border-radius:50px;font-size:15px;font-weight:bold;text-decoration:none;display:none;align-items:center;gap:10px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:transform .15s;}
+#wa-float-btn:hover{transform:scale(1.05);}
+</style>
+<a id="wa-float-btn" href="#" target="_blank">📲 Send Results to Mum</a>
+<!-- ════════════════════════════════════════════ -->
 </body>
 </html>
