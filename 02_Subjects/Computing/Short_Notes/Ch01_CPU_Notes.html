@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 1 – Central Processing Unit | Sheyvon's ICT Notes</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f3f0ff; color: #222; }
+  .header { background: linear-gradient(135deg, #4527A0, #7E57C2); color: white; padding: 24px 32px; }
+  .header h1 { font-size: 22px; }
+  .header p  { font-size: 13px; opacity: 0.85; margin-top: 6px; }
+  .badge { display:inline-block; background:#EDE7F6; color:#4527A0; border-radius:20px; padding:3px 12px; font-size:12px; font-weight:bold; margin-top:8px; }
+  .container { max-width: 860px; margin: 28px auto; padding: 0 20px 60px; }
+  .card { background: white; border-radius: 12px; padding: 24px 28px; margin-bottom: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-left: 5px solid #7E57C2; }
+  .card h2 { font-size: 16px; color: #4527A0; margin-bottom: 14px; }
+  .card p, .card li { font-size: 14px; line-height: 1.7; color: #333; }
+  .card ul { padding-left: 20px; margin-top: 8px; }
+  .card li { margin-bottom: 6px; }
+  .definition { background: #EDE7F6; border-left: 4px solid #7E57C2; border-radius: 8px; padding: 14px 18px; margin: 12px 0; }
+  .definition strong { color: #4527A0; }
+  .remember { background: #FFF9E6; border-left: 4px solid #FFD966; border-radius: 8px; padding: 14px 18px; margin: 12px 0; }
+  .remember strong { color: #7F4F00; }
+  .mistake { background: #FFF0F0; border-left: 4px solid #FF6B6B; border-radius: 8px; padding: 14px 18px; margin: 12px 0; }
+  .example-box { background: #F0FFF4; border: 1px solid #C6EFCE; border-radius: 8px; padding: 14px 18px; margin: 12px 0; }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+  th { background: #4527A0; color: white; padding: 10px; text-align: left; }
+  td { padding: 9px 10px; border-bottom: 1px solid #eee; }
+  tr:nth-child(even) td { background: #F7F5FF; }
+  .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:14px; margin-top:14px; }
+  .box-item { background: #F7F5FF; border:1px solid #D1C4E9; border-radius:8px; padding:14px; text-align:center; }
+  .box-item .icon { font-size:28px; display:block; margin-bottom:6px; }
+  .box-item .name { font-weight:bold; font-size:13px; color:#4527A0; }
+  .box-item .desc { font-size:12px; color:#666; margin-top:4px; }
+  .nav-btn { display:inline-block; background:#4527A0; color:white; text-decoration:none; padding:12px 24px; border-radius:8px; font-size:14px; font-weight:bold; margin-top:10px; }
+  .progress-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+  .prog-item { background:#EDE7F6; color:#4527A0; border-radius:6px; padding:6px 14px; font-size:12px; font-weight:bold; }
+  .prog-item.active { background:#4527A0; color:white; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>💻 Chapter 1 — Central Processing Unit</h1>
+  <p>ICT Grade 7 | Sri Lankan Syllabus | Short Notes for Revision</p>
+  <span class="badge">📖 Read this BEFORE doing Practice Set A</span>
+</div>
+<div class="container">
+  <div class="progress-bar">
+    <div class="prog-item active">📖 1. Short Notes</div>
+    <div class="prog-item">✏️ 2. Practice Set A</div>
+    <div class="prog-item">⏱️ 3. Timed Paper</div>
+  </div>
+
+  <div class="card">
+    <h2>🔑 What is the CPU?</h2>
+    <div class="definition">
+      <strong>Central Processing Unit (CPU):</strong> A digital circuit that processes data according to given instructions. It is the brain of the computer — every task the computer performs goes through the CPU.
+    </div>
+    <p style="margin-top:10px;">Think of the CPU like a chef in a hotel kitchen. Just as the chef prepares food from ingredients, the CPU takes in data and converts it into useful information. A dual-core processor is like having two chefs — two tasks can be done at the same time!</p>
+    <div class="remember" style="margin-top:12px;">
+      <strong>📍 Location:</strong> The CPU cannot be seen from the outside. It is fixed on the <em>motherboard</em>, inside the system unit.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>⚙️ The Three Components of the CPU</h2>
+    <div class="grid3">
+      <div class="box-item">
+        <span class="icon">🔢</span>
+        <div class="name">Arithmetic &amp; Logical Unit (ALU)</div>
+        <div class="desc">Performs all mathematical calculations (add, subtract, multiply, divide) and logical comparisons (greater than, less than, equal to)</div>
+      </div>
+      <div class="box-item">
+        <span class="icon">🎮</span>
+        <div class="name">Control Unit (CU)</div>
+        <div class="desc">Controls and coordinates all hardware connected to the computer. Manages input/output data — sends data to the right place at the right time</div>
+      </div>
+      <div class="box-item">
+        <span class="icon">💾</span>
+        <div class="name">Memory Registers</div>
+        <div class="desc">Temporarily stores data and instructions being used by the CPU. Very low storage capacity but extremely fast access speed</div>
+      </div>
+    </div>
+    <div class="remember" style="margin-top:14px;">
+      <strong>✅ Memory Tip:</strong> ALU = Calculations | CU = Control &amp; Coordination | Registers = Temporary fast memory
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📅 The Four Generations of CPU</h2>
+    <table>
+      <tr><th>Generation</th><th>Time Period</th><th>Technology</th><th>Speed</th><th>Examples</th></tr>
+      <tr><td><strong>1st</strong></td><td>1940–1956</td><td>Vacuum Tubes</td><td>Millisecond</td><td>ENIAC, UNIVAC</td></tr>
+      <tr><td><strong>2nd</strong></td><td>1956–1963</td><td>Transistors</td><td>Microsecond</td><td>IBM 7030, CDC 1604</td></tr>
+      <tr><td><strong>3rd</strong></td><td>1964–1971</td><td>Integrated Circuits</td><td>Nanosecond</td><td>IBM 360, CDC 6600</td></tr>
+      <tr><td><strong>4th</strong></td><td>1971–present</td><td>Microprocessors</td><td>MIPS / Picosecond</td><td>Modern computers</td></tr>
+    </table>
+    <div class="remember" style="margin-top:12px;">
+      <strong>📉 Trend with each generation:</strong> Computers got SMALLER in size, used LESS power, became FASTER, and cost LESS to buy.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>⏱️ Speed of the CPU (Clock Speed)</h2>
+    <div class="definition">
+      <strong>Clock Speed:</strong> The number of instructions the CPU executes per second. Measured in Hertz (Hz).
+    </div>
+    <table>
+      <tr><th>Unit</th><th>Value</th></tr>
+      <tr><td>Millisecond</td><td>1 ms = 0.001 second</td></tr>
+      <tr><td>Microsecond</td><td>1 μs = 0.000001 second</td></tr>
+      <tr><td>Nanosecond</td><td>1 ns = 0.000000001 second</td></tr>
+      <tr><td>Picosecond</td><td>1 ps = 0.000000000001 second</td></tr>
+      <tr><td>Kilohertz (KHz)</td><td>1 KHz = 1,000 Hz</td></tr>
+      <tr><td>Megahertz (MHz)</td><td>1 MHz = 1,000,000 Hz</td></tr>
+      <tr><td>Gigahertz (GHz)</td><td>1 GHz = 1,000,000,000 Hz</td></tr>
+    </table>
+    <p style="margin-top:10px; font-size:13px;">Modern computers use <strong>MHz</strong> or <strong>GHz</strong> to measure CPU speed. MIPS = Millions of Instructions Per Second.</p>
+  </div>
+
+  <div class="card" style="border-left-color:#4527A0;">
+    <h2>📋 Chapter Summary</h2>
+    <table>
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td>CPU</td><td>Brain of the computer — processes all data and instructions</td></tr>
+      <tr><td>ALU</td><td>Does maths and logic (comparisons)</td></tr>
+      <tr><td>Control Unit</td><td>Controls and coordinates all hardware, manages data flow</td></tr>
+      <tr><td>Memory Registers</td><td>Tiny fast temporary memory inside the CPU</td></tr>
+      <tr><td>Clock Speed</td><td>Number of instructions per second — measured in Hz/MHz/GHz</td></tr>
+      <tr><td>1st Gen</td><td>Vacuum tubes — room-sized, slow (ms)</td></tr>
+      <tr><td>4th Gen</td><td>Microprocessors — small, fast (MIPS/ps), cheap</td></tr>
+    </table>
+  </div>
+
+  <div style="text-align:center; margin-top:30px;">
+    <a class="nav-btn" href="../Practice_Papers/Ch01_CPU_PracticeA.html">✏️ Go to Practice Set A →</a>
+  </div>
+</div>
+</body>
+</html>

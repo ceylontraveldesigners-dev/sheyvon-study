@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Chapter 5 – Programme Development | Sheyvon ICT</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f3f0ff;color:#222}
+.hdr{background:linear-gradient(135deg,#4527A0,#7E57C2);color:white;padding:24px 32px}
+.hdr h1{font-size:22px}.hdr p{font-size:13px;opacity:.85;margin-top:6px}
+.badge{display:inline-block;background:#EDE7F6;color:#4527A0;border-radius:20px;padding:3px 12px;font-size:12px;font-weight:bold;margin-top:8px}
+.con{max-width:860px;margin:28px auto;padding:0 20px 60px}
+.card{background:white;border-radius:12px;padding:24px 28px;margin-bottom:22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid #7E57C2}
+.card h2{font-size:16px;color:#4527A0;margin-bottom:14px}
+.card p,.card li{font-size:14px;line-height:1.7;color:#333}
+.card ul{padding-left:20px;margin-top:8px}.card li{margin-bottom:6px}
+.def{background:#EDE7F6;border-left:4px solid #7E57C2;border-radius:8px;padding:14px 18px;margin:12px 0}
+.def strong{color:#4527A0}
+.tip{background:#FFF9E6;border-left:4px solid #FFD966;border-radius:8px;padding:14px 18px;margin:12px 0}
+.tip strong{color:#7F4F00}
+.eg{background:#F0FFF4;border:1px solid #C6EFCE;border-radius:8px;padding:14px 18px;margin:12px 0}
+.warn{background:#FFF0F0;border-left:4px solid #FF6B6B;border-radius:8px;padding:14px 18px;margin:12px 0}
+table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+th{background:#4527A0;color:white;padding:10px;text-align:left}
+td{padding:9px 10px;border-bottom:1px solid #eee}
+tr:nth-child(even) td{background:#F7F5FF}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:12px}
+.gi{background:#F7F5FF;border:1px solid #D1C4E9;border-radius:8px;padding:14px;text-align:center}
+.gi .ic{font-size:24px;display:block;margin-bottom:6px}
+.gi .nm{font-weight:bold;font-size:13px;color:#4527A0}
+.gi .ds{font-size:11px;color:#666;margin-top:4px}
+.nb{display:inline-block;background:#4527A0;color:white;text-decoration:none;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:bold;margin-top:10px}
+.pb{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.pi{background:#EDE7F6;color:#4527A0;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:bold}
+.pi.active{background:#4527A0;color:white}</style></head><body>
+<div class="hdr"><h1>⌨️ Chapter 5 — Programme Development</h1>
+<p>ICT Grade 7 | Sri Lankan Syllabus | Short Notes for Revision</p>
+<span class="badge">📖 Read this BEFORE doing Practice Set A</span></div>
+<div class="con">
+<div class="pb"><div class="pi active">📖 1. Short Notes</div><div class="pi">✏️ 2. Practice Set A</div><div class="pi">⏱️ 3. Timed Paper</div></div>
+
+<div class="card"><h2>🔑 What is Programme Development?</h2>
+<div class="def"><strong>Programme (Program):</strong> A set of instructions written in a programming language that tells the computer what to do.</div>
+<div class="def" style="margin-top:10px;"><strong>Programme Development:</strong> The process of planning, writing, testing, and fixing a computer programme.</div></div>
+
+<div class="card"><h2>📋 Steps in Programme Development</h2>
+<ol style="padding-left:20px;margin-top:8px;">
+<li style="margin-bottom:8px;"><strong>Problem Identification</strong> — understand exactly what the programme needs to do</li>
+<li style="margin-bottom:8px;"><strong>Algorithm Development</strong> — plan the step-by-step solution</li>
+<li style="margin-bottom:8px;"><strong>Flowchart / Pseudocode</strong> — represent the algorithm visually or in plain language</li>
+<li style="margin-bottom:8px;"><strong>Coding</strong> — write the algorithm in a programming language</li>
+<li style="margin-bottom:8px;"><strong>Testing and Debugging</strong> — run the programme and fix errors (bugs)</li>
+<li style="margin-bottom:8px;"><strong>Documentation</strong> — write notes explaining how the programme works</li>
+</ol></div>
+
+<div class="card"><h2>📐 What is an Algorithm?</h2>
+<div class="def"><strong>Algorithm:</strong> A step-by-step set of instructions to solve a problem. Must be: Clear, Finite (has an end), and Effective.</div>
+<div class="eg"><strong>Example — Algorithm to make a cup of tea:</strong><br>
+Step 1: Boil water<br>Step 2: Place teabag in cup<br>Step 3: Pour boiling water into cup<br>Step 4: Wait 2 minutes<br>Step 5: Remove teabag<br>Step 6: Add milk/sugar if desired<br>Step 7: Done!</div></div>
+
+<div class="card"><h2>📊 Flowcharts</h2>
+<div class="def"><strong>Flowchart:</strong> A diagram that shows the steps of an algorithm using standard shapes connected by arrows.</div>
+<table><tr><th>Shape</th><th>Name</th><th>Meaning</th></tr>
+<tr><td>⬭ Oval</td><td>Terminal</td><td>Start or End of the programme</td></tr>
+<tr><td>▭ Rectangle</td><td>Process</td><td>An action or calculation (e.g. Add 5 to x)</td></tr>
+<tr><td>◇ Diamond</td><td>Decision</td><td>A Yes/No question (e.g. Is x > 10?)</td></tr>
+<tr><td>▱ Parallelogram</td><td>Input/Output</td><td>Data entered by user OR result displayed</td></tr>
+<tr><td>→ Arrow</td><td>Flow Line</td><td>Shows the direction/order of steps</td></tr>
+</table>
+<div class="tip" style="margin-top:12px;"><strong>💡 Remember:</strong> Every flowchart MUST start and end with an Oval (Terminal). Decisions use a Diamond with YES and NO paths.</div></div>
+
+<div class="card"><h2>💬 Pseudocode</h2>
+<div class="def"><strong>Pseudocode:</strong> A way of writing an algorithm in plain English (not a real programming language). It is easier to understand than actual code.</div>
+<div class="eg"><strong>Example — Pseudocode to find if a number is even or odd:</strong><br>
+START<br>INPUT number<br>IF number MOD 2 = 0 THEN<br>&nbsp;&nbsp;&nbsp;PRINT "Even"<br>ELSE<br>&nbsp;&nbsp;&nbsp;PRINT "Odd"<br>END IF<br>STOP</div></div>
+
+<div class="card"><h2>🐛 Errors (Bugs) in Programmes</h2>
+<table><tr><th>Error Type</th><th>Meaning</th><th>Example</th></tr>
+<tr><td>Syntax Error</td><td>Spelling or grammar mistake in code</td><td>Writing "pint" instead of "print"</td></tr>
+<tr><td>Logic Error</td><td>Programme runs but gives wrong answer</td><td>Using + when you should use ×</td></tr>
+<tr><td>Runtime Error</td><td>Programme crashes while running</td><td>Dividing by zero</td></tr>
+</table>
+<div class="tip" style="margin-top:10px;"><strong>💡 Debugging:</strong> Finding and fixing errors in a programme. A programmer who fixes bugs is called a <em>debugger</em>.</div></div>
+
+<div class="card" style="border-left-color:#4527A0;"><h2>📋 Chapter Summary</h2>
+<table><tr><th>Term</th><th>Meaning</th></tr>
+<tr><td>Algorithm</td><td>Step-by-step plan to solve a problem</td></tr>
+<tr><td>Flowchart</td><td>Diagram showing algorithm using shapes</td></tr>
+<tr><td>Pseudocode</td><td>Algorithm written in plain English</td></tr>
+<tr><td>Oval</td><td>Start/End in flowchart</td></tr>
+<tr><td>Diamond</td><td>Decision (Yes/No) in flowchart</td></tr>
+<tr><td>Rectangle</td><td>Process/action in flowchart</td></tr>
+<tr><td>Bug / Debugging</td><td>Error in programme / process of fixing errors</td></tr>
+</table></div>
+<div style="text-align:center;margin-top:30px;">
+<a class="nb" href="../Practice_Papers/Ch05_ProgDev_PracticeA.html">✏️ Go to Practice Set A →</a>
+</div></div></body></html>

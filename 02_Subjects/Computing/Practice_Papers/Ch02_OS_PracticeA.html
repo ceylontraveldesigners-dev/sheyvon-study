@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.2 OS – Practice Set A | Sheyvon</title>
+<style>  *{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f3f0ff;color:#222}
+  .header{background:linear-gradient(135deg,#4527A0,#7E57C2);color:white;padding:20px 32px}
+  .header h1{font-size:20px}.header .meta{font-size:12px;opacity:.85;margin-top:6px;display:flex;gap:20px;flex-wrap:wrap}
+  .badge{display:inline-block;background:#EDE7F6;color:#4527A0;border-radius:20px;padding:3px 12px;font-size:12px;font-weight:bold}
+  .container{max-width:780px;margin:24px auto;padding:0 20px 60px}
+  .intro-card{background:#EDE7F6;border-left:5px solid #7E57C2;border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:13px;line-height:1.6}
+  .q-card{background:white;border-radius:12px;padding:22px 24px;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+  .q-card.answered-correct{border-left:5px solid #70AD47}.q-card.answered-wrong{border-left:5px solid #FF6B6B}
+  .q-num{font-size:11px;font-weight:bold;color:#7E57C2;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+  .q-text{font-size:15px;font-weight:bold;color:#4527A0;line-height:1.5;margin-bottom:16px}
+  .options{display:flex;flex-direction:column;gap:10px}
+  .option-btn{background:#F7F5FF;border:2px solid #D1C4E9;border-radius:8px;padding:12px 16px;text-align:left;font-size:14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px}
+  .option-btn:hover:not(:disabled){background:#EDE7F6;border-color:#7E57C2}
+  .option-btn.selected{background:#7E57C2;border-color:#7E57C2;color:white}
+  .option-btn.correct{background:#C6EFCE;border-color:#70AD47;color:#375623;font-weight:bold}
+  .option-btn.wrong{background:#FFE0E0;border-color:#FF6B6B;color:#9C0006}
+  .option-btn:disabled{cursor:default}
+  .option-label{width:26px;height:26px;border-radius:50%;background:#7E57C2;color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;flex-shrink:0}
+  .option-btn.correct .option-label{background:#375623}.option-btn.wrong .option-label{background:#9C0006}
+  .feedback{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:13px;display:none}
+  .feedback.show{display:block}.feedback.correct{background:#EBF9E6;color:#375623}.feedback.wrong{background:#FFF0F0;color:#9C0006}
+  .fill-input{border:2px solid #D1C4E9;border-radius:8px;padding:10px 14px;font-size:15px;width:200px;outline:none;font-family:Arial}
+  .fill-input:focus{border-color:#7E57C2}.fill-input.correct{border-color:#70AD47;background:#EBF9E6;color:#375623;font-weight:bold}
+  .fill-input.wrong{border-color:#FF6B6B;background:#FFF0F0;color:#9C0006}
+  .check-btn{background:#7E57C2;color:white;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:bold;cursor:pointer;margin-top:10px}
+  .check-btn:hover{background:#4527A0}.check-btn:disabled{background:#aaa;cursor:default}
+  .tf-group{display:flex;gap:12px;margin-top:8px}
+  .tf-btn{flex:1;padding:12px;border:2px solid #D1C4E9;border-radius:8px;font-size:14px;font-weight:bold;cursor:pointer;background:#F7F5FF;transition:all .2s}
+  .tf-btn:hover:not(:disabled){background:#EDE7F6}
+  .tf-btn.selected{background:#7E57C2;color:white;border-color:#7E57C2}
+  .tf-btn.correct{background:#C6EFCE;border-color:#70AD47;color:#375623}
+  .tf-btn.wrong{background:#FFE0E0;border-color:#FF6B6B;color:#9C0006}
+  .tf-btn:disabled{cursor:default}
+  .score-panel{background:white;border-radius:14px;padding:28px;text-align:center;margin-top:30px;box-shadow:0 4px 20px rgba(0,0,0,.12);display:none}
+  .score-panel.show{display:block}
+  .score-circle{width:120px;height:120px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;font-weight:bold;color:white}
+  .score-circle.pass{background:linear-gradient(135deg,#375623,#70AD47)}
+  .score-circle.warn{background:linear-gradient(135deg,#7F4F00,#FFC000)}
+  .score-circle.fail{background:linear-gradient(135deg,#9C0006,#FF6B6B)}
+  .score-circle small{font-size:12px;font-weight:normal}
+  .score-msg{font-size:18px;font-weight:bold;color:#4527A0;margin-bottom:10px}
+  .score-detail{font-size:14px;color:#555;line-height:1.6}
+  .next-btn{display:inline-block;background:#4527A0;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-size:14px;font-weight:bold;margin-top:16px}
+  .submit-btn{width:100%;background:#4527A0;color:white;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:16px}
+  .submit-btn:hover{background:#311B92}
+  .pb{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .pi{background:#F2F2F2;color:#aaa;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:bold}
+  .pi.done{background:#EDE7F6;color:#4527A0}.pi.active{background:#4527A0;color:white}</style></head><body>
+<div class="header">
+  <h1>✏️ Practice Set A — Chapter 2: Operating System</h1>
+  <div class="meta"><span>💻 ICT Grade 7</span><span>🎯 10 Questions</span><span>⏱️ ~20 minutes</span><span>✅ Self-marking</span></div>
+  <span class="badge" style="margin-top:10px;display:inline-block;">Basic Level — Read your notes first!</span>
+</div>
+<div class="container">
+<div class="pb"><div class="pi done">📖 1. Short Notes</div><div class="pi active">✏️ 2. Practice Set A</div><div class="pi">⏱️ 3. Timed Paper</div></div>
+<div class="intro-card"><strong>📋 Instructions:</strong> Answer all 10 questions. Click your answer for instant feedback. Take your time!</div>
+
+<div class="q-card" id="q1"><div class="q-num">Q1 — Multiple Choice</div>
+<div class="q-text">What is an Operating System?</div>
+<div class="options">
+<button class="option-btn" onclick="checkMCQ('q1',this,false)"><span class="option-label">A</span>A hardware device that stores data permanently</button>
+<button class="option-btn" onclick="checkMCQ('q1',this,true)"><span class="option-label">B</span>A software that acts as a mediator between the user and computer hardware</button>
+<button class="option-btn" onclick="checkMCQ('q1',this,false)"><span class="option-label">C</span>A device that displays output on a screen</button>
+<button class="option-btn" onclick="checkMCQ('q1',this,false)"><span class="option-label">D</span>A physical component inside the system unit</button>
+</div><div class="feedback" id="q1-fb"></div></div>
+
+<div class="q-card" id="q2"><div class="q-num">Q2 — Multiple Choice</div>
+<div class="q-text">Which of the following is a MAGNETIC media storage device?</div>
+<div class="options">
+<button class="option-btn" onclick="checkMCQ('q2',this,true)"><span class="option-label">A</span>Hard Disk</button>
+<button class="option-btn" onclick="checkMCQ('q2',this,false)"><span class="option-label">B</span>CD (Compact Disk)</button>
+<button class="option-btn" onclick="checkMCQ('q2',this,false)"><span class="option-label">C</span>Pen Drive</button>
+<button class="option-btn" onclick="checkMCQ('q2',this,false)"><span class="option-label">D</span>Blu-ray Disk</button>
+</div><div class="feedback" id="q2-fb"></div></div>
+
+<div class="q-card" id="q3"><div class="q-num">Q3 — Multiple Choice</div>
+<div class="q-text">Optical media devices read and write data using:</div>
+<div class="options">
+<button class="option-btn" onclick="checkMCQ('q3',this,false)"><span class="option-label">A</span>Magnetic fields</button>
+<button class="option-btn" onclick="checkMCQ('q3',this,false)"><span class="option-label">B</span>Electronic circuits</button>
+<button class="option-btn" onclick="checkMCQ('q3',this,true)"><span class="option-label">C</span>Laser beams</button>
+<button class="option-btn" onclick="checkMCQ('q3',this,false)"><span class="option-label">D</span>Radio waves</button>
+</div><div class="feedback" id="q3-fb"></div></div>
+
+<div class="q-card" id="q4"><div class="q-num">Q4 — True or False</div>
+<div class="q-text">A folder in a computer is used to store actual data like photos and songs.</div>
+<div class="tf-group">
+<button class="tf-btn" onclick="checkTF('q4',this,false)">✅ True</button>
+<button class="tf-btn" onclick="checkTF('q4',this,true)">❌ False</button>
+</div><div class="feedback" id="q4-fb"></div></div>
+
+<div class="q-card" id="q5"><div class="q-num">Q5 — Multiple Choice</div>
+<div class="q-text">A pen drive is an example of which type of storage device?</div>
+<div class="options">
+<button class="option-btn" onclick="checkMCQ('q5',this,false)"><span class="option-label">A</span>Magnetic media</button>
+<button class="option-btn" onclick="checkMCQ('q5',this,false)"><span class="option-label">B</span>Optical media</button>
+<button class="option-btn" onclick="checkMCQ('q5',this,true)"><span class="option-label">C</span>Solid state media</button>
+<button class="option-btn" onclick="checkMCQ('q5',this,false)"><span class="option-label">D</span>Tape media</button>
+</div><div class="feedback" id="q5-fb"></div></div>
+
+<div class="q-card" id="q6"><div class="q-num">Q6 — Multiple Choice</div>
+<div class="q-text">The file extension ".docx" tells us the file was created using which software?</div>
+<div class="options">
+<button class="option-btn" onclick="checkMCQ('q6',this,false)"><span class="option-label">A</span>Microsoft Excel</button>
+<button class="option-btn" onclick="checkMCQ('q6',this,true)"><span class="option-label">B</span>Microsoft Word</button>
+<button class="option-btn" onclick="checkMCQ('q6',this,false)"><span class="option-label">C</span>Microsoft PowerPoint</button>
+<button class="option-btn" onclick="checkMCQ('q6',this,false)"><span class="option-label">D</span>Windows Media Player</button>
+</div><div class="feedback" id="q6-fb"></div></div>
+
+<div class="q-card" id="q7"><div class="q-num">Q7 — True or False</div>
+<div class="q-text">Solid state media devices have no moving parts.</div>
+<div class="tf-group">
+<button class="tf-btn" onclick="checkTF('q7',this,true)">✅ True</button>
+<button class="tf-btn" onclick="checkTF('q7',this,false)">❌ False</button>
+</div><div class="feedback" id="q7-fb"></div></div>
+
+<div class="q-card" id="q8"><div class="q-num">Q8 — Multiple Choice</div>
+<div class="q-text">What is the storage capacity of a standard DVD?</div>
+<div class="options">
+<button class="option-btn" onclick="checkMCQ('q8',this,false)"><span class="option-label">A</span>1.44 MB</button>
+<button class="option-btn" onclick="checkMCQ('q8',this,false)"><span class="option-label">B</span>700 MB</button>
+<button class="option-btn" onclick="checkMCQ('q8',this,true)"><span class="option-label">C</span>4.7 GB to 30 GB</button>
+<button class="option-btn" onclick="checkMCQ('q8',this,false)"><span class="option-label">D</span>250 GB</button>
+</div><div class="feedback" id="q8-fb"></div></div>
+
+<div class="q-card" id="q9"><div class="q-num">Q9 — Multiple Choice</div>
+<div class="q-text">Which operating system is used in Apple iPhone and iPad?</div>
+<div class="options">
+<button class="option-btn" onclick="checkMCQ('q9',this,false)"><span class="option-label">A</span>Android</button>
+<button class="option-btn" onclick="checkMCQ('q9',this,true)"><span class="option-label">B</span>iOS (iPhone OS)</button>
+<button class="option-btn" onclick="checkMCQ('q9',this,false)"><span class="option-label">C</span>Microsoft Windows</button>
+<button class="option-btn" onclick="checkMCQ('q9',this,false)"><span class="option-label">D</span>Ubuntu</button>
+</div><div class="feedback" id="q9-fb"></div></div>
+
+<div class="q-card" id="q10"><div class="q-num">Q10 — True or False</div>
+<div class="q-text">A hard disk stores data permanently (until it is deleted).</div>
+<div class="tf-group">
+<button class="tf-btn" onclick="checkTF('q10',this,true)">✅ True</button>
+<button class="tf-btn" onclick="checkTF('q10',this,false)">❌ False</button>
+</div><div class="feedback" id="q10-fb"></div></div>
+
+<button class="submit-btn" onclick="showScore()">📊 See My Score</button>
+<div class="score-panel" id="score-panel">
+  <div class="score-circle" id="score-circle"><span id="score-num">?</span><small>/ 10</small></div>
+  <div class="score-msg" id="score-msg"></div><div class="score-detail" id="score-detail"></div>
+  <br><a class="next-btn" href="../Timed_Exams/Ch02_OS_TimedPaper.html">⏱️ Ready? Try the Timed Paper →</a>
+</div>
+</div>
+<script>
+let scores={},answered={};
+const correctFeedback={
+  q1:"✅ Correct! The Operating System is a software that acts as a mediator between the user and computer hardware.",
+  q2:"✅ Correct! Magnetic media devices use magnetic technology. Hard disk, floppy disk, and magnetic tape are examples.",
+  q3:"✅ Correct! Optical media devices use LASER BEAMS to read and write data. CD, DVD, and Blu-ray are optical media.",
+  q4:"✅ Correct! That is FALSE. A folder stores RELATED FILES together to keep things organised. A file is what holds actual data.",
+  q5:"✅ Correct! A pen drive is a solid state media device. It has no moving parts and stores data electronically.",
+  q6:"✅ Correct! The file extension shows which software created the file. .docx = Microsoft Word.",
+  q7:"✅ Correct! That is TRUE. Solid state devices have NO moving parts, which makes them faster and more durable.",
+  q8:"✅ Correct! DVD capacity ranges from 4.7 GB to 30 GB, which is much larger than a CD (650–700 MB).",
+  q9:"✅ Correct! Android is used in smartphones. iOS is used in Apple devices (iPhone, iPad). Both are mobile operating systems.",
+  q10:"✅ Correct! A hard disk can store data permanently. It is a magnetic media device found inside the system unit.",
+};
+const wrongFeedback={
+  q1:"❌ The Operating System is software — not hardware. It acts as a mediator between the user and the hardware, controlling everything.",
+  q2:"❌ Magnetic media uses MAGNETISM to store data. Hard disk, floppy disk, and magnetic tape are magnetic devices. CDs use laser beams (optical).",
+  q3:"❌ Optical media uses LASER BEAMS to read and write data. Magnetic media uses magnetism, and solid state uses electronics.",
+  q4:"❌ This is FALSE. A folder holds RELATED FILES together — like a container for files. The folder itself does not hold the actual data.",
+  q5:"❌ A pen drive is a SOLID STATE device (no moving parts, electronic storage). Hard disk is magnetic, and CD is optical.",
+  q6:"❌ The file extension (like .docx, .mp3, .jpg) tells you which software was used to create the file, not the file's name.",
+  q7:"❌ This is TRUE. Solid state media devices (pen drives, SSDs, memory cards) have no moving parts — that is what makes them different from hard disks.",
+  q8:"❌ DVDs hold 4.7 GB to 30 GB. CDs hold only 650–700 MB. A Blu-ray disk holds 25 GB per layer.",
+  q9:"❌ Android is used in smartphones. iOS is used in Apple devices. These are MOBILE operating systems. Microsoft Windows and Mac OS are computer operating systems.",
+  q10:"❌ A hard disk stores data PERMANENTLY (until deleted). It is a magnetic media device fixed inside the system unit.",
+};
+function checkMCQ(qid,btn,isCorrect){
+  if(answered[qid])return;answered[qid]=true;scores[qid]=isCorrect?1:0;
+  const card=document.getElementById(qid);const buttons=card.querySelectorAll('.option-btn');
+  buttons.forEach(b=>b.disabled=true);
+  if(isCorrect){btn.classList.add('correct');btn.querySelector('.option-label').style.background='#375623';card.classList.add('answered-correct');}
+  else{btn.classList.add('wrong');btn.querySelector('.option-label').style.background='#9C0006';card.classList.add('answered-wrong');
+    buttons.forEach(b=>{if(b.onclick.toString().includes('true')){b.classList.add('correct');b.querySelector('.option-label').style.background='#375623';}});}
+  const fb=document.getElementById(qid+'-fb');
+  fb.textContent=isCorrect?correctFeedback[qid]:wrongFeedback[qid];
+  fb.className='feedback show '+(isCorrect?'correct':'wrong');
+}
+function checkTF(qid,btn,isCorrect){
+  if(answered[qid])return;answered[qid]=true;scores[qid]=isCorrect?1:0;
+  const card=document.getElementById(qid);const buttons=card.querySelectorAll('.tf-btn');
+  buttons.forEach(b=>b.disabled=true);
+  if(isCorrect){btn.classList.add('correct');card.classList.add('answered-correct');}
+  else{btn.classList.add('wrong');card.classList.add('answered-wrong');buttons.forEach(b=>{if(b!==btn)b.classList.add('correct');});}
+  const fb=document.getElementById(qid+'-fb');
+  fb.textContent=isCorrect?correctFeedback[qid]:wrongFeedback[qid];
+  fb.className='feedback show '+(isCorrect?'correct':'wrong');
+}
+function checkFill(qid,acceptable){
+  if(answered[qid])return;
+  const input=document.getElementById(qid+'-input');
+  const userAns=input.value.trim().toLowerCase();
+  const isCorrect=acceptable.some(a=>userAns===a.toLowerCase());
+  answered[qid]=true;scores[qid]=isCorrect?1:0;
+  input.classList.add(isCorrect?'correct':'wrong');input.disabled=true;
+  document.querySelector('#'+qid+' .check-btn').disabled=true;
+  document.getElementById(qid).classList.add(isCorrect?'answered-correct':'answered-wrong');
+  const fb=document.getElementById(qid+'-fb');
+  fb.textContent=isCorrect?correctFeedback[qid]:wrongFeedback[qid];
+  fb.className='feedback show '+(isCorrect?'correct':'wrong');
+}
+function showScore(){
+  let total=0;for(let k in scores)total+=scores[k];
+  const pct=Math.round((total/10)*100);
+  const panel=document.getElementById('score-panel');
+  const circle=document.getElementById('score-circle');
+  document.getElementById('score-num').textContent=total;
+  panel.classList.add('show');panel.scrollIntoView({behavior:'smooth',block:'center'});
+  if(pct>=80){circle.className='score-circle pass';document.getElementById('score-msg').textContent='🌟 Excellent work, Sheyvon!';document.getElementById('score-detail').textContent=`You scored ${total}/10 (${pct}%). Brilliant! Move on to the Timed Paper.`;}
+  else if(pct>=60){circle.className='score-circle warn';document.getElementById('score-msg').textContent='👍 Good effort!';document.getElementById('score-detail').textContent=`You scored ${total}/10 (${pct}%). Review your wrong answers then try the Timed Paper.`;}
+  else{circle.className='score-circle fail';document.getElementById('score-msg').textContent='📖 Re-read your notes!';document.getElementById('score-detail').textContent=`You scored ${total}/10 (${pct}%). Go back and re-read the Short Notes carefully. You can do this!`;}
+}</script></body></html>

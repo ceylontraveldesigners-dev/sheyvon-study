@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ch.3 Security of Computer System – Practice A | Sheyvon</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f3f0ff;color:#222}
+.hdr{background:linear-gradient(135deg,#4527A0,#7E57C2);color:white;padding:20px 32px}
+.hdr h1{font-size:20px}.meta{font-size:12px;opacity:.85;margin-top:6px;display:flex;gap:20px;flex-wrap:wrap}
+.badge{display:inline-block;background:#EDE7F6;color:#4527A0;border-radius:20px;padding:3px 12px;font-size:12px;font-weight:bold}
+.con{max-width:780px;margin:24px auto;padding:0 20px 60px}
+.ic{background:#EDE7F6;border-left:5px solid #7E57C2;border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:13px;line-height:1.6}
+.qc{background:white;border-radius:12px;padding:22px 24px;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.qc.ac{border-left:5px solid #70AD47}.qc.aw{border-left:5px solid #FF6B6B}
+.qn{font-size:11px;font-weight:bold;color:#7E57C2;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.qt{font-size:15px;font-weight:bold;color:#4527A0;line-height:1.5;margin-bottom:16px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.ob{background:#F7F5FF;border:2px solid #D1C4E9;border-radius:8px;padding:12px 16px;text-align:left;font-size:14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px}
+.ob:hover:not(:disabled){background:#EDE7F6;border-color:#7E57C2}
+.ob.sel{background:#7E57C2;border-color:#7E57C2;color:white}
+.ob.cor{background:#C6EFCE;border-color:#70AD47;color:#375623;font-weight:bold}
+.ob.wrg{background:#FFE0E0;border-color:#FF6B6B;color:#9C0006}
+.ob:disabled{cursor:default}
+.ol{width:26px;height:26px;border-radius:50%;background:#7E57C2;color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;flex-shrink:0}
+.ob.cor .ol{background:#375623}.ob.wrg .ol{background:#9C0006}
+.fb{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:13px;display:none}
+.fb.show{display:block}.fb.cor{background:#EBF9E6;color:#375623}.fb.wrg{background:#FFF0F0;color:#9C0006}
+.tg{display:flex;gap:12px;margin-top:8px}
+.tb{flex:1;padding:12px;border:2px solid #D1C4E9;border-radius:8px;font-size:14px;font-weight:bold;cursor:pointer;background:#F7F5FF;transition:all .2s}
+.tb:hover:not(:disabled){background:#EDE7F6}
+.tb.sel{background:#7E57C2;color:white;border-color:#7E57C2}
+.tb.cor{background:#C6EFCE;border-color:#70AD47;color:#375623}
+.tb.wrg{background:#FFE0E0;border-color:#FF6B6B;color:#9C0006}
+.tb:disabled{cursor:default}
+.fi{border:2px solid #D1C4E9;border-radius:8px;padding:10px 14px;font-size:15px;width:200px;outline:none;font-family:Arial}
+.fi:focus{border-color:#7E57C2}.fi.cor{border-color:#70AD47;background:#EBF9E6;color:#375623;font-weight:bold}
+.fi.wrg{border-color:#FF6B6B;background:#FFF0F0;color:#9C0006}
+.cb{background:#7E57C2;color:white;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:bold;cursor:pointer;margin-top:10px}
+.cb:hover{background:#4527A0}.cb:disabled{background:#aaa;cursor:default}
+.sp{background:white;border-radius:14px;padding:28px;text-align:center;margin-top:30px;box-shadow:0 4px 20px rgba(0,0,0,.12);display:none}
+.sp.show{display:block}
+.sc{width:120px;height:120px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;font-weight:bold;color:white}
+.sc.pass{background:linear-gradient(135deg,#375623,#70AD47)}
+.sc.warn{background:linear-gradient(135deg,#7F4F00,#FFC000)}
+.sc.fail{background:linear-gradient(135deg,#9C0006,#FF6B6B)}
+.sc small{font-size:12px;font-weight:normal}
+.sm{font-size:18px;font-weight:bold;color:#4527A0;margin-bottom:10px}
+.sd{font-size:14px;color:#555;line-height:1.6}
+.nb{display:inline-block;background:#4527A0;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-size:14px;font-weight:bold;margin-top:16px}
+.xb{width:100%;background:#4527A0;color:white;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:16px}
+.xb:hover{background:#311B92}
+.pb{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.pi{background:#F2F2F2;color:#aaa;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:bold}
+.pi.done{background:#EDE7F6;color:#4527A0}.pi.active{background:#4527A0;color:white}</style></head><body>
+<div class="hdr"><h1>✏️ Practice Set A — Chapter 3: Security of Computer System</h1>
+<div class="meta"><span>💻 ICT Grade 7</span><span>🎯 10 Questions</span><span>⏱️ ~20 minutes</span><span>✅ Self-marking</span></div>
+<span class="badge" style="margin-top:10px;display:inline-block;">Read your notes first!</span></div>
+<div class="con">
+<div class="pb"><div class="pi done">📖 1. Short Notes</div><div class="pi active">✏️ 2. Practice Set A</div><div class="pi">⏱️ 3. Timed Paper</div></div>
+<div class="ic"><strong>📋 Instructions:</strong> Answer all 10 questions. Click your answer for instant feedback. Take your time!</div>
+<div class="qc" id="q1"><div class="qn">Question 1 of 10 — Multiple Choice</div>
+<div class="qt">What is the main purpose of computer security?</div><div class="opts"><button class="ob" onclick="checkMCQ('q1',this,false)"><span class="ol">A</span>To make the computer run faster</button>
+<button class="ob" onclick="checkMCQ('q1',this,true)"><span class="ol">B</span>To protect data and systems from theft, damage, or unauthorised access</button>
+<button class="ob" onclick="checkMCQ('q1',this,false)"><span class="ol">C</span>To increase the storage capacity</button>
+<button class="ob" onclick="checkMCQ('q1',this,false)"><span class="ol">D</span>To connect the computer to the internet</button>
+</div><div class="fb" id="q1-fb"></div></div><div class="qc" id="q2"><div class="qn">Question 2 of 10 — True or False</div>
+<div class="qt">A computer virus is a type of malicious software that can damage or delete files.</div>
+<div class="tg"><button class="tb" onclick="checkTF('q2',this,true)">✅ True</button>
+<button class="tb" onclick="checkTF('q2',this,false)">❌ False</button></div>
+<div class="fb" id="q2-fb"></div></div><div class="qc" id="q3"><div class="qn">Question 3 of 10 — Multiple Choice</div>
+<div class="qt">Which software is used to detect and remove viruses from a computer?</div><div class="opts"><button class="ob" onclick="checkMCQ('q3',this,false)"><span class="ol">A</span>Firewall</button>
+<button class="ob" onclick="checkMCQ('q3',this,false)"><span class="ol">B</span>Operating System</button>
+<button class="ob" onclick="checkMCQ('q3',this,true)"><span class="ol">C</span>Antivirus</button>
+<button class="ob" onclick="checkMCQ('q3',this,false)"><span class="ol">D</span>Word Processor</button>
+</div><div class="fb" id="q3-fb"></div></div><div class="qc" id="q4"><div class="qn">Question 4 of 10 — Multiple Choice</div>
+<div class="qt">A Trojan Horse in computing is:</div><div class="opts"><button class="ob" onclick="checkMCQ('q4',this,false)"><span class="ol">A</span>A useful virus that helps the computer</button>
+<button class="ob" onclick="checkMCQ('q4',this,false)"><span class="ol">B</span>A harmless game programme</button>
+<button class="ob" onclick="checkMCQ('q4',this,true)"><span class="ol">C</span>A harmful programme disguised as useful software</button>
+<button class="ob" onclick="checkMCQ('q4',this,false)"><span class="ol">D</span>A type of firewall</button>
+</div><div class="fb" id="q4-fb"></div></div><div class="qc" id="q5"><div class="qn">Question 5 of 10 — True or False</div>
+<div class="qt">A firewall monitors network traffic to block unauthorised access.</div>
+<div class="tg"><button class="tb" onclick="checkTF('q5',this,true)">✅ True</button>
+<button class="tb" onclick="checkTF('q5',this,false)">❌ False</button></div>
+<div class="fb" id="q5-fb"></div></div><div class="qc" id="q6"><div class="qn">Question 6 of 10 — Multiple Choice</div>
+<div class="qt">Which of the following is the STRONGEST password?</div><div class="opts"><button class="ob" onclick="checkMCQ('q6',this,false)"><span class="ol">A</span>password</button>
+<button class="ob" onclick="checkMCQ('q6',this,false)"><span class="ol">B</span>sheyvon2012</button>
+<button class="ob" onclick="checkMCQ('q6',this,true)"><span class="ol">C</span>Tr@vel#99!</button>
+<button class="ob" onclick="checkMCQ('q6',this,false)"><span class="ol">D</span>12345678</button>
+</div><div class="fb" id="q6-fb"></div></div><div class="qc" id="q7"><div class="qn">Question 7 of 10 — True or False</div>
+<div class="qt">Spyware secretly collects your personal information without your knowledge.</div>
+<div class="tg"><button class="tb" onclick="checkTF('q7',this,true)">✅ True</button>
+<button class="tb" onclick="checkTF('q7',this,false)">❌ False</button></div>
+<div class="fb" id="q7-fb"></div></div><div class="qc" id="q8"><div class="qn">Question 8 of 10 — Multiple Choice</div>
+<div class="qt">What is a 'backup' in computer security?</div><div class="opts"><button class="ob" onclick="checkMCQ('q8',this,false)"><span class="ol">A</span>A password to log in</button>
+<button class="ob" onclick="checkMCQ('q8',this,false)"><span class="ol">B</span>Antivirus software</button>
+<button class="ob" onclick="checkMCQ('q8',this,true)"><span class="ol">C</span>A copy of important data saved in another location</button>
+<button class="ob" onclick="checkMCQ('q8',this,false)"><span class="ol">D</span>A type of firewall</button>
+</div><div class="fb" id="q8-fb"></div></div><div class="qc" id="q9"><div class="qn">Question 9 of 10 — Multiple Choice</div>
+<div class="qt">Ransomware is a type of malware that:</div><div class="opts"><button class="ob" onclick="checkMCQ('q9',this,false)"><span class="ol">A</span>Speeds up your computer</button>
+<button class="ob" onclick="checkMCQ('q9',this,true)"><span class="ol">B</span>Locks your files and demands payment to unlock them</button>
+<button class="ob" onclick="checkMCQ('q9',this,false)"><span class="ol">C</span>Deletes your antivirus</button>
+<button class="ob" onclick="checkMCQ('q9',this,false)"><span class="ol">D</span>Improves your internet connection</button>
+</div><div class="fb" id="q9-fb"></div></div><div class="qc" id="q10"><div class="qn">Question 10 of 10 — True or False</div>
+<div class="qt">You should share your password with your best friend so they can help you if you forget it.</div>
+<div class="tg"><button class="tb" onclick="checkTF('q10',this,false)">✅ True</button>
+<button class="tb" onclick="checkTF('q10',this,true)">❌ False</button></div>
+<div class="fb" id="q10-fb"></div></div>
+<button class="xb" onclick="showScore()">📊 See My Score</button>
+<div class="sp" id="score-panel">
+  <div class="sc" id="score-circle"><span id="score-num">?</span><small>/ 10</small></div>
+  <div class="sm" id="score-msg"></div><div class="sd" id="score-detail"></div>
+  <br><a class="nb" href="../Timed_Exams/Ch03_Security_TimedPaper.html">⏱️ Ready? Try the Timed Paper →</a>
+</div></div>
+<script>const cf={"q1":"✅ Correct! Computer security protects data and systems from theft, damage, or unauthorised access.","q2":"✅ Correct! TRUE — Computer viruses are malicious programs that can damage or delete your files.","q3":"✅ Correct! Antivirus software scans for and removes viruses and other malware from your computer.","q4":"✅ Correct! A Trojan Horse looks like a useful programme but contains hidden harmful code.","q5":"✅ Correct! TRUE — A firewall monitors network traffic and blocks unauthorised incoming/outgoing connections.","q6":"✅ Correct! Tr@vel#99! is the strongest — it uses uppercase, lowercase, numbers AND symbols.","q7":"✅ Correct! TRUE — Spyware secretly collects your information (passwords, browsing history) without your knowledge.","q8":"✅ Correct! A backup is a copy of your important data saved elsewhere so you don't lose everything if something goes wrong.","q9":"✅ Correct! Ransomware encrypts (locks) your files and demands payment to restore access.","q10":"✅ Correct! FALSE — Never share your password with ANYONE. Passwords protect your personal accounts and data."};const wf={"q1":"❌ Computer security is about PROTECTING data and systems from theft, damage, or unauthorised access.","q2":"❌ TRUE — A computer virus is malicious software that attaches to files and can damage or delete data.","q3":"❌ Antivirus software detects and removes viruses. A firewall blocks network access, not viruses already on the computer.","q4":"❌ A Trojan Horse is a HARMFUL programme disguised as useful software. Once installed, it causes damage.","q5":"❌ TRUE — A firewall monitors network traffic and blocks unauthorised connections.","q6":"❌ Tr@vel#99! is strongest — it mixes uppercase, lowercase, numbers, and symbols. Never use 'password' or simple words.","q7":"❌ TRUE — Spyware secretly gathers personal information (like passwords and browsing habits) without your knowledge.","q8":"❌ A backup is a COPY of important data saved in another location (external drive or cloud). It protects against data loss.","q9":"❌ Ransomware LOCKS your files and demands payment (a 'ransom') to unlock them. Very dangerous!","q10":"❌ FALSE — Never share your password with ANYONE, not even friends. Passwords are private and protect your accounts."};
+let scores={},answered={};
+function checkMCQ(qid,btn,isCorrect){
+  if(answered[qid])return;answered[qid]=true;scores[qid]=isCorrect?1:0;
+  const card=document.getElementById(qid);const buttons=card.querySelectorAll('.ob');
+  buttons.forEach(b=>b.disabled=true);
+  if(isCorrect){btn.classList.add('cor');btn.querySelector('.ol').style.background='#375623';card.classList.add('ac');}
+  else{btn.classList.add('wrg');btn.querySelector('.ol').style.background='#9C0006';card.classList.add('aw');
+    buttons.forEach(b=>{if(b.onclick.toString().includes('true')){b.classList.add('cor');b.querySelector('.ol').style.background='#375623';}});}
+  const fb=document.getElementById(qid+'-fb');
+  fb.textContent=isCorrect?cf[qid]:wf[qid];
+  fb.className='fb show '+(isCorrect?'cor':'wrg');
+}
+function checkTF(qid,btn,isCorrect){
+  if(answered[qid])return;answered[qid]=true;scores[qid]=isCorrect?1:0;
+  const card=document.getElementById(qid);const buttons=card.querySelectorAll('.tb');
+  buttons.forEach(b=>b.disabled=true);
+  if(isCorrect){btn.classList.add('cor');card.classList.add('ac');}
+  else{btn.classList.add('wrg');card.classList.add('aw');buttons.forEach(b=>{if(b!==btn)b.classList.add('cor');});}
+  const fb=document.getElementById(qid+'-fb');
+  fb.textContent=isCorrect?cf[qid]:wf[qid];
+  fb.className='fb show '+(isCorrect?'cor':'wrg');
+}
+function checkFill(qid,acc){
+  if(answered[qid])return;
+  const input=document.getElementById(qid+'-input');
+  const ua=input.value.trim().toLowerCase();
+  const ok=acc.some(a=>ua===a.toLowerCase());
+  answered[qid]=true;scores[qid]=ok?1:0;
+  input.classList.add(ok?'cor':'wrg');input.disabled=true;
+  document.querySelector('#'+qid+' .cb').disabled=true;
+  document.getElementById(qid).classList.add(ok?'ac':'aw');
+  const fb=document.getElementById(qid+'-fb');
+  fb.textContent=ok?cf[qid]:wf[qid];
+  fb.className='fb show '+(ok?'cor':'wrg');
+}
+function showScore(){
+  let total=0;for(let k in scores)total+=scores[k];
+  const pct=Math.round((total/10)*100);
+  const panel=document.getElementById('score-panel');
+  const circle=document.getElementById('score-circle');
+  document.getElementById('score-num').textContent=total;
+  panel.classList.add('show');panel.scrollIntoView({behavior:'smooth',block:'center'});
+  if(pct>=80){circle.className='sc pass';document.getElementById('score-msg').textContent='🌟 Excellent work, Sheyvon!';document.getElementById('score-detail').textContent=`You scored ${total}/10 (${pct}%). Brilliant! Move on to the Timed Paper.`;}
+  else if(pct>=60){circle.className='sc warn';document.getElementById('score-msg').textContent='👍 Good effort!';document.getElementById('score-detail').textContent=`You scored ${total}/10 (${pct}%). Review wrong answers then try the Timed Paper.`;}
+  else{circle.className='sc fail';document.getElementById('score-msg').textContent='📖 Re-read your notes!';document.getElementById('score-detail').textContent=`You scored ${total}/10 (${pct}%). Go back to the Short Notes and re-read carefully. You can do this!`;}
+}</script></body></html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch.1 CPU – Practice Set A | Sheyvon</title>
+<style>  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f3f0ff; color: #222; }
+  .header { background: linear-gradient(135deg, #4527A0, #7E57C2); color: white; padding: 20px 32px; }
+  .header h1 { font-size: 20px; }
+  .header .meta { font-size: 12px; opacity: 0.85; margin-top: 6px; display:flex; gap:20px; flex-wrap:wrap; }
+  .badge { display:inline-block; background:#EDE7F6; color:#4527A0; border-radius:20px; padding:3px 12px; font-size:12px; font-weight:bold; }
+  .container { max-width: 780px; margin: 24px auto; padding: 0 20px 60px; }
+  .intro-card { background: #EDE7F6; border-left: 5px solid #7E57C2; border-radius: 10px; padding: 16px 20px; margin-bottom: 24px; font-size: 13px; line-height: 1.6; }
+  .q-card { background: white; border-radius: 12px; padding: 22px 24px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .q-card.answered-correct { border-left: 5px solid #70AD47; }
+  .q-card.answered-wrong   { border-left: 5px solid #FF6B6B; }
+  .q-num { font-size: 11px; font-weight: bold; color: #7E57C2; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .q-text { font-size: 15px; font-weight: bold; color: #4527A0; line-height: 1.5; margin-bottom: 16px; }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn { background: #F7F5FF; border: 2px solid #D1C4E9; border-radius: 8px; padding: 12px 16px; text-align: left; font-size: 14px; cursor: pointer; transition: all 0.2s; display:flex; align-items:center; gap:10px; }
+  .option-btn:hover:not(:disabled) { background: #EDE7F6; border-color: #7E57C2; }
+  .option-btn.selected { background: #7E57C2; border-color: #7E57C2; color: white; }
+  .option-btn.correct  { background: #C6EFCE; border-color: #70AD47; color: #375623; font-weight: bold; }
+  .option-btn.wrong    { background: #FFE0E0; border-color: #FF6B6B; color: #9C0006; }
+  .option-btn:disabled { cursor: default; }
+  .option-label { width: 26px; height: 26px; border-radius: 50%; background: #7E57C2; color: white; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; }
+  .option-btn.correct .option-label { background: #375623; }
+  .option-btn.wrong   .option-label { background: #9C0006; }
+  .feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 13px; display: none; }
+  .feedback.show { display: block; }
+  .feedback.correct { background: #EBF9E6; color: #375623; }
+  .feedback.wrong   { background: #FFF0F0; color: #9C0006; }
+  .fill-input { border: 2px solid #D1C4E9; border-radius: 8px; padding: 10px 14px; font-size: 15px; width: 200px; outline: none; font-family: Arial; }
+  .fill-input:focus { border-color: #7E57C2; }
+  .fill-input.correct { border-color: #70AD47; background: #EBF9E6; color: #375623; font-weight: bold; }
+  .fill-input.wrong   { border-color: #FF6B6B; background: #FFF0F0; color: #9C0006; }
+  .check-btn { background: #7E57C2; color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+  .check-btn:hover { background: #4527A0; }
+  .check-btn:disabled { background: #aaa; cursor: default; }
+  .tf-group { display: flex; gap: 12px; margin-top: 8px; }
+  .tf-btn { flex: 1; padding: 12px; border: 2px solid #D1C4E9; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; background: #F7F5FF; transition: all 0.2s; }
+  .tf-btn:hover:not(:disabled) { background: #EDE7F6; }
+  .tf-btn.selected { background: #7E57C2; color: white; border-color: #7E57C2; }
+  .tf-btn.correct  { background: #C6EFCE; border-color: #70AD47; color: #375623; }
+  .tf-btn.wrong    { background: #FFE0E0; border-color: #FF6B6B; color: #9C0006; }
+  .tf-btn:disabled { cursor: default; }
+  .score-panel { background: white; border-radius: 14px; padding: 28px; text-align: center; margin-top: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); display: none; }
+  .score-panel.show { display: block; }
+  .score-circle { width: 120px; height: 120px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 32px; font-weight: bold; color: white; }
+  .score-circle.pass { background: linear-gradient(135deg, #375623, #70AD47); }
+  .score-circle.warn { background: linear-gradient(135deg, #7F4F00, #FFC000); }
+  .score-circle.fail { background: linear-gradient(135deg, #9C0006, #FF6B6B); }
+  .score-circle small { font-size: 12px; font-weight: normal; }
+  .score-msg { font-size: 18px; font-weight: bold; color: #4527A0; margin-bottom: 10px; }
+  .score-detail { font-size: 14px; color: #555; line-height: 1.6; }
+  .next-btn { display: inline-block; background: #4527A0; color: white; text-decoration: none; padding: 13px 28px; border-radius: 8px; font-size: 14px; font-weight: bold; margin-top: 16px; }
+  .submit-btn { width: 100%; background: #4527A0; color: white; border: none; border-radius: 10px; padding: 16px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 16px; }
+  .submit-btn:hover { background: #311B92; }
+  .progress-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .prog-item { background: #F2F2F2; color: #aaa; border-radius: 6px; padding: 6px 14px; font-size: 12px; font-weight: bold; }
+  .prog-item.done { background: #EDE7F6; color: #4527A0; }
+  .prog-item.active { background: #4527A0; color: white; }</style>
+</head>
+<body>
+<div class="header">
+  <h1>✏️ Practice Set A — Chapter 1: Central Processing Unit</h1>
+  <div class="meta"><span>💻 ICT Grade 7</span><span>🎯 10 Questions</span><span>⏱️ ~20 minutes</span><span>✅ Self-marking</span></div>
+  <span class="badge" style="margin-top:10px;display:inline-block;">Basic Level — Read your notes first!</span>
+</div>
+<div class="container">
+  <div class="progress-bar">
+    <div class="prog-item done">📖 1. Short Notes</div>
+    <div class="prog-item active">✏️ 2. Practice Set A</div>
+    <div class="prog-item">⏱️ 3. Timed Paper</div>
+  </div>
+  <div class="intro-card"><strong>📋 Instructions:</strong> Answer all 10 questions. Click your answer to see instant feedback. Take your time — this is not timed.</div>
+
+  <div class="q-card" id="q1">
+    <div class="q-num">Question 1 of 10 — Multiple Choice</div>
+    <div class="q-text">What is the Central Processing Unit (CPU)?</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMCQ('q1',this,false)"><span class="option-label">A</span>A storage device that saves files permanently</button>
+      <button class="option-btn" onclick="checkMCQ('q1',this,true)"><span class="option-label">B</span>A digital circuit that processes data according to given instructions</button>
+      <button class="option-btn" onclick="checkMCQ('q1',this,false)"><span class="option-label">C</span>The screen that displays computer output</button>
+      <button class="option-btn" onclick="checkMCQ('q1',this,false)"><span class="option-label">D</span>Software that controls the computer's operations</button>
+    </div>
+    <div class="feedback" id="q1-fb"></div>
+  </div>
+
+  <div class="q-card" id="q2">
+    <div class="q-num">Question 2 of 10 — Multiple Choice</div>
+    <div class="q-text">Where is the CPU located inside a computer?</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMCQ('q2',this,false)"><span class="option-label">A</span>On the monitor screen</button>
+      <button class="option-btn" onclick="checkMCQ('q2',this,false)"><span class="option-label">B</span>Inside the keyboard</button>
+      <button class="option-btn" onclick="checkMCQ('q2',this,true)"><span class="option-label">C</span>Fixed on the motherboard, inside the system unit</button>
+      <button class="option-btn" onclick="checkMCQ('q2',this,false)"><span class="option-label">D</span>Inside the hard disk drive</button>
+    </div>
+    <div class="feedback" id="q2-fb"></div>
+  </div>
+
+  <div class="q-card" id="q3">
+    <div class="q-num">Question 3 of 10 — Multiple Choice</div>
+    <div class="q-text">Which component of the CPU performs mathematical calculations like addition and subtraction?</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMCQ('q3',this,false)"><span class="option-label">A</span>Control Unit (CU)</button>
+      <button class="option-btn" onclick="checkMCQ('q3',this,true)"><span class="option-label">B</span>Arithmetic and Logical Unit (ALU)</button>
+      <button class="option-btn" onclick="checkMCQ('q3',this,false)"><span class="option-label">C</span>Memory Registers</button>
+      <button class="option-btn" onclick="checkMCQ('q3',this,false)"><span class="option-label">D</span>Hard Disk</button>
+    </div>
+    <div class="feedback" id="q3-fb"></div>
+  </div>
+
+  <div class="q-card" id="q4">
+    <div class="q-num">Question 4 of 10 — True or False</div>
+    <div class="q-text">The Control Unit performs mathematical calculations inside the CPU.</div>
+    <div class="tf-group">
+      <button class="tf-btn" onclick="checkTF('q4',this,false)">✅ True</button>
+      <button class="tf-btn" onclick="checkTF('q4',this,true)">❌ False</button>
+    </div>
+    <div class="feedback" id="q4-fb"></div>
+  </div>
+
+  <div class="q-card" id="q5">
+    <div class="q-num">Question 5 of 10 — Multiple Choice</div>
+    <div class="q-text">What technology was used in the FIRST generation of computers?</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMCQ('q5',this,false)"><span class="option-label">A</span>Transistors</button>
+      <button class="option-btn" onclick="checkMCQ('q5',this,true)"><span class="option-label">B</span>Vacuum tubes</button>
+      <button class="option-btn" onclick="checkMCQ('q5',this,false)"><span class="option-label">C</span>Microprocessors</button>
+      <button class="option-btn" onclick="checkMCQ('q5',this,false)"><span class="option-label">D</span>Integrated circuits</button>
+    </div>
+    <div class="feedback" id="q5-fb"></div>
+  </div>
+
+  <div class="q-card" id="q6">
+    <div class="q-num">Question 6 of 10 — Fill in the Blank</div>
+    <div class="q-text">The speed of the CPU is measured in units called __________ (e.g. MHz or GHz).</div>
+    <input class="fill-input" id="q6-input" type="text" placeholder="Type your answer..." />
+    <br><button class="check-btn" onclick="checkFill('q6',['hertz','hz','megahertz','gigahertz','mhz','ghz'])">Check Answer</button>
+    <div class="feedback" id="q6-fb"></div>
+  </div>
+
+  <div class="q-card" id="q7">
+    <div class="q-num">Question 7 of 10 — Multiple Choice</div>
+    <div class="q-text">Which generation of CPU uses microprocessors?</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMCQ('q7',this,false)"><span class="option-label">A</span>First generation</button>
+      <button class="option-btn" onclick="checkMCQ('q7',this,false)"><span class="option-label">B</span>Second generation</button>
+      <button class="option-btn" onclick="checkMCQ('q7',this,false)"><span class="option-label">C</span>Third generation</button>
+      <button class="option-btn" onclick="checkMCQ('q7',this,true)"><span class="option-label">D</span>Fourth generation</button>
+    </div>
+    <div class="feedback" id="q7-fb"></div>
+  </div>
+
+  <div class="q-card" id="q8">
+    <div class="q-num">Question 8 of 10 — True or False</div>
+    <div class="q-text">Memory registers inside the CPU have a very high storage capacity but slow access speed.</div>
+    <div class="tf-group">
+      <button class="tf-btn" onclick="checkTF('q8',this,false)">✅ True</button>
+      <button class="tf-btn" onclick="checkTF('q8',this,true)">❌ False</button>
+    </div>
+    <div class="feedback" id="q8-fb"></div>
+  </div>
+
+  <div class="q-card" id="q9">
+    <div class="q-num">Question 9 of 10 — Multiple Choice</div>
+    <div class="q-text">ENIAC and UNIVAC are examples of which generation of computers?</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMCQ('q9',this,true)"><span class="option-label">A</span>First generation</button>
+      <button class="option-btn" onclick="checkMCQ('q9',this,false)"><span class="option-label">B</span>Second generation</button>
+      <button class="option-btn" onclick="checkMCQ('q9',this,false)"><span class="option-label">C</span>Third generation</button>
+      <button class="option-btn" onclick="checkMCQ('q9',this,false)"><span class="option-label">D</span>Fourth generation</button>
+    </div>
+    <div class="feedback" id="q9-fb"></div>
+  </div>
+
+  <div class="q-card" id="q10">
+    <div class="q-num">Question 10 of 10 — Multiple Choice</div>
+    <div class="q-text">What does ALU stand for?</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMCQ('q10',this,false)"><span class="option-label">A</span>Automatic Logical Unit</button>
+      <button class="option-btn" onclick="checkMCQ('q10',this,true)"><span class="option-label">B</span>Arithmetic and Logical Unit</button>
+      <button class="option-btn" onclick="checkMCQ('q10',this,false)"><span class="option-label">C</span>Advanced Logic Utility</button>
+      <button class="option-btn" onclick="checkMCQ('q10',this,false)"><span class="option-label">D</span>Array Logic Unit</button>
+    </div>
+    <div class="feedback" id="q10-fb"></div>
+  </div>
+
+  <button class="submit-btn" onclick="showScore()">📊 See My Score</button>
+  <div class="score-panel" id="score-panel">
+    <div class="score-circle" id="score-circle"><span id="score-num">?</span><small>/ 10</small></div>
+    <div class="score-msg" id="score-msg"></div>
+    <div class="score-detail" id="score-detail"></div>
+    <br><a class="next-btn" href="../Timed_Exams/Ch01_CPU_TimedPaper.html">⏱️ Ready? Try the Timed Paper →</a>
+  </div>
+</div>
+<script>
+const correctFeedback = {
+  q1:"✅ Correct! The CPU is a digital circuit that processes data according to given instructions — it is the brain of the computer.",
+  q2:"✅ Correct! The CPU is fixed on the motherboard inside the system unit. You cannot see it from outside the computer.",
+  q3:"✅ Correct! The ALU performs mathematical calculations (add, subtract, multiply, divide) and logical comparisons.",
+  q4:"✅ Correct! That is FALSE. The Control Unit controls and coordinates hardware — it is the ALU that does calculations.",
+  q5:"✅ Correct! The first generation (1940–1956) used vacuum tubes. These computers were room-sized!",
+  q6:"✅ Correct! CPU speed is measured in Hertz (Hz). Modern computers use Megahertz (MHz) or Gigahertz (GHz).",
+  q7:"✅ Correct! The fourth generation (1971–present) uses microprocessors — these are the modern computers we use today.",
+  q8:"✅ Correct! That is FALSE. Memory registers have very LOW storage capacity but VERY HIGH (fast) access speed.",
+  q9:"✅ Correct! ENIAC and UNIVAC are first generation computers that used vacuum tubes and were as large as a room.",
+  q10:"✅ Correct! ALU = Arithmetic and Logical Unit — it handles all maths and logical operations in the CPU.",
+};
+const wrongFeedback = {
+  q1:"❌ The CPU is a digital circuit that processes data according to instructions. It is the 'brain' of the computer, not a storage or display device.",
+  q2:"❌ The CPU is fixed on the motherboard inside the system unit. It cannot be seen from outside — it is hidden inside the computer case.",
+  q3:"❌ That is the job of the ALU (Arithmetic and Logical Unit). The Control Unit manages data flow, and memory registers store temporary data.",
+  q4:"❌ This is FALSE. The Control Unit controls and coordinates hardware. The ALU (Arithmetic and Logical Unit) is the component that does calculations.",
+  q5:"❌ First generation computers (1940–1956) used vacuum tubes. Transistors came in 2nd gen, integrated circuits in 3rd, and microprocessors in 4th.",
+  q6:"❌ CPU speed is measured in Hertz (Hz). Modern CPUs use Megahertz (MHz) = 1 million Hz, or Gigahertz (GHz) = 1 billion Hz.",
+  q7:"❌ The fourth generation (1971 to present) uses microprocessors. These are the modern computers we use every day.",
+  q8:"❌ This is FALSE. Memory registers have very LOW storage capacity (tiny!) but extremely HIGH access speed — much faster than a hard disk.",
+  q9:"❌ ENIAC and UNIVAC are first generation computers (1940–1956) that used vacuum tubes. IBM 360 belongs to 3rd generation.",
+  q10:"❌ ALU stands for Arithmetic and Logical Unit. It performs all mathematical calculations and logical comparisons inside the CPU.",
+};
+
+let scores = {}, answered = {};
+function checkMCQ(qid, btn, isCorrect) {
+  if (answered[qid]) return;
+  answered[qid] = true; scores[qid] = isCorrect ? 1 : 0;
+  const card = document.getElementById(qid);
+  const buttons = card.querySelectorAll('.option-btn');
+  buttons.forEach(b => b.disabled = true);
+  if (isCorrect) { btn.classList.add('correct'); btn.querySelector('.option-label').style.background='#375623'; card.classList.add('answered-correct'); }
+  else { btn.classList.add('wrong'); btn.querySelector('.option-label').style.background='#9C0006'; card.classList.add('answered-wrong');
+    buttons.forEach(b => { if(b.onclick.toString().includes('true')){ b.classList.add('correct'); b.querySelector('.option-label').style.background='#375623'; } }); }
+  const fb = document.getElementById(qid+'-fb');
+  fb.textContent = isCorrect ? correctFeedback[qid] : wrongFeedback[qid];
+  fb.className = 'feedback show ' + (isCorrect?'correct':'wrong');
+}
+function checkTF(qid, btn, isCorrect) {
+  if (answered[qid]) return;
+  answered[qid] = true; scores[qid] = isCorrect ? 1 : 0;
+  const card = document.getElementById(qid);
+  const buttons = card.querySelectorAll('.tf-btn');
+  buttons.forEach(b => b.disabled = true);
+  if (isCorrect) { btn.classList.add('correct'); card.classList.add('answered-correct'); }
+  else { btn.classList.add('wrong'); card.classList.add('answered-wrong'); buttons.forEach(b => { if(b!==btn) b.classList.add('correct'); }); }
+  const fb = document.getElementById(qid+'-fb');
+  fb.textContent = isCorrect ? correctFeedback[qid] : wrongFeedback[qid];
+  fb.className = 'feedback show ' + (isCorrect?'correct':'wrong');
+}
+function checkFill(qid, acceptable) {
+  if (answered[qid]) return;
+  const input = document.getElementById(qid+'-input');
+  const userAns = input.value.trim().toLowerCase();
+  const isCorrect = acceptable.some(a => userAns === a.toLowerCase());
+  answered[qid] = true; scores[qid] = isCorrect ? 1 : 0;
+  input.classList.add(isCorrect?'correct':'wrong'); input.disabled = true;
+  document.querySelector('#'+qid+' .check-btn').disabled = true;
+  document.getElementById(qid).classList.add(isCorrect?'answered-correct':'answered-wrong');
+  const fb = document.getElementById(qid+'-fb');
+  fb.textContent = isCorrect ? correctFeedback[qid] : wrongFeedback[qid];
+  fb.className = 'feedback show ' + (isCorrect?'correct':'wrong');
+}
+function showScore() {
+  let total = 0; for(let k in scores) total += scores[k];
+  const pct = Math.round((total/10)*100);
+  const panel = document.getElementById('score-panel');
+  const circle = document.getElementById('score-circle');
+  document.getElementById('score-num').textContent = total;
+  panel.classList.add('show');
+  panel.scrollIntoView({behavior:'smooth',block:'center'});
+  if(pct>=80){ circle.className='score-circle pass'; document.getElementById('score-msg').textContent='🌟 Excellent work, Sheyvon!'; document.getElementById('score-detail').textContent=`You scored ${total}/10 (${pct}%). Great understanding of this chapter! Move on to the Timed Paper.`; }
+  else if(pct>=60){ circle.className='score-circle warn'; document.getElementById('score-msg').textContent='👍 Good effort — keep it up!'; document.getElementById('score-detail').textContent=`You scored ${total}/10 (${pct}%). Review the feedback for wrong answers then try the Timed Paper.`; }
+  else { circle.className='score-circle fail'; document.getElementById('score-msg').textContent='📖 Re-read your notes and try again!'; document.getElementById('score-detail').textContent=`You scored ${total}/10 (${pct}%). Go back to the Short Notes and re-read carefully. You can do this!`; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ch.5 Programme Development – Practice A | Sheyvon</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f3f0ff;color:#222}
+.hdr{background:linear-gradient(135deg,#4527A0,#7E57C2);color:white;padding:20px 32px}
+.hdr h1{font-size:20px}.meta{font-size:12px;opacity:.85;margin-top:6px;display:flex;gap:20px;flex-wrap:wrap}
+.badge{display:inline-block;background:#EDE7F6;color:#4527A0;border-radius:20px;padding:3px 12px;font-size:12px;font-weight:bold}
+.con{max-width:780px;margin:24px auto;padding:0 20px 60px}
+.ic{background:#EDE7F6;border-left:5px solid #7E57C2;border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:13px;line-height:1.6}
+.qc{background:white;border-radius:12px;padding:22px 24px;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.qc.ac{border-left:5px solid #70AD47}.qc.aw{border-left:5px solid #FF6B6B}
+.qn{font-size:11px;font-weight:bold;color:#7E57C2;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.qt{font-size:15px;font-weight:bold;color:#4527A0;line-height:1.5;margin-bottom:16px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.ob{background:#F7F5FF;border:2px solid #D1C4E9;border-radius:8px;padding:12px 16px;text-align:left;font-size:14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px}
+.ob:hover:not(:disabled){background:#EDE7F6;border-color:#7E57C2}
+.ob.sel{background:#7E57C2;border-color:#7E57C2;color:white}
+.ob.cor{background:#C6EFCE;border-color:#70AD47;color:#375623;font-weight:bold}
+.ob.wrg{background:#FFE0E0;border-color:#FF6B6B;color:#9C0006}
+.ob:disabled{cursor:default}
+.ol{width:26px;height:26px;border-radius:50%;background:#7E57C2;color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;flex-shrink:0}
+.ob.cor .ol{background:#375623}.ob.wrg .ol{background:#9C0006}
+.fb{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:13px;display:none}
+.fb.show{display:block}.fb.cor{background:#EBF9E6;color:#375623}.fb.wrg{background:#FFF0F0;color:#9C0006}
+.tg{display:flex;gap:12px;margin-top:8px}
+.tb{flex:1;padding:12px;border:2px solid #D1C4E9;border-radius:8px;font-size:14px;font-weight:bold;cursor:pointer;background:#F7F5FF;transition:all .2s}
+.tb:hover:not(:disabled){background:#EDE7F6}
+.tb.sel{background:#7E57C2;color:white;border-color:#7E57C2}
+.tb.cor{background:#C6EFCE;border-color:#70AD47;color:#375623}
+.tb.wrg{background:#FFE0E0;border-color:#FF6B6B;color:#9C0006}
+.tb:disabled{cursor:default}
+.fi{border:2px solid #D1C4E9;border-radius:8px;padding:10px 14px;font-size:15px;width:200px;outline:none;font-family:Arial}
+.fi:focus{border-color:#7E57C2}.fi.cor{border-color:#70AD47;background:#EBF9E6;color:#375623;font-weight:bold}
+.fi.wrg{border-color:#FF6B6B;background:#FFF0F0;color:#9C0006}
+.cb{background:#7E57C2;color:white;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:bold;cursor:pointer;margin-top:10px}
+.cb:hover{background:#4527A0}.cb:disabled{background:#aaa;cursor:default}
+.sp{background:white;border-radius:14px;padding:28px;text-align:center;margin-top:30px;box-shadow:0 4px 20px rgba(0,0,0,.12);display:none}
+.sp.show{display:block}
+.sc{width:120px;height:120px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;font-weight:bold;color:white}
+.sc.pass{background:linear-gradient(135deg,#375623,#70AD47)}
+.sc.warn{background:linear-gradient(135deg,#7F4F00,#FFC000)}
+.sc.fail{background:linear-gradient(135deg,#9C0006,#FF6B6B)}
+.sc small{font-size:12px;font-weight:normal}
+.sm{font-size:18px;font-weight:bold;color:#4527A0;margin-bottom:10px}
+.sd{font-size:14px;color:#555;line-height:1.6}
+.nb{display:inline-block;background:#4527A0;color:white;text-decoration:none;padding:13px 28px;border-radius:8px;font-size:14px;font-weight:bold;margin-top:16px}
+.xb{width:100%;background:#4527A0;color:white;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:16px}
+.xb:hover{background:#311B92}
+.pb{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.pi{background:#F2F2F2;color:#aaa;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:bold}
+.pi.done{background:#EDE7F6;color:#4527A0}.pi.active{background:#4527A0;color:white}</style></head><body>
+<div class="hdr"><h1>✏️ Practice Set A — Chapter 5: Programme Development</h1>
+<div class="meta"><span>💻 ICT Grade 7</span><span>🎯 10 Questions</span><span>⏱️ ~20 minutes</span><span>✅ Self-marking</span></div>
+<span class="badge" style="margin-top:10px;display:inline-block;">Read your notes first!</span></div>
+<div class="con">
+<div class="pb"><div class="pi done">📖 1. Short Notes</div><div class="pi active">✏️ 2. Practice Set A</div><div class="pi">⏱️ 3. Timed Paper</div></div>
+<div class="ic"><strong>📋 Instructions:</strong> Answer all 10 questions. Click your answer for instant feedback. Take your time!</div>
+<div class="qc" id="q1"><div class="qn">Question 1 of 10 — Multiple Choice</div>
+<div class="qt">What is an algorithm?</div><div class="opts"><button class="ob" onclick="checkMCQ('q1',this,false)"><span class="ol">A</span>A type of computer virus</button>
+<button class="ob" onclick="checkMCQ('q1',this,false)"><span class="ol">B</span>A programming language used in schools</button>
+<button class="ob" onclick="checkMCQ('q1',this,true)"><span class="ol">C</span>A step-by-step set of instructions to solve a problem</button>
+<button class="ob" onclick="checkMCQ('q1',this,false)"><span class="ol">D</span>The screen display of a computer</button>
+</div><div class="fb" id="q1-fb"></div></div><div class="qc" id="q2"><div class="qn">Question 2 of 10 — True or False</div>
+<div class="qt">A flowchart uses standard shapes connected by arrows to show the steps of an algorithm.</div>
+<div class="tg"><button class="tb" onclick="checkTF('q2',this,true)">✅ True</button>
+<button class="tb" onclick="checkTF('q2',this,false)">❌ False</button></div>
+<div class="fb" id="q2-fb"></div></div><div class="qc" id="q3"><div class="qn">Question 3 of 10 — Multiple Choice</div>
+<div class="qt">Which shape in a flowchart represents the START or END of a programme?</div><div class="opts"><button class="ob" onclick="checkMCQ('q3',this,false)"><span class="ol">A</span>Rectangle</button>
+<button class="ob" onclick="checkMCQ('q3',this,false)"><span class="ol">B</span>Diamond</button>
+<button class="ob" onclick="checkMCQ('q3',this,true)"><span class="ol">C</span>Oval (Ellipse)</button>
+<button class="ob" onclick="checkMCQ('q3',this,false)"><span class="ol">D</span>Parallelogram</button>
+</div><div class="fb" id="q3-fb"></div></div><div class="qc" id="q4"><div class="qn">Question 4 of 10 — Multiple Choice</div>
+<div class="qt">Which flowchart shape is used for a DECISION (Yes/No question)?</div><div class="opts"><button class="ob" onclick="checkMCQ('q4',this,false)"><span class="ol">A</span>Rectangle</button>
+<button class="ob" onclick="checkMCQ('q4',this,true)"><span class="ol">B</span>Diamond</button>
+<button class="ob" onclick="checkMCQ('q4',this,false)"><span class="ol">C</span>Oval</button>
+<button class="ob" onclick="checkMCQ('q4',this,false)"><span class="ol">D</span>Parallelogram</button>
+</div><div class="fb" id="q4-fb"></div></div><div class="qc" id="q5"><div class="qn">Question 5 of 10 — True or False</div>
+<div class="qt">Pseudocode is written in a real programming language like Python or Java.</div>
+<div class="tg"><button class="tb" onclick="checkTF('q5',this,false)">✅ True</button>
+<button class="tb" onclick="checkTF('q5',this,true)">❌ False</button></div>
+<div class="fb" id="q5-fb"></div></div><div class="qc" id="q6"><div class="qn">Question 6 of 10 — Multiple Choice</div>
+<div class="qt">A syntax error in a programme means:</div><div class="opts"><button class="ob" onclick="checkMCQ('q6',this,false)"><span class="ol">A</span>The programme gives a wrong answer</button>
+<button class="ob" onclick="checkMCQ('q6',this,false)"><span class="ol">B</span>The programme crashes while running</button>
+<button class="ob" onclick="checkMCQ('q6',this,true)"><span class="ol">C</span>There is a spelling or grammar mistake in the code</button>
+<button class="ob" onclick="checkMCQ('q6',this,false)"><span class="ol">D</span>The programme is too slow</button>
+</div><div class="fb" id="q6-fb"></div></div><div class="qc" id="q7"><div class="qn">Question 7 of 10 — Multiple Choice</div>
+<div class="qt">What shape in a flowchart represents INPUT or OUTPUT?</div><div class="opts"><button class="ob" onclick="checkMCQ('q7',this,false)"><span class="ol">A</span>Oval</button>
+<button class="ob" onclick="checkMCQ('q7',this,false)"><span class="ol">B</span>Diamond</button>
+<button class="ob" onclick="checkMCQ('q7',this,false)"><span class="ol">C</span>Rectangle</button>
+<button class="ob" onclick="checkMCQ('q7',this,true)"><span class="ol">D</span>Parallelogram</button>
+</div><div class="fb" id="q7-fb"></div></div><div class="qc" id="q8"><div class="qn">Question 8 of 10 — True or False</div>
+<div class="qt">Debugging means finding and fixing errors (bugs) in a programme.</div>
+<div class="tg"><button class="tb" onclick="checkTF('q8',this,true)">✅ True</button>
+<button class="tb" onclick="checkTF('q8',this,false)">❌ False</button></div>
+<div class="fb" id="q8-fb"></div></div><div class="qc" id="q9"><div class="qn">Question 9 of 10 — Multiple Choice</div>
+<div class="qt">Which type of error causes a programme to run but give the wrong answer?</div><div class="opts"><button class="ob" onclick="checkMCQ('q9',this,false)"><span class="ol">A</span>Syntax error</button>
+<button class="ob" onclick="checkMCQ('q9',this,true)"><span class="ol">B</span>Logic error</button>
+<button class="ob" onclick="checkMCQ('q9',this,false)"><span class="ol">C</span>Runtime error</button>
+<button class="ob" onclick="checkMCQ('q9',this,false)"><span class="ol">D</span>Compile error</button>
+</div><div class="fb" id="q9-fb"></div></div><div class="qc" id="q10"><div class="qn">Question 10 of 10 — Multiple Choice</div>
+<div class="qt">What does the Rectangle shape represent in a flowchart?</div><div class="opts"><button class="ob" onclick="checkMCQ('q10',this,false)"><span class="ol">A</span>Start/End</button>
+<button class="ob" onclick="checkMCQ('q10',this,false)"><span class="ol">B</span>Decision</button>
+<button class="ob" onclick="checkMCQ('q10',this,false)"><span class="ol">C</span>Input/Output</button>
+<button class="ob" onclick="checkMCQ('q10',this,true)"><span class="ol">D</span>A process or action</button>
+</div><div class="fb" id="q10-fb"></div></div>
+<button class="xb" onclick="showScore()">📊 See My Score</button>
+<div class="sp" id="score-panel">
+  <div class="sc" id="score-circle"><span id="score-num">?</span><small>/ 10</small></div>
+  <div class="sm" id="score-msg"></div><div class="sd" id="score-detail"></div>
+  <br><a class="nb" href="../Timed_Exams/Ch05_ProgDev_TimedPaper.html">⏱️ Ready? Try the Timed Paper →</a>
+</div></div>
+<script>const cf={"q1":"✅ Correct! An algorithm is a clear, step-by-step set of instructions to solve a problem. It must be finite and effective.","q2":"✅ Correct! TRUE — Flowcharts use standard shapes (oval, rectangle, diamond, parallelogram) connected by arrows.","q3":"✅ Correct! An Oval (ellipse) is used for START and END — it is called a 'Terminal' in flowcharts.","q4":"✅ Correct! A Diamond is used for DECISIONS — it always has YES and NO paths coming out of it.","q5":"✅ Correct! FALSE — Pseudocode is written in plain English, NOT a real programming language. It is just a planning tool.","q6":"✅ Correct! A syntax error is a spelling or grammar mistake in the code (like a typo). The programme won't even run!","q7":"✅ Correct! A Parallelogram (slanted rectangle) represents INPUT (entering data) or OUTPUT (displaying a result).","q8":"✅ Correct! TRUE — Debugging is the process of finding and fixing errors (bugs) in a programme.","q9":"✅ Correct! A logic error means the programme runs but produces the WRONG result — the logic/thinking is wrong.","q10":"✅ Correct! A Rectangle represents a PROCESS or action — like 'Add 5 to x' or 'Calculate total'."};const wf={"q1":"❌ An algorithm is a step-by-step set of instructions to solve a problem. It is NOT a virus or programming language.","q2":"❌ TRUE — Flowcharts DO use standard shapes connected by arrows to show the steps of an algorithm.","q3":"❌ An OVAL (ellipse) is used for START and END in a flowchart. It is called a 'Terminal'.","q4":"❌ A DIAMOND is used for decisions (Yes/No questions). A rectangle is for processes, oval for start/end.","q5":"❌ FALSE — Pseudocode is written in plain ENGLISH, not a real programming language. It helps you plan before coding.","q6":"❌ A SYNTAX error is a spelling/grammar mistake in the code. A logic error gives wrong answers. A runtime error crashes the programme.","q7":"❌ A PARALLELOGRAM (slanted shape) is used for INPUT and OUTPUT. Not the oval (start/end) or diamond (decision).","q8":"❌ TRUE — Debugging is finding and fixing bugs (errors) in a programme. A person who does this is called a debugger.","q9":"❌ A LOGIC error causes wrong results while the programme runs. Syntax = code mistake. Runtime = programme crashes.","q10":"❌ A RECTANGLE is used for a PROCESS or action (like a calculation or assignment). Diamond = decision, Oval = start/end."};
+let scores={},answered={};
+function checkMCQ(qid,btn,isCorrect){
+  if(answered[qid])return;answered[qid]=true;scores[qid]=isCorrect?1:0;
+  const card=document.getElementById(qid);const buttons=card.querySelectorAll('.ob');
+  buttons.forEach(b=>b.disabled=true);
+  if(isCorrect){btn.classList.add('cor');btn.querySelector('.ol').style.background='#375623';card.classList.add('ac');}
+  else{btn.classList.add('wrg');btn.querySelector('.ol').style.background='#9C0006';card.classList.add('aw');
+    buttons.forEach(b=>{if(b.onclick.toString().includes('true')){b.classList.add('cor');b.querySelector('.ol').style.background='#375623';}});}
+  const fb=document.getElementById(qid+'-fb');
+  fb.textContent=isCorrect?cf[qid]:wf[qid];
+  fb.className='fb show '+(isCorrect?'cor':'wrg');
+}
+function checkTF(qid,btn,isCorrect){
+  if(answered[qid])return;answered[qid]=true;scores[qid]=isCorrect?1:0;
+  const card=document.getElementById(qid);const buttons=card.querySelectorAll('.tb');
+  buttons.forEach(b=>b.disabled=true);
+  if(isCorrect){btn.classList.add('cor');card.classList.add('ac');}
+  else{btn.classList.add('wrg');card.classList.add('aw');buttons.forEach(b=>{if(b!==btn)b.classList.add('cor');});}
+  const fb=document.getElementById(qid+'-fb');
+  fb.textContent=isCorrect?cf[qid]:wf[qid];
+  fb.className='fb show '+(isCorrect?'cor':'wrg');
+}
+function checkFill(qid,acc){
+  if(answered[qid])return;
+  const input=document.getElementById(qid+'-input');
+  const ua=input.value.trim().toLowerCase();
+  const ok=acc.some(a=>ua===a.toLowerCase());
+  answered[qid]=true;scores[qid]=ok?1:0;
+  input.classList.add(ok?'cor':'wrg');input.disabled=true;
+  document.querySelector('#'+qid+' .cb').disabled=true;
+  document.getElementById(qid).classList.add(ok?'ac':'aw');
+  const fb=document.getElementById(qid+'-fb');
+  fb.textContent=ok?cf[qid]:wf[qid];
+  fb.className='fb show '+(ok?'cor':'wrg');
+}
+function showScore(){
+  let total=0;for(let k in scores)total+=scores[k];
+  const pct=Math.round((total/10)*100);
+  const panel=document.getElementById('score-panel');
+  const circle=document.getElementById('score-circle');
+  document.getElementById('score-num').textContent=total;
+  panel.classList.add('show');panel.scrollIntoView({behavior:'smooth',block:'center'});
+  if(pct>=80){circle.className='sc pass';document.getElementById('score-msg').textContent='🌟 Excellent work, Sheyvon!';document.getElementById('score-detail').textContent=`You scored ${total}/10 (${pct}%). Brilliant! Move on to the Timed Paper.`;}
+  else if(pct>=60){circle.className='sc warn';document.getElementById('score-msg').textContent='👍 Good effort!';document.getElementById('score-detail').textContent=`You scored ${total}/10 (${pct}%). Review wrong answers then try the Timed Paper.`;}
+  else{circle.className='sc fail';document.getElementById('score-msg').textContent='📖 Re-read your notes!';document.getElementById('score-detail').textContent=`You scored ${total}/10 (${pct}%). Go back to the Short Notes and re-read carefully. You can do this!`;}
+}</script></body></html>
