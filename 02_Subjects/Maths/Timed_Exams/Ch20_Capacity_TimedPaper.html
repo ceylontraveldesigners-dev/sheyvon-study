@@ -145,6 +145,9 @@ function submitExam(auto){
 }
 </script>
 
+
+    <div class="action-panel" style="margin-top:16px;text-align:center;"><h2>Save This Result</h2><p style="font-size:13px;color:#555;margin-bottom:14px;">Download a full record of answers to save in the Completed Work folder.</p><button onclick="downloadResults()" style="background:#375623;color:white;border:none;border-radius:10px;padding:14px 32px;font-size:15px;font-weight:bold;cursor:pointer;">&#128229; Download Results File</button></div>
+
 <!-- ═══ WhatsApp Result Capture (injected) ═══ -->
 <style>
 #wa-float-btn{position:fixed;bottom:22px;right:22px;background:#25D366;color:#fff;padding:14px 22px;border-radius:50px;font-size:15px;font-weight:bold;text-decoration:none;display:none;align-items:center;gap:10px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:transform .15s;}
@@ -152,5 +155,25 @@ function submitExam(auto){
 </style>
 <a id="wa-float-btn" href="#" target="_blank">📲 Send Results to Mum</a>
 <!-- ════════════════════════════════════════════ -->
+<script>
+function downloadResults(){
+  var d=new Date(),ds=d.toLocaleDateString("en-GB",{day:"2-digit",month:"long",year:"numeric"}),dt=d.toISOString().slice(0,10);
+  var sc=window._rSc||0,tot=window._rTot||15,pct=window._rPct||0,t=window._rTime||"--";
+  var lbl=window._rLbl||(document.querySelector("title")||{textContent:""}).textContent.split("|")[0].split(String.fromCharCode(8211))[0].split(String.fromCharCode(8212))[0].trim();
+  var st=pct>=80?"Outstanding":pct>=60?"Passed":"Needs Revision";
+  var qids=window._rQids||[],qt=window._rQt||{},ans=window._rAns||{},ex=window._rEx||{};
+  var rows=qids.map(function(q,i){var ok=ans[q]&&ans[q].correct;return"<tr style=background:"+(ok?"#C6EFCE":"#FFE0E0")+"><td>"+(i+1)+"</td><td>"+(qt[q]||"")+"</td><td>"+(ok?"Correct":"Wrong")+"</td><td style=font-size:12px;color:#555>"+(ok?"":(ex[q]||""))+"</td></tr>";}).join("");
+  var b1="",b2="",ta=document.querySelectorAll("textarea");
+  if(ta[0])b1=ta[0].value||"(not answered)";
+  if(ta[1])b2=ta[1].value||"(not answered)";
+  var bk=b1?"<div style=background:white;border-radius:10px;padding:20px;margin-bottom:16px><h2 style=color:#1F3864;font-size:15px>Bonus Q1 (parent-marked)</h2><pre style=white-space:pre-wrap;font-family:Arial;font-size:13px;background:#f7f9ff;padding:12px;border-radius:6px>"+b1.replace(/</g,"&lt;")+"</pre></div>":"";
+  if(b2)bk+="<div style=background:white;border-radius:10px;padding:20px;margin-bottom:16px><h2 style=color:#1F3864;font-size:15px>Bonus Q2 (parent-marked)</h2><pre style=white-space:pre-wrap;font-family:Arial;font-size:13px;background:#f7f9ff;padding:12px;border-radius:6px>"+b2.replace(/</g,"&lt;")+"</pre></div>";
+  var h="<!DOCTYPE html><html><head><meta charset=UTF-8><title>Results - "+lbl+" - "+ds+"</title><style>body{font-family:Arial,sans-serif;background:#f0f4ff;margin:0;padding:24px}table{width:100%;border-collapse:collapse;background:white;border-radius:8px;margin-bottom:20px}th{background:#1F3864;color:white;padding:10px 12px;text-align:left}td{padding:8px 10px;border-bottom:1px solid #eee;vertical-align:top}</style></head><body><div style=background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;padding:24px 30px;border-radius:12px;margin-bottom:20px><h1 style=font-size:20px;margin-bottom:4px>"+lbl+"</h1><p>Sheyvon Warnapura | "+ds+" | Time: "+t+"</p><div style=font-size:48px;font-weight:bold;margin:10px 0>"+sc+" / "+tot+"</div><p style=font-size:18px;font-weight:bold>"+pct+"% - "+st+"</p></div><div style=background:white;border-radius:10px;padding:20px;margin-bottom:16px><h2 style=color:#1F3864;font-size:15px;margin-bottom:10px>Question Results</h2><table><tr><th>#</th><th>Question</th><th>Result</th><th>Note</th></tr>"+rows+"</table></div>"+bk+"<p style=font-size:12px;color:#999;text-align:center>Sheyvon Study System - "+ds+"</p></body></html>";
+  var bl=new Blob([h],{type:"text/html"}),a=document.createElement("a");
+  a.href=URL.createObjectURL(bl);a.download=dt+"_"+(window._rSlug||"Maths")+"_Results.html";
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+}
+</script>
 </body>
 </html>
