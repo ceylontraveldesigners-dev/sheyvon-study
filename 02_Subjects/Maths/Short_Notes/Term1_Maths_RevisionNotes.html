@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Term 1 Revision Notes — Maths Grade 7 | Sheyvon</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #1F3864, #2E75B6); color: white; padding: 28px 32px; }
+  .header h1 { font-size: 24px; }
+  .header p  { font-size: 13px; opacity: 0.85; margin-top: 6px; }
+  .badge { display:inline-block; background:#FFD966; color:#7F4F00; border-radius:20px; padding:4px 14px; font-size:12px; font-weight:bold; margin-top:10px; }
+
+  /* STICKY NAV */
+  .chapter-nav { background: white; border-bottom: 2px solid #BDD7EE; position: sticky; top: 0; z-index: 100; padding: 10px 20px; display: flex; gap: 10px; flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .nav-chip { background: #EBF3FB; color: #1F3864; border: none; border-radius: 20px; padding: 6px 16px; font-size: 12px; font-weight: bold; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+  .nav-chip:hover, .nav-chip.active { background: #1F3864; color: white; }
+
+  /* CONTAINERS */
+  .container { max-width: 860px; margin: 28px auto; padding: 0 20px 80px; }
+
+  /* CHAPTER BLOCK */
+  .chapter-block { margin-bottom: 48px; }
+  .chapter-title { background: linear-gradient(135deg, #1F3864, #2E75B6); color: white; border-radius: 12px; padding: 16px 24px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px; }
+  .chapter-title .ch-icon { font-size: 32px; }
+  .chapter-title h2 { font-size: 20px; }
+  .chapter-title p { font-size: 12px; opacity: 0.85; margin-top: 2px; }
+
+  /* CARDS */
+  .card { background: white; border-radius: 12px; padding: 22px 26px; margin-bottom: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); border-left: 5px solid #2E75B6; }
+  .card h3 { font-size: 15px; color: #1F3864; margin-bottom: 12px; display:flex; align-items:center; gap:8px; }
+  .card p, .card li { font-size: 14px; line-height: 1.75; color: #333; }
+  .card ul, .card ol { padding-left: 20px; margin-top: 8px; }
+  .card li { margin-bottom: 6px; }
+
+  /* CALLOUT BOXES */
+  .definition { background: #EBF3FB; border-left: 4px solid #2E75B6; border-radius: 8px; padding: 12px 16px; margin: 10px 0; font-size: 14px; line-height: 1.7; }
+  .definition strong { color: #1F3864; }
+  .remember { background: #FFF9E6; border-left: 4px solid #FFD966; border-radius: 8px; padding: 12px 16px; margin: 10px 0; font-size: 14px; line-height: 1.7; }
+  .remember strong { color: #7F4F00; }
+  .mistake { background: #FFF0F0; border-left: 4px solid #FF6B6B; border-radius: 8px; padding: 12px 16px; margin: 10px 0; font-size: 14px; line-height: 1.7; }
+  .mistake strong { color: #9C0006; }
+  .example-box { background: #F0FFF4; border: 1px solid #C6EFCE; border-radius: 8px; padding: 12px 16px; margin: 10px 0; font-size: 14px; line-height: 1.75; }
+  .example-box strong { color: #375623; }
+
+  /* TABLES */
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+  th { background: #1F3864; color: white; padding: 10px 12px; text-align: left; }
+  td { padding: 9px 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+  tr:nth-child(even) td { background: #F7F9FF; }
+
+  /* FORMULA BOX */
+  .formula { background: #1F3864; color: white; border-radius: 8px; padding: 14px 18px; margin: 10px 0; font-size: 15px; font-family: monospace; line-height: 2; }
+  .formula span { color: #FFD966; font-weight: bold; }
+
+  /* GRID */
+  .sym-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 12px; }
+  .sym-item { background: #F7F9FF; border: 1px solid #BDD7EE; border-radius: 8px; padding: 12px; text-align: center; }
+  .sym-item .shape { font-size: 28px; display: block; margin-bottom: 4px; }
+  .sym-item .name { font-weight: bold; font-size: 12px; color: #1F3864; }
+  .sym-item .axes { font-size: 11px; color: #2E75B6; margin-top: 3px; }
+
+  /* VENN */
+  .venn-area { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+  .venn-svg { flex-shrink: 0; }
+
+  /* QUICK QUIZ */
+  .quick-quiz { background: #FFF9E6; border: 1px solid #FFD966; border-radius: 10px; padding: 16px 20px; margin-top: 16px; }
+  .quick-quiz h4 { color: #7F4F00; font-size: 13px; margin-bottom: 10px; }
+  .quick-quiz ol { padding-left: 18px; }
+  .quick-quiz li { font-size: 13px; color: #555; margin-bottom: 6px; }
+  .quick-quiz details { margin-top: 10px; }
+  .quick-quiz summary { font-size: 12px; color: #2E75B6; cursor: pointer; font-weight: bold; }
+  .quick-quiz .answers { font-size: 12px; color: #375623; margin-top: 6px; line-height: 1.8; }
+
+  /* NAV BOTTOM */
+  .chapter-nav-bottom { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+  .nav-btn { display: inline-block; background: #1F3864; color: white; text-decoration: none; padding: 12px 22px; border-radius: 8px; font-size: 13px; font-weight: bold; }
+  .nav-btn:hover { background: #2E75B6; }
+  .nav-btn.green { background: #375623; }
+
+  /* DIVIDER */
+  .chapter-divider { border: none; border-top: 2px dashed #BDD7EE; margin: 20px 0 40px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📚 Term 1 — Maths Revision Notes</h1>
+  <p>Grade 7 | Sri Lankan Syllabus | Sheyvon Warnapura</p>
+  <span class="badge">📖 Read this BEFORE the First Term Test Paper</span>
+</div>
+
+<!-- STICKY CHAPTER NAV -->
+<div class="chapter-nav">
+  <a class="nav-chip" href="#ch01">📐 Ch01 Symmetry</a>
+  <a class="nav-chip" href="#ch02">🔢 Ch02 Sets</a>
+  <a class="nav-chip" href="#ch03">➕ Ch03 Operations</a>
+  <a class="nav-chip" href="#ch04">🔢 Ch04 Factors &amp; Multiples</a>
+  <a class="nav-chip" href="#ch05">⬆️ Ch05 Indices</a>
+  <a class="nav-chip nav-btn green" href="../Timed_Exams/Term1_Maths_TimedPaper.html" style="border-radius:20px; padding:6px 16px; font-size:12px;">⏱️ Take Term 1 Test</a>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════════
+     CHAPTER 1 — SYMMETRY
+═══════════════════════════════════════════════ -->
+<div class="chapter-block" id="ch01">
+  <div class="chapter-title">
+    <div class="ch-icon">📐</div>
+    <div>
+      <h2>Chapter 1 — Symmetry</h2>
+      <p>Bilateral Symmetry &amp; Axes of Symmetry</p>
+    </div>
+  </div>
+
+  <!-- Key Definitions -->
+  <div class="card">
+    <h3>🔑 Key Definitions</h3>
+    <div class="definition">
+      <strong>Bilateral Symmetry:</strong> A plane figure has bilateral symmetry if it can be folded along a straight line so that the two parts <em>exactly coincide</em> (fit perfectly on top of each other).
+    </div>
+    <div class="definition">
+      <strong>Axis of Symmetry:</strong> The straight fold line along which a figure is folded to produce two coinciding halves. A figure can have more than one axis of symmetry.
+    </div>
+    <p style="margin-top:10px;">Think of it like folding a piece of paper — if both halves match up perfectly when folded, the fold line is the axis of symmetry.</p>
+  </div>
+
+  <!-- Shapes and Axes -->
+  <div class="card">
+    <h3>📊 Shapes and Their Axes of Symmetry</h3>
+    <div class="sym-grid">
+      <div class="sym-item"><span class="shape">⬛</span><span class="name">Square</span><span class="axes">4 axes</span></div>
+      <div class="sym-item"><span class="shape">▬</span><span class="name">Rectangle</span><span class="axes">2 axes</span></div>
+      <div class="sym-item"><span class="shape">🔷</span><span class="name">Rhombus</span><span class="axes">2 axes</span></div>
+      <div class="sym-item"><span class="shape">🔺</span><span class="name">Equilateral △</span><span class="axes">3 axes</span></div>
+      <div class="sym-item"><span class="shape">▲</span><span class="name">Isosceles △</span><span class="axes">1 axis</span></div>
+      <div class="sym-item"><span class="shape">▷</span><span class="name">Scalene △</span><span class="axes">0 axes</span></div>
+      <div class="sym-item"><span class="shape">⬡</span><span class="name">Reg. Hexagon</span><span class="axes">6 axes</span></div>
+      <div class="sym-item"><span class="shape">⭕</span><span class="name">Circle</span><span class="axes">∞ axes</span></div>
+    </div>
+    <div class="remember" style="margin-top:14px;">
+      <strong>✅ Key Rule:</strong> For any <em>regular polygon</em>, the number of axes of symmetry equals the number of sides. (Pentagon → 5 axes, hexagon → 6 axes, etc.)
+    </div>
+  </div>
+
+  <!-- Mirror Images -->
+  <div class="card">
+    <h3>📌 Mirror Images on a Grid</h3>
+    <p>When plotting the mirror image of a point across an axis of symmetry:</p>
+    <ul style="margin-top:8px;">
+      <li>The mirror image is the <strong>same distance</strong> from the axis, but on the <strong>opposite side</strong>.</li>
+      <li>If a point is 3 squares to the left of a vertical axis, its mirror image is 3 squares to the right.</li>
+      <li>The axis of symmetry is exactly <strong>halfway between</strong> a point and its mirror image.</li>
+    </ul>
+    <div class="example-box" style="margin-top:12px;">
+      <strong>✏️ Example:</strong> Point P is at (1, 4) and the axis of symmetry is the vertical line x = 4.<br>
+      Distance from P to axis = 4 – 1 = 3 units.<br>
+      Mirror image P' is at (7, 4) — which is 3 units to the right of x = 4.
+    </div>
+  </div>
+
+  <!-- Common Mistakes -->
+  <div class="card">
+    <h3>⚠️ Common Mistakes</h3>
+    <div class="mistake">
+      <strong>✗ Mistake:</strong> Thinking that "equal area" is enough for an axis of symmetry.<br>
+      <strong>✓ Correct:</strong> The two halves must <em>coincide exactly</em> when folded — same shape AND same position.
+    </div>
+    <div class="mistake">
+      <strong>✗ Mistake:</strong> Thinking a figure can only have ONE axis of symmetry.<br>
+      <strong>✓ Correct:</strong> A figure can have many axes (a square has 4, a circle has infinitely many).
+    </div>
+  </div>
+
+  <!-- Quick Check -->
+  <div class="quick-quiz">
+    <h4>⚡ Quick Check — Chapter 1</h4>
+    <ol>
+      <li>How many axes of symmetry does a regular octagon have?</li>
+      <li>True or False: A parallelogram has 2 axes of symmetry.</li>
+      <li>A point is 5 cm to the right of an axis. Where is its mirror image?</li>
+    </ol>
+    <details><summary>👁 Show Answers</summary>
+      <div class="answers">
+        1. 8 axes (regular polygon: axes = sides).<br>
+        2. FALSE — a parallelogram (non-rectangular) has 0 axes of symmetry.<br>
+        3. 5 cm to the LEFT of the axis.
+      </div>
+    </details>
+  </div>
+</div>
+
+<hr class="chapter-divider">
+
+<!-- ═══════════════════════════════════════════════
+     CHAPTER 2 — SETS
+═══════════════════════════════════════════════ -->
+<div class="chapter-block" id="ch02">
+  <div class="chapter-title">
+    <div class="ch-icon">🔢</div>
+    <div>
+      <h2>Chapter 2 — Sets</h2>
+      <p>Set Notation, Operations &amp; Venn Diagrams</p>
+    </div>
+  </div>
+
+  <!-- Key Definitions -->
+  <div class="card">
+    <h3>🔑 Key Definitions</h3>
+    <div class="definition">
+      <strong>Set:</strong> A well-defined collection of objects (called <em>elements</em> or <em>members</em>).
+    </div>
+    <div class="definition">
+      <strong>n(A):</strong> The number of elements in set A. Also called the <em>cardinality</em>.
+    </div>
+    <div class="definition">
+      <strong>Empty Set (∅ or { }):</strong> A set with no elements. e.g. {whole numbers between 3 and 4}.
+    </div>
+    <div class="definition">
+      <strong>Universal Set (ξ):</strong> The set of all elements being considered in a problem.
+    </div>
+    <table>
+      <tr><th>Symbol</th><th>Meaning</th><th>Example</th></tr>
+      <tr><td>∈</td><td>Is a member of / belongs to</td><td>3 ∈ {1, 2, 3}</td></tr>
+      <tr><td>∉</td><td>Is NOT a member of</td><td>5 ∉ {1, 2, 3}</td></tr>
+      <tr><td>⊂</td><td>Is a subset of</td><td>{2, 3} ⊂ {1, 2, 3, 4}</td></tr>
+      <tr><td>n(A)</td><td>Number of elements in A</td><td>n({a,b,c}) = 3</td></tr>
+      <tr><td>∅ or { }</td><td>Empty set</td><td>{x: x &gt; 5 and x &lt; 4}</td></tr>
+    </table>
+  </div>
+
+  <!-- Set Operations -->
+  <div class="card">
+    <h3>➕ Set Operations</h3>
+    <div class="definition">
+      <strong>Union (A ∪ B):</strong> All elements that are in A <em>OR</em> B (or both). This includes everything.
+    </div>
+    <div class="definition">
+      <strong>Intersection (A ∩ B):</strong> Only elements that are in A <em>AND</em> B — elements common to both.
+    </div>
+    <div class="definition">
+      <strong>Complement (A'):</strong> All elements in the universal set ξ that are <em>NOT</em> in A.
+    </div>
+    <div class="example-box">
+      <strong>✏️ Example:</strong><br>
+      ξ = {1, 2, 3, 4, 5, 6, 7, 8}, A = {1, 2, 3, 4}, B = {3, 4, 5, 6}<br><br>
+      A ∪ B = {1, 2, 3, 4, 5, 6} &nbsp;← everything in A or B<br>
+      A ∩ B = {3, 4} &nbsp;← only what's in both<br>
+      A' = {5, 6, 7, 8} &nbsp;← everything in ξ NOT in A
+    </div>
+  </div>
+
+  <!-- Venn Diagrams -->
+  <div class="card">
+    <h3>⭕ Venn Diagrams</h3>
+    <p>A Venn diagram uses overlapping circles inside a rectangle (the universal set) to show relationships between sets.</p>
+    <svg viewBox="0 0 320 160" width="320" height="160" style="margin-top:14px; display:block;">
+      <rect x="5" y="5" width="310" height="150" rx="8" fill="#f0f4ff" stroke="#1F3864" stroke-width="2"/>
+      <circle cx="120" cy="80" r="60" fill="rgba(46,117,182,0.2)" stroke="#2E75B6" stroke-width="2"/>
+      <circle cx="200" cy="80" r="60" fill="rgba(112,173,71,0.2)" stroke="#70AD47" stroke-width="2"/>
+      <text x="90" y="78" font-size="13" font-family="Arial" font-weight="bold" fill="#1F3864" text-anchor="middle">A only</text>
+      <text x="160" y="74" font-size="11" font-family="Arial" font-weight="bold" fill="#375623" text-anchor="middle">A ∩ B</text>
+      <text x="160" y="90" font-size="10" font-family="Arial" fill="#375623" text-anchor="middle">(both)</text>
+      <text x="230" y="78" font-size="13" font-family="Arial" font-weight="bold" fill="#375623" text-anchor="middle">B only</text>
+      <text x="280" y="30" font-size="11" font-family="Arial" fill="#777" text-anchor="middle">ξ</text>
+      <text x="40" y="140" font-size="11" font-family="Arial" fill="#555" text-anchor="middle">Neither</text>
+      <text x="120" y="15" font-size="12" font-family="Arial" font-weight="bold" fill="#2E75B6" text-anchor="middle">A</text>
+      <text x="200" y="15" font-size="12" font-family="Arial" font-weight="bold" fill="#70AD47" text-anchor="middle">B</text>
+    </svg>
+    <div class="remember" style="margin-top:12px;">
+      <strong>✅ Useful formula:</strong> n(A ∪ B) = n(A) + n(B) − n(A ∩ B)<br>
+      This avoids double-counting the elements in both sets.
+    </div>
+  </div>
+
+  <!-- Common Mistakes -->
+  <div class="card">
+    <h3>⚠️ Common Mistakes</h3>
+    <div class="mistake">
+      <strong>✗ Mistake:</strong> Confusing union (∪) and intersection (∩).<br>
+      <strong>✓ Remember:</strong> Union (∪) = <em>everything</em> (like a cup that collects all). Intersection (∩) = <em>only what's shared</em>.
+    </div>
+    <div class="mistake">
+      <strong>✗ Mistake:</strong> Writing the empty set as {∅}.<br>
+      <strong>✓ Correct:</strong> The empty set is ∅ or { }. Writing {∅} means a set containing the symbol ∅, which is NOT empty.
+    </div>
+  </div>
+
+  <div class="quick-quiz">
+    <h4>⚡ Quick Check — Chapter 2</h4>
+    <ol>
+      <li>A = {2,4,6,8}, B = {6,8,10}. Find A ∩ B and A ∪ B.</li>
+      <li>ξ = {1–10}, A = {odd numbers}. What is A'?</li>
+      <li>n(A) = 12, n(B) = 9, n(A ∩ B) = 4. Find n(A ∪ B).</li>
+    </ol>
+    <details><summary>👁 Show Answers</summary>
+      <div class="answers">
+        1. A ∩ B = {6, 8} &nbsp;|&nbsp; A ∪ B = {2, 4, 6, 8, 10}.<br>
+        2. A' = {2, 4, 6, 8, 10} (even numbers).<br>
+        3. n(A ∪ B) = 12 + 9 − 4 = 17.
+      </div>
+    </details>
+  </div>
+</div>
+
+<hr class="chapter-divider">
+
+<!-- ═══════════════════════════════════════════════
+     CHAPTER 3 — OPERATIONS ON WHOLE NUMBERS
+═══════════════════════════════════════════════ -->
+<div class="chapter-block" id="ch03">
+  <div class="chapter-title">
+    <div class="ch-icon">➕</div>
+    <div>
+      <h2>Chapter 3 — Operations on Whole Numbers</h2>
+      <p>BODMAS &amp; Order of Operations</p>
+    </div>
+  </div>
+
+  <!-- BODMAS -->
+  <div class="card">
+    <h3>🔑 The BODMAS Rule</h3>
+    <p>BODMAS tells us the <strong>order</strong> in which to carry out operations in a mathematical expression.</p>
+    <table style="margin-top:14px;">
+      <tr><th>Letter</th><th>Stands For</th><th>Example</th></tr>
+      <tr><td><strong style="color:#FFD966;background:#1F3864;padding:2px 8px;border-radius:4px;">B</strong></td><td>Brackets</td><td>(3 + 4) → do this first</td></tr>
+      <tr><td><strong style="color:#FFD966;background:#1F3864;padding:2px 8px;border-radius:4px;">O</strong></td><td>Orders (indices / powers / roots)</td><td>3² → do this second</td></tr>
+      <tr><td><strong style="color:#FFD966;background:#1F3864;padding:2px 8px;border-radius:4px;">D</strong></td><td>Division ÷</td><td>Same priority as M</td></tr>
+      <tr><td><strong style="color:#FFD966;background:#1F3864;padding:2px 8px;border-radius:4px;">M</strong></td><td>Multiplication ×</td><td>Same priority as D</td></tr>
+      <tr><td><strong style="color:#FFD966;background:#1F3864;padding:2px 8px;border-radius:4px;">A</strong></td><td>Addition +</td><td>Same priority as S</td></tr>
+      <tr><td><strong style="color:#FFD966;background:#1F3864;padding:2px 8px;border-radius:4px;">S</strong></td><td>Subtraction −</td><td>Same priority as A</td></tr>
+    </table>
+    <div class="remember" style="margin-top:14px;">
+      <strong>✅ Key Rule for D &amp; M, and A &amp; S:</strong> Division and multiplication have <em>equal priority</em> — when they appear together, work <strong>left to right</strong>. Same applies to addition and subtraction.
+    </div>
+  </div>
+
+  <!-- Worked Examples -->
+  <div class="card">
+    <h3>✏️ Worked Examples</h3>
+    <div class="example-box">
+      <strong>Example 1:</strong> Calculate 8 + 6 ÷ 2<br>
+      Step 1 (D): 6 ÷ 2 = 3<br>
+      Step 2 (A): 8 + 3 = <strong>11</strong>
+    </div>
+    <div class="example-box" style="margin-top:10px;">
+      <strong>Example 2:</strong> Calculate (15 − 3) × 2 + 4<br>
+      Step 1 (B): (15 − 3) = 12<br>
+      Step 2 (M): 12 × 2 = 24<br>
+      Step 3 (A): 24 + 4 = <strong>28</strong>
+    </div>
+    <div class="example-box" style="margin-top:10px;">
+      <strong>Example 3:</strong> Calculate 3² + 4 × (7 − 3)<br>
+      Step 1 (B): (7 − 3) = 4<br>
+      Step 2 (O): 3² = 9<br>
+      Step 3 (M): 4 × 4 = 16<br>
+      Step 4 (A): 9 + 16 = <strong>25</strong>
+    </div>
+    <div class="example-box" style="margin-top:10px;">
+      <strong>Example 4:</strong> Calculate 24 ÷ 4 × 3<br>
+      D and M same priority → work left to right:<br>
+      Step 1: 24 ÷ 4 = 6<br>
+      Step 2: 6 × 3 = <strong>18</strong>
+    </div>
+  </div>
+
+  <!-- Common Mistakes -->
+  <div class="card">
+    <h3>⚠️ Common Mistakes</h3>
+    <div class="mistake">
+      <strong>✗ Mistake:</strong> Doing addition BEFORE multiplication: 3 + 4 × 2 = 7 × 2 = 14 ✗<br>
+      <strong>✓ Correct:</strong> Multiply first: 3 + (4 × 2) = 3 + 8 = 11 ✓
+    </div>
+    <div class="mistake">
+      <strong>✗ Mistake:</strong> Always doing multiplication before division: 12 ÷ 4 × 3 = 12 ÷ 12 = 1 ✗<br>
+      <strong>✓ Correct:</strong> Left to right: (12 ÷ 4) × 3 = 3 × 3 = 9 ✓
+    </div>
+  </div>
+
+  <div class="quick-quiz">
+    <h4>⚡ Quick Check — Chapter 3</h4>
+    <ol>
+      <li>Calculate: 5 + 3 × 4 − 2</li>
+      <li>Calculate: (10 − 4) ÷ 2 × 3</li>
+      <li>Calculate: 2² + (8 − 3) × 2</li>
+    </ol>
+    <details><summary>👁 Show Answers</summary>
+      <div class="answers">
+        1. 5 + 12 − 2 = 15.<br>
+        2. (10−4)=6; 6÷2=3; 3×3 = 9.<br>
+        3. 2²=4; (8−3)=5; 5×2=10; 4+10 = 14.
+      </div>
+    </details>
+  </div>
+</div>
+
+<hr class="chapter-divider">
+
+<!-- ═══════════════════════════════════════════════
+     CHAPTER 4 — FACTORS & MULTIPLES
+═══════════════════════════════════════════════ -->
+<div class="chapter-block" id="ch04">
+  <div class="chapter-title">
+    <div class="ch-icon">🔢</div>
+    <div>
+      <h2>Chapter 4 — Factors &amp; Multiples</h2>
+      <p>Prime Numbers, HCF &amp; LCM</p>
+    </div>
+  </div>
+
+  <!-- Key Definitions -->
+  <div class="card">
+    <h3>🔑 Key Definitions</h3>
+    <div class="definition">
+      <strong>Factor:</strong> A number that divides exactly into another number with no remainder.<br>
+      Factors of 12: <em>1, 2, 3, 4, 6, 12</em>
+    </div>
+    <div class="definition">
+      <strong>Multiple:</strong> The result of multiplying a number by a positive integer.<br>
+      Multiples of 4: <em>4, 8, 12, 16, 20 ...</em>
+    </div>
+    <div class="definition">
+      <strong>Prime Number:</strong> A whole number greater than 1 that has exactly TWO factors: 1 and itself.<br>
+      Primes: <em>2, 3, 5, 7, 11, 13, 17, 19, 23, 29...</em>
+    </div>
+    <div class="definition">
+      <strong>Composite Number:</strong> A whole number greater than 1 that has MORE than two factors.<br>
+      Examples: <em>4, 6, 8, 9, 10, 12...</em>
+    </div>
+    <div class="remember">
+      <strong>⚠️ Special note:</strong> The number <strong>1</strong> is NEITHER prime nor composite — it has only ONE factor (itself). The number <strong>2</strong> is the ONLY even prime number.
+    </div>
+  </div>
+
+  <!-- Prime Factorisation -->
+  <div class="card">
+    <h3>🌳 Prime Factorisation</h3>
+    <p>Writing a number as a product of <strong>prime factors only</strong>. Use a factor tree or repeated division.</p>
+    <div class="example-box" style="margin-top:12px;">
+      <strong>✏️ Example: Prime factorisation of 60</strong><br>
+      60 = 2 × 30 = 2 × 2 × 15 = 2 × 2 × 3 × 5<br>
+      <strong>= 2² × 3 × 5</strong>
+    </div>
+    <div class="example-box" style="margin-top:10px;">
+      <strong>✏️ Example: Prime factorisation of 48</strong><br>
+      48 = 2 × 24 = 2 × 2 × 12 = 2 × 2 × 2 × 6 = 2 × 2 × 2 × 2 × 3<br>
+      <strong>= 2⁴ × 3</strong>
+    </div>
+  </div>
+
+  <!-- HCF and LCM -->
+  <div class="card">
+    <h3>📌 HCF and LCM</h3>
+    <div class="definition">
+      <strong>HCF (Highest Common Factor):</strong> The LARGEST number that divides exactly into all the given numbers.
+    </div>
+    <div class="definition">
+      <strong>LCM (Lowest Common Multiple):</strong> The SMALLEST number that is a multiple of all the given numbers.
+    </div>
+    <div class="example-box" style="margin-top:12px;">
+      <strong>✏️ Finding HCF and LCM of 12 and 18:</strong><br><br>
+      Factors of 12: 1, 2, 3, <strong>4, 6, 12</strong><br>
+      Factors of 18: 1, 2, 3, <strong>6, 9, 18</strong><br>
+      <strong>HCF(12, 18) = 6</strong><br><br>
+      Multiples of 12: 12, 24, <strong>36</strong>, 48...<br>
+      Multiples of 18: 18, <strong>36</strong>, 54...<br>
+      <strong>LCM(12, 18) = 36</strong>
+    </div>
+    <div class="remember" style="margin-top:12px;">
+      <strong>✅ Quick tip:</strong> For two numbers, HCF × LCM = product of the two numbers.<br>
+      Check: 6 × 36 = 216 = 12 × 18 ✓
+    </div>
+  </div>
+
+  <!-- Common Mistakes -->
+  <div class="card">
+    <h3>⚠️ Common Mistakes</h3>
+    <div class="mistake">
+      <strong>✗ Mistake:</strong> Saying "1 is a prime number because it's only divisible by 1 and itself."<br>
+      <strong>✓ Correct:</strong> 1 is NOT prime. A prime must have <em>exactly two</em> different factors. 1 has only one factor.
+    </div>
+    <div class="mistake">
+      <strong>✗ Mistake:</strong> Leaving factors in prime factorisation that are not prime (e.g. 2² × 6 for 24).<br>
+      <strong>✓ Correct:</strong> Keep breaking down until ALL factors are prime: 24 = 2³ × 3.
+    </div>
+    <div class="mistake">
+      <strong>✗ Mistake:</strong> Confusing HCF and LCM — choosing the largest number for LCM or smallest for HCF.<br>
+      <strong>✓ Remember:</strong> HCF = Highest (largest) <em>factor</em> they share. LCM = Lowest (smallest) <em>multiple</em> they share.
+    </div>
+  </div>
+
+  <div class="quick-quiz">
+    <h4>⚡ Quick Check — Chapter 4</h4>
+    <ol>
+      <li>Write the prime factorisation of 72.</li>
+      <li>Find the HCF of 24 and 36.</li>
+      <li>Find the LCM of 6 and 10.</li>
+    </ol>
+    <details><summary>👁 Show Answers</summary>
+      <div class="answers">
+        1. 72 = 2³ × 3².<br>
+        2. Factors of 24: 1,2,3,4,6,8,12,24. Factors of 36: 1,2,3,4,6,9,12,18,36. HCF = 12.<br>
+        3. Multiples of 6: 6,12,18,24,30. Multiples of 10: 10,20,30. LCM = 30.
+      </div>
+    </details>
+  </div>
+</div>
+
+<hr class="chapter-divider">
+
+<!-- ═══════════════════════════════════════════════
+     CHAPTER 5 — INDICES
+═══════════════════════════════════════════════ -->
+<div class="chapter-block" id="ch05">
+  <div class="chapter-title">
+    <div class="ch-icon">⬆️</div>
+    <div>
+      <h2>Chapter 5 — Indices</h2>
+      <p>Index Notation &amp; Laws of Indices</p>
+    </div>
+  </div>
+
+  <!-- Key Definitions -->
+  <div class="card">
+    <h3>🔑 Index Notation</h3>
+    <div class="definition">
+      <strong>aⁿ</strong> means multiply <em>a</em> by itself <em>n</em> times.<br>
+      <em>a</em> is called the <strong>base</strong> and <em>n</em> is called the <strong>index</strong> (or power or exponent).
+    </div>
+    <div class="example-box" style="margin-top:10px;">
+      2⁵ = 2 × 2 × 2 × 2 × 2 = <strong>32</strong><br>
+      3⁴ = 3 × 3 × 3 × 3 = <strong>81</strong><br>
+      5² = 5 × 5 = <strong>25</strong>
+    </div>
+  </div>
+
+  <!-- Laws of Indices -->
+  <div class="card">
+    <h3>📐 Laws of Indices</h3>
+    <div class="formula">
+      <span>Law 1 (Multiplication):</span> aᵐ × aⁿ = a^(m+n)<br>
+      → Same base: <strong>ADD</strong> the indices
+    </div>
+    <div class="formula" style="margin-top:8px;">
+      <span>Law 2 (Division):</span> aᵐ ÷ aⁿ = a^(m−n)<br>
+      → Same base: <strong>SUBTRACT</strong> the indices
+    </div>
+    <div class="formula" style="margin-top:8px;">
+      <span>Law 3 (Power of a Power):</span> (aᵐ)ⁿ = a^(m×n)<br>
+      → <strong>MULTIPLY</strong> the indices
+    </div>
+    <div class="formula" style="margin-top:8px;">
+      <span>Law 4 (Zero Index):</span> a⁰ = 1 (for any a ≠ 0)<br>
+      → Any number to the power 0 = <strong>1</strong>
+    </div>
+    <div class="formula" style="margin-top:8px;">
+      <span>Law 5 (Index of 1):</span> a¹ = a<br>
+      → Any number to the power 1 = <strong>itself</strong>
+    </div>
+  </div>
+
+  <!-- Worked Examples -->
+  <div class="card">
+    <h3>✏️ Worked Examples</h3>
+    <div class="example-box">
+      <strong>Example 1:</strong> Simplify 2³ × 2⁴<br>
+      Same base (2), so ADD indices: 2^(3+4) = <strong>2⁷</strong>
+    </div>
+    <div class="example-box" style="margin-top:10px;">
+      <strong>Example 2:</strong> Simplify 5⁶ ÷ 5²<br>
+      Same base (5), so SUBTRACT indices: 5^(6−2) = <strong>5⁴</strong>
+    </div>
+    <div class="example-box" style="margin-top:10px;">
+      <strong>Example 3:</strong> Simplify (3²)⁴<br>
+      Power of a power — MULTIPLY indices: 3^(2×4) = <strong>3⁸</strong>
+    </div>
+    <div class="example-box" style="margin-top:10px;">
+      <strong>Example 4:</strong> Evaluate 7⁰ + 2¹ + 3²<br>
+      7⁰ = 1, &nbsp; 2¹ = 2, &nbsp; 3² = 9<br>
+      1 + 2 + 9 = <strong>12</strong>
+    </div>
+  </div>
+
+  <!-- Common Mistakes -->
+  <div class="card">
+    <h3>⚠️ Common Mistakes</h3>
+    <div class="mistake">
+      <strong>✗ Mistake:</strong> Multiplying bases AND indices: 2³ × 2⁴ = 4⁷ ✗<br>
+      <strong>✓ Correct:</strong> Keep the same base, ADD the indices: 2^(3+4) = 2⁷ ✓
+    </div>
+    <div class="mistake">
+      <strong>✗ Mistake:</strong> Thinking a⁰ = 0.<br>
+      <strong>✓ Correct:</strong> a⁰ = 1 (for any non-zero a). This is a law — memorise it!
+    </div>
+    <div class="mistake">
+      <strong>✗ Mistake:</strong> Applying laws when bases are DIFFERENT: 2³ × 3² ≠ 6⁵<br>
+      <strong>✓ Correct:</strong> The laws only apply when the <em>base is the same</em>. 2³ × 3² = 8 × 9 = 72.
+    </div>
+  </div>
+
+  <div class="quick-quiz">
+    <h4>⚡ Quick Check — Chapter 5</h4>
+    <ol>
+      <li>Simplify: 4³ × 4²</li>
+      <li>Simplify: 6⁸ ÷ 6³</li>
+      <li>What is the value of 5⁰ + 10¹?</li>
+    </ol>
+    <details><summary>👁 Show Answers</summary>
+      <div class="answers">
+        1. 4^(3+2) = 4⁵.<br>
+        2. 6^(8−3) = 6⁵.<br>
+        3. 5⁰ = 1, 10¹ = 10 → 1 + 10 = 11.
+      </div>
+    </details>
+  </div>
+</div>
+
+<hr class="chapter-divider">
+
+<!-- BOTTOM ACTION BUTTONS -->
+<div style="background:white; border-radius:12px; padding:24px; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,0.08);">
+  <p style="font-size:16px; font-weight:bold; color:#1F3864; margin-bottom:16px;">🎯 Ready to test yourself?</p>
+  <a class="nav-btn green" href="../Timed_Exams/Term1_Maths_TimedPaper.html">⏱️ Take the First Term Test Paper</a>
+  <br><br>
+  <p style="font-size:13px; color:#777;">Review each chapter's individual notes and timed papers for more targeted practice.</p>
+  <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:14px;">
+    <a class="nav-btn" href="Ch01_Symmetry_Notes.html" style="font-size:12px; padding:8px 16px;">Ch01 Notes</a>
+    <a class="nav-btn" href="Ch02_Sets_Notes.html" style="font-size:12px; padding:8px 16px;">Ch02 Notes</a>
+    <a class="nav-btn" href="Ch03_Operations_Notes.html" style="font-size:12px; padding:8px 16px;">Ch03 Notes</a>
+    <a class="nav-btn" href="Ch04_Factors_Multiples_Notes.html" style="font-size:12px; padding:8px 16px;">Ch04 Notes</a>
+    <a class="nav-btn" href="Ch05_Indices_Notes.html" style="font-size:12px; padding:8px 16px;">Ch05 Notes</a>
+  </div>
+</div>
+
+</div><!-- end container -->
+</body>
+</html>

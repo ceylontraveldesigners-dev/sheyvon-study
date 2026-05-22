@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Term 1 Maths — First Term Test Paper | Sheyvon</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
+
+  /* START SCREEN */
+  #start-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .start-card { background: white; border-radius: 16px; padding: 40px; max-width: 600px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.12); text-align: center; }
+  .start-card h1 { font-size: 24px; color: #1F3864; margin-bottom: 6px; }
+  .start-card p  { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 20px; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+  .info-box { background: #F0F4FF; border-radius: 10px; padding: 14px; }
+  .info-box .val { font-size: 22px; font-weight: bold; color: #1F3864; }
+  .info-box .lbl { font-size: 11px; color: #777; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .start-btn { background: linear-gradient(135deg, #1F3864, #2E75B6); color: white; border: none; border-radius: 10px; padding: 16px 40px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+  .start-btn:hover { opacity: 0.9; }
+  .warning-box { background: #FFF9E6; border-left: 4px solid #FFC000; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #7F4F00; text-align: left; margin-bottom: 16px; }
+  .chapters-covered { background: #EBF3FB; border-radius: 10px; padding: 14px 18px; margin: 16px 0; text-align: left; }
+  .chapters-covered h3 { font-size: 13px; color: #1F3864; font-weight: bold; margin-bottom: 8px; }
+  .chapters-covered ul { list-style: none; padding: 0; }
+  .chapters-covered li { font-size: 13px; color: #333; padding: 3px 0; }
+  .chapters-covered li::before { content: "✅ "; }
+
+  /* EXAM SCREEN */
+  #exam-screen { display: none; }
+  .exam-header { background: linear-gradient(135deg, #1F3864, #2E75B6); color: white; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .exam-title { font-size: 15px; font-weight: bold; }
+  .exam-meta { font-size: 11px; opacity: 0.8; }
+  .timer-box { background: rgba(255,255,255,0.15); border-radius: 10px; padding: 8px 18px; text-align: center; min-width: 100px; }
+  .timer-num { font-size: 26px; font-weight: bold; font-family: monospace; }
+  .timer-lbl { font-size: 10px; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+  .timer-box.warning { background: rgba(255,200,0,0.3); animation: pulse 1s infinite; }
+  .timer-box.danger  { background: rgba(255,60,60,0.4); animation: pulse 0.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
+  .container { max-width: 780px; margin: 24px auto; padding: 0 20px 60px; }
+  .marks-bar { background: white; border-radius: 10px; padding: 14px 20px; margin-bottom: 20px; font-size: 13px; color: #555; box-shadow: 0 1px 6px rgba(0,0,0,0.06); display:flex; gap:14px; flex-wrap:wrap; }
+  .marks-bar strong { color: #1F3864; }
+
+  .q-card { background: white; border-radius: 12px; padding: 22px 24px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border-left: 4px solid #BDD7EE; }
+  .q-num { font-size: 11px; font-weight: bold; color: #2E75B6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .q-marks { float: right; background: #EBF3FB; color: #2E75B6; border-radius: 6px; padding: 2px 10px; font-size: 12px; font-weight: bold; }
+  .q-text { font-size: 15px; font-weight: bold; color: #1F3864; line-height: 1.5; margin-bottom: 16px; }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn { background: #F7F9FF; border: 2px solid #BDD7EE; border-radius: 8px; padding: 12px 16px; text-align: left; font-size: 14px; cursor: pointer; transition: all 0.2s; display:flex; align-items:center; gap:10px; }
+  .option-btn:hover { background: #EBF3FB; border-color: #2E75B6; }
+  .option-btn.selected { background: #2E75B6; border-color: #2E75B6; color: white; }
+  .option-btn.selected .option-label { background: white; color: #2E75B6; }
+  .option-label { width: 26px; height: 26px; border-radius: 50%; background: #2E75B6; color: white; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; }
+  .option-btn.correct { background: #C6EFCE; border-color: #70AD47; color: #375623; }
+  .option-btn.wrong   { background: #FFE0E0; border-color: #FF6B6B; color: #9C0006; }
+  .option-btn.correct .option-label { background: #375623; color: white; }
+  .option-btn.wrong   .option-label { background: #9C0006; color: white; }
+  .tf-group { display: flex; gap: 12px; margin-top: 8px; }
+  .tf-btn { flex: 1; padding: 12px; border: 2px solid #BDD7EE; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; background: #F7F9FF; transition: all 0.2s; }
+  .tf-btn:hover { background: #EBF3FB; }
+  .tf-btn.selected { background: #2E75B6; color: white; border-color: #2E75B6; }
+  .tf-btn.correct  { background: #C6EFCE; border-color: #70AD47; color: #375623; }
+  .tf-btn.wrong    { background: #FFE0E0; border-color: #FF6B6B; color: #9C0006; }
+  .fill-input { border: 2px solid #BDD7EE; border-radius: 8px; padding: 10px 14px; font-size: 15px; width: 220px; outline: none; font-family: Arial; display:block; margin-top:8px; }
+  .fill-input:focus { border-color: #2E75B6; }
+  .fill-input.correct { border-color: #70AD47; background: #EBF9E6; color: #375623; }
+  .fill-input.wrong   { border-color: #FF6B6B; background: #FFF0F0; color: #9C0006; }
+
+  .section-header { background: #1F3864; color: white; border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: bold; margin: 24px 0 14px; }
+  .chapter-sub { background: #EBF3FB; border-left: 4px solid #2E75B6; border-radius: 6px; padding: 8px 14px; font-size: 12px; font-weight: bold; color: #1F3864; margin: 16px 0 10px; }
+
+  .submit-btn { width: 100%; background: #9C0006; color: white; border: none; border-radius: 10px; padding: 16px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 16px; }
+  .submit-btn:hover { background: #7F0005; }
+
+  /* RESULTS SCREEN */
+  #results-screen { display: none; }
+  .results-header { background: linear-gradient(135deg, #1F3864, #2E75B6); color: white; padding: 30px 32px; text-align: center; }
+  .results-header h1 { font-size: 20px; margin-bottom: 4px; }
+  .score-circle { width: 140px; height: 140px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px auto; font-size: 36px; font-weight: bold; color: white; }
+  .score-circle.pass { background: linear-gradient(135deg, #375623, #70AD47); }
+  .score-circle.warn { background: linear-gradient(135deg, #7F4F00, #FFC000); }
+  .score-circle.fail { background: linear-gradient(135deg, #9C0006, #FF6B6B); }
+  .score-circle small { font-size: 13px; font-weight: normal; }
+  .results-body { max-width: 760px; margin: 0 auto; padding: 24px 20px 60px; }
+  .results-summary { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+  .results-summary h2 { font-size: 16px; color: #1F3864; margin-bottom: 14px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .stat-box { background: #F0F4FF; border-radius: 10px; padding: 14px; text-align: center; }
+  .stat-box .val { font-size: 24px; font-weight: bold; color: #1F3864; }
+  .stat-box .lbl { font-size: 11px; color: #777; margin-top: 2px; }
+  .chapter-score { background: white; border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; display:flex; justify-content: space-between; align-items:center; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+  .chapter-score .ch-name { font-size: 14px; font-weight: bold; color: #1F3864; }
+  .chapter-score .ch-sc { font-size: 14px; font-weight: bold; }
+  .q-result { background: white; border-radius: 10px; padding: 16px 18px; margin-bottom: 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 14px; }
+  .q-result .icon { font-size: 20px; flex-shrink: 0; }
+  .q-result .q-info { flex: 1; }
+  .q-result .q-info p { font-size: 13px; color: #555; line-height: 1.5; }
+  .q-result .q-info strong { color: #1F3864; font-size: 14px; }
+  .q-result.correct-res { border-left: 4px solid #70AD47; }
+  .q-result.wrong-res   { border-left: 4px solid #FF6B6B; }
+  .action-panel { background: white; border-radius: 12px; padding: 20px 24px; margin-top: 20px; }
+  .action-panel h2 { font-size: 16px; color: #1F3864; margin-bottom: 12px; }
+  .action-btn { display: inline-block; background: #1F3864; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: bold; margin: 5px; }
+  .action-btn.green { background: #375623; }
+  .action-btn.orange { background: #7F4F00; }
+  .parent-box { background: #FFF9E6; border: 1px solid #FFC000; border-radius: 10px; padding: 16px 20px; margin-top: 20px; font-size: 13px; line-height: 1.7; }
+  .parent-box h3 { color: #7F4F00; font-size: 14px; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ START SCREEN ═══════════ -->
+<div id="start-screen">
+  <div class="start-card">
+    <div style="font-size:52px; margin-bottom:12px;">📝</div>
+    <h1>First Term Test Paper</h1>
+    <p>Maths Grade 7 &nbsp;|&nbsp; Sri Lankan Syllabus &nbsp;|&nbsp; Sheyvon Warnapura</p>
+
+    <div class="chapters-covered">
+      <h3>📚 Chapters Covered in This Paper:</h3>
+      <ul>
+        <li>Chapter 1 — Symmetry</li>
+        <li>Chapter 2 — Sets</li>
+        <li>Chapter 3 — Operations on Whole Numbers</li>
+        <li>Chapter 4 — Factors &amp; Multiples</li>
+        <li>Chapter 5 — Indices</li>
+      </ul>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-box"><div class="val">30</div><div class="lbl">Objective Marks</div></div>
+      <div class="info-box"><div class="val">45</div><div class="lbl">Minutes</div></div>
+      <div class="info-box"><div class="val">30</div><div class="lbl">Questions</div></div>
+      <div class="info-box"><div class="val">+10</div><div class="lbl">Bonus Marks</div></div>
+    </div>
+
+    <div class="warning-box">
+      ⚠️ <strong>Important:</strong> Once you click "Start Exam", the 45-minute timer begins. The paper auto-submits when time runs out. Do not close this tab.
+    </div>
+
+    <p style="font-size:13px; color:#555; margin-bottom:16px;">Make sure you have revised the <strong>Term 1 Short Notes</strong> before attempting this paper.</p>
+
+    <button class="start-btn" onclick="startExam()">▶ Start Exam — 45 Minutes</button>
+  </div>
+</div>
+
+<!-- ═══════════ EXAM SCREEN ═══════════ -->
+<div id="exam-screen">
+  <div class="exam-header">
+    <div>
+      <div class="exam-title">📝 First Term Test Paper — Maths Grade 7</div>
+      <div class="exam-meta">Ch01–Ch05 &nbsp;|&nbsp; 30 objective marks + 10 bonus &nbsp;|&nbsp; Sheyvon Warnapura</div>
+    </div>
+    <div class="timer-box" id="timer-box">
+      <div class="timer-num" id="timer-display">45:00</div>
+      <div class="timer-lbl">Time Remaining</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="marks-bar">
+      <span><strong>Section A:</strong> Multiple Choice — 20 × 1 mark = 20 marks</span>
+      <span><strong>Section B:</strong> True / False — 5 × 1 mark = 5 marks</span>
+      <span><strong>Section C:</strong> Fill in the Blank — 5 × 1 mark = 5 marks</span>
+      <span><strong>Bonus:</strong> Short Answer — 2 × 5 marks = 10 marks</span>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SECTION A — MULTIPLE CHOICE (20 marks)
+    ══════════════════════════════════════ -->
+    <div class="section-header">Section A — Multiple Choice &nbsp;(20 marks)</div>
+
+    <!-- Ch01: Symmetry -->
+    <div class="chapter-sub">📐 Chapter 1: Symmetry — Questions 1–4</div>
+
+    <div class="q-card" id="q1">
+      <div class="q-num">Question 1 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">How many axes of symmetry does a rectangle have?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q1','A',false)"><span class="option-label">A</span>1</button>
+        <button class="option-btn" onclick="selectMCQ('q1','B',true)"><span class="option-label">B</span>2</button>
+        <button class="option-btn" onclick="selectMCQ('q1','C',false)"><span class="option-label">C</span>3</button>
+        <button class="option-btn" onclick="selectMCQ('q1','D',false)"><span class="option-label">D</span>4</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q2">
+      <div class="q-num">Question 2 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A regular pentagon has 5 equal sides. How many axes of symmetry does it have?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q2','A',false)"><span class="option-label">A</span>3</button>
+        <button class="option-btn" onclick="selectMCQ('q2','B',false)"><span class="option-label">B</span>4</button>
+        <button class="option-btn" onclick="selectMCQ('q2','C',true)"><span class="option-label">C</span>5</button>
+        <button class="option-btn" onclick="selectMCQ('q2','D',false)"><span class="option-label">D</span>10</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q3">
+      <div class="q-num">Question 3 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The capital letter "H" — how many axes of symmetry does it have?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q3','A',false)"><span class="option-label">A</span>0</button>
+        <button class="option-btn" onclick="selectMCQ('q3','B',false)"><span class="option-label">B</span>1</button>
+        <button class="option-btn" onclick="selectMCQ('q3','C',true)"><span class="option-label">C</span>2</button>
+        <button class="option-btn" onclick="selectMCQ('q3','D',false)"><span class="option-label">D</span>4</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q4">
+      <div class="q-num">Question 4 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A point P is 4 cm to the left of an axis of symmetry. Where is its mirror image P'?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q4','A',false)"><span class="option-label">A</span>4 cm above P</button>
+        <button class="option-btn" onclick="selectMCQ('q4','B',true)"><span class="option-label">B</span>4 cm to the right of the axis of symmetry</button>
+        <button class="option-btn" onclick="selectMCQ('q4','C',false)"><span class="option-label">C</span>On the axis of symmetry</button>
+        <button class="option-btn" onclick="selectMCQ('q4','D',false)"><span class="option-label">D</span>8 cm to the left of P</button>
+      </div>
+    </div>
+
+    <!-- Ch02: Sets -->
+    <div class="chapter-sub">🔢 Chapter 2: Sets — Questions 5–8</div>
+
+    <div class="q-card" id="q5">
+      <div class="q-num">Question 5 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A = {1, 2, 3, 4} and B = {3, 4, 5, 6}. What is A ∩ B?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q5','A',false)"><span class="option-label">A</span>{1, 2, 5, 6}</button>
+        <button class="option-btn" onclick="selectMCQ('q5','B',true)"><span class="option-label">B</span>{3, 4}</button>
+        <button class="option-btn" onclick="selectMCQ('q5','C',false)"><span class="option-label">C</span>{1, 2, 3, 4, 5, 6}</button>
+        <button class="option-btn" onclick="selectMCQ('q5','D',false)"><span class="option-label">D</span>{ } (empty set)</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q6">
+      <div class="q-num">Question 6 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">ξ = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10} and A = {2, 4, 6, 8, 10}. What is A' (the complement of A)?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q6','A',true)"><span class="option-label">A</span>{1, 3, 5, 7, 9}</button>
+        <button class="option-btn" onclick="selectMCQ('q6','B',false)"><span class="option-label">B</span>{2, 4, 6, 8, 10}</button>
+        <button class="option-btn" onclick="selectMCQ('q6','C',false)"><span class="option-label">C</span>{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}</button>
+        <button class="option-btn" onclick="selectMCQ('q6','D',false)"><span class="option-label">D</span>{ } (empty set)</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q7">
+      <div class="q-num">Question 7 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Which of the following is an empty set?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q7','A',false)"><span class="option-label">A</span>{0}</button>
+        <button class="option-btn" onclick="selectMCQ('q7','B',true)"><span class="option-label">B</span>{whole numbers greater than 3 and less than 4}</button>
+        <button class="option-btn" onclick="selectMCQ('q7','C',false)"><span class="option-label">C</span>{even numbers less than 10}</button>
+        <button class="option-btn" onclick="selectMCQ('q7','D',false)"><span class="option-label">D</span>{multiples of 5 less than 50}</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q8">
+      <div class="q-num">Question 8 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A = {vowels in the word "EDUCATION"}. What is n(A)?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q8','A',false)"><span class="option-label">A</span>3</button>
+        <button class="option-btn" onclick="selectMCQ('q8','B',false)"><span class="option-label">B</span>4</button>
+        <button class="option-btn" onclick="selectMCQ('q8','C',true)"><span class="option-label">C</span>5</button>
+        <button class="option-btn" onclick="selectMCQ('q8','D',false)"><span class="option-label">D</span>9</button>
+      </div>
+    </div>
+
+    <!-- Ch03: Operations -->
+    <div class="chapter-sub">➕ Chapter 3: Operations on Whole Numbers — Questions 9–12</div>
+
+    <div class="q-card" id="q9">
+      <div class="q-num">Question 9 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Calculate: 8 + 6 ÷ 2</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q9','A',false)"><span class="option-label">A</span>7</button>
+        <button class="option-btn" onclick="selectMCQ('q9','B',true)"><span class="option-label">B</span>11</button>
+        <button class="option-btn" onclick="selectMCQ('q9','C',false)"><span class="option-label">C</span>14</button>
+        <button class="option-btn" onclick="selectMCQ('q9','D',false)"><span class="option-label">D</span>3</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q10">
+      <div class="q-num">Question 10 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Calculate: (15 – 3) × 2 + 4</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q10','A',false)"><span class="option-label">A</span>20</button>
+        <button class="option-btn" onclick="selectMCQ('q10','B',false)"><span class="option-label">B</span>24</button>
+        <button class="option-btn" onclick="selectMCQ('q10','C',true)"><span class="option-label">C</span>28</button>
+        <button class="option-btn" onclick="selectMCQ('q10','D',false)"><span class="option-label">D</span>32</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q11">
+      <div class="q-num">Question 11 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">In the expression 24 ÷ 4 × 3, which operation is performed first?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q11','A',false)"><span class="option-label">A</span>Multiplication (×)</button>
+        <button class="option-btn" onclick="selectMCQ('q11','B',true)"><span class="option-label">B</span>Division (÷) — it appears first, left to right</button>
+        <button class="option-btn" onclick="selectMCQ('q11','C',false)"><span class="option-label">C</span>Neither — both have the same priority so the answer is the same either way</button>
+        <button class="option-btn" onclick="selectMCQ('q11','D',false)"><span class="option-label">D</span>Addition (+)</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q12">
+      <div class="q-num">Question 12 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Calculate: 3² + 4 × (7 – 3)</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q12','A',true)"><span class="option-label">A</span>25</button>
+        <button class="option-btn" onclick="selectMCQ('q12','B',false)"><span class="option-label">B</span>37</button>
+        <button class="option-btn" onclick="selectMCQ('q12','C',false)"><span class="option-label">C</span>52</button>
+        <button class="option-btn" onclick="selectMCQ('q12','D',false)"><span class="option-label">D</span>13</button>
+      </div>
+    </div>
+
+    <!-- Ch04: Factors & Multiples -->
+    <div class="chapter-sub">🔢 Chapter 4: Factors &amp; Multiples — Questions 13–16</div>
+
+    <div class="q-card" id="q13">
+      <div class="q-num">Question 13 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">What is the prime factorisation of 48?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q13','A',false)"><span class="option-label">A</span>2³ × 6</button>
+        <button class="option-btn" onclick="selectMCQ('q13','B',true)"><span class="option-label">B</span>2⁴ × 3</button>
+        <button class="option-btn" onclick="selectMCQ('q13','C',false)"><span class="option-label">C</span>2² × 12</button>
+        <button class="option-btn" onclick="selectMCQ('q13','D',false)"><span class="option-label">D</span>3 × 16</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q14">
+      <div class="q-num">Question 14 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">What is the HCF (Highest Common Factor) of 18 and 30?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q14','A',false)"><span class="option-label">A</span>3</button>
+        <button class="option-btn" onclick="selectMCQ('q14','B',true)"><span class="option-label">B</span>6</button>
+        <button class="option-btn" onclick="selectMCQ('q14','C',false)"><span class="option-label">C</span>9</button>
+        <button class="option-btn" onclick="selectMCQ('q14','D',false)"><span class="option-label">D</span>90</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q15">
+      <div class="q-num">Question 15 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">What is the LCM (Lowest Common Multiple) of 8 and 12?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q15','A',false)"><span class="option-label">A</span>4</button>
+        <button class="option-btn" onclick="selectMCQ('q15','B',false)"><span class="option-label">B</span>16</button>
+        <button class="option-btn" onclick="selectMCQ('q15','C',true)"><span class="option-label">C</span>24</button>
+        <button class="option-btn" onclick="selectMCQ('q15','D',false)"><span class="option-label">D</span>96</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q16">
+      <div class="q-num">Question 16 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">How many prime numbers are there between 1 and 20 (not including 1 or 20)?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q16','A',false)"><span class="option-label">A</span>6</button>
+        <button class="option-btn" onclick="selectMCQ('q16','B',false)"><span class="option-label">B</span>7</button>
+        <button class="option-btn" onclick="selectMCQ('q16','C',true)"><span class="option-label">C</span>8</button>
+        <button class="option-btn" onclick="selectMCQ('q16','D',false)"><span class="option-label">D</span>9</button>
+      </div>
+    </div>
+
+    <!-- Ch05: Indices -->
+    <div class="chapter-sub">🔢 Chapter 5: Indices — Questions 17–20</div>
+
+    <div class="q-card" id="q17">
+      <div class="q-num">Question 17 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">What is the value of 3⁴?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q17','A',false)"><span class="option-label">A</span>12</button>
+        <button class="option-btn" onclick="selectMCQ('q17','B',false)"><span class="option-label">B</span>27</button>
+        <button class="option-btn" onclick="selectMCQ('q17','C',false)"><span class="option-label">C</span>64</button>
+        <button class="option-btn" onclick="selectMCQ('q17','D',true)"><span class="option-label">D</span>81</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q18">
+      <div class="q-num">Question 18 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Simplify: 5³ × 5²</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q18','A',true)"><span class="option-label">A</span>5⁵</button>
+        <button class="option-btn" onclick="selectMCQ('q18','B',false)"><span class="option-label">B</span>5⁶</button>
+        <button class="option-btn" onclick="selectMCQ('q18','C',false)"><span class="option-label">C</span>25⁵</button>
+        <button class="option-btn" onclick="selectMCQ('q18','D',false)"><span class="option-label">D</span>10³</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q19">
+      <div class="q-num">Question 19 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Simplify: (4²)³</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q19','A',false)"><span class="option-label">A</span>4⁵</button>
+        <button class="option-btn" onclick="selectMCQ('q19','B',true)"><span class="option-label">B</span>4⁶</button>
+        <button class="option-btn" onclick="selectMCQ('q19','C',false)"><span class="option-label">C</span>4⁸</button>
+        <button class="option-btn" onclick="selectMCQ('q19','D',false)"><span class="option-label">D</span>8⁶</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q20">
+      <div class="q-num">Question 20 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">What is the value of 8⁰ + 3¹?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q20','A',false)"><span class="option-label">A</span>3</button>
+        <button class="option-btn" onclick="selectMCQ('q20','B',true)"><span class="option-label">B</span>4</button>
+        <button class="option-btn" onclick="selectMCQ('q20','C',false)"><span class="option-label">C</span>9</button>
+        <button class="option-btn" onclick="selectMCQ('q20','D',false)"><span class="option-label">D</span>11</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SECTION B — TRUE OR FALSE (5 marks)
+    ══════════════════════════════════════ -->
+    <div class="section-header">Section B — True or False &nbsp;(5 marks)</div>
+
+    <div class="q-card" id="q21">
+      <div class="q-num">Question 21 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A scalene triangle (all sides of different lengths) has no axes of symmetry.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q21','T',true)">✅ True</button>
+        <button class="tf-btn" onclick="selectTF('q21','F',false)">❌ False</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q22">
+      <div class="q-num">Question 22 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The intersection A ∩ B gives all elements that belong to BOTH set A and set B.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q22','T',true)">✅ True</button>
+        <button class="tf-btn" onclick="selectTF('q22','F',false)">❌ False</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q23">
+      <div class="q-num">Question 23 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">In BODMAS, multiplication is always performed before division, regardless of their position in the expression.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q23','T',false)">✅ True</button>
+        <button class="tf-btn" onclick="selectTF('q23','F',true)">❌ False</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q24">
+      <div class="q-num">Question 24 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The number 1 is considered a prime number.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q24','T',false)">✅ True</button>
+        <button class="tf-btn" onclick="selectTF('q24','F',true)">❌ False</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q25">
+      <div class="q-num">Question 25 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">3⁴ ÷ 3² = 3²</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q25','T',true)">✅ True</button>
+        <button class="tf-btn" onclick="selectTF('q25','F',false)">❌ False</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SECTION C — FILL IN THE BLANK (5 marks)
+    ══════════════════════════════════════ -->
+    <div class="section-header">Section C — Fill in the Blank &nbsp;(5 marks)</div>
+
+    <div class="q-card" id="q26">
+      <div class="q-num">Question 26 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">An equilateral triangle has _______ axes of symmetry.</div>
+      <input class="fill-input" id="q26-input" type="text" placeholder="Enter a number...">
+    </div>
+
+    <div class="q-card" id="q27">
+      <div class="q-num">Question 27 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">4² × 4³ = 4^_______</div>
+      <input class="fill-input" id="q27-input" type="text" placeholder="Enter the index...">
+    </div>
+
+    <div class="q-card" id="q28">
+      <div class="q-num">Question 28 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The HCF of 12 and 20 is _______.</div>
+      <input class="fill-input" id="q28-input" type="text" placeholder="Enter a number...">
+    </div>
+
+    <div class="q-card" id="q29">
+      <div class="q-num">Question 29 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Using BODMAS: 10 + 4 × 3 – 8 = _______</div>
+      <input class="fill-input" id="q29-input" type="text" placeholder="Enter the answer...">
+    </div>
+
+    <div class="q-card" id="q30">
+      <div class="q-num">Question 30 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">6² = _______</div>
+      <input class="fill-input" id="q30-input" type="text" placeholder="Enter the value...">
+    </div>
+
+    <!-- ══════════════════════════════════════
+         BONUS — SHORT ANSWER (10 marks)
+    ══════════════════════════════════════ -->
+    <div class="section-header" style="background:#7F4F00;">Bonus Section — Short Answer &nbsp;(10 marks) — Marked by parent / teacher</div>
+
+    <div class="q-card" id="q31" style="border-left-color:#FFC000;">
+      <div class="q-num">Bonus Question 1 <span class="q-marks">5 marks</span></div>
+      <div class="q-text">In a class of 30 students, let A = {students who play cricket} and B = {students who play football}. n(A) = 18, n(B) = 15, and n(A ∩ B) = 7.<br><br>
+      (a) Find n(A ∪ B) — how many students play at least one sport. <em>(2 marks)</em><br>
+      (b) How many students play neither cricket nor football? <em>(1 mark)</em><br>
+      (c) Draw a labelled Venn diagram to show this information. <em>(2 marks)</em></div>
+      <textarea style="width:100%; height:140px; border:2px solid #BDD7EE; border-radius:8px; padding:12px; font-size:14px; font-family:Arial; margin-top:10px; outline:none; resize:vertical;" placeholder="Write your working and answer here..."></textarea>
+    </div>
+
+    <div class="q-card" id="q32" style="border-left-color:#FFC000;">
+      <div class="q-num">Bonus Question 2 <span class="q-marks">5 marks</span></div>
+      <div class="q-text">Using the laws of indices, simplify each of the following. Show all working clearly.<br><br>
+      (a) 2⁴ × 2³ &nbsp;&nbsp;<em>(1 mark)</em><br>
+      (b) 5⁶ ÷ 5² &nbsp;&nbsp;<em>(1 mark)</em><br>
+      (c) (3²)⁴ &nbsp;&nbsp;<em>(1 mark)</em><br>
+      (d) 7⁰ + 2¹ + 3² &nbsp;&nbsp;<em>(2 marks)</em></div>
+      <textarea style="width:100%; height:140px; border:2px solid #BDD7EE; border-radius:8px; padding:12px; font-size:14px; font-family:Arial; margin-top:10px; outline:none; resize:vertical;" placeholder="Write your working and answer here..."></textarea>
+    </div>
+
+    <button class="submit-btn" onclick="submitExam()">📩 Submit Paper &amp; See Results</button>
+  </div>
+</div>
+
+<!-- ═══════════ RESULTS SCREEN ═══════════ -->
+<div id="results-screen">
+  <div class="results-header">
+    <h1>📊 Term 1 Test Results — Maths Grade 7</h1>
+    <p style="font-size:13px; opacity:0.85; margin-top:4px;">Chapters 1–5 | Sheyvon Warnapura</p>
+    <div class="score-circle" id="r-circle">
+      <span id="r-score">?</span>
+      <small>/ 30 (obj.)</small>
+    </div>
+    <p id="r-pct" style="font-size:22px; font-weight:bold;"></p>
+    <p id="r-status" style="font-size:15px; margin-top:6px; opacity:0.9;"></p>
+  </div>
+
+  <div class="results-body">
+    <div class="results-summary">
+      <h2>📈 Score Summary</h2>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="val" id="r-correct">—</div><div class="lbl">Correct (obj.)</div></div>
+        <div class="stat-box"><div class="val" id="r-wrong">—</div><div class="lbl">Wrong (obj.)</div></div>
+        <div class="stat-box"><div class="val" id="r-time">—</div><div class="lbl">Time Taken</div></div>
+        <div class="stat-box"><div class="val">10</div><div class="lbl">Bonus (parent-marked)</div></div>
+      </div>
+    </div>
+
+    <h2 style="color:#1F3864; margin:20px 0 12px;">📊 Score by Chapter</h2>
+    <div id="chapter-scores"></div>
+
+    <h2 style="color:#1F3864; margin:20px 0 12px;">📝 Question-by-Question Review</h2>
+    <div id="results-list"></div>
+
+    <div class="parent-box">
+      <h3>📱 Parent Summary (for WhatsApp / Email)</h3>
+      <div id="parent-msg"></div>
+    </div>
+
+    <div class="action-panel">
+      <h2>⏭️ What Next?</h2>
+      <div id="next-action"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── State ──────────────────────────────────────────────────
+let timerInterval = null;
+let secondsLeft = 45 * 60;
+let startTime = null;
+let submitted = false;
+
+const answers = {};
+
+const correct_answers = {
+  q1:'B', q2:'C', q3:'C', q4:'B',
+  q5:'B', q6:'A', q7:'B', q8:'C',
+  q9:'B', q10:'C', q11:'B', q12:'A',
+  q13:'B', q14:'B', q15:'C', q16:'C',
+  q17:'D', q18:'A', q19:'B', q20:'B',
+  q21:'T', q22:'T', q23:'F', q24:'F', q25:'T'
+};
+
+const fillAnswers = {
+  q26: ['3','three'],
+  q27: ['5','five'],
+  q28: ['4','four'],
+  q29: ['14','fourteen'],
+  q30: ['36','thirty-six']
+};
+
+const q_texts = {
+  q1:'How many axes of symmetry does a rectangle have?',
+  q2:'Axes of symmetry of a regular pentagon?',
+  q3:'How many axes of symmetry does the capital letter "H" have?',
+  q4:'Where is the mirror image of a point 4 cm left of the axis?',
+  q5:'A={1,2,3,4}, B={3,4,5,6} — what is A ∩ B?',
+  q6:'ξ={1–10}, A={even numbers} — what is A\' (complement)?',
+  q7:'Which of the following is an empty set?',
+  q8:'A = {vowels in "EDUCATION"} — what is n(A)?',
+  q9:'Calculate: 8 + 6 ÷ 2',
+  q10:'Calculate: (15 – 3) × 2 + 4',
+  q11:'In 24 ÷ 4 × 3, which operation is performed first?',
+  q12:'Calculate: 3² + 4 × (7 – 3)',
+  q13:'Prime factorisation of 48?',
+  q14:'HCF of 18 and 30?',
+  q15:'LCM of 8 and 12?',
+  q16:'How many prime numbers between 1 and 20?',
+  q17:'Value of 3⁴?',
+  q18:'Simplify: 5³ × 5²',
+  q19:'Simplify: (4²)³',
+  q20:'Value of 8⁰ + 3¹?',
+  q21:'A scalene triangle has no axes of symmetry. True/False?',
+  q22:'A ∩ B gives elements in BOTH sets. True/False?',
+  q23:'Multiplication always before division in BODMAS. True/False?',
+  q24:'The number 1 is a prime number. True/False?',
+  q25:'3⁴ ÷ 3² = 3². True/False?',
+  q26:'Equilateral triangle has __ axes of symmetry.',
+  q27:'4² × 4³ = 4^__',
+  q28:'HCF of 12 and 20 = __',
+  q29:'BODMAS: 10 + 4 × 3 – 8 = __',
+  q30:'6² = __'
+};
+
+const explanations = {
+  q1:'A rectangle has 2 axes: one horizontal and one vertical through the centre.',
+  q2:'A regular polygon has the same number of axes as sides. Pentagon → 5 axes.',
+  q3:'The capital letter H has 2 axes of symmetry: one vertical and one horizontal.',
+  q4:'The mirror image is the same distance (4 cm) on the other side of the axis.',
+  q5:'A ∩ B = elements in BOTH sets = {3, 4}.',
+  q6:'A\' = elements in ξ NOT in A. A has evens, so A\' = {1,3,5,7,9}.',
+  q7:'{0} has one element (zero). Between 3 and 4 there are no whole numbers → empty set.',
+  q8:'EDUCATION vowels: E,U,A,I,O — 5 distinct vowels. n(A) = 5.',
+  q9:'BODMAS: division first: 6÷2=3. Then: 8+3=11.',
+  q10:'Brackets first: 15-3=12. Then: 12×2=24. Then: 24+4=28.',
+  q11:'Division and multiplication have equal priority — work left to right. ÷ comes first.',
+  q12:'B: (7-3)=4. O: 3²=9. M: 4×4=16. A: 9+16=25.',
+  q13:'48 = 2×2×2×2×3 = 2⁴×3. Options A, C, D are not fully prime-factorised.',
+  q14:'Factors of 18: 1,2,3,6,9,18. Factors of 30: 1,2,3,5,6,10,15,30. HCF = 6.',
+  q15:'Multiples of 8: 8,16,24... Multiples of 12: 12,24... LCM = 24.',
+  q16:'Primes between 1 and 20: 2,3,5,7,11,13,17,19 — that is 8 primes.',
+  q17:'3⁴ = 3×3×3×3 = 9×9 = 81.',
+  q18:'Same base → add indices: 5³×5² = 5^(3+2) = 5⁵.',
+  q19:'Power of a power → multiply indices: (4²)³ = 4^(2×3) = 4⁶.',
+  q20:'8⁰=1 (any number to the power 0 = 1). 3¹=3. So 1+3=4.',
+  q21:'TRUE — a scalene triangle (all sides different) has no axis of symmetry.',
+  q22:'TRUE — intersection means elements common to BOTH sets.',
+  q23:'FALSE — multiplication and division have equal priority; work left to right.',
+  q24:'FALSE — 1 is neither prime nor composite. Primes must have exactly 2 factors.',
+  q25:'TRUE — dividing same base: subtract indices: 3^(4-2) = 3².',
+  q26:'An equilateral triangle has 3 axes of symmetry (one through each vertex to opposite midpoint).',
+  q27:'4²×4³ = 4^(2+3) = 4⁵ — the index is 5.',
+  q28:'Factors of 12: 1,2,3,4,6,12. Factors of 20: 1,2,4,5,10,20. HCF = 4.',
+  q29:'BODMAS: multiply first: 4×3=12. Then: 10+12-8=14.',
+  q30:'6²=6×6=36.'
+};
+
+const chapterRanges = {
+  'Ch01: Symmetry':        ['q1','q2','q3','q4'],
+  'Ch02: Sets':            ['q5','q6','q7','q8'],
+  'Ch03: Operations':      ['q9','q10','q11','q12'],
+  'Ch04: Factors & Mult.': ['q13','q14','q15','q16'],
+  'Ch05: Indices':         ['q17','q18','q19','q20']
+};
+
+const mcqQids = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10',
+                 'q11','q12','q13','q14','q15','q16','q17','q18','q19','q20'];
+const tfQids  = ['q21','q22','q23','q24','q25'];
+const fillQids = ['q26','q27','q28','q29','q30'];
+const objQids = [...mcqQids, ...tfQids, ...fillQids];
+
+// ─── Timer ──────────────────────────────────────────────────
+function startExam() {
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('exam-screen').style.display = 'block';
+  startTime = new Date();
+  timerInterval = setInterval(tick, 1000);
+  window.scrollTo(0, 0);
+}
+
+function tick() {
+  secondsLeft--;
+  const m = Math.floor(secondsLeft / 60);
+  const s = secondsLeft % 60;
+  document.getElementById('timer-display').textContent =
+    String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  const box = document.getElementById('timer-box');
+  if (secondsLeft <= 0) {
+    clearInterval(timerInterval);
+    submitExam(true);
+  } else if (secondsLeft <= 180) {
+    box.className = 'timer-box danger';
+  } else if (secondsLeft <= 600) {
+    box.className = 'timer-box warning';
+  }
+}
+
+// ─── MCQ ────────────────────────────────────────────────────
+function selectMCQ(qid, letter, isCorrect) {
+  if (submitted) return;
+  answers[qid] = { selected: letter, correct: isCorrect };
+  const card = document.getElementById(qid);
+  card.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+}
+
+// ─── T/F ────────────────────────────────────────────────────
+function selectTF(qid, letter, isCorrect) {
+  if (submitted) return;
+  answers[qid] = { selected: letter, correct: isCorrect };
+  const card = document.getElementById(qid);
+  card.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+}
+
+// ─── Submit ─────────────────────────────────────────────────
+function submitExam(autoSubmit = false) {
+  if (submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+
+  const elapsed = Math.round((new Date() - startTime) / 1000);
+  const em = Math.floor(elapsed / 60);
+  const es = elapsed % 60;
+  const timeStr = String(em).padStart(2,'0') + ':' + String(es).padStart(2,'0');
+
+  // Score fills
+  fillQids.forEach(qid => {
+    const val = (document.getElementById(qid + '-input').value || '').trim().toLowerCase();
+    answers[qid] = { selected: val, correct: fillAnswers[qid].includes(val) };
+  });
+
+  // ── Highlight MCQ ────────────────────────────────────────
+  mcqQids.forEach(qid => {
+    const card = document.getElementById(qid);
+    card.querySelectorAll('.option-btn').forEach(b => {
+      b.disabled = true;
+      const isCorrectBtn = b.onclick && b.onclick.toString().includes(',true)');
+      if (b.classList.contains('selected')) {
+        b.classList.remove('selected');
+        b.classList.add(answers[qid]?.correct ? 'correct' : 'wrong');
+        b.querySelector('.option-label').style.background = answers[qid]?.correct ? '#375623' : '#9C0006';
+        b.querySelector('.option-label').style.color = 'white';
+      } else if (isCorrectBtn) {
+        b.classList.add('correct');
+        b.querySelector('.option-label').style.background = '#375623';
+        b.querySelector('.option-label').style.color = 'white';
+      }
+    });
+  });
+
+  // ── Highlight T/F ────────────────────────────────────────
+  tfQids.forEach(qid => {
+    const card = document.getElementById(qid);
+    card.querySelectorAll('.tf-btn').forEach(b => {
+      b.disabled = true;
+      if (b.classList.contains('selected')) {
+        b.classList.remove('selected');
+        b.classList.add(answers[qid]?.correct ? 'correct' : 'wrong');
+      } else {
+        const letter = b.onclick.toString().match(/'(T|F)'/)?.[1];
+        if (letter === correct_answers[qid]) b.classList.add('correct');
+      }
+    });
+  });
+
+  // ── Highlight Fill ───────────────────────────────────────
+  fillQids.forEach(qid => {
+    const inp = document.getElementById(qid + '-input');
+    inp.disabled = true;
+    inp.classList.add(answers[qid]?.correct ? 'correct' : 'wrong');
+  });
+
+  // ── Score ────────────────────────────────────────────────
+  let score = 0;
+  objQids.forEach(qid => { if (answers[qid]?.correct) score++; });
+  const pct = Math.round((score / 30) * 100);
+
+  // ── Show Results ─────────────────────────────────────────
+  document.getElementById('exam-screen').style.display = 'none';
+  const rs = document.getElementById('results-screen');
+  rs.style.display = 'block';
+  window.scrollTo(0, 0);
+
+  document.getElementById('r-score').textContent = score;
+  document.getElementById('r-pct').textContent = pct + '%';
+  document.getElementById('r-correct').textContent = score;
+  document.getElementById('r-wrong').textContent = (30 - score);
+  document.getElementById('r-time').textContent = timeStr;
+
+  const circle = document.getElementById('r-circle');
+  const status = document.getElementById('r-status');
+  if (pct >= 80) {
+    circle.className = 'score-circle pass';
+    status.textContent = '🌟 Excellent! Outstanding Term 1 result, Sheyvon!';
+  } else if (pct >= 60) {
+    circle.className = 'score-circle warn';
+    status.textContent = '👍 Good effort — review wrong answers and aim higher!';
+  } else {
+    circle.className = 'score-circle fail';
+    status.textContent = '📖 Needs revision — go back to the Term 1 notes and try again.';
+  }
+
+  // ── Chapter Scores ───────────────────────────────────────
+  const csDiv = document.getElementById('chapter-scores');
+  csDiv.innerHTML = '';
+  Object.entries(chapterRanges).forEach(([name, qids]) => {
+    const chScore = qids.filter(qid => answers[qid]?.correct).length;
+    const chPct = Math.round((chScore / qids.length) * 100);
+    const colour = chPct >= 75 ? '#375623' : chPct >= 50 ? '#7F4F00' : '#9C0006';
+    const div = document.createElement('div');
+    div.className = 'chapter-score';
+    div.innerHTML = `<span class="ch-name">${name}</span><span class="ch-sc" style="color:${colour}">${chScore}/${qids.length} (${chPct}%)</span>`;
+    csDiv.appendChild(div);
+  });
+
+  // ── Q-by-Q Review ────────────────────────────────────────
+  const list = document.getElementById('results-list');
+  list.innerHTML = '';
+  objQids.forEach((qid, i) => {
+    const isCorrect = answers[qid]?.correct;
+    const div = document.createElement('div');
+    div.className = 'q-result ' + (isCorrect ? 'correct-res' : 'wrong-res');
+    div.innerHTML = `
+      <div class="icon">${isCorrect ? '✅' : '❌'}</div>
+      <div class="q-info">
+        <strong>Q${i+1}: ${q_texts[qid]}</strong>
+        <p>${isCorrect ? '✔ Correct' : '✘ Wrong — ' + explanations[qid]}</p>
+      </div>`;
+    list.appendChild(div);
+  });
+
+  // ── Parent Message ───────────────────────────────────────
+  const chSummary = Object.entries(chapterRanges).map(([name, qids]) => {
+    const s = qids.filter(qid => answers[qid]?.correct).length;
+    return `${name}: ${s}/${qids.length}`;
+  }).join(' | ');
+
+  document.getElementById('parent-msg').innerHTML = `
+    <strong>Sheyvon completed:</strong> Maths — First Term Test Paper (Ch01–Ch05)<br>
+    <strong>Score (objective):</strong> ${score}/30 (${pct}%)<br>
+    <strong>Time taken:</strong> ${timeStr}<br>
+    <strong>By chapter:</strong> ${chSummary}<br>
+    <strong>Status:</strong> ${pct >= 60 ? '✅ Passed' : '❌ Needs revision'}<br>
+    <strong>Bonus:</strong> 2 written answers — please review with Sheyvon.`;
+
+  // ── Next Action ──────────────────────────────────────────
+  const na = document.getElementById('next-action');
+  if (pct >= 80) {
+    na.innerHTML = `<p style="color:#375623; font-size:14px; margin-bottom:12px;">🌟 Outstanding! You have a strong grasp of Term 1. Keep it up!</p>
+    <a class="action-btn green" href="../Short_Notes/Term1_Maths_RevisionNotes.html">📖 Term 1 Revision Notes</a>
+    <a class="action-btn" href="../Short_Notes/Ch06_Time_Notes.html">➡️ Start Chapter 6 — Time</a>`;
+  } else if (pct >= 60) {
+    na.innerHTML = `<p style="color:#7F4F00; font-size:14px; margin-bottom:12px;">👍 You passed! Review the weak chapters above, then move to Chapter 6.</p>
+    <a class="action-btn orange" href="../Short_Notes/Term1_Maths_RevisionNotes.html">📖 Revise Term 1 Notes</a>
+    <a class="action-btn" href="../Short_Notes/Ch06_Time_Notes.html">➡️ Chapter 6 — Time</a>`;
+  } else {
+    na.innerHTML = `<p style="color:#9C0006; font-size:14px; margin-bottom:12px;">📖 Let's revise Term 1 before moving on. Check the chapter scores above — focus on weak areas first.</p>
+    <a class="action-btn" href="../Short_Notes/Term1_Maths_RevisionNotes.html">📖 Term 1 Revision Notes</a>
+    <a class="action-btn orange" href="Term1_Maths_TimedPaper.html">↩ Retry This Paper</a>`;
+  }
+
+  // ── WhatsApp float button ─────────────────────────────────
+  (function(){
+    var _dat = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    var _msg = '📊 *Sheyvon Result*\n📚 Maths — First Term Test (Ch01–Ch05)\n🗓️ ' + _dat +
+               '\n✏️ Score: ' + score + '/30 (' + pct + '%) · Time: ' + timeStr +
+               '\n' + (pct >= 60 ? '✅ Passed' : '❌ Needs revision');
+    var btn = document.getElementById('wa-float-btn');
+    if (btn) { btn.href = 'https://wa.me/94764551840?text=' + encodeURIComponent(_msg); btn.style.display = 'flex'; }
+  })();
+}
+</script>
+
+<!-- ═══ WhatsApp Float Button ═══ -->
+<style>
+#wa-float-btn{position:fixed;bottom:22px;right:22px;background:#25D366;color:#fff;padding:14px 22px;border-radius:50px;font-size:15px;font-weight:bold;text-decoration:none;display:none;align-items:center;gap:10px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:transform .15s;}
+#wa-float-btn:hover{transform:scale(1.05);}
+</style>
+<a id="wa-float-btn" href="#" target="_blank">📲 Send Results to Mum</a>
+</body>
+</html>
