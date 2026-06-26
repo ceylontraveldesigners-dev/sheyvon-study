@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Year Maths Comprehensive Paper — 90 Minutes | Sheyvon</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f0f4ff; color: #222; }
+
+  /* START SCREEN */
+  #start-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .start-card { background: white; border-radius: 16px; padding: 40px; max-width: 640px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.12); text-align: center; }
+  .start-card h1 { font-size: 24px; color: #1F3864; margin-bottom: 6px; }
+  .start-card p  { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 20px; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+  .info-box { background: #F0F4FF; border-radius: 10px; padding: 14px; }
+  .info-box .val { font-size: 22px; font-weight: bold; color: #1F3864; }
+  .info-box .lbl { font-size: 11px; color: #777; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .start-btn { background: linear-gradient(135deg, #1F3864, #2E75B6); color: white; border: none; border-radius: 10px; padding: 16px 40px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+  .start-btn:hover { opacity: 0.9; }
+  .warning-box { background: #FFF9E6; border-left: 4px solid #FFC000; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #7F4F00; text-align: left; margin-bottom: 16px; }
+  .chapters-covered { background: #EBF3FB; border-radius: 10px; padding: 14px 18px; margin: 16px 0; text-align: left; max-height: 280px; overflow-y: auto; }
+  .chapters-covered h3 { font-size: 13px; color: #1F3864; font-weight: bold; margin-bottom: 8px; }
+  .chapters-covered ul { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .chapters-covered li { font-size: 12px; color: #333; padding: 2px 0; }
+  .chapters-covered li::before { content: "✅ "; }
+
+  /* EXAM SCREEN */
+  #exam-screen { display: none; }
+  .exam-header { background: linear-gradient(135deg, #1F3864, #2E75B6); color: white; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .exam-title { font-size: 15px; font-weight: bold; }
+  .exam-meta { font-size: 11px; opacity: 0.8; }
+  .timer-box { background: rgba(255,255,255,0.15); border-radius: 10px; padding: 8px 18px; text-align: center; min-width: 100px; }
+  .timer-num { font-size: 26px; font-weight: bold; font-family: monospace; }
+  .timer-lbl { font-size: 10px; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+  .timer-box.warning { background: rgba(255,200,0,0.3); animation: pulse 1s infinite; }
+  .timer-box.danger  { background: rgba(255,60,60,0.4); animation: pulse 0.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
+  .container { max-width: 780px; margin: 24px auto; padding: 0 20px 60px; }
+  .marks-bar { background: white; border-radius: 10px; padding: 14px 20px; margin-bottom: 20px; font-size: 13px; color: #555; box-shadow: 0 1px 6px rgba(0,0,0,0.06); display:flex; gap:14px; flex-wrap:wrap; }
+  .marks-bar strong { color: #1F3864; }
+
+  .q-card { background: white; border-radius: 12px; padding: 22px 24px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border-left: 4px solid #BDD7EE; }
+  .q-num { font-size: 11px; font-weight: bold; color: #2E75B6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .q-marks { float: right; background: #EBF3FB; color: #2E75B6; border-radius: 6px; padding: 2px 10px; font-size: 12px; font-weight: bold; }
+  .q-text { font-size: 15px; font-weight: bold; color: #1F3864; line-height: 1.5; margin-bottom: 16px; }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn { background: #F7F9FF; border: 2px solid #BDD7EE; border-radius: 8px; padding: 12px 16px; text-align: left; font-size: 14px; cursor: pointer; transition: all 0.2s; display:flex; align-items:center; gap:10px; }
+  .option-btn:hover { background: #EBF3FB; border-color: #2E75B6; }
+  .option-btn.selected { background: #2E75B6; border-color: #2E75B6; color: white; }
+  .option-btn.selected .option-label { background: white; color: #2E75B6; }
+  .option-label { width: 26px; height: 26px; border-radius: 50%; background: #2E75B6; color: white; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; }
+  .option-btn.correct { background: #C6EFCE; border-color: #70AD47; color: #375623; }
+  .option-btn.wrong   { background: #FFE0E0; border-color: #FF6B6B; color: #9C0006; }
+  .option-btn.correct .option-label { background: #375623; color: white; }
+  .option-btn.wrong   .option-label { background: #9C0006; color: white; }
+  .tf-group { display: flex; gap: 12px; margin-top: 8px; }
+  .tf-btn { flex: 1; padding: 12px; border: 2px solid #BDD7EE; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; background: #F7F9FF; transition: all 0.2s; }
+  .tf-btn:hover { background: #EBF3FB; }
+  .tf-btn.selected { background: #2E75B6; color: white; border-color: #2E75B6; }
+  .tf-btn.correct  { background: #C6EFCE; border-color: #70AD47; color: #375623; }
+  .tf-btn.wrong    { background: #FFE0E0; border-color: #FF6B6B; color: #9C0006; }
+  .fill-input { border: 2px solid #BDD7EE; border-radius: 8px; padding: 10px 14px; font-size: 15px; width: 240px; outline: none; font-family: Arial; display:block; margin-top:8px; }
+  .fill-input:focus { border-color: #2E75B6; }
+  .fill-input.correct { border-color: #70AD47; background: #EBF9E6; color: #375623; }
+  .fill-input.wrong   { border-color: #FF6B6B; background: #FFF0F0; color: #9C0006; }
+
+  .section-header { background: #1F3864; color: white; border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: bold; margin: 24px 0 14px; }
+  .chapter-sub { background: #EBF3FB; border-left: 4px solid #2E75B6; border-radius: 6px; padding: 8px 14px; font-size: 12px; font-weight: bold; color: #1F3864; margin: 16px 0 10px; }
+
+  .bonus-card { background: #FFF9E6; border: 2px solid #FFC000; border-radius: 12px; padding: 22px 24px; margin-bottom: 18px; }
+  .bonus-card .q-num { color: #7F4F00; }
+  .bonus-card .q-text { color: #7F4F00; }
+  .bonus-textarea { border: 2px solid #FFC000; border-radius: 8px; padding: 12px; width: 100%; min-height: 100px; font-size: 14px; font-family: Arial; outline: none; margin-top: 10px; background: #FFFDF0; }
+  .bonus-textarea:focus { border-color: #E6A800; }
+
+  .submit-btn { width: 100%; background: #9C0006; color: white; border: none; border-radius: 10px; padding: 16px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 16px; }
+  .submit-btn:hover { background: #7F0005; }
+
+  /* RESULTS SCREEN */
+  #results-screen { display: none; }
+  .results-header { background: linear-gradient(135deg, #1F3864, #2E75B6); color: white; padding: 30px 32px; text-align: center; }
+  .results-header h1 { font-size: 20px; margin-bottom: 4px; }
+  .score-circle { width: 140px; height: 140px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px auto; font-size: 36px; font-weight: bold; color: white; }
+  .score-circle.pass { background: linear-gradient(135deg, #375623, #70AD47); }
+  .score-circle.warn { background: linear-gradient(135deg, #7F4F00, #FFC000); }
+  .score-circle.fail { background: linear-gradient(135deg, #9C0006, #FF6B6B); }
+  .score-circle small { font-size: 13px; font-weight: normal; }
+  .results-body { max-width: 760px; margin: 0 auto; padding: 24px 20px 60px; }
+  .results-summary { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+  .results-summary h2 { font-size: 16px; color: #1F3864; margin-bottom: 14px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .stat-box { background: #F0F4FF; border-radius: 10px; padding: 14px; text-align: center; }
+  .stat-box .val { font-size: 24px; font-weight: bold; color: #1F3864; }
+  .stat-box .lbl { font-size: 11px; color: #777; margin-top: 2px; }
+  .chapter-score { background: white; border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; display:flex; justify-content: space-between; align-items:center; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+  .chapter-score .ch-name { font-size: 14px; font-weight: bold; color: #1F3864; }
+  .chapter-score .ch-sc { font-size: 14px; font-weight: bold; }
+  .q-result { background: white; border-radius: 10px; padding: 16px 18px; margin-bottom: 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 14px; }
+  .q-result .icon { font-size: 20px; flex-shrink: 0; }
+  .q-result .q-info { flex: 1; }
+  .q-result .q-info p { font-size: 13px; color: #555; line-height: 1.5; }
+  .q-result .q-info strong { color: #1F3864; font-size: 14px; }
+  .q-result.correct-res { border-left: 4px solid #70AD47; }
+  .q-result.wrong-res   { border-left: 4px solid #FF6B6B; }
+  .action-panel { background: white; border-radius: 12px; padding: 20px 24px; margin-top: 20px; }
+  .action-panel h2 { font-size: 16px; color: #1F3864; margin-bottom: 12px; }
+  .action-btn { display: inline-block; background: #1F3864; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: bold; margin: 5px; }
+  .action-btn.green  { background: #375623; }
+  .action-btn.orange { background: #7F4F00; }
+  .parent-box { background: #FFF9E6; border: 1px solid #FFC000; border-radius: 10px; padding: 16px 20px; margin-top: 20px; font-size: 13px; line-height: 1.7; }
+  .parent-box h3 { color: #7F4F00; font-size: 14px; margin-bottom: 8px; }
+  .download-btn { background: #375623; color: white; border: none; border-radius: 8px; padding: 12px 24px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+  .download-btn:hover { background: #2A4318; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ START SCREEN ═══════════ -->
+<div id="start-screen">
+  <div class="start-card">
+    <div style="font-size:52px; margin-bottom:12px;">📝</div>
+    <h1>Full Year Comprehensive Maths Paper</h1>
+    <p>Maths Grade 7 &nbsp;|&nbsp; Sri Lankan Syllabus &nbsp;|&nbsp; Sheyvon Warnapura<br>
+    All 29 chapters covered — your best chance to see where you stand!</p>
+
+    <div class="chapters-covered">
+      <h3>📚 All Chapters Covered in This Paper:</h3>
+      <ul>
+        <li>Ch01 — Symmetry</li>
+        <li>Ch02 — Sets</li>
+        <li>Ch03 — Operations</li>
+        <li>Ch04 — Factors &amp; Multiples</li>
+        <li>Ch05 — Indices</li>
+        <li>Ch06 — Time</li>
+        <li>Ch07 — Parallel Lines</li>
+        <li>Ch08 — Directed Numbers</li>
+        <li>Ch09 — Angles</li>
+        <li>Ch10 — Fractions</li>
+        <li>Ch11 — Decimals</li>
+        <li>Ch12 — Algebra</li>
+        <li>Ch13 — Mass</li>
+        <li>Ch14 — Plane Figures</li>
+        <li>Ch15 — Equations</li>
+        <li>Ch16 — Length</li>
+        <li>Ch17 — Area</li>
+        <li>Ch18 — Circles</li>
+        <li>Ch19 — Volume</li>
+        <li>Ch20 — Capacity</li>
+        <li>Ch21 — Ratios</li>
+        <li>Ch22 — Percentages</li>
+        <li>Ch23 — Cartesian Plane</li>
+        <li>Ch24 — Construction</li>
+        <li>Ch25 — Solids</li>
+        <li>Ch26 — Data</li>
+        <li>Ch27 — Scale</li>
+        <li>Ch28 — Tessellation</li>
+        <li>Ch29 — Likelihood</li>
+      </ul>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-box"><div class="val">60</div><div class="lbl">Objective Marks</div></div>
+      <div class="info-box"><div class="val">90</div><div class="lbl">Minutes</div></div>
+      <div class="info-box"><div class="val">60</div><div class="lbl">Questions</div></div>
+      <div class="info-box"><div class="val">+10</div><div class="lbl">Bonus Marks</div></div>
+    </div>
+
+    <div class="warning-box">
+      ⚠️ <strong>Important:</strong> Once you click "Start Exam", the 90-minute timer begins. The paper auto-submits when time runs out. Do not close this tab.
+    </div>
+
+    <p style="font-size:13px; color:#555; margin-bottom:16px;">This paper tests <strong>every chapter</strong> of your Grade 7 Maths syllabus. Give it your best shot, Sheyvon! 💪</p>
+
+    <button class="start-btn" onclick="startExam()">▶ Start Exam — 90 Minutes</button>
+  </div>
+</div>
+
+<!-- ═══════════ EXAM SCREEN ═══════════ -->
+<div id="exam-screen">
+  <div class="exam-header">
+    <div>
+      <div class="exam-title">📝 Full Year Comprehensive Maths Paper — Grade 7</div>
+      <div class="exam-meta">Ch01–Ch29 &nbsp;|&nbsp; 60 objective marks + 10 bonus &nbsp;|&nbsp; Sheyvon Warnapura</div>
+    </div>
+    <div class="timer-box" id="timer-box">
+      <div class="timer-num" id="timer-display">90:00</div>
+      <div class="timer-lbl">Time Remaining</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="marks-bar">
+      <span><strong>Section A:</strong> Multiple Choice — 40 × 1 mark = 40 marks</span>
+      <span><strong>Section B:</strong> True / False — 10 × 1 mark = 10 marks</span>
+      <span><strong>Section C:</strong> Fill in the Blank — 10 × 1 mark = 10 marks</span>
+      <span><strong>Bonus:</strong> Written — 2 × 5 marks = 10 marks</span>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SECTION A — MULTIPLE CHOICE (40 marks)
+    ══════════════════════════════════════ -->
+    <div class="section-header">Section A — Multiple Choice &nbsp;(40 marks)</div>
+
+    <!-- Ch01 & Ch02 -->
+    <div class="chapter-sub">📐 Ch01: Symmetry &amp; Ch02: Sets — Questions 1–4</div>
+
+    <div class="q-card" id="q1">
+      <div class="q-num">Question 1 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A square has how many axes of symmetry?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q1','A',false)"><span class="option-label">A</span>2</button>
+        <button class="option-btn" onclick="selectMCQ('q1','B',false)"><span class="option-label">B</span>3</button>
+        <button class="option-btn" onclick="selectMCQ('q1','C',true)"><span class="option-label">C</span>4</button>
+        <button class="option-btn" onclick="selectMCQ('q1','D',false)"><span class="option-label">D</span>8</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q2">
+      <div class="q-num">Question 2 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Which shape has rotational symmetry of order 4?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q2','A',false)"><span class="option-label">A</span>Equilateral triangle</button>
+        <button class="option-btn" onclick="selectMCQ('q2','B',true)"><span class="option-label">B</span>Square</button>
+        <button class="option-btn" onclick="selectMCQ('q2','C',false)"><span class="option-label">C</span>Regular pentagon</button>
+        <button class="option-btn" onclick="selectMCQ('q2','D',false)"><span class="option-label">D</span>Scalene triangle</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q3">
+      <div class="q-num">Question 3 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">P = {2, 4, 6, 8} and Q = {4, 8, 12}. What is P ∪ Q?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q3','A',false)"><span class="option-label">A</span>{4, 8}</button>
+        <button class="option-btn" onclick="selectMCQ('q3','B',true)"><span class="option-label">B</span>{2, 4, 6, 8, 12}</button>
+        <button class="option-btn" onclick="selectMCQ('q3','C',false)"><span class="option-label">C</span>{2, 6}</button>
+        <button class="option-btn" onclick="selectMCQ('q3','D',false)"><span class="option-label">D</span>{4, 8, 12}</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q4">
+      <div class="q-num">Question 4 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">How many subsets does a set with 3 elements have?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q4','A',false)"><span class="option-label">A</span>3</button>
+        <button class="option-btn" onclick="selectMCQ('q4','B',false)"><span class="option-label">B</span>6</button>
+        <button class="option-btn" onclick="selectMCQ('q4','C',true)"><span class="option-label">C</span>8</button>
+        <button class="option-btn" onclick="selectMCQ('q4','D',false)"><span class="option-label">D</span>9</button>
+      </div>
+    </div>
+
+    <!-- Ch03 & Ch04 -->
+    <div class="chapter-sub">➕ Ch03: Operations &amp; Ch04: Factors &amp; Multiples — Questions 5–8</div>
+
+    <div class="q-card" id="q5">
+      <div class="q-num">Question 5 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Calculate: 3² + 4 × 2 − 1</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q5','A',false)"><span class="option-label">A</span>24</button>
+        <button class="option-btn" onclick="selectMCQ('q5','B',true)"><span class="option-label">B</span>16</button>
+        <button class="option-btn" onclick="selectMCQ('q5','C',false)"><span class="option-label">C</span>19</button>
+        <button class="option-btn" onclick="selectMCQ('q5','D',false)"><span class="option-label">D</span>22</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q6">
+      <div class="q-num">Question 6 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Calculate: (20 − 8) ÷ 3 + 5</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q6','A',false)"><span class="option-label">A</span>7</button>
+        <button class="option-btn" onclick="selectMCQ('q6','B',false)"><span class="option-label">B</span>8</button>
+        <button class="option-btn" onclick="selectMCQ('q6','C',true)"><span class="option-label">C</span>9</button>
+        <button class="option-btn" onclick="selectMCQ('q6','D',false)"><span class="option-label">D</span>11</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q7">
+      <div class="q-num">Question 7 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">What is the HCF of 24 and 36?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q7','A',false)"><span class="option-label">A</span>6</button>
+        <button class="option-btn" onclick="selectMCQ('q7','B',false)"><span class="option-label">B</span>8</button>
+        <button class="option-btn" onclick="selectMCQ('q7','C',true)"><span class="option-label">C</span>12</button>
+        <button class="option-btn" onclick="selectMCQ('q7','D',false)"><span class="option-label">D</span>18</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q8">
+      <div class="q-num">Question 8 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">What is the LCM of 6 and 9?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q8','A',false)"><span class="option-label">A</span>3</button>
+        <button class="option-btn" onclick="selectMCQ('q8','B',true)"><span class="option-label">B</span>18</button>
+        <button class="option-btn" onclick="selectMCQ('q8','C',false)"><span class="option-label">C</span>27</button>
+        <button class="option-btn" onclick="selectMCQ('q8','D',false)"><span class="option-label">D</span>54</button>
+      </div>
+    </div>
+
+    <!-- Ch05 & Ch06 -->
+    <div class="chapter-sub">🔢 Ch05: Indices &amp; Ch06: Time — Questions 9–12</div>
+
+    <div class="q-card" id="q9">
+      <div class="q-num">Question 9 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Simplify: 2³ × 2⁴</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q9','A',true)"><span class="option-label">A</span>2⁷</button>
+        <button class="option-btn" onclick="selectMCQ('q9','B',false)"><span class="option-label">B</span>4⁷</button>
+        <button class="option-btn" onclick="selectMCQ('q9','C',false)"><span class="option-label">C</span>2¹²</button>
+        <button class="option-btn" onclick="selectMCQ('q9','D',false)"><span class="option-label">D</span>2⁶</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q10">
+      <div class="q-num">Question 10 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">What is the value of 5⁰?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q10','A',false)"><span class="option-label">A</span>0</button>
+        <button class="option-btn" onclick="selectMCQ('q10','B',false)"><span class="option-label">B</span>5</button>
+        <button class="option-btn" onclick="selectMCQ('q10','C',true)"><span class="option-label">C</span>1</button>
+        <button class="option-btn" onclick="selectMCQ('q10','D',false)"><span class="option-label">D</span>25</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q11">
+      <div class="q-num">Question 11 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">How many minutes are in 2¾ hours?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q11','A',false)"><span class="option-label">A</span>150</button>
+        <button class="option-btn" onclick="selectMCQ('q11','B',false)"><span class="option-label">B</span>160</button>
+        <button class="option-btn" onclick="selectMCQ('q11','C',true)"><span class="option-label">C</span>165</button>
+        <button class="option-btn" onclick="selectMCQ('q11','D',false)"><span class="option-label">D</span>170</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q12">
+      <div class="q-num">Question 12 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A bus departs at 08:45 and arrives at 11:20. How long is the journey?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q12','A',false)"><span class="option-label">A</span>2 hours 25 minutes</button>
+        <button class="option-btn" onclick="selectMCQ('q12','B',true)"><span class="option-label">B</span>2 hours 35 minutes</button>
+        <button class="option-btn" onclick="selectMCQ('q12','C',false)"><span class="option-label">C</span>3 hours 25 minutes</button>
+        <button class="option-btn" onclick="selectMCQ('q12','D',false)"><span class="option-label">D</span>3 hours 5 minutes</button>
+      </div>
+    </div>
+
+    <!-- Ch07 & Ch08 -->
+    <div class="chapter-sub">📏 Ch07: Parallel Lines &amp; Ch08: Directed Numbers — Questions 13–16</div>
+
+    <div class="q-card" id="q13">
+      <div class="q-num">Question 13 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Co-interior angles (same-side interior angles) between two parallel lines add up to:</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q13','A',false)"><span class="option-label">A</span>90°</button>
+        <button class="option-btn" onclick="selectMCQ('q13','B',true)"><span class="option-label">B</span>180°</button>
+        <button class="option-btn" onclick="selectMCQ('q13','C',false)"><span class="option-label">C</span>360°</button>
+        <button class="option-btn" onclick="selectMCQ('q13','D',false)"><span class="option-label">D</span>270°</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q14">
+      <div class="q-num">Question 14 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Alternate interior angles (formed by a transversal cutting two parallel lines) are:</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q14','A',false)"><span class="option-label">A</span>Supplementary (add to 180°)</button>
+        <button class="option-btn" onclick="selectMCQ('q14','B',false)"><span class="option-label">B</span>Complementary (add to 90°)</button>
+        <button class="option-btn" onclick="selectMCQ('q14','C',true)"><span class="option-label">C</span>Equal</button>
+        <button class="option-btn" onclick="selectMCQ('q14','D',false)"><span class="option-label">D</span>Always right angles</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q15">
+      <div class="q-num">Question 15 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Calculate: (−8) + (+5)</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q15','A',false)"><span class="option-label">A</span>−13</button>
+        <button class="option-btn" onclick="selectMCQ('q15','B',false)"><span class="option-label">B</span>+13</button>
+        <button class="option-btn" onclick="selectMCQ('q15','C',true)"><span class="option-label">C</span>−3</button>
+        <button class="option-btn" onclick="selectMCQ('q15','D',false)"><span class="option-label">D</span>+3</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q16">
+      <div class="q-num">Question 16 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Calculate: (−6) × (−4)</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q16','A',false)"><span class="option-label">A</span>−24</button>
+        <button class="option-btn" onclick="selectMCQ('q16','B',true)"><span class="option-label">B</span>+24</button>
+        <button class="option-btn" onclick="selectMCQ('q16','C',false)"><span class="option-label">C</span>−10</button>
+        <button class="option-btn" onclick="selectMCQ('q16','D',false)"><span class="option-label">D</span>+10</button>
+      </div>
+    </div>
+
+    <!-- Ch09 & Ch10 -->
+    <div class="chapter-sub">📐 Ch09: Angles &amp; Ch10: Fractions — Questions 17–20</div>
+
+    <div class="q-card" id="q17">
+      <div class="q-num">Question 17 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Angles on a straight line add up to:</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q17','A',false)"><span class="option-label">A</span>90°</button>
+        <button class="option-btn" onclick="selectMCQ('q17','B',true)"><span class="option-label">B</span>180°</button>
+        <button class="option-btn" onclick="selectMCQ('q17','C',false)"><span class="option-label">C</span>270°</button>
+        <button class="option-btn" onclick="selectMCQ('q17','D',false)"><span class="option-label">D</span>360°</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q18">
+      <div class="q-num">Question 18 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">An angle of 135° is best described as:</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q18','A',false)"><span class="option-label">A</span>Acute</button>
+        <button class="option-btn" onclick="selectMCQ('q18','B',false)"><span class="option-label">B</span>Right angle</button>
+        <button class="option-btn" onclick="selectMCQ('q18','C',true)"><span class="option-label">C</span>Obtuse</button>
+        <button class="option-btn" onclick="selectMCQ('q18','D',false)"><span class="option-label">D</span>Reflex</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q19">
+      <div class="q-num">Question 19 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Calculate: 2/3 + 3/4</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q19','A',false)"><span class="option-label">A</span>5/7</button>
+        <button class="option-btn" onclick="selectMCQ('q19','B',true)"><span class="option-label">B</span>17/12</button>
+        <button class="option-btn" onclick="selectMCQ('q19','C',false)"><span class="option-label">C</span>5/12</button>
+        <button class="option-btn" onclick="selectMCQ('q19','D',false)"><span class="option-label">D</span>6/7</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q20">
+      <div class="q-num">Question 20 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Calculate: 3/4 ÷ 1/2</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q20','A',false)"><span class="option-label">A</span>3/8</button>
+        <button class="option-btn" onclick="selectMCQ('q20','B',true)"><span class="option-label">B</span>3/2 (= 1½)</button>
+        <button class="option-btn" onclick="selectMCQ('q20','C',false)"><span class="option-label">C</span>1/6</button>
+        <button class="option-btn" onclick="selectMCQ('q20','D',false)"><span class="option-label">D</span>6/4</button>
+      </div>
+    </div>
+
+    <!-- Ch11 & Ch12 -->
+    <div class="chapter-sub">🔣 Ch11: Decimals &amp; Ch12: Algebra — Questions 21–24</div>
+
+    <div class="q-card" id="q21">
+      <div class="q-num">Question 21 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Calculate: 0.6 × 0.5</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q21','A',false)"><span class="option-label">A</span>0.11</button>
+        <button class="option-btn" onclick="selectMCQ('q21','B',true)"><span class="option-label">B</span>0.3</button>
+        <button class="option-btn" onclick="selectMCQ('q21','C',false)"><span class="option-label">C</span>3</button>
+        <button class="option-btn" onclick="selectMCQ('q21','D',false)"><span class="option-label">D</span>0.03</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q22">
+      <div class="q-num">Question 22 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Round 7.8463 to 2 decimal places:</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q22','A',false)"><span class="option-label">A</span>7.84</button>
+        <button class="option-btn" onclick="selectMCQ('q22','B',true)"><span class="option-label">B</span>7.85</button>
+        <button class="option-btn" onclick="selectMCQ('q22','C',false)"><span class="option-label">C</span>7.8</button>
+        <button class="option-btn" onclick="selectMCQ('q22','D',false)"><span class="option-label">D</span>7.9</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q23">
+      <div class="q-num">Question 23 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Simplify: 5x + 3y − 2x + y</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q23','A',true)"><span class="option-label">A</span>3x + 4y</button>
+        <button class="option-btn" onclick="selectMCQ('q23','B',false)"><span class="option-label">B</span>6x + 4y</button>
+        <button class="option-btn" onclick="selectMCQ('q23','C',false)"><span class="option-label">C</span>3x + 3y</button>
+        <button class="option-btn" onclick="selectMCQ('q23','D',false)"><span class="option-label">D</span>7x + 2y</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q24">
+      <div class="q-num">Question 24 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Expand: 3(2x − 5)</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q24','A',false)"><span class="option-label">A</span>6x + 15</button>
+        <button class="option-btn" onclick="selectMCQ('q24','B',false)"><span class="option-label">B</span>6x − 5</button>
+        <button class="option-btn" onclick="selectMCQ('q24','C',true)"><span class="option-label">C</span>6x − 15</button>
+        <button class="option-btn" onclick="selectMCQ('q24','D',false)"><span class="option-label">D</span>5x − 15</button>
+      </div>
+    </div>
+
+    <!-- Ch13 & Ch14 -->
+    <div class="chapter-sub">⚖️ Ch13: Mass &amp; Ch14: Plane Figures — Questions 25–26</div>
+
+    <div class="q-card" id="q25">
+      <div class="q-num">Question 25 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Convert 4.25 kg to grams:</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q25','A',false)"><span class="option-label">A</span>425 g</button>
+        <button class="option-btn" onclick="selectMCQ('q25','B',false)"><span class="option-label">B</span>4025 g</button>
+        <button class="option-btn" onclick="selectMCQ('q25','C',true)"><span class="option-label">C</span>4250 g</button>
+        <button class="option-btn" onclick="selectMCQ('q25','D',false)"><span class="option-label">D</span>42500 g</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q26">
+      <div class="q-num">Question 26 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The sum of interior angles of a quadrilateral is:</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q26','A',false)"><span class="option-label">A</span>180°</button>
+        <button class="option-btn" onclick="selectMCQ('q26','B',false)"><span class="option-label">B</span>270°</button>
+        <button class="option-btn" onclick="selectMCQ('q26','C',true)"><span class="option-label">C</span>360°</button>
+        <button class="option-btn" onclick="selectMCQ('q26','D',false)"><span class="option-label">D</span>540°</button>
+      </div>
+    </div>
+
+    <!-- Ch15 & Ch16 -->
+    <div class="chapter-sub">🔤 Ch15: Equations &amp; Ch16: Length — Questions 27–29</div>
+
+    <div class="q-card" id="q27">
+      <div class="q-num">Question 27 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Solve: 2x + 3 = 11</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q27','A',false)"><span class="option-label">A</span>x = 3</button>
+        <button class="option-btn" onclick="selectMCQ('q27','B',true)"><span class="option-label">B</span>x = 4</button>
+        <button class="option-btn" onclick="selectMCQ('q27','C',false)"><span class="option-label">C</span>x = 5</button>
+        <button class="option-btn" onclick="selectMCQ('q27','D',false)"><span class="option-label">D</span>x = 7</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q28">
+      <div class="q-num">Question 28 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Solve: 5x − 8 = 12</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q28','A',false)"><span class="option-label">A</span>x = 2</button>
+        <button class="option-btn" onclick="selectMCQ('q28','B',false)"><span class="option-label">B</span>x = 3</button>
+        <button class="option-btn" onclick="selectMCQ('q28','C',true)"><span class="option-label">C</span>x = 4</button>
+        <button class="option-btn" onclick="selectMCQ('q28','D',false)"><span class="option-label">D</span>x = 5</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q29">
+      <div class="q-num">Question 29 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Convert 3.2 km to metres:</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q29','A',false)"><span class="option-label">A</span>320 m</button>
+        <button class="option-btn" onclick="selectMCQ('q29','B',false)"><span class="option-label">B</span>3020 m</button>
+        <button class="option-btn" onclick="selectMCQ('q29','C',true)"><span class="option-label">C</span>3200 m</button>
+        <button class="option-btn" onclick="selectMCQ('q29','D',false)"><span class="option-label">D</span>32000 m</button>
+      </div>
+    </div>
+
+    <!-- Ch17 & Ch18 -->
+    <div class="chapter-sub">📐 Ch17: Area &amp; Ch18: Circles — Questions 30–31</div>
+
+    <div class="q-card" id="q30">
+      <div class="q-num">Question 30 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A triangle has a base of 10 cm and a height of 8 cm. What is its area?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q30','A',false)"><span class="option-label">A</span>80 cm²</button>
+        <button class="option-btn" onclick="selectMCQ('q30','B',true)"><span class="option-label">B</span>40 cm²</button>
+        <button class="option-btn" onclick="selectMCQ('q30','C',false)"><span class="option-label">C</span>18 cm²</button>
+        <button class="option-btn" onclick="selectMCQ('q30','D',false)"><span class="option-label">D</span>20 cm²</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q31">
+      <div class="q-num">Question 31 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">What is the circumference of a circle with diameter 14 cm? (Use π = 22/7)</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q31','A',false)"><span class="option-label">A</span>22 cm</button>
+        <button class="option-btn" onclick="selectMCQ('q31','B',true)"><span class="option-label">B</span>44 cm</button>
+        <button class="option-btn" onclick="selectMCQ('q31','C',false)"><span class="option-label">C</span>88 cm</button>
+        <button class="option-btn" onclick="selectMCQ('q31','D',false)"><span class="option-label">D</span>154 cm</button>
+      </div>
+    </div>
+
+    <!-- Ch19 & Ch20 -->
+    <div class="chapter-sub">📦 Ch19: Volume &amp; Ch20: Capacity — Questions 32–33</div>
+
+    <div class="q-card" id="q32">
+      <div class="q-num">Question 32 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">What is the volume of a cuboid measuring 5 cm × 4 cm × 3 cm?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q32','A',false)"><span class="option-label">A</span>12 cm³</button>
+        <button class="option-btn" onclick="selectMCQ('q32','B',false)"><span class="option-label">B</span>47 cm³</button>
+        <button class="option-btn" onclick="selectMCQ('q32','C',true)"><span class="option-label">C</span>60 cm³</button>
+        <button class="option-btn" onclick="selectMCQ('q32','D',false)"><span class="option-label">D</span>94 cm³</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q33">
+      <div class="q-num">Question 33 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">How many millilitres are in 3.5 litres?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q33','A',false)"><span class="option-label">A</span>350 ml</button>
+        <button class="option-btn" onclick="selectMCQ('q33','B',false)"><span class="option-label">B</span>3050 ml</button>
+        <button class="option-btn" onclick="selectMCQ('q33','C',true)"><span class="option-label">C</span>3500 ml</button>
+        <button class="option-btn" onclick="selectMCQ('q33','D',false)"><span class="option-label">D</span>35000 ml</button>
+      </div>
+    </div>
+
+    <!-- Ch21 & Ch22 -->
+    <div class="chapter-sub">📊 Ch21: Ratios &amp; Ch22: Percentages — Questions 34–35</div>
+
+    <div class="q-card" id="q34">
+      <div class="q-num">Question 34 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Share Rs. 180 in the ratio 2 : 3. What is the larger share?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q34','A',false)"><span class="option-label">A</span>Rs. 60</button>
+        <button class="option-btn" onclick="selectMCQ('q34','B',true)"><span class="option-label">B</span>Rs. 108</button>
+        <button class="option-btn" onclick="selectMCQ('q34','C',false)"><span class="option-label">C</span>Rs. 90</option></button>
+        <button class="option-btn" onclick="selectMCQ('q34','D',false)"><span class="option-label">D</span>Rs. 36</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q35">
+      <div class="q-num">Question 35 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">What is 25% of 360?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q35','A',false)"><span class="option-label">A</span>72</button>
+        <button class="option-btn" onclick="selectMCQ('q35','B',true)"><span class="option-label">B</span>90</button>
+        <button class="option-btn" onclick="selectMCQ('q35','C',false)"><span class="option-label">C</span>100</button>
+        <button class="option-btn" onclick="selectMCQ('q35','D',false)"><span class="option-label">D</span>108</button>
+      </div>
+    </div>
+
+    <!-- Ch23 & Ch24 -->
+    <div class="chapter-sub">🗺️ Ch23: Cartesian Plane &amp; Ch24: Construction — Questions 36–37</div>
+
+    <div class="q-card" id="q36">
+      <div class="q-num">Question 36 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A point at coordinates (−3, 4) is in which quadrant?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q36','A',false)"><span class="option-label">A</span>First quadrant</button>
+        <button class="option-btn" onclick="selectMCQ('q36','B',true)"><span class="option-label">B</span>Second quadrant</button>
+        <button class="option-btn" onclick="selectMCQ('q36','C',false)"><span class="option-label">C</span>Third quadrant</button>
+        <button class="option-btn" onclick="selectMCQ('q36','D',false)"><span class="option-label">D</span>Fourth quadrant</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q37">
+      <div class="q-num">Question 37 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">To bisect an angle accurately, you need:</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q37','A',false)"><span class="option-label">A</span>A protractor only</button>
+        <button class="option-btn" onclick="selectMCQ('q37','B',false)"><span class="option-label">B</span>A ruler only</button>
+        <button class="option-btn" onclick="selectMCQ('q37','C',true)"><span class="option-label">C</span>A compass and a ruler</button>
+        <button class="option-btn" onclick="selectMCQ('q37','D',false)"><span class="option-label">D</span>A set square only</button>
+      </div>
+    </div>
+
+    <!-- Ch25, Ch26 & Ch27 -->
+    <div class="chapter-sub">🧊 Ch25: Solids, Ch26: Data &amp; Ch27: Scale — Questions 38–40</div>
+
+    <div class="q-card" id="q38">
+      <div class="q-num">Question 38 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">How many edges does a cuboid (rectangular prism) have?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q38','A',false)"><span class="option-label">A</span>6</button>
+        <button class="option-btn" onclick="selectMCQ('q38','B',false)"><span class="option-label">B</span>8</button>
+        <button class="option-btn" onclick="selectMCQ('q38','C',false)"><span class="option-label">C</span>10</button>
+        <button class="option-btn" onclick="selectMCQ('q38','D',true)"><span class="option-label">D</span>12</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q39">
+      <div class="q-num">Question 39 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">What is the mean of: 5, 8, 6, 9, 7?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q39','A',false)"><span class="option-label">A</span>6</button>
+        <button class="option-btn" onclick="selectMCQ('q39','B',true)"><span class="option-label">B</span>7</button>
+        <button class="option-btn" onclick="selectMCQ('q39','C',false)"><span class="option-label">C</span>8</button>
+        <button class="option-btn" onclick="selectMCQ('q39','D',false)"><span class="option-label">D</span>9</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q40">
+      <div class="q-num">Question 40 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A map uses a scale of 1 : 25 000. A distance of 4 cm on the map represents how many metres in real life?</div>
+      <div class="options">
+        <button class="option-btn" onclick="selectMCQ('q40','A',false)"><span class="option-label">A</span>100 m</button>
+        <button class="option-btn" onclick="selectMCQ('q40','B',false)"><span class="option-label">B</span>250 m</button>
+        <button class="option-btn" onclick="selectMCQ('q40','C',true)"><span class="option-label">C</span>1000 m</button>
+        <button class="option-btn" onclick="selectMCQ('q40','D',false)"><span class="option-label">D</span>10 000 m</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SECTION B — TRUE / FALSE (10 marks)
+    ══════════════════════════════════════ -->
+    <div class="section-header">Section B — True / False &nbsp;(10 marks)</div>
+
+    <div class="q-card" id="q41">
+      <div class="q-num">Question 41 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The product of two negative numbers is always positive.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q41','T',true)">✅ TRUE</button>
+        <button class="tf-btn" onclick="selectTF('q41','F',false)">❌ FALSE</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q42">
+      <div class="q-num">Question 42 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A prime number has exactly two factors: 1 and itself.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q42','T',true)">✅ TRUE</button>
+        <button class="tf-btn" onclick="selectTF('q42','F',false)">❌ FALSE</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q43">
+      <div class="q-num">Question 43 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The number 1 is a prime number.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q43','T',false)">✅ TRUE</button>
+        <button class="tf-btn" onclick="selectTF('q43','F',true)">❌ FALSE</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q44">
+      <div class="q-num">Question 44 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Any number raised to the power zero equals 0.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q44','T',false)">✅ TRUE</button>
+        <button class="tf-btn" onclick="selectTF('q44','F',true)">❌ FALSE</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q45">
+      <div class="q-num">Question 45 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Co-interior angles between parallel lines are always equal to each other.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q45','T',false)">✅ TRUE</button>
+        <button class="tf-btn" onclick="selectTF('q45','F',true)">❌ FALSE</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q46">
+      <div class="q-num">Question 46 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Area of a rectangle = length × breadth.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q46','T',true)">✅ TRUE</button>
+        <button class="tf-btn" onclick="selectTF('q46','F',false)">❌ FALSE</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q47">
+      <div class="q-num">Question 47 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A percentage value can be greater than 100.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q47','T',true)">✅ TRUE</button>
+        <button class="tf-btn" onclick="selectTF('q47','F',false)">❌ FALSE</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q48">
+      <div class="q-num">Question 48 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">A regular hexagon can tile (tessellate) a flat surface without gaps or overlaps.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q48','T',true)">✅ TRUE</button>
+        <button class="tf-btn" onclick="selectTF('q48','F',false)">❌ FALSE</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q49">
+      <div class="q-num">Question 49 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">An impossible event has a probability (likelihood) of 0.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q49','T',true)">✅ TRUE</button>
+        <button class="tf-btn" onclick="selectTF('q49','F',false)">❌ FALSE</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q50">
+      <div class="q-num">Question 50 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The median of a data set is the most frequently occurring value.</div>
+      <div class="tf-group">
+        <button class="tf-btn" onclick="selectTF('q50','T',false)">✅ TRUE</button>
+        <button class="tf-btn" onclick="selectTF('q50','F',true)">❌ FALSE</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SECTION C — FILL IN THE BLANK (10 marks)
+    ══════════════════════════════════════ -->
+    <div class="section-header">Section C — Fill in the Blank &nbsp;(10 marks)</div>
+
+    <div class="q-card" id="q51">
+      <div class="q-num">Question 51 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The square root of 169 is ___.</div>
+      <input class="fill-input" id="q51-input" type="text" placeholder="Type your answer here">
+    </div>
+
+    <div class="q-card" id="q52">
+      <div class="q-num">Question 52 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">3³ × 3⁴ = 3<sup>___</sup> &nbsp; (Write the index only)</div>
+      <input class="fill-input" id="q52-input" type="text" placeholder="Type the index">
+    </div>
+
+    <div class="q-card" id="q53">
+      <div class="q-num">Question 53 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Simplify 4a + 7b − 2a. The coefficient of <em>a</em> in the simplified expression is ___.</div>
+      <input class="fill-input" id="q53-input" type="text" placeholder="Type the coefficient">
+    </div>
+
+    <div class="q-card" id="q54">
+      <div class="q-num">Question 54 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The interior angles of a triangle always add up to ___°.</div>
+      <input class="fill-input" id="q54-input" type="text" placeholder="Type the number of degrees">
+    </div>
+
+    <div class="q-card" id="q55">
+      <div class="q-num">Question 55 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">Express ¾ as a decimal: ___</div>
+      <input class="fill-input" id="q55-input" type="text" placeholder="Type the decimal">
+    </div>
+
+    <div class="q-card" id="q56">
+      <div class="q-num">Question 56 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">30% of 400 = ___</div>
+      <input class="fill-input" id="q56-input" type="text" placeholder="Type your answer">
+    </div>
+
+    <div class="q-card" id="q57">
+      <div class="q-num">Question 57 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The ratio 18 : 24 in its simplest form is ___ : 4. (Write the missing number)</div>
+      <input class="fill-input" id="q57-input" type="text" placeholder="Type the missing number">
+    </div>
+
+    <div class="q-card" id="q58">
+      <div class="q-num">Question 58 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The volume of a cube with side length 4 cm is ___ cm³.</div>
+      <input class="fill-input" id="q58-input" type="text" placeholder="Type the volume">
+    </div>
+
+    <div class="q-card" id="q59">
+      <div class="q-num">Question 59 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">On a scale drawing of 1 : 5000, a length of 3 cm represents ___ metres in real life.</div>
+      <input class="fill-input" id="q59-input" type="text" placeholder="Type the real distance in metres">
+    </div>
+
+    <div class="q-card" id="q60">
+      <div class="q-num">Question 60 <span class="q-marks">1 mark</span></div>
+      <div class="q-text">The middle value of an ordered data set is called the ___.</div>
+      <input class="fill-input" id="q60-input" type="text" placeholder="Type the statistical term">
+    </div>
+
+    <!-- ══════════════════════════════════════
+         BONUS — WRITTEN QUESTIONS (10 marks)
+    ══════════════════════════════════════ -->
+    <div class="section-header" style="background:#7F4F00;">⭐ Bonus Section — Written Questions &nbsp;(10 marks — parent-marked)</div>
+
+    <div class="bonus-card" id="q61">
+      <div class="q-num">Bonus Question 1 <span class="q-marks" style="background:#FFF9E6; color:#7F4F00;">5 marks</span></div>
+      <div class="q-text">A shopkeeper buys goods for Rs. 1,800 and sells them for Rs. 2,250.<br>
+        (a) Calculate the profit.<br>
+        (b) Calculate the profit percentage.<br>
+        <em style="font-size:13px; font-weight:normal; color:#7F4F00;">Show your working clearly.</em></div>
+      <textarea class="bonus-textarea" id="q61-ans" placeholder="Write your working and answers here..."></textarea>
+    </div>
+
+    <div class="bonus-card" id="q62">
+      <div class="q-num">Bonus Question 2 <span class="q-marks" style="background:#FFF9E6; color:#7F4F00;">5 marks</span></div>
+      <div class="q-text">The four interior angles of a quadrilateral are in the ratio 2 : 3 : 4 : 3.<br>
+        Find all four angles.<br>
+        <em style="font-size:13px; font-weight:normal; color:#7F4F00;">Show all your working.</em></div>
+      <textarea class="bonus-textarea" id="q62-ans" placeholder="Write your working and answers here..."></textarea>
+    </div>
+
+    <button class="submit-btn" onclick="submitExam(false)">✅ Submit Paper &amp; See Results</button>
+  </div>
+</div>
+
+<!-- ═══════════ RESULTS SCREEN ═══════════ -->
+<div id="results-screen">
+  <div class="results-header">
+    <h1>📝 Full Year Maths — Results</h1>
+    <p>Grade 7 · Sri Lankan Syllabus · Sheyvon Warnapura</p>
+    <div class="score-circle" id="r-circle">
+      <span id="r-score">—</span>
+      <small>/ 60</small>
+    </div>
+    <div style="font-size:20px; font-weight:bold;" id="r-pct">—</div>
+    <p id="r-status" style="margin-top:8px; font-size:14px;"></p>
+  </div>
+
+  <div class="results-body">
+    <div class="results-summary">
+      <h2>📊 Your Results at a Glance</h2>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="val" id="r-correct">—</div><div class="lbl">Correct</div></div>
+        <div class="stat-box"><div class="val" id="r-wrong">—</div><div class="lbl">Wrong / Skipped</div></div>
+        <div class="stat-box"><div class="val" id="r-time">—</div><div class="lbl">Time Taken</div></div>
+        <div class="stat-box"><div class="val">60</div><div class="lbl">Total Marks</div></div>
+      </div>
+    </div>
+
+    <div class="results-summary">
+      <h2>📚 Score by Topic</h2>
+      <div id="chapter-scores"></div>
+    </div>
+
+    <div class="results-summary">
+      <h2>📋 Question-by-Question Review</h2>
+      <div id="results-list"></div>
+    </div>
+
+    <div class="results-summary" style="background:#FFF9E6; border: 1px solid #FFC000;">
+      <h2 style="color:#7F4F00;">⭐ Bonus Section — Parent Marking</h2>
+      <p style="font-size:13px; color:#555; margin-bottom:12px;">Please review Sheyvon's written answers below and award marks accordingly (5 marks each).</p>
+      <div style="margin-bottom:16px;">
+        <strong style="color:#1F3864;">Bonus Q1 — Profit &amp; Profit %</strong>
+        <p style="font-size:12px; color:#777; margin: 4px 0;">Expected: Profit = Rs. 450 &nbsp;|&nbsp; Profit % = 25%</p>
+        <div style="background:#FFFDF0; border:1px solid #FFC000; border-radius:8px; padding:12px; font-size:14px; margin-top:6px; white-space:pre-wrap;" id="r-bonus1"></div>
+      </div>
+      <div>
+        <strong style="color:#1F3864;">Bonus Q2 — Angles in a Quadrilateral (ratio 2:3:4:3)</strong>
+        <p style="font-size:12px; color:#777; margin: 4px 0;">Expected: 12x = 360°, x = 30° → Angles: 60°, 90°, 120°, 90°</p>
+        <div style="background:#FFFDF0; border:1px solid #FFC000; border-radius:8px; padding:12px; font-size:14px; margin-top:6px; white-space:pre-wrap;" id="r-bonus2"></div>
+      </div>
+    </div>
+
+    <div class="action-panel">
+      <h2>📌 What Next?</h2>
+      <div id="next-action"></div>
+    </div>
+
+    <div class="parent-box">
+      <h3>📲 Parent Summary</h3>
+      <div id="parent-msg"></div>
+    </div>
+
+    <div style="text-align:center; margin-top:20px;">
+      <button class="download-btn" onclick="downloadResults()">⬇️ Download Full Results Report</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ WhatsApp Float Button ═══ -->
+<style>
+#wa-float-btn{position:fixed;bottom:22px;right:22px;background:#25D366;color:#fff;padding:14px 22px;border-radius:50px;font-size:15px;font-weight:bold;text-decoration:none;display:none;align-items:center;gap:10px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:transform .15s;}
+#wa-float-btn:hover{transform:scale(1.05);}
+</style>
+<a id="wa-float-btn" href="#" target="_blank">📲 Send Results to Mum</a>
+
+<script>
+// ─── State ──────────────────────────────────────────────────
+let secondsLeft = 5400; // 90 minutes
+let timerInterval = null;
+let startTime = null;
+let submitted = false;
+const answers = {};
+
+// ─── Correct TF answers ──────────────────────────────────────
+const correct_answers = {
+  q41:'T', q42:'T', q43:'F', q44:'F', q45:'F',
+  q46:'T', q47:'T', q48:'T', q49:'T', q50:'F'
+};
+
+// ─── Fill-in accepted answers ────────────────────────────────
+const fillAnswers = {
+  q51: ['13'],
+  q52: ['7'],
+  q53: ['2'],
+  q54: ['180'],
+  q55: ['0.75', '.75', '3/4'],
+  q56: ['120'],
+  q57: ['3'],
+  q58: ['64'],
+  q59: ['150'],
+  q60: ['median']
+};
+
+// ─── Question text for results display ───────────────────────
+const q_texts = {
+  q1:'A square has how many axes of symmetry?',
+  q2:'Which shape has rotational symmetry of order 4?',
+  q3:'P={2,4,6,8}, Q={4,8,12} — what is P∪Q?',
+  q4:'How many subsets does a set with 3 elements have?',
+  q5:'Calculate: 3² + 4 × 2 − 1',
+  q6:'Calculate: (20 − 8) ÷ 3 + 5',
+  q7:'What is the HCF of 24 and 36?',
+  q8:'What is the LCM of 6 and 9?',
+  q9:'Simplify: 2³ × 2⁴',
+  q10:'What is the value of 5⁰?',
+  q11:'How many minutes are in 2¾ hours?',
+  q12:'Bus departs 08:45, arrives 11:20 — how long is the journey?',
+  q13:'Co-interior angles between parallel lines add up to?',
+  q14:'Alternate interior angles between parallel lines are?',
+  q15:'Calculate: (−8) + (+5)',
+  q16:'Calculate: (−6) × (−4)',
+  q17:'Angles on a straight line add up to?',
+  q18:'An angle of 135° is classified as?',
+  q19:'Calculate: 2/3 + 3/4',
+  q20:'Calculate: 3/4 ÷ 1/2',
+  q21:'Calculate: 0.6 × 0.5',
+  q22:'Round 7.8463 to 2 decimal places',
+  q23:'Simplify: 5x + 3y − 2x + y',
+  q24:'Expand: 3(2x − 5)',
+  q25:'Convert 4.25 kg to grams',
+  q26:'Sum of interior angles of a quadrilateral?',
+  q27:'Solve: 2x + 3 = 11',
+  q28:'Solve: 5x − 8 = 12',
+  q29:'Convert 3.2 km to metres',
+  q30:'Area of triangle with base 10 cm, height 8 cm?',
+  q31:'Circumference of circle with diameter 14 cm (π=22/7)?',
+  q32:'Volume of cuboid 5 cm × 4 cm × 3 cm?',
+  q33:'How many millilitres in 3.5 litres?',
+  q34:'Share Rs.180 in ratio 2:3 — what is the larger share?',
+  q35:'What is 25% of 360?',
+  q36:'Point (−3, 4) is in which quadrant?',
+  q37:'To bisect an angle, you need?',
+  q38:'How many edges does a cuboid have?',
+  q39:'Mean of 5, 8, 6, 9, 7?',
+  q40:'Scale 1:25000 — 4 cm represents how many metres?',
+  q41:'Product of two negative numbers is always positive. T/F?',
+  q42:'A prime number has exactly two factors. T/F?',
+  q43:'The number 1 is a prime number. T/F?',
+  q44:'Any number to the power zero equals 0. T/F?',
+  q45:'Co-interior angles between parallel lines are equal. T/F?',
+  q46:'Area of rectangle = length × breadth. T/F?',
+  q47:'A percentage can be greater than 100. T/F?',
+  q48:'A regular hexagon can tessellate a flat surface. T/F?',
+  q49:'An impossible event has a probability of 0. T/F?',
+  q50:'The median is the most frequently occurring value. T/F?',
+  q51:'Square root of 169 = ___',
+  q52:'3³ × 3⁴ = 3___ (index)',
+  q53:'4a + 7b − 2a — coefficient of a is ___',
+  q54:'Interior angles of a triangle add up to ___°',
+  q55:'¾ as a decimal = ___',
+  q56:'30% of 400 = ___',
+  q57:'18:24 simplest form is ___:4',
+  q58:'Volume of cube side 4 cm = ___ cm³',
+  q59:'Scale 1:5000, 3 cm represents ___ metres',
+  q60:'Middle value of ordered data set is the ___'
+};
+
+// ─── Explanations ────────────────────────────────────────────
+const explanations = {
+  q1:'A square has 4 axes of symmetry: 2 through opposite vertices and 2 through opposite midpoints.',
+  q2:'A square fits onto itself in 4 positions (every 90°) → rotational symmetry of order 4.',
+  q3:'P∪Q = all elements in either set = {2,4,6,8,12}.',
+  q4:'A set with n elements has 2ⁿ subsets. 2³ = 8.',
+  q5:'BODMAS: indices first (3²=9), then multiply (4×2=8), then left to right: 9+8−1=16.',
+  q6:'Brackets first: 20−8=12. Then 12÷3=4. Then 4+5=9.',
+  q7:'Factors of 24: 1,2,3,4,6,8,12,24. Factors of 36: 1,2,3,4,6,9,12,18,36. HCF=12.',
+  q8:'Multiples of 6: 6,12,18... Multiples of 9: 9,18... LCM=18.',
+  q9:'Same base, add indices: 2³×2⁴ = 2^(3+4) = 2⁷.',
+  q10:'Any non-zero number raised to power 0 = 1. So 5⁰=1.',
+  q11:'2¾ hours = 2 hours + ¾ hour = 120 min + 45 min = 165 min.',
+  q12:'From 08:45 to 11:20: add 2h → 10:45, then add 35 min → 11:20. Total = 2h 35min.',
+  q13:'Co-interior (same-side interior) angles between parallel lines are supplementary — they add to 180°.',
+  q14:'Alternate interior angles (Z-angles) between parallel lines are always equal.',
+  q15:'(−8)+(+5) = −3. Adding a positive to a negative reduces the magnitude.',
+  q16:'Negative × Negative = Positive. (−6)×(−4)=+24.',
+  q17:'Angles on a straight line (linear pair) always add up to 180°.',
+  q18:'An obtuse angle is between 90° and 180°. 135° is obtuse.',
+  q19:'2/3+3/4: common denom=12. 8/12+9/12=17/12.',
+  q20:'Dividing by a fraction = multiplying by its reciprocal. 3/4 ÷ 1/2 = 3/4 × 2/1 = 6/4 = 3/2.',
+  q21:'0.6×0.5 = 0.30 = 0.3. (6×5=30, two decimal places → 0.30)',
+  q22:'7.8463 — the 3rd decimal is 6 (≥5), so round up the 2nd decimal: 7.85.',
+  q23:'Collect like terms: (5x−2x)+(3y+y)=3x+4y.',
+  q24:'3×2x=6x; 3×(−5)=−15. Answer: 6x−15.',
+  q25:'1 kg = 1000 g. So 4.25 kg = 4250 g.',
+  q26:'Sum of interior angles of any quadrilateral = 360°.',
+  q27:'2x+3=11 → 2x=8 → x=4.',
+  q28:'5x−8=12 → 5x=20 → x=4.',
+  q29:'1 km = 1000 m. So 3.2 km = 3200 m.',
+  q30:'Area of triangle = ½ × base × height = ½ × 10 × 8 = 40 cm².',
+  q31:'C = π × d = 22/7 × 14 = 44 cm.',
+  q32:'V = l×w×h = 5×4×3 = 60 cm³.',
+  q33:'1 litre = 1000 ml. So 3.5 L = 3500 ml.',
+  q34:'Total parts = 2+3=5. One part = 180÷5=36. Larger share = 3×36 = Rs.108.',
+  q35:'25% = ¼. ¼ × 360 = 90.',
+  q36:'x is negative, y is positive → Second quadrant.',
+  q37:'To bisect an angle you draw arcs using a compass, then connect the intersection — compass and ruler.',
+  q38:'A cuboid has 12 edges (4 along each of 3 dimensions).',
+  q39:'Sum = 5+8+6+9+7=35. Mean = 35÷5 = 7.',
+  q40:'4 cm × 25000 = 100,000 cm = 1000 m.',
+  q41:'TRUE — negative × negative = positive. e.g. (−3)×(−2)=+6.',
+  q42:'TRUE — by definition, a prime has exactly two distinct factors.',
+  q43:'FALSE — 1 has only one factor (itself), so it is neither prime nor composite.',
+  q44:'FALSE — any non-zero number to the power 0 equals 1, not 0.',
+  q45:'FALSE — co-interior angles add to 180° (supplementary). Alternate angles are equal, not co-interior.',
+  q46:'TRUE — Area of rectangle = length × breadth.',
+  q47:'TRUE — e.g. 150% means 1.5 times the original value.',
+  q48:'TRUE — regular hexagons (interior angle 120°) fit together perfectly to cover a plane.',
+  q49:'TRUE — impossible events (e.g. rolling a 7 on a standard die) have probability = 0.',
+  q50:'FALSE — the median is the MIDDLE value. The MODE is the most frequently occurring value.',
+  q51:'√169 = 13 (since 13×13=169).',
+  q52:'3³×3⁴ = 3^(3+4) = 3⁷. The index is 7.',
+  q53:'4a−2a=2a. So the coefficient of a is 2.',
+  q54:'Interior angles of any triangle always add up to 180°.',
+  q55:'¾ = 3÷4 = 0.75.',
+  q56:'30% of 400 = 0.30 × 400 = 120.',
+  q57:'18:24 — divide both by 6 → 3:4. Missing number is 3.',
+  q58:'Volume of cube = side³ = 4³ = 4×4×4 = 64 cm³.',
+  q59:'3 cm × 5000 = 15,000 cm = 150 m.',
+  q60:'The MEDIAN is the middle value of an ordered data set.'
+};
+
+// ─── Chapter groupings for results ───────────────────────────
+const chapterRanges = {
+  'Ch01–02: Symmetry &amp; Sets':       ['q1','q2','q3','q4'],
+  'Ch03–04: Operations &amp; Factors':  ['q5','q6','q7','q8'],
+  'Ch05–06: Indices &amp; Time':         ['q9','q10','q11','q12'],
+  'Ch07–08: Parallel Lines &amp; Directed Numbers': ['q13','q14','q15','q16'],
+  'Ch09–10: Angles &amp; Fractions':    ['q17','q18','q19','q20'],
+  'Ch11–12: Decimals &amp; Algebra':    ['q21','q22','q23','q24'],
+  'Ch13–16: Mass, Plane Figures, Equations, Length': ['q25','q26','q27','q28','q29'],
+  'Ch17–20: Area, Circles, Volume, Capacity': ['q30','q31','q32','q33'],
+  'Ch21–24: Ratios, %, Cartesian, Construction': ['q34','q35','q36','q37'],
+  'Ch25–27: Solids, Data &amp; Scale':  ['q38','q39','q40'],
+  'Section B: True / False':             ['q41','q42','q43','q44','q45','q46','q47','q48','q49','q50'],
+  'Section C: Fill in the Blank':        ['q51','q52','q53','q54','q55','q56','q57','q58','q59','q60']
+};
+
+const mcqQids  = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10',
+                  'q11','q12','q13','q14','q15','q16','q17','q18','q19','q20',
+                  'q21','q22','q23','q24','q25','q26','q27','q28','q29','q30',
+                  'q31','q32','q33','q34','q35','q36','q37','q38','q39','q40'];
+const tfQids   = ['q41','q42','q43','q44','q45','q46','q47','q48','q49','q50'];
+const fillQids = ['q51','q52','q53','q54','q55','q56','q57','q58','q59','q60'];
+const objQids  = [...mcqQids, ...tfQids, ...fillQids];
+
+// ─── Timer ───────────────────────────────────────────────────
+function startExam() {
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('exam-screen').style.display = 'block';
+  startTime = new Date();
+  timerInterval = setInterval(tick, 1000);
+  window.scrollTo(0, 0);
+}
+
+function tick() {
+  secondsLeft--;
+  const m = Math.floor(secondsLeft / 60);
+  const s = secondsLeft % 60;
+  document.getElementById('timer-display').textContent =
+    String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  const box = document.getElementById('timer-box');
+  if (secondsLeft <= 0) {
+    clearInterval(timerInterval);
+    submitExam(true);
+  } else if (secondsLeft <= 180) {
+    box.className = 'timer-box danger';
+  } else if (secondsLeft <= 600) {
+    box.className = 'timer-box warning';
+  }
+}
+
+// ─── MCQ ─────────────────────────────────────────────────────
+function selectMCQ(qid, letter, isCorrect) {
+  if (submitted) return;
+  answers[qid] = { selected: letter, correct: isCorrect };
+  const card = document.getElementById(qid);
+  card.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+}
+
+// ─── T/F ─────────────────────────────────────────────────────
+function selectTF(qid, letter, isCorrect) {
+  if (submitted) return;
+  answers[qid] = { selected: letter, correct: isCorrect };
+  const card = document.getElementById(qid);
+  card.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+}
+
+// ─── Submit ──────────────────────────────────────────────────
+function submitExam(autoSubmit = false) {
+  if (submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+
+  const elapsed = Math.round((new Date() - startTime) / 1000);
+  const em = Math.floor(elapsed / 60);
+  const es = elapsed % 60;
+  const timeStr = String(em).padStart(2,'0') + ':' + String(es).padStart(2,'0');
+
+  // Score fills
+  fillQids.forEach(qid => {
+    const val = (document.getElementById(qid + '-input').value || '').trim().toLowerCase();
+    answers[qid] = { selected: val, correct: fillAnswers[qid].includes(val) };
+  });
+
+  // ── Highlight MCQ ────────────────────────────────────────
+  mcqQids.forEach(qid => {
+    const card = document.getElementById(qid);
+    card.querySelectorAll('.option-btn').forEach(b => {
+      b.disabled = true;
+      const isCorrectBtn = b.onclick && b.onclick.toString().includes(',true)');
+      if (b.classList.contains('selected')) {
+        b.classList.remove('selected');
+        b.classList.add(answers[qid]?.correct ? 'correct' : 'wrong');
+        b.querySelector('.option-label').style.background = answers[qid]?.correct ? '#375623' : '#9C0006';
+        b.querySelector('.option-label').style.color = 'white';
+      } else if (isCorrectBtn) {
+        b.classList.add('correct');
+        b.querySelector('.option-label').style.background = '#375623';
+        b.querySelector('.option-label').style.color = 'white';
+      }
+    });
+  });
+
+  // ── Highlight T/F ────────────────────────────────────────
+  tfQids.forEach(qid => {
+    const card = document.getElementById(qid);
+    card.querySelectorAll('.tf-btn').forEach(b => {
+      b.disabled = true;
+      if (b.classList.contains('selected')) {
+        b.classList.remove('selected');
+        b.classList.add(answers[qid]?.correct ? 'correct' : 'wrong');
+      } else {
+        const letter = b.onclick.toString().match(/'(T|F)'/)?.[1];
+        if (letter === correct_answers[qid]) b.classList.add('correct');
+      }
+    });
+  });
+
+  // ── Highlight Fill ───────────────────────────────────────
+  fillQids.forEach(qid => {
+    const inp = document.getElementById(qid + '-input');
+    inp.disabled = true;
+    inp.classList.add(answers[qid]?.correct ? 'correct' : 'wrong');
+  });
+
+  // ── Score ────────────────────────────────────────────────
+  let score = 0;
+  objQids.forEach(qid => { if (answers[qid]?.correct) score++; });
+  const pct = Math.round((score / 60) * 100);
+
+  // ── Show Results ─────────────────────────────────────────
+  document.getElementById('exam-screen').style.display = 'none';
+  const rs = document.getElementById('results-screen');
+  rs.style.display = 'block';
+  window.scrollTo(0, 0);
+
+  document.getElementById('r-score').textContent = score;
+  document.getElementById('r-pct').textContent = pct + '%';
+  document.getElementById('r-correct').textContent = score;
+  document.getElementById('r-wrong').textContent = (60 - score);
+  document.getElementById('r-time').textContent = timeStr;
+
+  const circle = document.getElementById('r-circle');
+  const status = document.getElementById('r-status');
+  if (pct >= 80) {
+    circle.className = 'score-circle pass';
+    status.textContent = '🌟 Excellent! Outstanding result across all 29 chapters, Sheyvon!';
+  } else if (pct >= 60) {
+    circle.className = 'score-circle warn';
+    status.textContent = '👍 Good effort! Review the weak areas and you will do even better.';
+  } else {
+    circle.className = 'score-circle fail';
+    status.textContent = '📖 Keep going — look at the chapter scores below and revise the weak areas.';
+  }
+
+  // ── Chapter Scores ───────────────────────────────────────
+  const csDiv = document.getElementById('chapter-scores');
+  csDiv.innerHTML = '';
+  Object.entries(chapterRanges).forEach(([name, qids]) => {
+    const chScore = qids.filter(qid => answers[qid]?.correct).length;
+    const chPct   = Math.round((chScore / qids.length) * 100);
+    const colour  = chPct >= 75 ? '#375623' : chPct >= 50 ? '#7F4F00' : '#9C0006';
+    const div = document.createElement('div');
+    div.className = 'chapter-score';
+    div.innerHTML = `<span class="ch-name">${name}</span><span class="ch-sc" style="color:${colour}">${chScore}/${qids.length} (${chPct}%)</span>`;
+    csDiv.appendChild(div);
+  });
+
+  // ── Q-by-Q Review ────────────────────────────────────────
+  const list = document.getElementById('results-list');
+  list.innerHTML = '';
+  objQids.forEach((qid, i) => {
+    const isCorrect = answers[qid]?.correct;
+    const div = document.createElement('div');
+    div.className = 'q-result ' + (isCorrect ? 'correct-res' : 'wrong-res');
+    div.innerHTML = `
+      <div class="icon">${isCorrect ? '✅' : '❌'}</div>
+      <div class="q-info">
+        <strong>Q${i+1}: ${q_texts[qid]}</strong>
+        <p>${isCorrect ? '✔ Correct' : '✘ Wrong — ' + explanations[qid]}</p>
+      </div>`;
+    list.appendChild(div);
+  });
+
+  // ── Bonus answers ────────────────────────────────────────
+  document.getElementById('r-bonus1').textContent = document.getElementById('q61-ans').value || '(not answered)';
+  document.getElementById('r-bonus2').textContent = document.getElementById('q62-ans').value || '(not answered)';
+
+  // ── Parent Message ───────────────────────────────────────
+  const chSummary = Object.entries(chapterRanges).map(([name, qids]) => {
+    const s = qids.filter(qid => answers[qid]?.correct).length;
+    return name.replace(/&amp;/g,'&') + ': ' + s + '/' + qids.length;
+  }).join(' | ');
+
+  document.getElementById('parent-msg').innerHTML = `
+    <strong>Sheyvon completed:</strong> Full Year Maths Comprehensive Paper (Ch01–Ch29)<br>
+    <strong>Score (objective):</strong> ${score}/60 (${pct}%)<br>
+    <strong>Time taken:</strong> ${timeStr}<br>
+    <strong>By section:</strong> MCQ ${mcqQids.filter(q=>answers[q]?.correct).length}/40 | T/F ${tfQids.filter(q=>answers[q]?.correct).length}/10 | Fill ${fillQids.filter(q=>answers[q]?.correct).length}/10<br>
+    <strong>Status:</strong> ${pct >= 60 ? '✅ Passed' : '❌ Needs revision'}<br>
+    <strong>Bonus:</strong> 2 written questions — please review and mark above.`;
+
+  // ── Next Action ──────────────────────────────────────────
+  const na = document.getElementById('next-action');
+  if (pct >= 80) {
+    na.innerHTML = `<p style="color:#375623; font-size:14px; margin-bottom:12px;">🌟 Superb! You have a strong command of the full year's Maths. You are well prepared for your exams!</p>
+    <a class="action-btn green" href="../Short_Notes/Term1_Maths_RevisionNotes.html">📖 Full Year Revision Notes</a>`;
+  } else if (pct >= 60) {
+    na.innerHTML = `<p style="color:#7F4F00; font-size:14px; margin-bottom:12px;">👍 You passed! Focus on the red-marked chapters above and revise those notes.</p>
+    <a class="action-btn orange" href="../Short_Notes/Term1_Maths_RevisionNotes.html">📖 Revision Notes</a>`;
+  } else {
+    na.innerHTML = `<p style="color:#9C0006; font-size:14px; margin-bottom:12px;">📖 Let's target the weak chapters. Look at the red sections above and revise those notes first.</p>
+    <a class="action-btn" href="../Short_Notes/Term1_Maths_RevisionNotes.html">📖 Start Revising</a>
+    <a class="action-btn orange" href="FullYear_Maths_TimedPaper.html">↩ Retry This Paper</a>`;
+  }
+
+  // ── Store for download ───────────────────────────────────
+  window._resultScore = score;
+  window._resultPct   = pct;
+  window._resultTime  = timeStr;
+
+  // ── WhatsApp float button ─────────────────────────────────
+  (function(){
+    var _dat = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    var _mcq = mcqQids.filter(q=>answers[q]?.correct).length;
+    var _tf  = tfQids.filter(q=>answers[q]?.correct).length;
+    var _fil = fillQids.filter(q=>answers[q]?.correct).length;
+    var _msg = '📊 *Sheyvon Result*\n📚 Maths — Full Year Comprehensive Paper (Ch01–Ch29)\n🗓️ ' + _dat +
+               '\n✏️ Score: ' + score + '/60 (' + pct + '%) · Time: ' + timeStr +
+               '\n📝 MCQ: ' + _mcq + '/40 | T/F: ' + _tf + '/10 | Fill: ' + _fil + '/10' +
+               '\n' + (pct >= 60 ? '✅ Passed' : '❌ Needs revision') +
+               '\n⭐ Bonus: 2 written questions — please check and mark.';
+    var btn = document.getElementById('wa-float-btn');
+    if (btn) { btn.href = 'https://wa.me/94764551840?text=' + encodeURIComponent(_msg); btn.style.display = 'flex'; }
+  })();
+}
+
+function downloadResults() {
+  var date      = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'});
+  var dateStamp = new Date().toISOString().slice(0,10);
+  var score     = window._resultScore || 0;
+  var pct       = window._resultPct   || 0;
+  var timeStr   = window._resultTime  || '--:--';
+  var status    = pct >= 80 ? '🌟 Excellent' : pct >= 60 ? '👍 Passed' : '❌ Needs Revision';
+
+  var qRows = objQids.map(function(qid, i) {
+    var ok = answers[qid]?.correct;
+    var bg = ok ? '#C6EFCE' : '#FFE0E0';
+    return '<tr style="background:' + bg + '"><td style="padding:8px 10px;border-bottom:1px solid #eee;">' + (i+1) +
+      '</td><td style="padding:8px 10px;border-bottom:1px solid #eee;">' + (q_texts[qid]||'') +
+      '</td><td style="padding:8px 10px;border-bottom:1px solid #eee;">' + (ok ? '✅ Correct' : '❌ Wrong') +
+      '</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-size:12px;color:#555;">' + (ok ? '' : (explanations[qid]||'')) +
+      '</td></tr>';
+  }).join('');
+
+  var b1 = document.getElementById('r-bonus1')?.textContent || '(not answered)';
+  var b2 = document.getElementById('r-bonus2')?.textContent || '(not answered)';
+
+  var html = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Results — Full Year Maths — ' + date + '</title>' +
+    '<style>body{font-family:Arial,sans-serif;background:#f0f4ff;margin:0;padding:24px;color:#222;}' +
+    '.hdr{background:linear-gradient(135deg,#1F3864,#2E75B6);color:white;padding:24px 30px;border-radius:12px;margin-bottom:20px;}' +
+    '.hdr h1{font-size:20px;margin-bottom:4px;}.hdr .sc{font-size:48px;font-weight:bold;margin:10px 0;}' +
+    'table{width:100%;border-collapse:collapse;background:white;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);margin-bottom:20px;}' +
+    'th{background:#1F3864;color:white;padding:10px 12px;text-align:left;font-size:13px;}' +
+    'td{vertical-align:top;}' +
+    '.box{background:white;border-radius:10px;padding:20px 24px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.07);}' +
+    '.box h2{color:#1F3864;font-size:15px;margin-bottom:10px;}' +
+    'pre{white-space:pre-wrap;font-family:Arial;font-size:13px;background:#f7f9ff;padding:12px;border-radius:6px;color:#333;margin-top:6px;}' +
+    '</style></head><body>' +
+    '<div class="hdr"><h1>📝 Full Year Maths Comprehensive Paper — Grade 7 (Ch01–Ch29)</h1>' +
+    '<p>Sheyvon Warnapura &nbsp;|&nbsp; ' + date + ' &nbsp;|&nbsp; Time taken: ' + timeStr + '</p>' +
+    '<div class="sc">' + score + ' / 60</div>' +
+    '<p style="font-size:18px;font-weight:bold;">' + pct + '% — ' + status + '</p></div>' +
+    '<div class="box"><h2>📝 Question-by-Question Results (60 objective marks)</h2>' +
+    '<table><tr><th>#</th><th>Question</th><th>Result</th><th>Explanation (if wrong)</th></tr>' + qRows + '</table></div>' +
+    '<div class="box"><h2>📖 Bonus Q1 — Profit &amp; Profit % (parent-marked, 5 marks)</h2><p style="font-size:12px;color:#777;">Expected: Profit = Rs.450, Profit% = 25%</p><pre>' + b1.replace(/</g,'&lt;') + '</pre></div>' +
+    '<div class="box"><h2>📖 Bonus Q2 — Angles in ratio 2:3:4:3 (parent-marked, 5 marks)</h2><p style="font-size:12px;color:#777;">Expected: 12x=360°, x=30° → Angles: 60°, 90°, 120°, 90°</p><pre>' + b2.replace(/</g,'&lt;') + '</pre></div>' +
+    '<p style="font-size:12px;color:#999;text-align:center;">Generated by Sheyvon\'s Study System · ' + date + '</p>' +
+    '</body></html>';
+
+  var blob = new Blob([html], {type:'text/html'});
+  var a    = document.createElement('a');
+  a.href   = URL.createObjectURL(blob);
+  a.download = dateStamp + '_FullYear_Maths_Results.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+}
+</script>
+</body>
+</html>
