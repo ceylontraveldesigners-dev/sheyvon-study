@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catholicism – Grade 7 Term 2 Timed Paper</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f9f3ee; color: #1a1a2e; }
+  .header {
+    background: linear-gradient(135deg, #6a1b1b, #b71c1c);
+    color: white; padding: 24px 32px; text-align: center;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .header h1 { font-size: 1.5rem; letter-spacing: 1px; }
+  .header .sub { font-size: 0.9rem; opacity: 0.85; margin-top: 4px; }
+  .timer-box {
+    margin-top: 12px; display: inline-block;
+    background: #4a148c; border-radius: 10px;
+    padding: 8px 24px; font-size: 1.8rem;
+    font-weight: bold; letter-spacing: 3px; min-width: 140px;
+  }
+  .timer-box.warning { background: #e65100; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
+  .controls { display: flex; gap: 12px; justify-content: center; padding: 20px; flex-wrap: wrap; }
+  .btn { padding: 10px 24px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .btn-start  { background: #2e7d32; color: white; }
+  .btn-start:hover  { background: #1b5e20; transform: translateY(-1px); }
+  .btn-submit { background: #6a1b1b; color: white; }
+  .btn-submit:hover { background: #4e0d0d; transform: translateY(-1px); }
+  .btn-reset  { background: #37474f; color: white; }
+  .btn-reset:hover  { background: #263238; transform: translateY(-1px); }
+  .instructions {
+    background: #fff8e1; border-left: 5px solid #f9a825;
+    margin: 0 24px 24px; padding: 18px 24px; border-radius: 6px;
+    font-size: 0.95rem; line-height: 1.7;
+  }
+  .instructions h3 { color: #e65100; margin-bottom: 8px; }
+  .paper { max-width: 820px; margin: 0 auto; padding: 0 20px 60px; }
+  .section-header {
+    background: linear-gradient(135deg, #6a1b1b, #b71c1c); color: white;
+    padding: 12px 20px; border-radius: 8px;
+    margin: 32px 0 20px; font-size: 1.05rem; font-weight: 700;
+  }
+  .section-header span { font-weight: 400; font-size: 0.9rem; opacity: 0.85; }
+  .qcard {
+    background: white; border-radius: 10px; padding: 20px 24px;
+    margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border-left: 4px solid #ffcdd2; transition: border-color 0.2s;
+  }
+  .qcard:hover { border-color: #b71c1c; }
+  .qcard.answered { border-color: #43a047; }
+  .q-number { font-weight: 700; color: #6a1b1b; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .q-text { font-size: 1rem; line-height: 1.6; margin-bottom: 14px; }
+  .marks-badge { float: right; background: #ffebee; color: #b71c1c; padding: 2px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 600; }
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  @media(max-width:580px){ .options { grid-template-columns: 1fr; } }
+  .option-label {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border-radius: 8px; border: 2px solid #ffebee;
+    cursor: pointer; font-size: 0.95rem; transition: all 0.15s;
+  }
+  .option-label:hover { border-color: #b71c1c; background: #ffebee; }
+  .option-label input { accent-color: #b71c1c; width: 16px; height: 16px; }
+  .answer-area {
+    width: 100%; min-height: 90px; border: 2px solid #e0e0e0;
+    border-radius: 8px; padding: 12px; font-size: 0.95rem;
+    font-family: inherit; resize: vertical; transition: border-color 0.2s;
+  }
+  .answer-area:focus { outline: none; border-color: #b71c1c; }
+  .hint { font-size: 0.82rem; color: #888; font-style: italic; margin-bottom: 8px; }
+  .progress-bar-wrap { background: #e0e0e0; border-radius: 6px; height: 8px; margin: 4px 0 8px; }
+  .progress-bar { height: 8px; border-radius: 6px; background: #b71c1c; transition: width 0.3s; width: 0%; }
+  .progress-label { font-size: 0.82rem; color: #666; text-align: right; }
+  #start-overlay {
+    position: fixed; inset: 0; background: rgba(106,27,27,0.96);
+    display: flex; align-items: center; justify-content: center; z-index: 999;
+  }
+  .overlay-box { background: white; padding: 48px; border-radius: 16px; max-width: 500px; text-align: center; box-shadow: 0 8px 40px rgba(0,0,0,0.4); }
+  .overlay-box h2 { color: #6a1b1b; font-size: 1.8rem; margin-bottom: 10px; }
+  .overlay-box p { color: #555; line-height: 1.7; margin-bottom: 20px; font-size: 0.95rem; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
+  .info-item { background: #ffebee; padding: 10px; border-radius: 8px; }
+  .info-item .lbl { font-size: 0.75rem; color: #888; }
+  .info-item .val { font-size: 0.95rem; font-weight: 700; color: #6a1b1b; margin-top: 2px; }
+  .locked { pointer-events: none; opacity: 0.5; }
+  #score-panel {
+    display: none; background: white; max-width: 820px;
+    margin: 20px auto; padding: 32px; border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12); text-align: center;
+  }
+  #score-panel h2 { color: #6a1b1b; font-size: 1.6rem; margin-bottom: 8px; }
+  .score-number { font-size: 3rem; font-weight: 900; color: #2e7d32; margin: 16px 0; }
+  .section-scores { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin: 20px 0; padding: 16px; background: #f5f5f5; border-radius: 8px; }
+  .section-score-box { background: white; padding: 12px 20px; border-radius: 8px; border: 2px solid #ffcdd2; text-align: center; min-width: 120px; }
+  .section-score-box .label { font-size: 0.78rem; color: #666; margin-bottom: 4px; }
+  .section-score-box .val { font-size: 1.4rem; font-weight: 800; color: #6a1b1b; }
+  .answer-key-note { background: #e8f5e9; border-radius: 8px; padding: 16px; margin-top: 16px; font-size: 0.95rem; color: #2e7d32; font-weight: 600; }
+  .written-answers { margin-top: 28px; text-align: left; }
+  .written-answers h3 { color: #6a1b1b; margin-bottom: 14px; font-size: 1rem; }
+  .wa-item { background: #f5f5f5; border-left: 4px solid #b71c1c; border-radius: 6px; padding: 12px 16px; margin-bottom: 10px; font-size: 0.9rem; }
+  .wa-item .wa-q { font-weight: 700; color: #6a1b1b; margin-bottom: 6px; font-size: 0.82rem; text-transform: uppercase; }
+  .wa-item .wa-a { color: #333; line-height: 1.6; white-space: pre-wrap; }
+  .btn-email { display: block; width: 100%; margin-top: 20px; background: #e53935; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; text-align: center; }
+  .btn-email:hover { background: #b71c1c; }
+</style>
+</head>
+<body>
+
+<!-- OVERLAY -->
+<div id="start-overlay">
+  <div class="overlay-box">
+    <h2>✝️ Catholicism — Term 2</h2>
+    <p>This paper covers all <strong>18 lessons</strong> from the Grade 7 Catholicism textbook — from <em>The Prophets of Israel</em> to <em>Living the Life of Faith</em>.</p>
+    <div class="info-grid">
+      <div class="info-item"><div class="lbl">Total Marks</div><div class="val">60</div></div>
+      <div class="info-item"><div class="lbl">Time Allowed</div><div class="val">1 hr 30 min</div></div>
+      <div class="info-item"><div class="lbl">Section A</div><div class="val">MCQ · 20 marks</div></div>
+      <div class="info-item"><div class="lbl">Section B</div><div class="val">Short Answer · 20 marks</div></div>
+      <div class="info-item" style="grid-column:1/-1"><div class="lbl">Section C</div><div class="val">Structured / Essay · 20 marks</div></div>
+    </div>
+    <button class="btn btn-start" onclick="startExam()" style="width:100%;font-size:1.1rem;padding:14px;">▶ Start Exam</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="sub">Grade 7 Catholicism · Term 2 · Lessons 1 – 18</div>
+  <h1>TERM 2 EXAMINATION</h1>
+  <div class="sub">Total Marks: 60 &nbsp;|&nbsp; Time: 1 Hour 30 Minutes</div>
+  <div class="timer-box" id="timer">01:30:00</div>
+</div>
+
+<div class="controls">
+  <button class="btn btn-submit" onclick="submitExam()">✔ Submit Paper</button>
+  <button class="btn btn-reset" onclick="resetExam()">↺ Reset</button>
+</div>
+
+<div style="max-width:820px;margin:0 auto;padding:0 20px 10px;">
+  <div class="progress-label" id="progress-label">0 / 28 answered</div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+</div>
+
+<div class="paper" id="paper">
+
+  <div class="instructions">
+    <h3>Instructions</h3>
+    <ol style="padding-left:20px;line-height:2;">
+      <li><strong>Section A</strong> — Select the best answer for each MCQ. (20 × 1 mark = 20 marks)</li>
+      <li><strong>Section B</strong> — Answer each question in 2–4 sentences. (8 × 2.5 marks = 20 marks)</li>
+      <li><strong>Section C</strong> — Answer in full paragraphs. (4 × 5 marks = 20 marks)</li>
+      <li>Submit before the timer reaches zero. Section A is auto-marked; Sections B &amp; C need teacher/parent marking.</li>
+    </ol>
+  </div>
+
+  <!-- ===== SECTION A ===== -->
+  <div class="section-header">Section A — Multiple Choice Questions <span>(20 × 1 mark = 20 marks)</span></div>
+
+  <div class="qcard" id="card-mcq1">
+    <div class="q-number">Question 1 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The Hebrew word for "Prophet" is:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq1" value="a"> a) Prophetes</label>
+      <label class="option-label"><input type="radio" name="mcq1" value="b"> b) Nabi</label>
+      <label class="option-label"><input type="radio" name="mcq1" value="c"> c) Logos</label>
+      <label class="option-label"><input type="radio" name="mcq1" value="d"> d) Doulos</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq2">
+    <div class="q-number">Question 2 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">How many Major Prophets are there in the Old Testament?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq2" value="a"> a) 2</label>
+      <label class="option-label"><input type="radio" name="mcq2" value="b"> b) 3</label>
+      <label class="option-label"><input type="radio" name="mcq2" value="c"> c) 12</label>
+      <label class="option-label"><input type="radio" name="mcq2" value="d"> d) 7</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq3">
+    <div class="q-number">Question 3 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which prophet was known as the "Prophet of Social Justice"?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq3" value="a"> a) Hosea</label>
+      <label class="option-label"><input type="radio" name="mcq3" value="b"> b) Jonah</label>
+      <label class="option-label"><input type="radio" name="mcq3" value="c"> c) Amos</label>
+      <label class="option-label"><input type="radio" name="mcq3" value="d"> d) Isaiah</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq4">
+    <div class="q-number">Question 4 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which prophet used his own marriage life as part of his prophetic mission to call Israel back to God?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq4" value="a"> a) Amos</label>
+      <label class="option-label"><input type="radio" name="mcq4" value="b"> b) Jonah</label>
+      <label class="option-label"><input type="radio" name="mcq4" value="c"> c) Elijah</label>
+      <label class="option-label"><input type="radio" name="mcq4" value="d"> d) Hosea</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq5">
+    <div class="q-number">Question 5 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The birthplace of Abraham was:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq5" value="a"> a) Haran</label>
+      <label class="option-label"><input type="radio" name="mcq5" value="b"> b) Canaan</label>
+      <label class="option-label"><input type="radio" name="mcq5" value="c"> c) Ur</label>
+      <label class="option-label"><input type="radio" name="mcq5" value="d"> d) Bethel</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq6">
+    <div class="q-number">Question 6 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">What is the meaning of the name "Abraham"?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq6" value="a"> a) Great Father</label>
+      <label class="option-label"><input type="radio" name="mcq6" value="b"> b) Father of Nations</label>
+      <label class="option-label"><input type="radio" name="mcq6" value="c"> c) God Saves</label>
+      <label class="option-label"><input type="radio" name="mcq6" value="d"> d) Father of Faith</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq7">
+    <div class="q-number">Question 7 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">What is the meaning of the name "Isaac"?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq7" value="a"> a) God has lifted</label>
+      <label class="option-label"><input type="radio" name="mcq7" value="b"> b) God has Encouraged</label>
+      <label class="option-label"><input type="radio" name="mcq7" value="c"> c) Smiling</label>
+      <label class="option-label"><input type="radio" name="mcq7" value="d"> d) God Saves</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq8">
+    <div class="q-number">Question 8 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The place where Jacob had a dream of a stairway reaching to heaven was named:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq8" value="a"> a) Penuel</label>
+      <label class="option-label"><input type="radio" name="mcq8" value="b"> b) Bethel</label>
+      <label class="option-label"><input type="radio" name="mcq8" value="c"> c) Beersheba</label>
+      <label class="option-label"><input type="radio" name="mcq8" value="d"> d) Moriah</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq9">
+    <div class="q-number">Question 9 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which Apostle was a tax collector before Jesus called him?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq9" value="a"> a) Peter</label>
+      <label class="option-label"><input type="radio" name="mcq9" value="b"> b) John</label>
+      <label class="option-label"><input type="radio" name="mcq9" value="c"> c) Andrew</label>
+      <label class="option-label"><input type="radio" name="mcq9" value="d"> d) Matthew</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq10">
+    <div class="q-number">Question 10 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The Sacrament of Holy Orders was instituted by Jesus Christ on:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq10" value="a"> a) Good Friday</label>
+      <label class="option-label"><input type="radio" name="mcq10" value="b"> b) Easter Sunday</label>
+      <label class="option-label"><input type="radio" name="mcq10" value="c"> c) Holy Thursday</label>
+      <label class="option-label"><input type="radio" name="mcq10" value="d"> d) Pentecost Sunday</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq11">
+    <div class="q-number">Question 11 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The three vows taken by Religious priests are:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq11" value="a"> a) Obedience, Chastity, Service</label>
+      <label class="option-label"><input type="radio" name="mcq11" value="b"> b) Poverty, Obedience, Chastity</label>
+      <label class="option-label"><input type="radio" name="mcq11" value="c"> c) Poverty, Celibacy, Service</label>
+      <label class="option-label"><input type="radio" name="mcq11" value="d"> d) Faith, Hope, Charity</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq12">
+    <div class="q-number">Question 12 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Through Baptism, every Christian is anointed as a:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq12" value="a"> a) Teacher, Leader and Servant</label>
+      <label class="option-label"><input type="radio" name="mcq12" value="b"> b) Priest, Prophet and King</label>
+      <label class="option-label"><input type="radio" name="mcq12" value="c"> c) Deacon, Priest and Bishop</label>
+      <label class="option-label"><input type="radio" name="mcq12" value="d"> d) Reader, Server and Singer</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq13">
+    <div class="q-number">Question 13 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The two signs of a Christian marriage are:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq13" value="a"> a) Love and Service</label>
+      <label class="option-label"><input type="radio" name="mcq13" value="b"> b) Faith and Hope</label>
+      <label class="option-label"><input type="radio" name="mcq13" value="c"> c) Unity and Continuity</label>
+      <label class="option-label"><input type="radio" name="mcq13" value="d"> d) Prayer and Fasting</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq14">
+    <div class="q-number">Question 14 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which commandment teaches us to honour and respect our parents?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq14" value="a"> a) 5th Commandment</label>
+      <label class="option-label"><input type="radio" name="mcq14" value="b"> b) 7th Commandment</label>
+      <label class="option-label"><input type="radio" name="mcq14" value="c"> c) 4th Commandment</label>
+      <label class="option-label"><input type="radio" name="mcq14" value="d"> d) 8th Commandment</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq15">
+    <div class="q-number">Question 15 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which commandment says "You shall not give false testimony against your neighbour"?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq15" value="a"> a) 6th Commandment</label>
+      <label class="option-label"><input type="radio" name="mcq15" value="b"> b) 9th Commandment</label>
+      <label class="option-label"><input type="radio" name="mcq15" value="c"> c) 7th Commandment</label>
+      <label class="option-label"><input type="radio" name="mcq15" value="d"> d) 8th Commandment</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq16">
+    <div class="q-number">Question 16 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which of the following is a JUST way of obtaining property according to the 7th commandment?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq16" value="a"> a) Taking by force</label>
+      <label class="option-label"><input type="radio" name="mcq16" value="b"> b) Borrowing and not returning</label>
+      <label class="option-label"><input type="radio" name="mcq16" value="c"> c) Inheriting</label>
+      <label class="option-label"><input type="radio" name="mcq16" value="d"> d) Stealing as a joke</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq17">
+    <div class="q-number">Question 17 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The 10th commandment forbids us from:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq17" value="a"> a) Lying to our teachers</label>
+      <label class="option-label"><input type="radio" name="mcq17" value="b"> b) Stealing from others</label>
+      <label class="option-label"><input type="radio" name="mcq17" value="c"> c) Coveting our neighbour's goods</label>
+      <label class="option-label"><input type="radio" name="mcq17" value="d"> d) Disrespecting parents</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq18">
+    <div class="q-number">Question 18 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The external symbol of the Covenant God made with Abraham was:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq18" value="a"> a) Baptism</label>
+      <label class="option-label"><input type="radio" name="mcq18" value="b"> b) The rainbow</label>
+      <label class="option-label"><input type="radio" name="mcq18" value="c"> c) Circumcision</label>
+      <label class="option-label"><input type="radio" name="mcq18" value="d"> d) Fire</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq19">
+    <div class="q-number">Question 19 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which Oratory Prophet cured Naaman, the commander of the Syrian army, from a dreaded skin disease?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq19" value="a"> a) Elijah</label>
+      <label class="option-label"><input type="radio" name="mcq19" value="b"> b) Nathan</label>
+      <label class="option-label"><input type="radio" name="mcq19" value="c"> c) Elisha</label>
+      <label class="option-label"><input type="radio" name="mcq19" value="d"> d) Isaiah</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq20">
+    <div class="q-number">Question 20 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which of the following is NOT a degree of the ministerial priesthood?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq20" value="a"> a) Deacon</label>
+      <label class="option-label"><input type="radio" name="mcq20" value="b"> b) Bishop</label>
+      <label class="option-label"><input type="radio" name="mcq20" value="c"> c) Pope</label>
+      <label class="option-label"><input type="radio" name="mcq20" value="d"> d) Priest</label>
+    </div>
+  </div>
+
+  <!-- ===== SECTION B ===== -->
+  <div class="section-header">Section B — Short Answer Questions <span>(Write 2–4 sentences each · 8 × 2.5 marks = 20 marks)</span></div>
+
+  <div class="qcard" id="card-b1">
+    <div class="q-number">Question 21 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">Name the three Major Prophets. Write the meaning of each of their names and the century they lived in.</div>
+    <div class="hint">Expected: name + meaning + century for each prophet.</div>
+    <textarea class="answer-area" placeholder="1. Isaiah — &#10;2. Jeremiah — &#10;3. Ezekiel — " oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-b2">
+    <div class="q-number">Question 22 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">Describe what happened to Prophet Jonah when he tried to flee from God's call. What lesson can we learn from his story?</div>
+    <textarea class="answer-area" placeholder="Write your answer here..." oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-b3">
+    <div class="q-number">Question 23 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">What were the TWO elements of Abraham's call? Give one specific example of each from the textbook.</div>
+    <div class="hint">Elements: Sacrifice and Challenge.</div>
+    <textarea class="answer-area" placeholder="Element 1 — Sacrifice:&#10;&#10;Element 2 — Challenge:" oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-b4">
+    <div class="q-number">Question 24 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">Name the first four Apostles called by Jesus. Where were they when Jesus called them, and what did He say to them?</div>
+    <textarea class="answer-area" placeholder="Write your answer here..." oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-b5">
+    <div class="q-number">Question 25 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">Describe what happens at the most important and essential part of the Baptismal Rite. What does it symbolise?</div>
+    <textarea class="answer-area" placeholder="Write your answer here..." oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-b6">
+    <div class="q-number">Question 26 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">Write FOUR examples that a Christian family can take from the life of the Holy Family of Nazareth. (Lesson 14)</div>
+    <textarea class="answer-area" placeholder="1. &#10;2. &#10;3. &#10;4. " oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-b7">
+    <div class="q-number">Question 27 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">Explain the difference between the 7th commandment (Do Not Steal) and the 10th commandment (Do Not Covet Your Neighbour's Goods). Give one example to show the difference.</div>
+    <textarea class="answer-area" placeholder="Write your answer here..." oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-b8">
+    <div class="q-number">Question 28 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">The 4th commandment extends beyond just our parents. Name THREE other groups of people it asks us to respect, and write ONE duty we have towards each group.</div>
+    <textarea class="answer-area" placeholder="Group 1: ___ Duty: ___&#10;Group 2: ___ Duty: ___&#10;Group 3: ___ Duty: ___" oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- ===== SECTION C ===== -->
+  <div class="section-header">Section C — Structured &amp; Essay Questions <span>(Write in full paragraphs · 4 × 5 marks = 20 marks)</span></div>
+
+  <div class="qcard" id="card-c1">
+    <div class="q-number">Question 29 <span class="marks-badge">5 marks</span></div>
+    <div class="q-text">
+      <strong>The Oratory Prophets</strong><br><br>
+      <strong>(a)</strong> Name the three Oratory Prophets of the Old Testament. <em>(1.5 marks)</em><br><br>
+      <strong>(b)</strong> Choose ONE of these prophets and write about his work in detail — what he did, who he helped or corrected, and what lesson we can learn from him today. <em>(2.5 marks)</em><br><br>
+      <strong>(c)</strong> Give ONE example of how you can act as a "prophet" in your school or home today. <em>(1 mark)</em>
+    </div>
+    <textarea class="answer-area" style="min-height:160px;" placeholder="(a) The three Oratory Prophets are:&#10;&#10;(b)&#10;&#10;(c)" oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-c2">
+    <div class="q-number">Question 30 <span class="marks-badge">5 marks</span></div>
+    <div class="q-text">
+      <strong>Abraham — Father of Faith</strong><br><br>
+      <strong>(a)</strong> God made a Covenant with Abraham with two promises. State both promises clearly. <em>(2 marks)</em><br><br>
+      <strong>(b)</strong> What does it mean that Abraham was called the "Father of Faith"? Give TWO examples from his life that show his faith in God. <em>(2 marks)</em><br><br>
+      <strong>(c)</strong> Write ONE example from Abraham's life that you personally want to follow in your own life. Explain why. <em>(1 mark)</em>
+    </div>
+    <textarea class="answer-area" style="min-height:160px;" placeholder="(a)&#10;&#10;(b)&#10;&#10;(c)" oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-c3">
+    <div class="q-number">Question 31 <span class="marks-badge">5 marks</span></div>
+    <div class="q-text">
+      <strong>The Sacraments — Holy Orders and Religious Life</strong><br><br>
+      <strong>(a)</strong> Name the THREE degrees of the ministerial priesthood and write ONE responsibility for each. <em>(3 marks)</em><br><br>
+      <strong>(b)</strong> What are the three vows taken by Religious priests? Explain what each vow means in your own words. <em>(2 marks)</em>
+    </div>
+    <textarea class="answer-area" style="min-height:160px;" placeholder="(a) Three degrees:&#10;1. Deacon — &#10;2. Priest — &#10;3. Bishop — &#10;&#10;(b) Three vows:&#10;1. &#10;2. &#10;3. " oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-c4">
+    <div class="q-number">Question 32 <span class="marks-badge">5 marks</span></div>
+    <div class="q-text">
+      <strong>Living the Life of Faith — Essay</strong><br><br>
+      Choose <strong>ONE</strong> of the following commandments and write an essay of about 100–120 words explaining:<br>
+      &bull; What the commandment teaches<br>
+      &bull; A Bible story or quote from the lesson that relates to it<br>
+      &bull; How you plan to live this commandment as a Grade 7 student<br><br>
+      <em>Choose ONE: 4th Commandment (Honour your parents) &nbsp;|&nbsp; 7th Commandment (Do not steal) &nbsp;|&nbsp; 8th Commandment (Do not give false witness) &nbsp;|&nbsp; 10th Commandment (Do not covet)</em>
+    </div>
+    <textarea class="answer-area" style="min-height:200px;" placeholder="I have chosen the ___ Commandment.&#10;&#10;" oninput="updateProgress()"></textarea>
+  </div>
+
+  <div style="text-align:center;margin-top:30px;">
+    <button class="btn btn-submit" onclick="submitExam()" style="font-size:1.1rem;padding:14px 40px;">✔ Submit My Paper</button>
+  </div>
+
+</div><!-- end paper -->
+
+<!-- SCORE PANEL -->
+<div id="score-panel">
+  <h2>✝️ Paper Submitted!</h2>
+  <div class="score-number" id="mcq-score-display">— / 20</div>
+  <div class="score-message" id="score-msg">Section A (MCQ) Score</div>
+  <div class="section-scores">
+    <div class="section-score-box"><div class="label">Section A — MCQ</div><div class="val" id="sc-a">—/20</div></div>
+    <div class="section-score-box"><div class="label">Section B — Short Answer</div><div class="val">—/20</div></div>
+    <div class="section-score-box"><div class="label">Section C — Structured</div><div class="val">—/20</div></div>
+    <div class="section-score-box" style="background:#ffebee;border-color:#b71c1c"><div class="label">Total (estimated)</div><div class="val" id="sc-total">—/60</div></div>
+  </div>
+  <div class="answer-key-note">
+    📄 Sections B &amp; C need marking by a parent or teacher.<br>
+    Use <strong>Catholicism_Term2_AnswerKey.html</strong> to check all answers with explanations.
+  </div>
+  <div id="mcq-review" style="margin-top:28px;text-align:left;"></div>
+  <div class="written-answers" id="written-answers-panel"></div>
+  <button class="btn-email" id="email-btn" onclick="emailAnswers()" style="display:none;">📧 Send My Answers to Mum</button>
+</div>
+
+<script>
+const CORRECT = {
+  mcq1:'b', mcq2:'b', mcq3:'c', mcq4:'d', mcq5:'c',
+  mcq6:'b', mcq7:'c', mcq8:'b', mcq9:'d', mcq10:'c',
+  mcq11:'b', mcq12:'b', mcq13:'c', mcq14:'c', mcq15:'d',
+  mcq16:'c', mcq17:'c', mcq18:'c', mcq19:'c', mcq20:'c'
+};
+
+let totalSeconds = 90 * 60;
+let timerInterval = null;
+let examStarted = false;
+const TOTAL_Q = 28;
+
+function startExam() {
+  document.getElementById('start-overlay').style.display = 'none';
+  examStarted = true;
+  timerInterval = setInterval(tick, 1000);
+}
+
+function tick() {
+  totalSeconds--;
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  const el = document.getElementById('timer');
+  el.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+  if (totalSeconds <= 300) el.classList.add('warning');
+  if (totalSeconds <= 0) { clearInterval(timerInterval); submitExam(); }
+}
+function pad(n){ return String(n).padStart(2,'0'); }
+
+function updateProgress() {
+  let answered = 0;
+  for(let i=1;i<=20;i++){
+    if(document.querySelector(`input[name="mcq${i}"]:checked`)){
+      answered++;
+      document.getElementById(`card-mcq${i}`).classList.add('answered');
+    }
+  }
+  document.querySelectorAll('.answer-area').forEach(ta => {
+    if(ta.value.trim().length > 5) answered++;
+  });
+  document.getElementById('progress-label').textContent = `${answered} / ${TOTAL_Q} answered`;
+  document.getElementById('progress-bar').style.width = `${Math.min(100,(answered/TOTAL_Q)*100)}%`;
+}
+document.querySelectorAll('input[type=radio]').forEach(r => r.addEventListener('change', updateProgress));
+
+function submitExam() {
+  if(!examStarted){ alert('Please click Start Exam first!'); return; }
+  clearInterval(timerInterval);
+
+  let mcqScore = 0;
+  const reviewHTML = ['<h3 style="color:#6a1b1b;margin-bottom:16px;">📊 Section A — MCQ Review</h3>'];
+  for(let i=1;i<=20;i++){
+    const sel = document.querySelector(`input[name="mcq${i}"]:checked`);
+    const given = sel ? sel.value : null;
+    const correct = CORRECT[`mcq${i}`];
+    const correctLabel = document.querySelector(`input[name="mcq${i}"][value="${correct}"]`)?.parentElement?.textContent?.trim() || '';
+    const givenLabel = given ? (document.querySelector(`input[name="mcq${i}"][value="${given}"]`)?.parentElement?.textContent?.trim() || 'No answer') : 'No answer';
+    const isRight = given === correct;
+    if(isRight) mcqScore++;
+    const color = isRight ? '#2e7d32' : '#c62828';
+    const icon = isRight ? '✅' : '❌';
+    reviewHTML.push(`<div style="background:${isRight?'#e8f5e9':'#ffebee'};border-left:4px solid ${color};padding:10px 14px;border-radius:6px;margin-bottom:8px;font-size:0.9rem;">
+      <strong>Q${i}</strong> ${icon} &nbsp; Your answer: <em>${givenLabel}</em>
+      ${!isRight ? `&nbsp;|&nbsp; Correct: <strong style="color:#2e7d32">${correctLabel}</strong>` : ''}
+    </div>`);
+  }
+
+  document.getElementById('mcq-score-display').textContent = `${mcqScore} / 20`;
+  document.getElementById('sc-a').textContent = `${mcqScore}/20`;
+  document.getElementById('sc-total').textContent = `${mcqScore}+ / 60`;
+  document.getElementById('mcq-review').innerHTML = reviewHTML.join('');
+
+  const writtenQuestions = [
+    {id:'b1', num:'Q21', label:'Three Major Prophets — names, meanings and centuries'},
+    {id:'b2', num:'Q22', label:'Prophet Jonah — what happened and lesson learned'},
+    {id:'b3', num:'Q23', label:'Two elements of Abraham\'s call — Sacrifice and Challenge'},
+    {id:'b4', num:'Q24', label:'First four Apostles — where called and what Jesus said'},
+    {id:'b5', num:'Q25', label:'Most important part of the Baptismal Rite and its symbolism'},
+    {id:'b6', num:'Q26', label:'Four examples from the Holy Family of Nazareth'},
+    {id:'b7', num:'Q27', label:'Difference between 7th and 10th commandments with example'},
+    {id:'b8', num:'Q28', label:'Three groups the 4th commandment asks us to respect + one duty each'},
+    {id:'c1', num:'Q29', label:'Oratory Prophets — names, one in detail, prophet in school/home'},
+    {id:'c2', num:'Q30', label:'Abraham Father of Faith — two promises, two faith examples, personal example'},
+    {id:'c3', num:'Q31', label:'Holy Orders — three degrees with responsibilities, three vows explained'},
+    {id:'c4', num:'Q32', label:'Essay — chosen commandment teaching, Bible reference, personal plan'},
+  ];
+
+  let writtenHTML = '<h3>📝 Sections B &amp; C — Written Answers (for parent/teacher to mark)</h3>';
+  let emailBody = `CATHOLICISM TERM 2 — SHEYVON'S ANSWERS\nDate: ${new Date().toLocaleDateString('en-GB')}\n\nSECTION A (MCQ): ${mcqScore} / 20\n\n===== SECTIONS B & C =====\n`;
+
+  writtenQuestions.forEach(q => {
+    const ta = document.querySelector(`#card-${q.id} .answer-area`);
+    const val = ta ? ta.value.trim() : '';
+    const display = val || '(No answer written)';
+    writtenHTML += `<div class="wa-item"><div class="wa-q">${q.num} — ${q.label}</div><div class="wa-a">${display.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div></div>`;
+    emailBody += `\n${q.num} — ${q.label}\n${display}\n${'─'.repeat(50)}\n`;
+  });
+
+  document.getElementById('written-answers-panel').innerHTML = writtenHTML;
+  window._emailBody = emailBody;
+  document.getElementById('email-btn').style.display = 'block';
+  document.getElementById('score-panel').style.display = 'block';
+  document.getElementById('score-panel').scrollIntoView({behavior:'smooth'});
+  document.getElementById('paper').classList.add('locked');
+}
+
+function emailAnswers() {
+  const subject = encodeURIComponent("Catholicism Term 2 — Sheyvon's Answers");
+  const body = encodeURIComponent(window._emailBody || '');
+  window.location.href = `mailto:ceylontraveldesigners@gmail.com?subject=${subject}&body=${body}`;
+}
+
+function resetExam() {
+  if(!confirm('Reset the paper? All answers will be cleared.')) return;
+  location.reload();
+}
+</script>
+</body>
+</html>
