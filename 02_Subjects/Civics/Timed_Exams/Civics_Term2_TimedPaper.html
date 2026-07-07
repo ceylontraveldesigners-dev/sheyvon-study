@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civics – Grade 7 Term 2 Timed Paper</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; color: #1a1a2e; }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #1a237e, #283593);
+    color: white;
+    padding: 24px 32px;
+    text-align: center;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .header h1 { font-size: 1.5rem; letter-spacing: 1px; }
+  .header .sub { font-size: 0.9rem; opacity: 0.85; margin-top: 4px; }
+  .timer-box {
+    margin-top: 12px;
+    display: inline-block;
+    background: #e53935;
+    border-radius: 10px;
+    padding: 8px 24px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    letter-spacing: 3px;
+    min-width: 140px;
+  }
+  .timer-box.warning { background: #ff6f00; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
+
+  /* ── CONTROLS ── */
+  .controls {
+    display: flex; gap: 12px; justify-content: center; padding: 20px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 10px 24px; border: none; border-radius: 8px;
+    font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-start  { background: #2e7d32; color: white; }
+  .btn-start:hover  { background: #1b5e20; transform: translateY(-1px); }
+  .btn-submit { background: #1565c0; color: white; }
+  .btn-submit:hover { background: #0d47a1; transform: translateY(-1px); }
+  .btn-reset  { background: #c62828; color: white; }
+  .btn-reset:hover  { background: #b71c1c; transform: translateY(-1px); }
+
+  /* ── INSTRUCTIONS ── */
+  .instructions {
+    background: #fff8e1; border-left: 5px solid #f9a825;
+    margin: 0 24px 24px; padding: 18px 24px; border-radius: 6px;
+    font-size: 0.95rem; line-height: 1.7;
+  }
+  .instructions h3 { color: #e65100; margin-bottom: 8px; }
+
+  /* ── PAPER CONTAINER ── */
+  .paper {
+    max-width: 820px; margin: 0 auto; padding: 0 20px 60px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    background: #1a237e; color: white;
+    padding: 12px 20px; border-radius: 8px;
+    margin: 32px 0 20px; font-size: 1.05rem; font-weight: 700;
+  }
+  .section-header span { font-weight: 400; font-size: 0.9rem; opacity: 0.85; }
+
+  /* ── QUESTION CARDS ── */
+  .qcard {
+    background: white; border-radius: 10px; padding: 20px 24px;
+    margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border-left: 4px solid #c5cae9;
+    transition: border-color 0.2s;
+  }
+  .qcard:hover { border-color: #3949ab; }
+  .qcard.answered { border-color: #43a047; }
+  .q-number {
+    font-weight: 700; color: #1a237e; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;
+  }
+  .q-text { font-size: 1rem; line-height: 1.6; margin-bottom: 14px; }
+  .marks-badge {
+    float: right; background: #e8eaf6; color: #3949ab;
+    padding: 2px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 600;
+  }
+
+  /* ── MCQ OPTIONS ── */
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  @media(max-width:580px){ .options { grid-template-columns: 1fr; } }
+  .option-label {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border-radius: 8px; border: 2px solid #e8eaf6;
+    cursor: pointer; font-size: 0.95rem; transition: all 0.15s;
+  }
+  .option-label:hover { border-color: #3949ab; background: #e8eaf6; }
+  .option-label input { accent-color: #3949ab; width: 16px; height: 16px; }
+  .option-label.selected { border-color: #3949ab; background: #e8eaf6; }
+
+  /* ── TEXT AREAS ── */
+  .answer-area {
+    width: 100%; min-height: 80px; border: 2px solid #e0e0e0;
+    border-radius: 8px; padding: 12px; font-size: 0.95rem;
+    font-family: inherit; resize: vertical; transition: border-color 0.2s;
+  }
+  .answer-area:focus { outline: none; border-color: #3949ab; }
+
+  /* ── SCORE PANEL ── */
+  #score-panel {
+    display: none; background: white;
+    max-width: 820px; margin: 20px auto;
+    padding: 32px; border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    text-align: center;
+  }
+  #score-panel h2 { color: #1a237e; font-size: 1.6rem; margin-bottom: 8px; }
+  .score-number { font-size: 3rem; font-weight: 900; color: #2e7d32; margin: 16px 0; }
+  .score-message { font-size: 1.1rem; color: #555; margin-bottom: 20px; }
+  .section-scores {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    margin: 20px 0; padding: 16px; background: #f5f5f5; border-radius: 8px;
+  }
+  .section-score-box {
+    background: white; padding: 12px 20px; border-radius: 8px;
+    border: 2px solid #c5cae9; text-align: center; min-width: 120px;
+  }
+  .section-score-box .label { font-size: 0.8rem; color: #666; margin-bottom: 4px; }
+  .section-score-box .val { font-size: 1.4rem; font-weight: 800; color: #1a237e; }
+  .answer-key-note {
+    background: #e8f5e9; border-radius: 8px; padding: 16px;
+    margin-top: 16px; font-size: 0.95rem; color: #2e7d32; font-weight: 600;
+  }
+  .written-answers { margin-top: 28px; text-align: left; }
+  .written-answers h3 { color: #1a237e; margin-bottom: 14px; font-size: 1rem; }
+  .wa-item {
+    background: #f5f5f5; border-left: 4px solid #3949ab;
+    border-radius: 6px; padding: 12px 16px; margin-bottom: 10px; font-size: 0.9rem;
+  }
+  .wa-item .wa-q { font-weight: 700; color: #1a237e; margin-bottom: 6px; font-size: 0.82rem; text-transform: uppercase; }
+  .wa-item .wa-a { color: #333; line-height: 1.6; white-space: pre-wrap; }
+  .btn-email {
+    display: block; width: 100%; margin-top: 20px;
+    background: #e53935; color: white; border: none;
+    padding: 14px; border-radius: 8px; font-size: 1rem;
+    font-weight: 700; cursor: pointer; text-align: center;
+  }
+  .btn-email:hover { background: #b71c1c; }
+
+  /* ── OVERLAY ── */
+  #start-overlay {
+    position: fixed; inset: 0; background: rgba(26,35,126,0.95);
+    display: flex; align-items: center; justify-content: center; z-index: 999;
+  }
+  .overlay-box {
+    background: white; padding: 48px; border-radius: 16px;
+    max-width: 480px; text-align: center; box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  }
+  .overlay-box h2 { color: #1a237e; font-size: 1.8rem; margin-bottom: 12px; }
+  .overlay-box p { color: #555; line-height: 1.7; margin-bottom: 24px; }
+  .overlay-box .info-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px;
+  }
+  .info-item { background: #e8eaf6; padding: 10px; border-radius: 8px; }
+  .info-item .lbl { font-size: 0.75rem; color: #666; }
+  .info-item .val { font-size: 1rem; font-weight: 700; color: #1a237e; margin-top: 2px; }
+
+  .locked { pointer-events: none; opacity: 0.5; }
+  .progress-bar-wrap { background: #e0e0e0; border-radius: 6px; height: 8px; margin: 12px 0; }
+  .progress-bar { height: 8px; border-radius: 6px; background: #3949ab; transition: width 0.3s; width: 0%; }
+  .progress-label { font-size: 0.82rem; color: #666; text-align: right; }
+</style>
+</head>
+<body>
+
+<!-- START OVERLAY -->
+<div id="start-overlay">
+  <div class="overlay-box">
+    <h2>📚 Civics — Term 2</h2>
+    <p>This timed paper covers <strong>Lesson 1: Our Family</strong> and <strong>Lesson 2: Our Society</strong>. Read all questions carefully before answering.</p>
+    <div class="info-grid">
+      <div class="info-item"><div class="lbl">Total Marks</div><div class="val">60</div></div>
+      <div class="info-item"><div class="lbl">Time Allowed</div><div class="val">1 hr 30 min</div></div>
+      <div class="info-item"><div class="lbl">Section A</div><div class="val">MCQ · 20 marks</div></div>
+      <div class="info-item"><div class="lbl">Section B</div><div class="val">Short Answer · 20 marks</div></div>
+      <div class="info-item" style="grid-column:1/-1"><div class="lbl">Section C</div><div class="val">Structured Questions · 20 marks</div></div>
+    </div>
+    <button class="btn btn-start" onclick="startExam()" style="width:100%;font-size:1.1rem;padding:14px;">
+      ▶ Start Exam
+    </button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="sub">Grade 7 Civic Education · Term 2 · Lessons 1 &amp; 2</div>
+  <h1>TERM 2 EXAMINATION</h1>
+  <div class="sub">Total Marks: 60 &nbsp;|&nbsp; Time: 1 Hour 30 Minutes</div>
+  <div class="timer-box" id="timer">01:30:00</div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <button class="btn btn-submit" onclick="submitExam()">✔ Submit Paper</button>
+  <button class="btn btn-reset" onclick="resetExam()">↺ Reset</button>
+</div>
+
+<!-- PROGRESS -->
+<div style="max-width:820px;margin:0 auto;padding:0 20px 10px;">
+  <div class="progress-label" id="progress-label">0 / 30 questions answered</div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+</div>
+
+<!-- PAPER -->
+<div class="paper" id="paper">
+
+  <!-- INSTRUCTIONS -->
+  <div class="instructions">
+    <h3>Instructions</h3>
+    <ol style="padding-left:20px;line-height:2;">
+      <li>Section A — Circle / select the best answer for each multiple choice question. (20 × 1 mark)</li>
+      <li>Section B — Answer each question briefly in the space provided. (10 × 2 marks)</li>
+      <li>Section C — Answer ALL structured questions in full sentences. (4 × 5 marks)</li>
+      <li>You must submit before the timer reaches zero.</li>
+      <li>Only Section A is auto-marked. Sections B &amp; C require your parent or teacher to check against the Answer Key.</li>
+    </ol>
+  </div>
+
+  <!-- ===== SECTION A ===== -->
+  <div class="section-header">Section A — Multiple Choice Questions <span>(Choose the best answer · 20 marks)</span></div>
+
+  <!-- Q1 -->
+  <div class="qcard" id="card-mcq1">
+    <div class="q-number">Question 1 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">A family which consists of mother, father, children <strong>and</strong> paternal or maternal relatives living together in the same residence is called:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq1" value="a"> a) Nuclear family</label>
+      <label class="option-label"><input type="radio" name="mcq1" value="b"> b) Simple family</label>
+      <label class="option-label"><input type="radio" name="mcq1" value="c"> c) Extended family</label>
+      <label class="option-label"><input type="radio" name="mcq1" value="d"> d) Community family</label>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="qcard" id="card-mcq2">
+    <div class="q-number">Question 2 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which of the following is an advantage of an extended family over a nuclear family?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq2" value="a"> a) Fewer members to support financially</label>
+      <label class="option-label"><input type="radio" name="mcq2" value="b"> b) Labour is easily available for household chores</label>
+      <label class="option-label"><input type="radio" name="mcq2" value="c"> c) More privacy for parents</label>
+      <label class="option-label"><input type="radio" name="mcq2" value="d"> d) Less responsibility for parents</label>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="qcard" id="card-mcq3">
+    <div class="q-number">Question 3 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The pride you develop about your better qualities, superior behavioural patterns and capabilities is known as:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq3" value="a"> a) Self-confidence</label>
+      <label class="option-label"><input type="radio" name="mcq3" value="b"> b) Self-esteem</label>
+      <label class="option-label"><input type="radio" name="mcq3" value="c"> c) Self-discipline</label>
+      <label class="option-label"><input type="radio" name="mcq3" value="d"> d) Self-awareness</label>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="qcard" id="card-mcq4">
+    <div class="q-number">Question 4 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which of the following is a <strong>Civil Right</strong>?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq4" value="a"> a) Right to vote in an election</label>
+      <label class="option-label"><input type="radio" name="mcq4" value="b"> b) Right to be a candidate at an election</label>
+      <label class="option-label"><input type="radio" name="mcq4" value="c"> c) Right to follow any religion</label>
+      <label class="option-label"><input type="radio" name="mcq4" value="d"> d) Right to criticize the government</label>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="qcard" id="card-mcq5">
+    <div class="q-number">Question 5 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">DNA stands for:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq5" value="a"> a) Deoxyribose Nucleic Acid</label>
+      <label class="option-label"><input type="radio" name="mcq5" value="b"> b) Deoxyribonucleic Acid</label>
+      <label class="option-label"><input type="radio" name="mcq5" value="c"> c) Diribonucleic Acid</label>
+      <label class="option-label"><input type="radio" name="mcq5" value="d"> d) Deoxyribonitric Acid</label>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="qcard" id="card-mcq6">
+    <div class="q-number">Question 6 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">According to Sri Lankan law, children below the age of <strong>_____</strong> cannot be employed:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq6" value="a"> a) 12</label>
+      <label class="option-label"><input type="radio" name="mcq6" value="b"> b) 14</label>
+      <label class="option-label"><input type="radio" name="mcq6" value="c"> c) 16</label>
+      <label class="option-label"><input type="radio" name="mcq6" value="d"> d) 18</label>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="qcard" id="card-mcq7">
+    <div class="q-number">Question 7 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Government servants in Sri Lanka are required to retire at the age of:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq7" value="a"> a) 55</label>
+      <label class="option-label"><input type="radio" name="mcq7" value="b"> b) 57</label>
+      <label class="option-label"><input type="radio" name="mcq7" value="c"> c) 60</label>
+      <label class="option-label"><input type="radio" name="mcq7" value="d"> d) 65</label>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="qcard" id="card-mcq8">
+    <div class="q-number">Question 8 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">In which era of human civilisation did people work cooperatively to hunt for food and fulfill basic needs?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq8" value="a"> a) Nomadic era</label>
+      <label class="option-label"><input type="radio" name="mcq8" value="b"> b) Agrarian era</label>
+      <label class="option-label"><input type="radio" name="mcq8" value="c"> c) Hunting era</label>
+      <label class="option-label"><input type="radio" name="mcq8" value="d"> d) Industrial era</label>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="qcard" id="card-mcq9">
+    <div class="q-number">Question 9 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The emergency call bureau number mentioned in the Civics textbook is:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq9" value="a"> a) 1919</label>
+      <label class="option-label"><input type="radio" name="mcq9" value="b"> b) 119</label>
+      <label class="option-label"><input type="radio" name="mcq9" value="c"> c) 911</label>
+      <label class="option-label"><input type="radio" name="mcq9" value="d"> d) 110</label>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="qcard" id="card-mcq10">
+    <div class="q-number">Question 10 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which of the following is a <strong>Political Right</strong>?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq10" value="a"> a) Right to education</label>
+      <label class="option-label"><input type="radio" name="mcq10" value="b"> b) Right to live</label>
+      <label class="option-label"><input type="radio" name="mcq10" value="c"> c) Right to be an elector</label>
+      <label class="option-label"><input type="radio" name="mcq10" value="d"> d) Right to follow a religion</label>
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="qcard" id="card-mcq11">
+    <div class="q-number">Question 11 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The smallest social unit in society is:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq11" value="a"> a) School</label>
+      <label class="option-label"><input type="radio" name="mcq11" value="b"> b) Village</label>
+      <label class="option-label"><input type="radio" name="mcq11" value="c"> c) Family</label>
+      <label class="option-label"><input type="radio" name="mcq11" value="d"> d) Religious institution</label>
+    </div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="qcard" id="card-mcq12">
+    <div class="q-number">Question 12 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Customs and rituals that have prevailed in society for a long time are called:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq12" value="a"> a) Habits</label>
+      <label class="option-label"><input type="radio" name="mcq12" value="b"> b) Traditions</label>
+      <label class="option-label"><input type="radio" name="mcq12" value="c"> c) Rules</label>
+      <label class="option-label"><input type="radio" name="mcq12" value="d"> d) Norms</label>
+    </div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="qcard" id="card-mcq13">
+    <div class="q-number">Question 13 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which of the following activities helps to control unfavourable emotions?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq13" value="a"> a) Watching violent movies</label>
+      <label class="option-label"><input type="radio" name="mcq13" value="b"> b) Engaging in religious activities</label>
+      <label class="option-label"><input type="radio" name="mcq13" value="c"> c) Getting angry at others</label>
+      <label class="option-label"><input type="radio" name="mcq13" value="d"> d) Avoiding friends</label>
+    </div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="qcard" id="card-mcq14">
+    <div class="q-number">Question 14 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which of the following information <strong>must</strong> be printed on packaged food products?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq14" value="a"> a) Country of manufacture</label>
+      <label class="option-label"><input type="radio" name="mcq14" value="b"> b) Name of the shop selling it</label>
+      <label class="option-label"><input type="radio" name="mcq14" value="c"> c) Expiry date</label>
+      <label class="option-label"><input type="radio" name="mcq14" value="d"> d) Weight of the packaging material</label>
+    </div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="qcard" id="card-mcq15">
+    <div class="q-number">Question 15 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Private sector female employees can obtain their Employees' Provident Fund (EPF):</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq15" value="a"> a) At age 55 only</label>
+      <label class="option-label"><input type="radio" name="mcq15" value="b"> b) At age 55 or upon marriage</label>
+      <label class="option-label"><input type="radio" name="mcq15" value="c"> c) At age 57</label>
+      <label class="option-label"><input type="radio" name="mcq15" value="d"> d) At age 60</label>
+    </div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="qcard" id="card-mcq16">
+    <div class="q-number">Question 16 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which of the following is <strong>NOT</strong> a challenge faced by modern families?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq16" value="a"> a) Parents working abroad</label>
+      <label class="option-label"><input type="radio" name="mcq16" value="b"> b) Differences in attitudes among family members</label>
+      <label class="option-label"><input type="radio" name="mcq16" value="c"> c) Insufficient income for living</label>
+      <label class="option-label"><input type="radio" name="mcq16" value="d"> d) Having many helpful neighbours</label>
+    </div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="qcard" id="card-mcq17">
+    <div class="q-number">Question 17 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">'Data' in the context of the Civics lesson means:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq17" value="a"> a) Information found only on the internet</label>
+      <label class="option-label"><input type="radio" name="mcq17" value="b"> b) Sources which provide information related to a subject</label>
+      <label class="option-label"><input type="radio" name="mcq17" value="c"> c) Only written forms of communication</label>
+      <label class="option-label"><input type="radio" name="mcq17" value="d"> d) A type of electronic media</label>
+    </div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="qcard" id="card-mcq18">
+    <div class="q-number">Question 18 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which of the following is <strong>NOT</strong> listed as a great quality for a good citizen?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq18" value="a"> a) Compassion and kindness</label>
+      <label class="option-label"><input type="radio" name="mcq18" value="b"> b) Being honest</label>
+      <label class="option-label"><input type="radio" name="mcq18" value="c"> c) Selfishness</label>
+      <label class="option-label"><input type="radio" name="mcq18" value="d"> d) Fulfilling duties</label>
+    </div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="qcard" id="card-mcq19">
+    <div class="q-number">Question 19 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Article 23 of the Universal Charter on Human Rights gives every individual:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq19" value="a"> a) The right to free education</label>
+      <label class="option-label"><input type="radio" name="mcq19" value="b"> b) The right to work and choose one's occupation freely</label>
+      <label class="option-label"><input type="radio" name="mcq19" value="c"> c) The right to vote in every election</label>
+      <label class="option-label"><input type="radio" name="mcq19" value="d"> d) The right to free housing</label>
+    </div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="qcard" id="card-mcq20">
+    <div class="q-number">Question 20 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which of the following qualities is important for facing challenges successfully?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq20" value="a"> a) Running away from the problem</label>
+      <label class="option-label"><input type="radio" name="mcq20" value="b"> b) Self-confidence and firm determination</label>
+      <label class="option-label"><input type="radio" name="mcq20" value="c"> c) Ignoring the problem</label>
+      <label class="option-label"><input type="radio" name="mcq20" value="d"> d) Blaming others for the problem</label>
+    </div>
+  </div>
+
+  <!-- ===== SECTION B ===== -->
+  <div class="section-header">Section B — Short Answer Questions <span>(Answer briefly · 10 × 2 marks = 20 marks)</span></div>
+
+  <!-- B1 -->
+  <div class="qcard" id="card-b1">
+    <div class="q-number">Question 21 <span class="marks-badge">2 marks</span></div>
+    <div class="q-text"><strong>(a)</strong> What is a <strong>nuclear family</strong>?<br><strong>(b)</strong> Give ONE example of how a nuclear family differs from an extended family.</div>
+    <textarea class="answer-area" placeholder="Write your answer here..." oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- B2 -->
+  <div class="qcard" id="card-b2">
+    <div class="q-number">Question 22 <span class="marks-badge">2 marks</span></div>
+    <div class="q-text">List <strong>FOUR</strong> benefits of being a member of a family.</div>
+    <textarea class="answer-area" placeholder="1. &#10;2. &#10;3. &#10;4. " oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- B3 -->
+  <div class="qcard" id="card-b3">
+    <div class="q-number">Question 23 <span class="marks-badge">2 marks</span></div>
+    <div class="q-text">In the story of <em>Little Shyama</em>, what qualities did Shyama show that reflected her <strong>self-esteem</strong>? Name TWO.</div>
+    <textarea class="answer-area" placeholder="Write your answer here..." oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- B4 -->
+  <div class="qcard" id="card-b4">
+    <div class="q-number">Question 24 <span class="marks-badge">2 marks</span></div>
+    <div class="q-text">Name <strong>TWO civil rights</strong> and <strong>TWO political rights</strong> that citizens are entitled to.</div>
+    <textarea class="answer-area" placeholder="Civil Rights:&#10;1. &#10;2. &#10;&#10;Political Rights:&#10;1. &#10;2. " oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- B5 -->
+  <div class="qcard" id="card-b5">
+    <div class="q-number">Question 25 <span class="marks-badge">2 marks</span></div>
+    <div class="q-text">Name <strong>FOUR pieces of information</strong> that must be printed on packaged food products.</div>
+    <textarea class="answer-area" placeholder="1. &#10;2. &#10;3. &#10;4. " oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- B6 -->
+  <div class="qcard" id="card-b6">
+    <div class="q-number">Question 26 <span class="marks-badge">2 marks</span></div>
+    <div class="q-text">List <strong>FOUR activities</strong> you can do to control unfavourable emotions.</div>
+    <textarea class="answer-area" placeholder="1. &#10;2. &#10;3. &#10;4. " oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- B7 -->
+  <div class="qcard" id="card-b7">
+    <div class="q-number">Question 27 <span class="marks-badge">2 marks</span></div>
+    <div class="q-text">Describe <strong>TWO obligations</strong> that children have towards their parents.</div>
+    <textarea class="answer-area" placeholder="Write your answer here..." oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- B8 -->
+  <div class="qcard" id="card-b8">
+    <div class="q-number">Question 28 <span class="marks-badge">2 marks</span></div>
+    <div class="q-text">Name <strong>THREE types of social institutions</strong> and briefly describe one function performed by each.</div>
+    <textarea class="answer-area" placeholder="1. Institution: ___ Function: ___&#10;2. Institution: ___ Function: ___&#10;3. Institution: ___ Function: ___" oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- B9 -->
+  <div class="qcard" id="card-b9">
+    <div class="q-number">Question 29 <span class="marks-badge">2 marks</span></div>
+    <div class="q-text">Give <strong>TWO reasons</strong> why children are employed as labourers according to the textbook.</div>
+    <textarea class="answer-area" placeholder="1. &#10;2. " oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- B10 -->
+  <div class="qcard" id="card-b10">
+    <div class="q-number">Question 30 <span class="marks-badge">2 marks</span></div>
+    <div class="q-text">Name <strong>FOUR qualities</strong> a person needs to develop in order to face challenges in life successfully.</div>
+    <textarea class="answer-area" placeholder="1. &#10;2. &#10;3. &#10;4. " oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- ===== SECTION C ===== -->
+  <div class="section-header">Section C — Structured Questions <span>(Answer in full sentences · 4 × 5 marks = 20 marks)</span></div>
+
+  <!-- C1 -->
+  <div class="qcard" id="card-c1">
+    <div class="q-number">Question 31 <span class="marks-badge">5 marks</span></div>
+    <div class="q-text">
+      <strong>(a)</strong> Distinguish between a <strong>nuclear family</strong> and an <strong>extended family</strong>. <em>(2 marks)</em><br><br>
+      <strong>(b)</strong> Explain <strong>THREE</strong> ways in which being part of an extended family benefits its members compared to a nuclear family. <em>(3 marks)</em>
+    </div>
+    <textarea class="answer-area" style="min-height:140px" placeholder="(a)&#10;&#10;(b)" oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- C2 -->
+  <div class="qcard" id="card-c2">
+    <div class="q-number">Question 32 <span class="marks-badge">5 marks</span></div>
+    <div class="q-text">
+      <strong>(a)</strong> What is meant by the term <strong>'rights'</strong>? <em>(1 mark)</em><br><br>
+      <strong>(b)</strong> List <strong>THREE civil rights</strong> available to citizens in society. <em>(3 marks)</em><br><br>
+      <strong>(c)</strong> State <strong>ONE duty</strong> that is linked to the right to education. <em>(1 mark)</em>
+    </div>
+    <textarea class="answer-area" style="min-height:140px" placeholder="(a)&#10;&#10;(b)&#10;&#10;(c)" oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- C3 -->
+  <div class="qcard" id="card-c3">
+    <div class="q-number">Question 33 <span class="marks-badge">5 marks</span></div>
+    <div class="q-text">
+      <strong>(a)</strong> How did human society evolve from simple to complex? Briefly describe <strong>FOUR stages</strong> of this development. <em>(4 marks)</em><br><br>
+      <strong>(b)</strong> What does this evolution tell us about the importance of the <strong>family unit</strong> in society? <em>(1 mark)</em>
+    </div>
+    <textarea class="answer-area" style="min-height:160px" placeholder="(a) Stage 1:&#10;Stage 2:&#10;Stage 3:&#10;Stage 4:&#10;&#10;(b)" oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- C4 -->
+  <div class="qcard" id="card-c4">
+    <div class="q-number">Question 34 <span class="marks-badge">5 marks</span></div>
+    <div class="q-text">
+      <strong>(a)</strong> What is <strong>child labour</strong>? <em>(1 mark)</em><br><br>
+      <strong>(b)</strong> State <strong>THREE negative impacts</strong> of child labour on a child's life. <em>(3 marks)</em><br><br>
+      <strong>(c)</strong> Describe <strong>ONE action</strong> that society can take to prevent child labour. <em>(1 mark)</em>
+    </div>
+    <textarea class="answer-area" style="min-height:140px" placeholder="(a)&#10;&#10;(b)&#10;&#10;(c)" oninput="updateProgress()"></textarea>
+  </div>
+
+  <div style="text-align:center;margin-top:30px;">
+    <button class="btn btn-submit" onclick="submitExam()" style="font-size:1.1rem;padding:14px 40px;">
+      ✔ Submit My Paper
+    </button>
+  </div>
+
+</div><!-- end paper -->
+
+<!-- SCORE PANEL -->
+<div id="score-panel">
+  <h2>📋 Paper Submitted!</h2>
+  <div class="score-number" id="mcq-score-display">— / 20</div>
+  <div class="score-message" id="score-msg">Section A (MCQ) Score</div>
+  <div class="section-scores">
+    <div class="section-score-box"><div class="label">Section A — MCQ</div><div class="val" id="sc-a">—/20</div></div>
+    <div class="section-score-box"><div class="label">Section B — Short Answer</div><div class="val">—/20</div></div>
+    <div class="section-score-box" style="border-color:#c5cae9"><div class="label">Section C — Structured</div><div class="val">—/20</div></div>
+    <div class="section-score-box" style="background:#e8eaf6;border-color:#3949ab"><div class="label">Total (estimated)</div><div class="val" id="sc-total">—/60</div></div>
+  </div>
+  <div class="answer-key-note">
+    📄 Sections B &amp; C need to be checked by a parent or teacher using the <strong>Answer Key</strong> file.<br>
+    Download <strong>Civics_Term2_AnswerKey.html</strong> to see all correct answers with explanations.
+  </div>
+  <div id="mcq-review" style="margin-top:28px;text-align:left;"></div>
+  <div class="written-answers" id="written-answers-panel"></div>
+  <button class="btn-email" id="email-btn" onclick="emailAnswers()" style="display:none;">
+    📧 Send My Answers to Mum
+  </button>
+</div>
+
+<script>
+// ── ANSWERS ──
+const CORRECT = {
+  mcq1:'c', mcq2:'b', mcq3:'b', mcq4:'c', mcq5:'b',
+  mcq6:'b', mcq7:'b', mcq8:'c', mcq9:'b', mcq10:'c',
+  mcq11:'c', mcq12:'b', mcq13:'b', mcq14:'c', mcq15:'b',
+  mcq16:'d', mcq17:'b', mcq18:'c', mcq19:'b', mcq20:'b'
+};
+
+let totalSeconds = 90 * 60;
+let timerInterval = null;
+let examStarted = false;
+const TOTAL_Q = 30; // 20 MCQ + 10 short (we count MCQ+textarea)
+
+function startExam() {
+  document.getElementById('start-overlay').style.display = 'none';
+  examStarted = true;
+  timerInterval = setInterval(tick, 1000);
+}
+
+function tick() {
+  totalSeconds--;
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  const display = `${pad(h)}:${pad(m)}:${pad(s)}`;
+  const el = document.getElementById('timer');
+  el.textContent = display;
+  if (totalSeconds <= 300) el.classList.add('warning');
+  if (totalSeconds <= 0) { clearInterval(timerInterval); submitExam(); }
+}
+
+function pad(n){ return String(n).padStart(2,'0'); }
+
+function updateProgress() {
+  let answered = 0;
+  // MCQ
+  for(let i=1;i<=20;i++){
+    const sel = document.querySelector(`input[name="mcq${i}"]:checked`);
+    if(sel){ answered++; document.getElementById(`card-mcq${i}`).classList.add('answered'); }
+  }
+  // Textareas
+  document.querySelectorAll('.answer-area').forEach(ta => {
+    if(ta.value.trim().length > 5) answered++;
+  });
+  const label = document.getElementById('progress-label');
+  const bar = document.getElementById('progress-bar');
+  label.textContent = `${answered} / ${TOTAL_Q} questions answered`;
+  bar.style.width = `${Math.min(100,(answered/TOTAL_Q)*100)}%`;
+}
+
+// Listen to radio changes
+document.querySelectorAll('input[type=radio]').forEach(r => {
+  r.addEventListener('change', updateProgress);
+});
+
+function submitExam() {
+  if(!examStarted) { alert('Please click Start Exam first!'); return; }
+  clearInterval(timerInterval);
+
+  // Score MCQ
+  let mcqScore = 0;
+  const reviewHTML = ['<h3 style="color:#1a237e;margin-bottom:16px;">📊 Section A — MCQ Review</h3>'];
+
+  for(let i=1;i<=20;i++){
+    const sel = document.querySelector(`input[name="mcq${i}"]:checked`);
+    const given = sel ? sel.value : null;
+    const correct = CORRECT[`mcq${i}`];
+    const correct_label = document.querySelector(`input[name="mcq${i}"][value="${correct}"]`)?.parentElement?.textContent?.trim() || '';
+    const given_label = given ? (document.querySelector(`input[name="mcq${i}"][value="${given}"]`)?.parentElement?.textContent?.trim() || 'No answer') : 'No answer';
+    const isRight = given === correct;
+    if(isRight) mcqScore++;
+    const color = isRight ? '#2e7d32' : '#c62828';
+    const icon = isRight ? '✅' : '❌';
+    reviewHTML.push(`
+      <div style="background:${isRight?'#e8f5e9':'#ffebee'};border-left:4px solid ${color};padding:10px 14px;border-radius:6px;margin-bottom:8px;font-size:0.9rem;">
+        <strong>Q${i}</strong> ${icon} &nbsp;
+        Your answer: <em>${given_label}</em>
+        ${!isRight ? `&nbsp;|&nbsp; Correct: <strong style="color:#2e7d32">${correct_label}</strong>` : ''}
+      </div>`);
+  }
+
+  document.getElementById('mcq-score-display').textContent = `${mcqScore} / 20`;
+  document.getElementById('sc-a').textContent = `${mcqScore}/20`;
+  document.getElementById('sc-total').textContent = `${mcqScore}+ / 60`;
+  document.getElementById('score-msg').textContent = `(Sections B & C need teacher/parent marking)`;
+  document.getElementById('mcq-review').innerHTML = reviewHTML.join('');
+
+  // ── Compile written answers (Section B & C) ──
+  const writtenQuestions = [
+    { id:'b1', num:'Q21', label:'What is a nuclear family? How does it differ from an extended family?' },
+    { id:'b2', num:'Q22', label:'List FOUR benefits of being a member of a family.' },
+    { id:'b3', num:'Q23', label:'Qualities shown by Shyama reflecting self-esteem (TWO).' },
+    { id:'b4', num:'Q24', label:'TWO civil rights and TWO political rights.' },
+    { id:'b5', num:'Q25', label:'FOUR pieces of information printed on packaged food products.' },
+    { id:'b6', num:'Q26', label:'FOUR activities to control unfavourable emotions.' },
+    { id:'b7', num:'Q27', label:'TWO obligations of children towards parents.' },
+    { id:'b8', num:'Q28', label:'THREE social institutions and one function each.' },
+    { id:'b9', num:'Q29', label:'TWO reasons why children are employed as labourers.' },
+    { id:'b10', num:'Q30', label:'FOUR qualities needed to face challenges successfully.' },
+    { id:'c1', num:'Q31', label:'(a) Distinguish nuclear vs extended family. (b) THREE benefits of extended family.' },
+    { id:'c2', num:'Q32', label:"(a) What are rights? (b) THREE civil rights. (c) ONE duty linked to right to education." },
+    { id:'c3', num:'Q33', label:'(a) FOUR stages of societal evolution. (b) Importance of family unit.' },
+    { id:'c4', num:'Q34', label:'(a) What is child labour? (b) THREE negative impacts. (c) ONE preventive action.' },
+  ];
+
+  let writtenHTML = '<h3>📝 Sections B &amp; C — Written Answers (for parent/teacher to mark)</h3>';
+  let emailBody = `CIVICS TERM 2 — SHEYVON'S ANSWERS\nDate: ${new Date().toLocaleDateString('en-GB')}\n\n`;
+  emailBody += `===== SECTION A (MCQ) =====\nSheyvon scored: ${mcqScore} / 20\n\n===== SECTIONS B & C (Written) =====\n`;
+
+  writtenQuestions.forEach(q => {
+    const ta = document.querySelector(`#card-${q.id} .answer-area`);
+    const val = ta ? ta.value.trim() : '';
+    const display = val || '(No answer written)';
+    writtenHTML += `<div class="wa-item"><div class="wa-q">${q.num} — ${q.label}</div><div class="wa-a">${display.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div></div>`;
+    emailBody += `\n${q.num} — ${q.label}\n${display}\n${'─'.repeat(50)}\n`;
+  });
+
+  document.getElementById('written-answers-panel').innerHTML = writtenHTML;
+
+  // Store email body for mailto
+  window._emailBody = emailBody;
+  window._mcqScore = mcqScore;
+  document.getElementById('email-btn').style.display = 'block';
+
+  // Show score panel
+  document.getElementById('score-panel').style.display = 'block';
+  document.getElementById('score-panel').scrollIntoView({behavior:'smooth'});
+
+  // Lock paper
+  document.getElementById('paper').classList.add('locked');
+}
+
+function emailAnswers() {
+  const subject = encodeURIComponent('Civics Term 2 — Sheyvon\'s Answers');
+  const body = encodeURIComponent(window._emailBody || 'See answers below.');
+  const to = 'ceylontraveldesigners@gmail.com';
+  window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+}
+
+function resetExam() {
+  if(!confirm('Reset the paper? All answers will be cleared.')) return;
+  location.reload();
+}
+</script>
+</body>
+</html>
