@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geography – Chapters 1, 2 &amp; 3 Timed Paper</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f1f8f3; color: #1a2e1a; }
+  .header {
+    background: linear-gradient(135deg, #1b5e20, #2e7d32);
+    color: white; padding: 24px 32px; text-align: center;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .header h1 { font-size: 1.5rem; letter-spacing: 1px; }
+  .header .sub { font-size: 0.88rem; opacity: 0.85; margin-top: 4px; }
+  .timer-box {
+    margin-top: 12px; display: inline-block;
+    background: #003300; border-radius: 10px;
+    padding: 8px 24px; font-size: 1.8rem;
+    font-weight: bold; letter-spacing: 3px; min-width: 140px;
+  }
+  .timer-box.warning { background: #b71c1c; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
+  .controls { display: flex; gap: 12px; justify-content: center; padding: 18px; flex-wrap: wrap; }
+  .btn { padding: 10px 24px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .btn-start  { background: #2e7d32; color: white; }
+  .btn-start:hover  { background: #1b5e20; transform: translateY(-1px); }
+  .btn-submit { background: #1b5e20; color: white; }
+  .btn-submit:hover { background: #003300; transform: translateY(-1px); }
+  .btn-reset  { background: #37474f; color: white; }
+  .btn-reset:hover  { background: #263238; transform: translateY(-1px); }
+  .instructions {
+    background: #e8f5e9; border-left: 5px solid #2e7d32;
+    margin: 0 24px 24px; padding: 18px 24px; border-radius: 6px;
+    font-size: 0.95rem; line-height: 1.8;
+  }
+  .instructions h3 { color: #1b5e20; margin-bottom: 8px; }
+  .paper { max-width: 840px; margin: 0 auto; padding: 0 20px 60px; }
+  .section-header {
+    background: linear-gradient(135deg, #1b5e20, #2e7d32); color: white;
+    padding: 13px 20px; border-radius: 8px;
+    margin: 32px 0 20px; font-size: 1.05rem; font-weight: 700;
+  }
+  .section-header span { font-weight: 400; font-size: 0.9rem; opacity: 0.85; }
+  .chapter-tag {
+    display: inline-block; background: #e8f5e9; color: #1b5e20;
+    border-radius: 12px; padding: 1px 10px; font-size: 0.75rem;
+    font-weight: 700; margin-bottom: 8px; letter-spacing: 0.3px;
+  }
+  .qcard {
+    background: white; border-radius: 10px; padding: 20px 24px;
+    margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border-left: 4px solid #c8e6c9; transition: border-color 0.2s;
+  }
+  .qcard:hover { border-color: #2e7d32; }
+  .qcard.answered { border-color: #43a047; }
+  .q-number { font-weight: 700; color: #1b5e20; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .q-text { font-size: 1rem; line-height: 1.65; margin-bottom: 14px; }
+  .marks-badge { float: right; background: #e8f5e9; color: #1b5e20; padding: 2px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 600; }
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  @media(max-width:560px){ .options { grid-template-columns: 1fr; } }
+  .option-label {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border-radius: 8px; border: 2px solid #e8f5e9;
+    cursor: pointer; font-size: 0.95rem; transition: all 0.15s;
+  }
+  .option-label:hover { border-color: #2e7d32; background: #e8f5e9; }
+  .option-label input { accent-color: #2e7d32; width: 16px; height: 16px; }
+  .answer-area {
+    width: 100%; min-height: 110px; border: 2px solid #e0e0e0;
+    border-radius: 8px; padding: 12px; font-size: 0.95rem;
+    font-family: inherit; resize: vertical; transition: border-color 0.2s;
+  }
+  .answer-area:focus { outline: none; border-color: #2e7d32; }
+  .working-box {
+    background: #f5f5f5; border-radius: 6px; padding: 8px 14px;
+    font-size: 0.83rem; color: #555; margin-bottom: 8px; font-style: italic;
+  }
+  .progress-bar-wrap { background: #e0e0e0; border-radius: 6px; height: 8px; margin: 4px 0 8px; }
+  .progress-bar { height: 8px; border-radius: 6px; background: #2e7d32; transition: width 0.3s; width: 0%; }
+  .progress-label { font-size: 0.82rem; color: #666; text-align: right; }
+  #start-overlay {
+    position: fixed; inset: 0; background: rgba(27,94,32,0.96);
+    display: flex; align-items: center; justify-content: center; z-index: 999;
+  }
+  .overlay-box { background: white; padding: 44px; border-radius: 16px; max-width: 520px; text-align: center; box-shadow: 0 8px 40px rgba(0,0,0,0.4); }
+  .overlay-box h2 { color: #1b5e20; font-size: 1.8rem; margin-bottom: 10px; }
+  .overlay-box p { color: #555; line-height: 1.7; margin-bottom: 20px; font-size: 0.95rem; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
+  .info-item { background: #e8f5e9; padding: 10px; border-radius: 8px; }
+  .info-item .lbl { font-size: 0.75rem; color: #888; }
+  .info-item .val { font-size: 0.95rem; font-weight: 700; color: #1b5e20; margin-top: 2px; }
+  .locked { pointer-events: none; opacity: 0.5; }
+  #score-panel {
+    display: none; background: white; max-width: 840px;
+    margin: 20px auto; padding: 32px; border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12); text-align: center;
+  }
+  #score-panel h2 { color: #1b5e20; font-size: 1.6rem; margin-bottom: 8px; }
+  .score-number { font-size: 3rem; font-weight: 900; color: #2e7d32; margin: 16px 0; }
+  .section-scores { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin: 20px 0; padding: 16px; background: #f5f5f5; border-radius: 8px; }
+  .section-score-box { background: white; padding: 12px 20px; border-radius: 8px; border: 2px solid #c8e6c9; text-align: center; min-width: 130px; }
+  .section-score-box .label { font-size: 0.78rem; color: #666; margin-bottom: 4px; }
+  .section-score-box .val { font-size: 1.4rem; font-weight: 800; color: #1b5e20; }
+  .written-answers { margin-top: 28px; text-align: left; }
+  .written-answers h3 { color: #1b5e20; margin-bottom: 14px; font-size: 1rem; }
+  .wa-item { background: #f5f5f5; border-left: 4px solid #2e7d32; border-radius: 6px; padding: 12px 16px; margin-bottom: 10px; font-size: 0.9rem; }
+  .wa-item .wa-q { font-weight: 700; color: #1b5e20; margin-bottom: 6px; font-size: 0.82rem; text-transform: uppercase; }
+  .wa-item .wa-a { color: #333; line-height: 1.6; white-space: pre-wrap; }
+  .btn-email { display: block; width: 100%; margin-top: 20px; background: #1b5e20; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+  .btn-email:hover { background: #003300; }
+  .mcq-review-item { font-size: 0.88rem; padding: 9px 14px; border-radius: 6px; margin-bottom: 7px; }
+</style>
+</head>
+<body>
+
+<!-- OVERLAY -->
+<div id="start-overlay">
+  <div class="overlay-box">
+    <h2>🌍 Geography – Chapters 1–3</h2>
+    <p>This paper covers <strong>The Planet Earth</strong>, <strong>Identity of Sri Lanka</strong>, and <strong>The Landscape of Sri Lanka</strong>. Read each question carefully before answering.</p>
+    <div class="info-grid">
+      <div class="info-item"><div class="lbl">Total Marks</div><div class="val">60</div></div>
+      <div class="info-item"><div class="lbl">Time Allowed</div><div class="val">1 Hour 30 Min</div></div>
+      <div class="info-item"><div class="lbl">Section A</div><div class="val">20 MCQ · 20 marks</div></div>
+      <div class="info-item"><div class="lbl">Section B</div><div class="val">Short Answer · 20 marks</div></div>
+      <div class="info-item" style="grid-column:1/-1"><div class="lbl">Section C</div><div class="val">Extended Writing · 20 marks</div></div>
+    </div>
+    <button class="btn btn-start" onclick="startExam()" style="width:100%;font-size:1.1rem;padding:14px;">▶ Start Paper</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="sub">Grade 7 Geography · Chapters 1, 2 &amp; 3</div>
+  <h1>GEOGRAPHY TIMED EXAMINATION PAPER</h1>
+  <div class="sub">Total Marks: 60 &nbsp;|&nbsp; Time: 1 Hour 30 Minutes</div>
+  <div class="timer-box" id="timer">01:30:00</div>
+</div>
+
+<div class="controls">
+  <button class="btn btn-submit" onclick="submitExam()">✔ Submit Paper</button>
+  <button class="btn btn-reset" onclick="resetExam()">↺ Reset</button>
+</div>
+
+<div style="max-width:840px;margin:0 auto;padding:0 20px 10px;">
+  <div class="progress-label" id="progress-label">0 / 32 answered</div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+</div>
+
+<div class="paper" id="paper">
+  <div class="instructions">
+    <h3>Instructions to the Candidate</h3>
+    <ol style="padding-left:20px;line-height:2.2;">
+      <li><strong>Section A</strong> — Circle the best answer. (20 × 1 = 20 marks)</li>
+      <li><strong>Section B</strong> — Write concise, factual answers. (8 × 2.5 = 20 marks)</li>
+      <li><strong>Section C</strong> — Write detailed, well-structured answers using knowledge from all chapters. (4 × 5 = 20 marks)</li>
+      <li>Calculators are <strong>not</strong> permitted.</li>
+    </ol>
+  </div>
+
+  <!-- ===== SECTION A ===== -->
+  <div class="section-header">Section A — Multiple Choice Questions <span>(20 × 1 mark = 20 marks)</span></div>
+
+  <!-- CHAPTER 1 -->
+  <div class="qcard" id="card-mcq1">
+    <div class="chapter-tag">Ch. 1 — The Planet Earth</div>
+    <div class="q-number">Question 1 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">How long does the Earth take to complete one full rotation around its own axis?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq1" value="a"> a) 12 hours</label>
+      <label class="option-label"><input type="radio" name="mcq1" value="b"> b) 24 hours</label>
+      <label class="option-label"><input type="radio" name="mcq1" value="c"> c) 365 days</label>
+      <label class="option-label"><input type="radio" name="mcq1" value="d"> d) 30 days</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq2">
+    <div class="chapter-tag">Ch. 1 — The Planet Earth</div>
+    <div class="q-number">Question 2 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The equatorial diameter of the Earth is:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq2" value="a"> a) 12,714 km</label>
+      <label class="option-label"><input type="radio" name="mcq2" value="b"> b) 40,077 km</label>
+      <label class="option-label"><input type="radio" name="mcq2" value="c"> c) 12,757 km</label>
+      <label class="option-label"><input type="radio" name="mcq2" value="d"> d) 39,943 km</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq3">
+    <div class="chapter-tag">Ch. 1 — The Planet Earth</div>
+    <div class="q-number">Question 3 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The imaginary horizontal line drawn at 0° around the middle of the Earth is called:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq3" value="a"> a) The Prime Meridian</label>
+      <label class="option-label"><input type="radio" name="mcq3" value="b"> b) The Equator</label>
+      <label class="option-label"><input type="radio" name="mcq3" value="c"> c) The Arctic Circle</label>
+      <label class="option-label"><input type="radio" name="mcq3" value="d"> d) The International Date Line</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq4">
+    <div class="chapter-tag">Ch. 1 — The Planet Earth</div>
+    <div class="q-number">Question 4 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">How many continents are there in the world?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq4" value="a"> a) 5</label>
+      <label class="option-label"><input type="radio" name="mcq4" value="b"> b) 6</label>
+      <label class="option-label"><input type="radio" name="mcq4" value="c"> c) 7</label>
+      <label class="option-label"><input type="radio" name="mcq4" value="d"> d) 8</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq5">
+    <div class="chapter-tag">Ch. 1 — The Planet Earth</div>
+    <div class="q-number">Question 5 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which is the largest ocean in the world?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq5" value="a"> a) Indian Ocean</label>
+      <label class="option-label"><input type="radio" name="mcq5" value="b"> b) Atlantic Ocean</label>
+      <label class="option-label"><input type="radio" name="mcq5" value="c"> c) Arctic Ocean</label>
+      <label class="option-label"><input type="radio" name="mcq5" value="d"> d) Pacific Ocean</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq6">
+    <div class="chapter-tag">Ch. 1 — The Planet Earth</div>
+    <div class="q-number">Question 6 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The International Date Line follows the longitude of:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq6" value="a"> a) 0°</label>
+      <label class="option-label"><input type="radio" name="mcq6" value="b"> b) 90° East</label>
+      <label class="option-label"><input type="radio" name="mcq6" value="c"> c) 180°</label>
+      <label class="option-label"><input type="radio" name="mcq6" value="d"> d) 90° West</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq7">
+    <div class="chapter-tag">Ch. 1 — The Planet Earth</div>
+    <div class="q-number">Question 7 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">What percentage of the Earth's surface is covered by water?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq7" value="a"> a) 29%</label>
+      <label class="option-label"><input type="radio" name="mcq7" value="b"> b) 50%</label>
+      <label class="option-label"><input type="radio" name="mcq7" value="c"> c) 71%</label>
+      <label class="option-label"><input type="radio" name="mcq7" value="d"> d) 80%</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq8">
+    <div class="chapter-tag">Ch. 1 — The Planet Earth</div>
+    <div class="q-number">Question 8 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which is the smallest continent by area?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq8" value="a"> a) Antarctica</label>
+      <label class="option-label"><input type="radio" name="mcq8" value="b"> b) Europe</label>
+      <label class="option-label"><input type="radio" name="mcq8" value="c"> c) Australia</label>
+      <label class="option-label"><input type="radio" name="mcq8" value="d"> d) South America</label>
+    </div>
+  </div>
+
+  <!-- CHAPTER 2 -->
+  <div class="qcard" id="card-mcq9">
+    <div class="chapter-tag">Ch. 2 — Identity of Sri Lanka</div>
+    <div class="q-number">Question 9 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Sri Lanka is separated from India by:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq9" value="a"> a) The Indian Ocean</label>
+      <label class="option-label"><input type="radio" name="mcq9" value="b"> b) The Palk Strait</label>
+      <label class="option-label"><input type="radio" name="mcq9" value="c"> c) The Gulf of Bengal</label>
+      <label class="option-label"><input type="radio" name="mcq9" value="d"> d) The Arabian Sea</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq10">
+    <div class="chapter-tag">Ch. 2 — Identity of Sri Lanka</div>
+    <div class="q-number">Question 10 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The total land area of Sri Lanka is:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq10" value="a"> a) 65,160 km²</label>
+      <label class="option-label"><input type="radio" name="mcq10" value="b"> b) 65,610 km²</label>
+      <label class="option-label"><input type="radio" name="mcq10" value="c"> c) 56,610 km²</label>
+      <label class="option-label"><input type="radio" name="mcq10" value="d"> d) 65,016 km²</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq11">
+    <div class="chapter-tag">Ch. 2 — Identity of Sri Lanka</div>
+    <div class="q-number">Question 11 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">According to the specific location, Sri Lanka is located between which North Latitudes?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq11" value="a"> a) 5°55' – 9°51' N</label>
+      <label class="option-label"><input type="radio" name="mcq11" value="b"> b) 5°55' – 9°51' S</label>
+      <label class="option-label"><input type="radio" name="mcq11" value="c"> c) 0° – 23½° N</label>
+      <label class="option-label"><input type="radio" name="mcq11" value="d"> d) 79°41' – 81°53' N</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq12">
+    <div class="chapter-tag">Ch. 2 — Identity of Sri Lanka</div>
+    <div class="q-number">Question 12 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The territorial sea limit granted to coastal states under the International Convention of the Sea is:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq12" value="a"> a) 6 nautical miles</label>
+      <label class="option-label"><input type="radio" name="mcq12" value="b"> b) 12 nautical miles</label>
+      <label class="option-label"><input type="radio" name="mcq12" value="c"> c) 20 nautical miles</label>
+      <label class="option-label"><input type="radio" name="mcq12" value="d"> d) 24 nautical miles</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq13">
+    <div class="chapter-tag">Ch. 2 — Identity of Sri Lanka</div>
+    <div class="q-number">Question 13 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The literacy rate of Sri Lanka is:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq13" value="a"> a) 63%</label>
+      <label class="option-label"><input type="radio" name="mcq13" value="b"> b) 75%</label>
+      <label class="option-label"><input type="radio" name="mcq13" value="c"> c) 92%</label>
+      <label class="option-label"><input type="radio" name="mcq13" value="d"> d) 98%</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq14">
+    <div class="chapter-tag">Ch. 2 — Identity of Sri Lanka</div>
+    <div class="q-number">Question 14 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which type of rain occurs in Sri Lanka due to air disturbances in the Bay of Bengal?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq14" value="a"> a) Monsoon rain</label>
+      <label class="option-label"><input type="radio" name="mcq14" value="b"> b) Convectional rain</label>
+      <label class="option-label"><input type="radio" name="mcq14" value="c"> c) Cyclone rain</label>
+      <label class="option-label"><input type="radio" name="mcq14" value="d"> d) Orographic rain</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq15">
+    <div class="chapter-tag">Ch. 2 — Identity of Sri Lanka</div>
+    <div class="q-number">Question 15 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Sigiriya is an example of which type of cultural heritage?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq15" value="a"> a) Intangible heritage</label>
+      <label class="option-label"><input type="radio" name="mcq15" value="b"> b) Natural tangible heritage</label>
+      <label class="option-label"><input type="radio" name="mcq15" value="c"> c) Man-made tangible heritage</label>
+      <label class="option-label"><input type="radio" name="mcq15" value="d"> d) World intangible heritage</label>
+    </div>
+  </div>
+
+  <!-- CHAPTER 3 -->
+  <div class="qcard" id="card-mcq16">
+    <div class="chapter-tag">Ch. 3 — Landscape of Sri Lanka</div>
+    <div class="q-number">Question 16 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The Hill Country landscape is found in lands located above sea level of:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq16" value="a"> a) 100 m</label>
+      <label class="option-label"><input type="radio" name="mcq16" value="b"> b) 200 m</label>
+      <label class="option-label"><input type="radio" name="mcq16" value="c"> c) 300 m</label>
+      <label class="option-label"><input type="radio" name="mcq16" value="d"> d) 500 m</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq17">
+    <div class="chapter-tag">Ch. 3 — Landscape of Sri Lanka</div>
+    <div class="q-number">Question 17 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which of the following wildlife sanctuaries is located in the Dry Zone?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq17" value="a"> a) Sinharaja</label>
+      <label class="option-label"><input type="radio" name="mcq17" value="b"> b) Yala</label>
+      <label class="option-label"><input type="radio" name="mcq17" value="c"> c) Hikkaduwa</label>
+      <label class="option-label"><input type="radio" name="mcq17" value="d"> d) Biyagama</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq18">
+    <div class="chapter-tag">Ch. 3 — Landscape of Sri Lanka</div>
+    <div class="q-number">Question 18 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The commercial capital of Sri Lanka, located in the Wet Zone, is:</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq18" value="a"> a) Sri Jayawardanapura Kotte</label>
+      <label class="option-label"><input type="radio" name="mcq18" value="b"> b) Kandy</label>
+      <label class="option-label"><input type="radio" name="mcq18" value="c"> c) Colombo</label>
+      <label class="option-label"><input type="radio" name="mcq18" value="d"> d) Galle</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq19">
+    <div class="chapter-tag">Ch. 3 — Landscape of Sri Lanka</div>
+    <div class="q-number">Question 19 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">The Palmyra palm is specifically associated with which regional landscape?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq19" value="a"> a) Hill Country</label>
+      <label class="option-label"><input type="radio" name="mcq19" value="b"> b) Wet Zone</label>
+      <label class="option-label"><input type="radio" name="mcq19" value="c"> c) Coastal Belt</label>
+      <label class="option-label"><input type="radio" name="mcq19" value="d"> d) Jaffna Peninsula</label>
+    </div>
+  </div>
+
+  <div class="qcard" id="card-mcq20">
+    <div class="chapter-tag">Ch. 3 — Landscape of Sri Lanka</div>
+    <div class="q-number">Question 20 <span class="marks-badge">1 mark</span></div>
+    <div class="q-text">Which of the following is a free trade / investment promotion zone in Sri Lanka?</div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="mcq20" value="a"> a) Sigiriya</label>
+      <label class="option-label"><input type="radio" name="mcq20" value="b"> b) Katunayake</label>
+      <label class="option-label"><input type="radio" name="mcq20" value="c"> c) Nallur</label>
+      <label class="option-label"><input type="radio" name="mcq20" value="d"> d) Hambantota</label>
+    </div>
+  </div>
+
+  <!-- ===== SECTION B ===== -->
+  <div class="section-header">Section B — Short Answer Questions <span>(8 × 2.5 marks = 20 marks)</span></div>
+
+  <div class="qcard" id="card-b1">
+    <div class="chapter-tag">Ch. 1 — The Planet Earth</div>
+    <div class="q-number">Question 21 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">Explain the difference between <strong>rotation</strong> and <strong>revolution</strong> of the Earth. State the time taken for each.</div>
+    <textarea class="answer-area" placeholder="Rotation: &#10;&#10;Time taken: &#10;&#10;Revolution: &#10;&#10;Time taken: " oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-b2">
+    <div class="chapter-tag">Ch. 1 — The Planet Earth</div>
+    <div class="q-number">Question 22 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">Name all <strong>seven continents</strong> in order from largest to smallest by area. State the area (in million km²) of both the largest and the smallest.</div>
+    <textarea class="answer-area" placeholder="1. (Largest) — __ million km²&#10;2. &#10;3. &#10;4. &#10;5. &#10;6. &#10;7. (Smallest) — __ million km²" oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-b3">
+    <div class="chapter-tag">Ch. 1 — The Planet Earth</div>
+    <div class="q-number">Question 23 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">What is the <strong>Prime Meridian</strong>? Explain how longitudes are distributed from it and what the International Date Line is.</div>
+    <textarea class="answer-area" placeholder="The Prime Meridian is... &#10;&#10;Distribution of longitudes: &#10;&#10;International Date Line: " oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-b4">
+    <div class="chapter-tag">Ch. 2 — Identity of Sri Lanka</div>
+    <div class="q-number">Question 24 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">There are two ways of describing the location of a country. Name and explain <strong>both methods</strong> with reference to Sri Lanka.</div>
+    <div class="working-box">💡 Think about the two types of location described in Chapter 2.</div>
+    <textarea class="answer-area" placeholder="Method 1: &#10;Sri Lanka's example: &#10;&#10;Method 2: &#10;Sri Lanka's example: " oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-b5">
+    <div class="chapter-tag">Ch. 2 — Identity of Sri Lanka</div>
+    <div class="q-number">Question 25 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">Sri Lanka receives rain through three methods. Name and briefly describe each type, including when each mainly occurs.</div>
+    <textarea class="answer-area" placeholder="1. Monsoon Rain: &#10;   SW Monsoon — months: &#10;   NE Monsoon — months: &#10;&#10;2. Convectional Rain: &#10;&#10;3. Cyclone Rain: " oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-b6">
+    <div class="chapter-tag">Ch. 2 — Identity of Sri Lanka</div>
+    <div class="q-number">Question 26 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">What is a <strong>tangible heritage</strong>? Give <strong>three examples each</strong> of man-made tangible heritages and natural tangible heritages found in Sri Lanka.</div>
+    <textarea class="answer-area" placeholder="Tangible heritage means: &#10;&#10;Man-made examples:&#10;1. &#10;2. &#10;3. &#10;&#10;Natural examples:&#10;1. &#10;2. &#10;3. " oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-b7">
+    <div class="chapter-tag">Ch. 3 — Landscape of Sri Lanka</div>
+    <div class="q-number">Question 27 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">Describe <strong>five specific features</strong> of the landscape of the <strong>Dry Zone</strong> of Sri Lanka. Include both physical and human features.</div>
+    <textarea class="answer-area" placeholder="Physical features of the Dry Zone:&#10;1. &#10;2. &#10;&#10;Human features of the Dry Zone:&#10;3. &#10;4. &#10;5. " oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-b8">
+    <div class="chapter-tag">Ch. 3 — Landscape of Sri Lanka</div>
+    <div class="q-number">Question 28 <span class="marks-badge">2.5 marks</span></div>
+    <div class="q-text">State <strong>three ways</strong> in which the physical landscape of the <strong>Wet Zone</strong> has directly influenced human activities there. Give specific examples.</div>
+    <textarea class="answer-area" placeholder="1. Physical feature: &#10;   Human activity it influenced: &#10;&#10;2. Physical feature: &#10;   Human activity it influenced: &#10;&#10;3. Physical feature: &#10;   Human activity it influenced: " oninput="updateProgress()"></textarea>
+  </div>
+
+  <!-- ===== SECTION C ===== -->
+  <div class="section-header">Section C — Extended Writing <span>(4 × 5 marks = 20 marks)</span></div>
+
+  <div class="qcard" id="card-c1">
+    <div class="chapter-tag">Ch. 1 — The Planet Earth</div>
+    <div class="q-number">Question 29 <span class="marks-badge">5 marks</span></div>
+    <div class="q-text">
+      <strong>(a)</strong> Explain why the Earth is described as a <em>"spherical object"</em> but not a <em>"perfect sphere."</em> Use actual measurements from your textbook to support your answer. <em>(2 marks)</em><br><br>
+      <strong>(b)</strong> Explain what latitudes and longitudes are and why they are important. In your answer, name at least <strong>four main latitudes</strong> and state their values. <em>(3 marks)</em>
+    </div>
+    <textarea class="answer-area" style="min-height:180px;" placeholder="(a) The Earth is spherical because... &#10;Evidence — measurements:&#10;• Equatorial diameter = &#10;• Polar diameter = &#10;• Difference = &#10;Therefore it is not a perfect sphere because...&#10;&#10;(b) Latitudes are...&#10;Longitudes are...&#10;Importance: &#10;&#10;Four main latitudes:&#10;1. &#10;2. &#10;3. &#10;4. " oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-c2">
+    <div class="chapter-tag">Ch. 2 — Identity of Sri Lanka</div>
+    <div class="q-number">Question 30 <span class="marks-badge">5 marks</span></div>
+    <div class="q-text">
+      Describe the <strong>social identity</strong> of Sri Lanka. In your answer, discuss:<br><br>
+      &bull; The different ethnic groups and religions in Sri Lanka <em>(1 mark)</em><br>
+      &bull; The meaning of tangible and intangible cultural heritages, with examples of each <em>(2 marks)</em><br>
+      &bull; Why Sri Lanka is considered a country with a <strong>high level of social development</strong> compared to other South Asian countries. Give at least <strong>two statistical facts</strong>. <em>(2 marks)</em>
+    </div>
+    <textarea class="answer-area" style="min-height:200px;" placeholder="Ethnic groups: &#10;Religions: &#10;&#10;Tangible heritages (meaning + examples): &#10;&#10;Intangible heritages (meaning + examples): &#10;&#10;Social development — why Sri Lanka is highly ranked:&#10;• Statistical fact 1: &#10;• Statistical fact 2: &#10;Reasons for this high level: " oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-c3">
+    <div class="chapter-tag">Ch. 3 — Landscape of Sri Lanka</div>
+    <div class="q-number">Question 31 <span class="marks-badge">5 marks</span></div>
+    <div class="q-text">
+      <strong>Compare and contrast</strong> the landscape of the <strong>Hill Country</strong> and the <strong>Dry Zone</strong> under the following headings:<br><br>
+      &bull; Physical features <em>(2 marks)</em><br>
+      &bull; Main agricultural activities <em>(1.5 marks)</em><br>
+      &bull; Tourism and cultural attractions <em>(1.5 marks)</em>
+    </div>
+    <div class="working-box">💡 A comparison means giving details for BOTH zones under each heading.</div>
+    <textarea class="answer-area" style="min-height:200px;" placeholder="PHYSICAL FEATURES&#10;Hill Country: &#10;Dry Zone: &#10;&#10;MAIN AGRICULTURAL ACTIVITIES&#10;Hill Country: &#10;Dry Zone: &#10;&#10;TOURISM AND CULTURAL ATTRACTIONS&#10;Hill Country: &#10;Dry Zone: " oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="qcard" id="card-c4">
+    <div class="chapter-tag">Ch. 3 — Landscape of Sri Lanka</div>
+    <div class="q-number">Question 32 <span class="marks-badge">5 marks</span></div>
+    <div class="q-text">
+      Your textbook states: <em>"Though it is a harsh landscape, the Jaffna Peninsula possesses both a specific cultural identity and rich economy built by strong work ethics and great effort."</em><br><br>
+      Discuss this statement. In your answer:<br>
+      &bull; Describe the <strong>physical features</strong> that make the landscape harsh <em>(2 marks)</em><br>
+      &bull; Explain the <strong>human activities and economic features</strong> that show the richness of the economy despite these challenges <em>(2 marks)</em><br>
+      &bull; Give <strong>two examples</strong> of the specific cultural identity of the Jaffna Peninsula <em>(1 mark)</em>
+    </div>
+    <textarea class="answer-area" style="min-height:200px;" placeholder="Physical features making it harsh:&#10;1. &#10;2. &#10;&#10;Human/economic activities showing resilience:&#10;1. &#10;2. &#10;3. &#10;&#10;Cultural identity examples:&#10;1. &#10;2. " oninput="updateProgress()"></textarea>
+  </div>
+
+  <div style="text-align:center;margin-top:30px;">
+    <button class="btn btn-submit" onclick="submitExam()" style="font-size:1.1rem;padding:14px 40px;">✔ Submit My Paper</button>
+  </div>
+</div>
+
+<!-- SCORE PANEL -->
+<div id="score-panel">
+  <h2>🌍 Paper Submitted!</h2>
+  <div class="score-number" id="mcq-score-display">— / 20</div>
+  <div id="score-msg">Section A (MCQ) Score</div>
+  <div class="section-scores">
+    <div class="section-score-box"><div class="label">Section A — MCQ</div><div class="val" id="sc-a">—/20</div></div>
+    <div class="section-score-box"><div class="label">Section B — Short Answer</div><div class="val">—/20</div></div>
+    <div class="section-score-box"><div class="label">Section C — Extended</div><div class="val">—/20</div></div>
+    <div class="section-score-box" style="background:#e8f5e9;border-color:#2e7d32;"><div class="label">Total (estimated)</div><div class="val" id="sc-total">—/60</div></div>
+  </div>
+  <p style="color:#555;font-size:0.9rem;margin-top:8px;">Sections B &amp; C require parent / teacher marking. Use the Answer Key when available.</p>
+  <div id="mcq-review" style="margin-top:24px;text-align:left;"></div>
+  <div class="written-answers" id="written-answers-panel"></div>
+  <button class="btn-email" id="email-btn" onclick="emailAnswers()" style="display:none;">📧 Send My Answers to Mum</button>
+</div>
+
+<script>
+const CORRECT = {
+  mcq1:'b', mcq2:'c', mcq3:'b', mcq4:'c', mcq5:'d',
+  mcq6:'c', mcq7:'c', mcq8:'c', mcq9:'b', mcq10:'b',
+  mcq11:'a', mcq12:'b', mcq13:'c', mcq14:'c', mcq15:'c',
+  mcq16:'c', mcq17:'b', mcq18:'c', mcq19:'d', mcq20:'b'
+};
+
+let totalSeconds = 90 * 60;
+let timerInterval = null;
+let examStarted = false;
+const TOTAL_Q = 32;
+
+function startExam() {
+  document.getElementById('start-overlay').style.display = 'none';
+  examStarted = true;
+  timerInterval = setInterval(tick, 1000);
+}
+function tick() {
+  totalSeconds--;
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  const el = document.getElementById('timer');
+  el.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+  if (totalSeconds <= 600) el.classList.add('warning');
+  if (totalSeconds <= 0) { clearInterval(timerInterval); submitExam(); }
+}
+function pad(n) { return String(n).padStart(2,'0'); }
+
+function updateProgress() {
+  let answered = 0;
+  for (let i=1;i<=20;i++) {
+    if (document.querySelector(`input[name="mcq${i}"]:checked`)) {
+      answered++;
+      document.getElementById(`card-mcq${i}`).classList.add('answered');
+    }
+  }
+  document.querySelectorAll('.answer-area').forEach(ta => {
+    if (ta.value.trim().length > 5) answered++;
+  });
+  document.getElementById('progress-label').textContent = `${answered} / ${TOTAL_Q} answered`;
+  document.getElementById('progress-bar').style.width = `${Math.min(100,(answered/TOTAL_Q)*100)}%`;
+}
+document.querySelectorAll('input[type=radio]').forEach(r => r.addEventListener('change', updateProgress));
+
+function submitExam() {
+  if (!examStarted) { alert('Please click Start Paper first!'); return; }
+  clearInterval(timerInterval);
+
+  let mcqScore = 0;
+  const reviewItems = ['<h3 style="color:#1b5e20;margin-bottom:14px;">📊 Section A — MCQ Review</h3>'];
+  for (let i=1;i<=20;i++) {
+    const sel = document.querySelector(`input[name="mcq${i}"]:checked`);
+    const given = sel ? sel.value : null;
+    const correct = CORRECT[`mcq${i}`];
+    const correctLabel = document.querySelector(`input[name="mcq${i}"][value="${correct}"]`)?.parentElement?.textContent?.trim() || '';
+    const givenLabel = given ? (document.querySelector(`input[name="mcq${i}"][value="${given}"]`)?.parentElement?.textContent?.trim() || 'No answer') : 'No answer';
+    const isRight = given === correct;
+    if (isRight) mcqScore++;
+    const bg = isRight ? '#e8f5e9' : '#ffebee';
+    const border = isRight ? '#2e7d32' : '#c62828';
+    const icon = isRight ? '✅' : '❌';
+    reviewItems.push(`<div class="mcq-review-item" style="background:${bg};border-left:4px solid ${border};">
+      <strong>Q${i}</strong> ${icon} &nbsp; Your answer: <em>${givenLabel}</em>
+      ${!isRight ? `&nbsp;|&nbsp; Correct: <strong style="color:#2e7d32">${correctLabel}</strong>` : ''}
+    </div>`);
+  }
+
+  document.getElementById('mcq-score-display').textContent = `${mcqScore} / 20`;
+  document.getElementById('sc-a').textContent = `${mcqScore}/20`;
+  document.getElementById('sc-total').textContent = `${mcqScore}+ / 60`;
+  document.getElementById('mcq-review').innerHTML = reviewItems.join('');
+
+  const writtenQs = [
+    {id:'b1', num:'Q21', label:'Rotation vs Revolution — difference and time taken'},
+    {id:'b2', num:'Q22', label:'Seven continents in order of size, with areas of largest and smallest'},
+    {id:'b3', num:'Q23', label:'Prime Meridian — definition, longitude distribution, International Date Line'},
+    {id:'b4', num:'Q24', label:'Relative vs Specific location of Sri Lanka'},
+    {id:'b5', num:'Q25', label:'Three types of rain in Sri Lanka — name, description, timing'},
+    {id:'b6', num:'Q26', label:'Tangible heritage — meaning and 3 examples each of man-made and natural'},
+    {id:'b7', num:'Q27', label:'Five specific features of the Dry Zone landscape'},
+    {id:'b8', num:'Q28', label:'Three ways physical landscape of Wet Zone influenced human activities'},
+    {id:'c1', num:'Q29', label:'Why Earth is not a perfect sphere; latitudes and longitudes with 4 named examples'},
+    {id:'c2', num:'Q30', label:'Social identity of Sri Lanka — ethnic groups, religions, heritages, social development stats'},
+    {id:'c3', num:'Q31', label:'Compare Hill Country vs Dry Zone — physical features, agriculture, tourism'},
+    {id:'c4', num:'Q32', label:'Jaffna Peninsula — harsh landscape vs rich economy and cultural identity'},
+  ];
+
+  let html = '<h3>📝 Sections B &amp; C — Written Answers (for parent/teacher to mark)</h3>';
+  let emailBody = `GEOGRAPHY CHAPTERS 1-3 — SHEYVON'S ANSWERS\nDate: ${new Date().toLocaleDateString('en-GB')}\n\nSECTION A (MCQ): ${mcqScore} / 20\n\n===== SECTIONS B & C =====\n`;
+
+  writtenQs.forEach(q => {
+    const ta = document.querySelector(`#card-${q.id} .answer-area`);
+    const val = ta ? ta.value.trim() : '';
+    const display = val || '(No answer written)';
+    html += `<div class="wa-item"><div class="wa-q">${q.num} — ${q.label}</div><div class="wa-a">${display.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div></div>`;
+    emailBody += `\n${q.num} — ${q.label}\n${display}\n${'─'.repeat(50)}\n`;
+  });
+
+  document.getElementById('written-answers-panel').innerHTML = html;
+  window._emailBody = emailBody;
+  document.getElementById('email-btn').style.display = 'block';
+  document.getElementById('score-panel').style.display = 'block';
+  document.getElementById('score-panel').scrollIntoView({behavior:'smooth'});
+  document.getElementById('paper').classList.add('locked');
+}
+
+function emailAnswers() {
+  const subject = encodeURIComponent("Geography Ch.1-3 — Sheyvon's Answers");
+  const body = encodeURIComponent(window._emailBody || '');
+  window.location.href = `mailto:ceylontraveldesigners@gmail.com?subject=${subject}&body=${body}`;
+}
+
+function resetExam() {
+  if (!confirm('Reset the paper? All answers will be cleared.')) return;
+  location.reload();
+}
+</script>
+</body>
+</html>
