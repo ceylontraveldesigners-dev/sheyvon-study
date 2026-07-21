@@ -109,8 +109,12 @@
   .wa-item { background: #f5f5f5; border-left: 4px solid #1565c0; border-radius: 6px; padding: 12px 16px; margin-bottom: 10px; font-size: 0.9rem; }
   .wa-item .wa-q { font-weight: 700; color: #0d47a1; margin-bottom: 6px; font-size: 0.82rem; text-transform: uppercase; }
   .wa-item .wa-a { color: #333; line-height: 1.6; white-space: pre-wrap; }
-  .btn-email { display: block; width: 100%; margin-top: 20px; background: #0d47a1; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; }
-  .btn-email:hover { background: #0a2f6b; }
+  .btn-email { display: block; width: 100%; margin-top: 12px; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+  .btn-copy { background: #0d47a1; }
+  .btn-copy:hover { background: #0a2f6b; }
+  .btn-wa { background: #25D366; }
+  .btn-wa:hover { background: #128C7E; }
+  .copy-msg { display:none; color:#2e7d32; font-weight:700; margin-top:10px; font-size:0.95rem; text-align:center; }
   .mcq-review-item { font-size: 0.88rem; padding: 9px 14px; border-radius: 6px; margin-bottom: 7px; }
   frac { display: inline-flex; flex-direction: column; align-items: center; font-size: 0.85em; vertical-align: middle; margin: 0 3px; }
   frac num { border-bottom: 1.5px solid currentColor; padding: 0 2px; }
@@ -668,7 +672,9 @@
   <p style="color:#555;font-size:0.9rem;margin-top:8px;">Sections B and C require teacher / parent marking. Use the Answer Key to check your working.</p>
   <div id="mcq-review" style="margin-top:24px;text-align:left;"></div>
   <div class="written-answers" id="written-answers-panel"></div>
-  <button class="btn-email" id="email-btn" onclick="emailAnswers()" style="display:none;">📧 Send My Answers to Mum</button>
+  <button class="btn-email btn-copy" id="copy-btn" onclick="copyAnswers()" style="display:none;">📋 Copy My Answers</button>
+  <div class="copy-msg" id="copy-msg">✅ Copied! Open WhatsApp and paste to Mum 💚</div>
+  <button class="btn-email btn-wa" id="wa-btn" onclick="whatsappAnswers()" style="display:none;">💚 Send via WhatsApp to Mum</button>
 </div>
 
 <script>
@@ -776,16 +782,26 @@ function submitExam() {
 
   document.getElementById('written-answers-panel').innerHTML = html;
   window._emailBody = emailBody;
-  document.getElementById('email-btn').style.display = 'block';
+  document.getElementById('copy-btn').style.display = 'block';
+  document.getElementById('wa-btn').style.display = 'block';
   document.getElementById('score-panel').style.display = 'block';
   document.getElementById('score-panel').scrollIntoView({behavior:'smooth'});
   document.getElementById('paper').classList.add('locked');
 }
 
-function emailAnswers() {
-  const subject = encodeURIComponent("Maths Part I — Sheyvon's Answers");
-  const body = encodeURIComponent(window._emailBody || '');
-  window.location.href = `mailto:ceylontraveldesigners@gmail.com?subject=${subject}&body=${body}`;
+function copyAnswers() {
+  const text = window._emailBody || 'No answers captured.';
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copy-msg').style.display = 'block';
+    document.getElementById('copy-btn').textContent = '✅ Copied!';
+  }).catch(() => {
+    prompt('Copy the text below (Ctrl+A then Ctrl+C):', text);
+  });
+}
+function whatsappAnswers() {
+  const text = window._emailBody || 'No answers captured.';
+  const short = text.length > 1500 ? text.substring(0, 1500) + '\n\n[... see full answers — use Copy button above]' : text;
+  window.open('https://wa.me/?text=' + encodeURIComponent('📐 MATHS PART I — MY ANSWERS\n\n' + short), '_blank');
 }
 
 function resetExam() {
